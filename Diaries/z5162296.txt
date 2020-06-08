@@ -1,0 +1,3 @@
+
+Week 1
+The group was formed and a decision on the project (MealMatch) and tools to be used was made. I joined the team on Jira and the GitHub repository. In doing some research, I came across Recipeland and Foodwise, two other systems which have a functionality similar to our specs, and listed their pros and cons. I also attended the group meeting during which I helped come up with epics and smaller user stories.
