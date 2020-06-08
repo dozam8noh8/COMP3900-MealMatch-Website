@@ -1,0 +1,9 @@
+==============Week 1================
+This week we formed our teams. I posted on the forums early to try get a strong and organised
+team for mealMatch. By the first tute we had 4 people and we got our 5th in the tutorial.
+We set up Jira and linked it to a github account so that we can make tickets. I've been chosen to be the Scrum master but we're going to try distribute the development work evenly and I will get Waqif who has used Jira before to help me. After the 1st
+tutorial  (thursday) we had a quick team meeting to agree upon the likely technology stack we would be using. We've currently agreed upon some Angular frontend single page webapp + flask backend to serve data and stuff with a light SQL database. I set up a google doc for us to collaborate on. Our goal for this week is to read the spec thoroughly and determine the best approaches to implementation as well as start coming up with user stories.
+
+
+==================Week 2==============
+We're currently arranging a meeting for early this week.
