@@ -6,4 +6,8 @@ tutorial  (thursday) we had a quick team meeting to agree upon the likely techno
 
 
 ==================Week 2==============
-We're currently arranging a meeting for early this week.
+This week we had a meeting on Monday night discussing the proposal and what ideas 
+we'd had so far. We drafted user stories together on a google doc and I will be
+adding them into Jira throughout the week once we get some more feedback in 
+lectures and tutorials. As of monday night we have yet to do the software architecture
+and user storyboards.
