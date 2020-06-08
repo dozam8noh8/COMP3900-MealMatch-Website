@@ -1,4 +1,4 @@
-# COMP3900 - Implementing the MealMatch Project
+# COMP3900 (Group: I dont care) - Implementing the MealMatch Project
 
 Remember to add your diaries in the diaries directory with zXXXXXXX.txt as the name
 
