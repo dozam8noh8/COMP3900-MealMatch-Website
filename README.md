@@ -4,8 +4,8 @@ Remember to add your diaries in the diaries directory with zXXXXXXX.txt as the n
 
 
 # Members
-Emmanuel Borra
-Waqif Alam
-Manni Huang
-Kenny Wong
-Owen Silver
+- Emmanuel Borra
+- Waqif Alam
+- Manni Huang
+- Kenny Wong
+- Owen Silver
