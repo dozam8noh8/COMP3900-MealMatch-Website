@@ -1,0 +1,13 @@
+==============Week 1================
+We made our groups in the tute made sure we chose our project.
+We've also made sure we set up Jira and chose Owen as the scrum master. I've
+also decided to help Owen with Jira since I've used it before and it would help
+me keep up as well. We've done a fair bit of architecture design as well and
+decided it would be best to use an Angular frontend and a Flask RESTful api
+backend to serve the data with an SQLlite db.
+
+==============Week 2================
+We've had a meeting and went through the specs together. We've also drafted up
+some epics and user stories to decide our flow. We'll work on the storyboards
+and architecture by the end of this week or early next week. That should help
+us get the proposal done early and take time to review it before submitting.
