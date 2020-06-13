@@ -1,3 +1,7 @@
 
 Week 1
 The group was formed and a decision on the project (MealMatch) and tools to be used was made. I joined the team on Jira and the GitHub repository. In doing some research, I came across Recipeland and Foodwise, two other systems which have a functionality similar to our specs, and listed their pros and cons. I also attended the group meeting during which I helped come up with epics and smaller user stories.
+
+Week 2
+At the beginning of the week, I drew up draft storyboards, which I shared with the rest of the group. When we had our group meeting, we checked to ensure that all our user stories were covered. I noted down a few changes to be made and added the final storyboards to our proposal.
+
