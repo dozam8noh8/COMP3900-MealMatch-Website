@@ -1,0 +1,70 @@
+			    ________________
+
+			     DIARY ENTRIES
+
+			     Emmanuel Borra
+			    ________________
+
+
+
+
+
+Week 1 (2020-05-31 to 2020-06-07)
+=================================
+
+  I started my session on Thursday 11:00-13:00 however the groups filled
+  up much more quickly than I anticipated. As it turns out, quite a
+  significant amount of people (at least for my session) were already in
+  a group of some sort. Luckily there were more sessions for the same
+  day so I managed to get into one during the Thursday 16:00-18:00
+  session.
+
+  We decided to choose *MealMatch* by unanimous decision as it was the
+  most common pick held by the group. We also managed to get a Google
+  document setup for our proposal as it was the most accessible tool for
+  everybody. Some progress was made on the proposal in regards to the
+  overall structure as well as implementation related details such as
+  what tools or frameworks we were going to use. Overall, aside from
+  extraneous details like setting up Jira, Github and group accounts,
+  nothing much happened.
+
+
+Week 2 (2020-06-08 to 2020-06-14)
+=================================
+
+  The first half of the week (i.e. before Thursday) saw no activity from
+  me due to some faulty damage on my devices. Fortunately, by Thursday
+  midday I was able to get my laptop running for the session. For the
+  most part, we mostly continued the report as usual but with a narrower
+  focus on the inner details such as the user stories that we were
+  planning to do and the acceptance criteria for each and every one of
+  them. We also discussed a lot things about the specification in
+  regards to some of the more ambiguous parts such as deciding if user
+  interactions should be allowed for non-logged in and non-registered
+  users.  Regardless, we aimed to complete these tasks before assigning
+  them on Jira so that the ones up there are the "completed" versions
+  rather than the draft versions. (Of course, it goes without saying
+  that these things can change as time goes so what I mean to say by
+  "completed" only extends for a provisional time period before the
+  actual tasks are being worked on).
+
+  For me, I mainly concerned myself with learning more Angular since I
+  had never used it before. I've used things like `React' along with
+  `React-Redux' however those are more like third-party libraries that
+  you can optionally include whenever you want to. In contrast, Angular
+  is a full framework in and of itself so it seems to have a more
+  opinionated way of doing things.
+
+  At the same time, I also refreshed my knowledge of Flask as it's been
+  a long time since I've used it. In general, I have not used Python web
+  frameworks for such a long time so some idioms and conventions are a
+  little bit different to when I last used them. Considering that our
+  plan relies on a minimal backend solely for emitting blobs of data
+  (preferably in JSON format), then I do not think that diving deep into
+  the template engines aspect is needed...for now!
+
+
+Week 3
+======
+
+  Pending...but with more Angular related stuff!
