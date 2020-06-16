@@ -11,3 +11,21 @@ we'd had so far. We drafted user stories together on a google doc and I will be
 adding them into Jira throughout the week once we get some more feedback in 
 lectures and tutorials. As of monday night we have yet to do the software architecture
 and user storyboards.
+
+Throughout the week until the thursday tute we just did some self study of the pieces
+of the architecture that we would be using (e.g. Angular and Flask) and made sure to
+keep up with the lectures for any further hints with user stories/the proposal.
+We also moved our repo from our personal github repo to the github classroom repo.
+
+On thursday we had our tute and got most of the proposal draft done, we added some 
+more details to Jira in preparation for sprint planning. We had an unofficial sprint
+planning but didnt start it officially on Jira. Manni, Waqif and I worked on the
+storyboards for the proposals whilst Emmanuel did architecture and Kenny did US acceptance
+criteria. Then we all switched to give feedback on what we had all done.
+
+Throughout the week I got more familiar with admin tasks on Jira, added some of the user
+stories, and upgraded to premium temporarily to allow us to delete issues. The proposal
+is just about ready for submission (except for formatting) the team is doing an awesome
+job!
+
+==================Week 3==============
