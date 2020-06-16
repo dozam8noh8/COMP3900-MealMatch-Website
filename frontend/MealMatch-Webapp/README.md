@@ -1,3 +1,8 @@
+# Group I dont Care MealMatch Frontend
+If you are using angular CLI to generate components, I recommend we combine the html with the components to make things more readable by replacing templateUrl to template: `<your html here>`. Also move any generated tests to the testing folder so
+we don't clutter the useful source code.
+Using angular Documentation is below but let me know if you have any questions - Owen
+
 # MealMatchWebapp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.6.
