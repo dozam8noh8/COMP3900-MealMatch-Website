@@ -29,3 +29,10 @@ is just about ready for submission (except for formatting) the team is doing an 
 job!
 
 ==================Week 3==============
+Throughout the start of this week I've been finalising the user stories on Jira,
+placing them into their respective epics and assigning (draft) story point values.
+I'm not a huge fan of the Jira UI and it seems to lag on my computer :(. I'm currently
+working with the Angular CLI to generate the shell for the frontend. 
+On Wednesday I added routes for login and signup and pushed up the shell for the frontend
+so that the group could get some ideas on how things work. Currently planning to
+give the group a mini demo for thursday to get them started.
