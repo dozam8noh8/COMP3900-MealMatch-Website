@@ -1,0 +1,30 @@
+
+<h1>Search by ingredient</h1>
+
+<input type="text"
+placeholder="Input ingredient..."
+matInput
+[formControl]="ingredientControl"
+[matAutocomplete]="auto"> 
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayIngredient">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="addToList(option)"> 
+        {{option.name}} 
+    </mat-option>
+</mat-autocomplete>
+
+<br>
+<br>
+
+<div>
+<h2>My Ingredients List</h2>
+    <div *ngIf="added_ingredients">
+        <ul>
+        <div *ngFor="let ingredient of added_ingredients">
+            <li> 
+                {{ingredient.name}}
+            </li>
+        </div> 
+        </ul>
+    </div>    
+</div>
+
