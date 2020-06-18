@@ -11,3 +11,14 @@ We've had a meeting and went through the specs together. We've also drafted up
 some epics and user stories to decide our flow. We'll work on the storyboards
 and architecture by the end of this week or early next week. That should help
 us get the proposal done early and take time to review it before submitting.
+
+Our storyboards were done thanks to Manni walking us through drawing them and
+we kept on helping her with the UX stuff. I also spent a bit of time looking at
+Jira with Owen and making sure our stuff was going good. I spent rest of the week
+working on the Python backend part. Since we've decided to work with Flask, I've
+drafted out everything we need to setup a basic RESTful api and built a skeleton
+after going through a bunch of online tutorials. This should be good enough to setup
+the whole API as long as we have our modals and endpoints working.
+
+==============Week 3================
+
