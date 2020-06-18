@@ -14,7 +14,7 @@ const routes: Routes = [
 // This is the default "wildcard" if none of the above patterns match, we redirect to '' (home)
 // We could also put a "pageNotFound" component here if we didnt want to confuse
 // the users by redirecting here.
-  //{path: '**', redirectTo: 'home'},
+  {path: '**', redirectTo: 'home'},
 ];
 
 @NgModule({
