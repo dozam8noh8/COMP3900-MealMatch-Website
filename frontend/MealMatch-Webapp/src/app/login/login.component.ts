@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <h2>Log In</h2>
+      <div>
       <mat-error *ngIf="loginInvalid">
         The username and password were not recognised
       </mat-error>
@@ -18,16 +19,22 @@ import { ActivatedRoute, Router } from '@angular/router';
           Please provide a valid email address
         </mat-error>
       </mat-form-field>
+      </div>
+
       <mat-form-field class="full-width-input">
         <input matInput type="password" placeholder="Password" formControlName="password" required>
         <mat-error>
           Please provide a valid password
         </mat-error>
       </mat-form-field>
-      <button mat-raised-button color="primary">Login</button>
     </form>
+    <button mat-raised-button color="primary">Login</button>
+
+    <!-- You need the / here for an absolute link rather than an relative link (without, its login/signup) -->
+    <a routerLink="/signup"> Dont have an account? Sign up </a>
+    <!-- Maybe make this mat-card-footer? -->
   </mat-card-content>
-</mat-card>  
+</mat-card>
   `
 })
 // Code from https://developer.okta.com/blog/2020/01/21/angular-material-login
