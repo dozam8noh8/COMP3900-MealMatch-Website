@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "MealMatch-Webapp"
+    }
+  },
+  "defaultProject": "MealMatch-Webapp",
+  "cli": {
+    "analytics": "f85de66d-582c-4c1b-b36c-56cff070851b"
+  }
 }
