@@ -1,30 +1,32 @@
 
-<h1>Search by ingredient</h1>
-
-<input type="text"
-placeholder="Input ingredient..."
-matInput
-[formControl]="ingredientControl"
-[matAutocomplete]="auto"> 
-<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayIngredient">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="addToList(option)"> 
-        {{option.name}} 
-    </mat-option>
-</mat-autocomplete>
+<mat-card id="search-section">
+    <h1>Search by ingredient</h1>    
+    <mat-form-field style="width: 100%;">
+        
+        <input type="text"
+        placeholder="Input an ingredient"
+        matInput
+        [formControl]="ingredientControl"
+        [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayIngredient">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="addToList(option)"> 
+                {{option.name}} 
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</mat-card>
 
 <br>
 <br>
 
-<div>
+<mat-card id="my-ingredients-section">
 <h2>My Ingredients List</h2>
     <div *ngIf="added_ingredients">
-        <ul>
         <div *ngFor="let ingredient of added_ingredients">
-            <li> 
-                {{ingredient.name}}
-            </li>
+            <div class="user-list-item">
+                {{ingredient.name}} <button class="remove-button" (click)="removeFromList(ingredient)"> <strong>x</strong></button>
+            </div>
         </div> 
-        </ul>
-    </div>    
-</div>
+    </div> 
+</mat-card>
 

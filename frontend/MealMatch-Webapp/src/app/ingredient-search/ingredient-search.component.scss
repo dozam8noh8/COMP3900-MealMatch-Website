@@ -1,0 +1,38 @@
+
+
+
+#search-section {
+    margin: 0 auto;
+    width: 50%; 
+    border-color: black;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+#my-ingredients-section {
+    margin: 0 auto;
+    width: 75%; 
+    overflow: auto;
+    align-content: center;
+}
+
+.user-list-item {
+    float: left;
+    background-color: rgb(65, 215, 253);
+    margin-right: 7px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 5px 5px 5px 5px;
+}
+
+.remove-button {
+    cursor: pointer;
+    // background-color: skyblue;
+    background-color: transparent;
+    border-width: 0;
+}
+
+// button:hover {
+//     background-color: blue;
+// }

@@ -26,6 +26,10 @@ export class IngredientSearchComponent implements OnInit {
     { id: 4, name: 'butter' },
     { id: 5, name: 'sugar' },
     { id: 6, name: 'cream' },
+    { id: 7, name: 'egg'},
+    { id: 8, name: 'apple'},
+    { id: 9, name: 'pear'},
+    { id: 10, name: 'banana'},   
   ];
   added_ingredients: Ingredient[] = [
     { id: 1, name: 'beef' },
@@ -54,6 +58,11 @@ export class IngredientSearchComponent implements OnInit {
   addToList(newIngredient: Ingredient): void {
     this.added_ingredients.push(newIngredient);
     this.ingredientControl.setValue('');
+  }
+
+  removeFromList(ingredient: Ingredient): void {
+    this.added_ingredients = this.added_ingredients.filter(item => item.id!=ingredient.id);
+
   }
 
 }

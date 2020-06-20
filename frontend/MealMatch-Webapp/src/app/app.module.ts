@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IngredientSearchComponent } from './ingredient-search/ingredient-search.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
@@ -25,6 +27,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    MatCardModule,
+    MatInputModule,
     MatAutocompleteModule,
   ],
   providers: [],
