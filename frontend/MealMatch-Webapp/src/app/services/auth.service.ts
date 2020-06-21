@@ -12,9 +12,13 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(user): Promise<any> {
-    console.log("Attempting to login from auth service.")
-    let url = `${this.BASE_URL}/users`; // auth/login is the endpoint
-    return this.http.post(url, user, {headers: this.headers}).toPromise(); // Send api POST request with user data.
+    console.log(user.username)
+    var authData = 'Basic ' + window.btoa(`${user.username}:${user.password}`); // Establish auth data from username and pw.
+    this.headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': authData}); //Make a new header from old header + auth data.
+    console.log("Attempting to login from auth service.");
+    let url = `${this.BASE_URL}/token`; // auth/login is the endpoint
+    return this.http.get(url, {headers: this.headers}).toPromise(); // Send api POST request with user data.
+    // STORE AUTH RESPONSE HERE
   }
 
   signup(user): Promise<any> {

@@ -56,6 +56,7 @@ import { AuthService } from '../services/auth.service';
 </mat-card-content>
 </mat-card>
 </div>
+<h1 *ngIf=showSuccessBanner> CONGRATULATIONS SIGN UP SUCCESS </h1>
 
 
 
@@ -67,7 +68,7 @@ import { AuthService } from '../services/auth.service';
 export class SignupComponent implements OnInit {
   form: FormGroup;
   private formSubmitAttempt: boolean;
-
+  showSuccessBanner: boolean;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -88,6 +89,7 @@ export class SignupComponent implements OnInit {
           const username = this.form.get('username').value; // Get the values entered in the form.
           const password = this.form.get('password').value;
           await this.authService.signup({username,password}); // send in an object with username and password to auth service
+          this.showSuccessBanner = true;
         } catch (err) {
           console.log("An error occurred", err);
         }

@@ -54,6 +54,12 @@ def get_user(id):
 @app.route('/api/token')
 @auth.login_required
 def get_auth_token():
+    print("Attempting to get auth")
+    try:
+        print(request.headers)
+    except Exception as e:
+        print("We tried." + e.msg)
+    print("Done")
     token = g.user.generate_auth_token(12000)
     return jsonify({'token': token.decode('ascii'), 'duration': 12000})
 

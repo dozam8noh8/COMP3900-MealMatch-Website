@@ -36,6 +36,8 @@ import { AuthService } from '../services/auth.service';
     <!-- Maybe make this mat-card-footer? -->
   </mat-card-content>
 </mat-card>
+<h1 *ngIf=showSuccessBanner> CONGRATULATIONS SIGN UP SUCCESS </h1>
+
   `
 })
 // Code from https://developer.okta.com/blog/2020/01/21/angular-material-login
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
   public loginInvalid: boolean;
   private formSubmitAttempt: boolean;
   private returnUrl: string;
+  showSuccessBanner: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -68,15 +71,19 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit() {
+    console.log("Submitting?")
     this.loginInvalid = false;
     this.formSubmitAttempt = false;
+    this.showSuccessBanner = false;
     if (this.form.valid) {
       try {
         const username = this.form.get('username').value;
         const password = this.form.get('password').value;
         await this.authService.login({username,password}); // send in an object with username and password to auth service
+        this.showSuccessBanner = true;
+        this.router.navigate(['home']);
       } catch (err) {
-        console.log("An error occurred", err);
+        //console.log("An error occurred", err);
         this.loginInvalid = true;
       }
     } else {
