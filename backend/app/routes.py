@@ -5,7 +5,7 @@ from flask_httpauth import HTTPBasicAuth
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User
-from app import auth, app
+from app import auth, app, db
 
 
 ###############################################################
@@ -41,12 +41,15 @@ def new_user():
             {'Location': url_for('get_user', id=user.id, _external=True)})
 
 
-# @app.route('/api/users/<int:id>')
-# def get_user(id):
-#     user = User.query.get(id)
-#     if not user:
-#         abort(400)
-#     return jsonify({'username': user.username})
+@app.route('/api/users/<int:id>')
+@auth.login_required
+def get_user(id):
+    if current_user.id != id:
+        return 'Unauthorized Access', 401
+    user = User.query.get(id)
+    if not user:
+        abort(400)
+    return jsonify({'username': user.username})
 
 # Get Auth Token
 @app.route('/api/token')
