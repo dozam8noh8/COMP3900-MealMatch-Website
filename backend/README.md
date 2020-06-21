@@ -1,3 +1,12 @@
+#TLDR
+1. Make a venv using `virtualenv <venv here>`
+2. Activate venv `source <venvName>/bin/activate`
+3. install requirements with pip or pip3 `pip3 -r requirements.txt`
+4. Run program with `python run.py`
+
+#Common issues
+- Address already in use -> Find the process and kill it using `kill -9 <pid>`
+
 Restful Authentication skeleton modified from REST-Auth [RESTful Authentication with Flask](http://blog.miguelgrinberg.com/post/restful-authentication-with-flask) article.
 =========
 Installation
