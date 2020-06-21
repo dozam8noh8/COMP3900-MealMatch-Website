@@ -5,3 +5,5 @@ The group was formed and a decision on the project (MealMatch) and tools to be u
 Week 2
 At the beginning of the week, I drew up draft storyboards, which I shared with the rest of the group. When we had our group meeting, we checked to ensure that all our user stories were covered. I noted down a few changes to be made and added the final storyboards to our proposal.
 
+Week 3
+This week I helped finished off our proposal for submission as we marked the start of our first sprint. I have been learning Angular as I go along and was able to implement the ingredient search on the frontend. I also worked on the addition and remove of ingredients from a user's input list. 
