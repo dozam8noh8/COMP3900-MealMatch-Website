@@ -11,22 +11,36 @@ export class AuthService {
   private headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
   constructor(private http: HttpClient) {}
 
+  // Sends request to log in a user and places json web token in session storage.
   login(user): Promise<any> {
-    console.log(user.username)
-    var authData = 'Basic ' + window.btoa(`${user.username}:${user.password}`); // Establish auth data from username and pw.
+    var authData = 'Basic ' + window.btoa(`${user.username}:${user.password}`); // Establish auth data from username and pw (required to get token from endpoint.).
     this.headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': authData}); //Make a new header from old header + auth data.
-    console.log("Attempting to login from auth service.");
     let url = `${this.BASE_URL}/token`; // auth/login is the endpoint
-    return this.http.get(url, {headers: this.headers}).toPromise(); // Send api POST request with user data.
-    // STORE AUTH RESPONSE HERE
+    return this.http.get(url, {headers: this.headers})
+    .toPromise()
+    .then(response => {
+      localStorage.setItem('currentUser', JSON.stringify(response)) // If the promise resolves, store the object with token in local storage!
+      console.log("Storing details of response" + localStorage.getItem('currentUser'));
+    }); // Send api POST request with user data.
   }
 
+  // Sends the request to sign up a user given the details on the signup page.
   signup(user): Promise<any> {
     let url: string = `${this.BASE_URL}/users`;
     return this.http.post(url, user, {headers: this.headers}).toPromise();
   }
 
-  test() {
-    console.log('Auth service connected');
+  // Checks if a user is logged in by seeing if they have a token in local storage.
+  isLoggedIn(){
+    if (localStorage.getItem('currentUser')){
+      return true
+    }
+    else {
+      return false;
+    }
+  }
+
+  logout() {
+    localStorage.clear();
   }
 }

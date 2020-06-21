@@ -24,6 +24,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { PrivateResourceComponent } from './private-resource/private-resource.component';
 
 
 const materialModules = [
@@ -48,6 +49,7 @@ const materialModules = [
     LoginComponent,
     SignupComponent,
     NavbarComponent,
+    PrivateResourceComponent,
   ],
   imports: [
     BrowserModule,

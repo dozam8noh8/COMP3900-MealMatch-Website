@@ -35,7 +35,7 @@ import { AuthService } from '../services/auth.service';
     <p>
 
     <mat-form-field>
-      <input matInput placeholder="Password" formControlName="password" required>
+      <input matInput type="password" placeholder="Password" formControlName="password" required>
       <mat-error>
           Password cannot be blank.
 </mat-error>
@@ -45,7 +45,7 @@ import { AuthService } from '../services/auth.service';
     <p>
 
     <mat-form-field>
-      <input matInput placeholder="Confirm Password" formControlName="confirmPassword" required>
+      <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
       <mat-error>
           Please confirm password.
       </mat-error>
@@ -67,7 +67,6 @@ import { AuthService } from '../services/auth.service';
 })
 export class SignupComponent implements OnInit {
   form: FormGroup;
-  private formSubmitAttempt: boolean;
   showSuccessBanner: boolean;
   constructor(
     private fb: FormBuilder,
@@ -83,7 +82,6 @@ export class SignupComponent implements OnInit {
   }
   async onSubmit() {
     console.log('Submitting form');
-      this.formSubmitAttempt = false;
       if (this.form.valid) {
         try {
           const username = this.form.get('username').value; // Get the values entered in the form.
@@ -93,8 +91,6 @@ export class SignupComponent implements OnInit {
         } catch (err) {
           console.log("An error occurred", err);
         }
-      } else {
-        this.formSubmitAttempt = true;
       }
     }
 }

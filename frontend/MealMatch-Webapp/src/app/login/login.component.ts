@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
 
   async ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/game';
-    this.authService.test();
 
     this.form = this.fb.group({
       username: ['', Validators.required],
