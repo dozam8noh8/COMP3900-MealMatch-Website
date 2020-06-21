@@ -63,6 +63,18 @@ def get_auth_token():
 def get_resource():
     return jsonify({'data': 'Hello, %s!' % g.user.username})
 
+@app.after_request
+def after_request(response):
+    ''' This method adds the following headers after processing each request
+        it's necessary (until I find a work around) so that the responses
+        back to angular don't get blocked by the browser CORS check. '''
+
+    #print(response.headers)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    #print(response.headers)
+    return response
 
 if __name__ == '__main__':
     # if not os.path.exists('db.sqlite'):
