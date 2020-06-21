@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -69,10 +70,11 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
   ) {}
   ngOnInit(): void {
-    this.form = this.fb.group({
-      username: ['', Validators.required],
+    this.form = this.fb.group({  // This builds a reactive form with the given controls (like a big object)
+      username: ['', Validators.required], // These connect to the mat-errors to provide validation error text.
       email: ['', Validators.email],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
@@ -80,5 +82,17 @@ export class SignupComponent implements OnInit {
   }
   async onSubmit() {
     console.log('Submitting form');
-  }
+      this.formSubmitAttempt = false;
+      if (this.form.valid) {
+        try {
+          const username = this.form.get('username').value; // Get the values entered in the form.
+          const password = this.form.get('password').value;
+          await this.authService.signup({username,password}); // send in an object with username and password to auth service
+        } catch (err) {
+          console.log("An error occurred", err);
+        }
+      } else {
+        this.formSubmitAttempt = true;
+      }
+    }
 }

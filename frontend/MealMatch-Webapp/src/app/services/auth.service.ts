@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   signup(user): Promise<any> {
-    let url: string = `${this.BASE_URL}/signup`;
+    let url: string = `${this.BASE_URL}/users`;
     return this.http.post(url, user, {headers: this.headers}).toPromise();
   }
 
