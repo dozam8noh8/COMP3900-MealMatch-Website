@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
-interface Ingredient {
-  id: number;
-  name: String;
-}
+import {Ingredient} from '../ingredient';
+import { IngredientService } from '../ingredient.service';
 
 @Component({
   selector: 'app-ingredient-search',
@@ -17,52 +15,33 @@ interface Ingredient {
 
 export class IngredientSearchComponent implements OnInit {
 
+  ingredientService: IngredientService;
   ingredientControl = new FormControl();
-
-  all_ingredients: Ingredient[] = [
-    { id: 1, name: 'beef' },
-    { id: 2, name: 'milk' },
-    { id: 3, name: 'flour' },
-    { id: 4, name: 'butter' },
-    { id: 5, name: 'sugar' },
-    { id: 6, name: 'cream' },
-    { id: 7, name: 'egg'},
-    { id: 8, name: 'apple'},
-    { id: 9, name: 'pear'},
-    { id: 10, name: 'banana'},   
-  ];
-  added_ingredients: Ingredient[] = [
-    { id: 1, name: 'beef' },
-  ];
-
   filteredOptions: Observable<Ingredient[]>;
 
-  constructor() { }
-
-  private _filter(value: string): Ingredient[] {
-    const filterValue = value.toString().toLowerCase();
-    return filterValue==='' ? [] : this.all_ingredients.filter(item => item.name.startsWith(filterValue) && !this.added_ingredients.some(elem => elem.id==item.id));
+  constructor(ingService: IngredientService) { 
+    this.ingredientService = ingService;
   }
 
   ngOnInit(): void {
     this.filteredOptions = this.ingredientControl.valueChanges
       .pipe(
         map(value => this._filter(value)),
-      );    
+      );  
   }
 
   displayIngredient(ingredient: Ingredient): String {
     return ingredient.name;
   } 
 
-  addToList(newIngredient: Ingredient): void {
-    this.added_ingredients.push(newIngredient);
+  addToList(newIngredient: Ingredient) {
+    this.ingredientService.addToList(newIngredient);
     this.ingredientControl.setValue('');
   }
 
-  removeFromList(ingredient: Ingredient): void {
-    this.added_ingredients = this.added_ingredients.filter(item => item.id!=ingredient.id);
-
+  private _filter(value: string): Ingredient[] {
+    const filterValue = value.toString().toLowerCase();
+    return filterValue==='' ? [] : this.ingredientService.getAllIngredients().filter(item => item.name.startsWith(filterValue) && !this.ingredientService.getAddedIngredients().some(elem => elem.id==item.id));
   }
 
 }

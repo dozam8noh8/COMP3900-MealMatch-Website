@@ -20,13 +20,11 @@
 <br>
 
 <mat-card id="my-ingredients-section">
-<h2>My Ingredients List</h2>
-    <div *ngIf="added_ingredients">
-        <div *ngFor="let ingredient of added_ingredients">
-            <div class="user-list-item">
-                {{ingredient.name}} <button class="remove-button" (click)="removeFromList(ingredient)"> <strong>x</strong></button>
-            </div>
-        </div> 
+    <h2>My Ingredients List</h2>
+    <div *ngFor="let ingredient of ingredientService.added_ingredients">
+        <div class="user-list-item">
+            {{ingredient.name}} 
+            <button class="remove-button" (click)="ingredientService.removeFromList(ingredient)"> <strong>x</strong></button>
+        </div>
     </div> 
 </mat-card>
-
