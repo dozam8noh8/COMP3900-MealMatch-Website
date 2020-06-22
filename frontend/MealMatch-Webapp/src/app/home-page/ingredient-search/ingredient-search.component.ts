@@ -41,7 +41,7 @@ export class IngredientSearchComponent implements OnInit {
 
   private _filter(value: string): Ingredient[] {
     const filterValue = value.toString().toLowerCase();
-    return filterValue==='' ? [] : this.ingredientService.getAllIngredients().filter(item => item.name.startsWith(filterValue) && !this.ingredientService.getAddedIngredients().some(elem => elem.id==item.id));
+    return filterValue==='' ? [] : this.ingredientService.getAllIngredients().filter(item => item.name.startsWith(filterValue) && !item.onList);
   }
 
 }

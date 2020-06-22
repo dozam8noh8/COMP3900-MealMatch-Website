@@ -1,33 +1,34 @@
 import { Injectable } from '@angular/core';
 
 import {Ingredient} from './ingredient';
+import { Category } from './category';
 
-const ALL_INGREDIENTS: Ingredient[] = [
-  { id: 1, name: 'beef' },
-  { id: 2, name: 'milk' },
-  { id: 3, name: 'flour' },
-  { id: 4, name: 'butter' },
-  { id: 5, name: 'sugar' },
-  { id: 6, name: 'cream' },
-  { id: 7, name: 'egg'},
-  { id: 8, name: 'apple'},
-  { id: 9, name: 'pear'},
-  { id: 10, name: 'banana'},   
+var ALL_INGREDIENTS: Ingredient[] = [
+  { id: 1, name: 'beef', onList: true},
+  { id: 2, name: 'milk', onList: false },
+  { id: 3, name: 'flour', onList: false },
+  { id: 4, name: 'butter', onList: false },
+  { id: 5, name: 'sugar', onList: false },
+  { id: 6, name: 'cream', onList: false },
+  { id: 7, name: 'egg', onList: false },
+  { id: 8, name: 'apple', onList: false },
+  { id: 9, name: 'pear', onList: false },
+  { id: 10, name: 'banana', onList: false },   
 ];
 
+const ALL_CATEGORIES: Category[] = [
+  { id: 1, name: 'baking', items: [ALL_INGREDIENTS[2]] },
+  { id: 2, name: 'produce', items: [ALL_INGREDIENTS[7], ALL_INGREDIENTS[8], ALL_INGREDIENTS[9]] },
+  { id: 3, name: 'dairy', items: [ALL_INGREDIENTS[1], ALL_INGREDIENTS[3], ALL_INGREDIENTS[5], ALL_INGREDIENTS[6]] },
+  { id: 4, name: 'meat', items: [ALL_INGREDIENTS[0]] },
+];
 
 @Injectable({
   providedIn: 'root'
 })
 export class IngredientService {
 
-  added_ingredients: Ingredient[] = [
-    { id: 1, name: 'beef' },
-  ];
-
-  ngOnInit() {
-  
-  }
+  ngOnInit() { }
 
   constructor() { }
 
@@ -36,15 +37,19 @@ export class IngredientService {
   }
 
   getAddedIngredients(): Ingredient[] {
-    return this.added_ingredients;
+    return ALL_INGREDIENTS.filter(item => item.onList===true);
   }
 
   addToList(newIngredient: Ingredient) {
-    this.added_ingredients.push(newIngredient);
+    newIngredient.onList = true;
   }
 
   removeFromList(ingredient: Ingredient) {
-    this.added_ingredients = this.added_ingredients.filter(item => item.id!=ingredient.id);
+    ingredient.onList = false;
+  }
+
+  getAllCategories(): Category[] {
+    return ALL_CATEGORIES;
   }
 
 }

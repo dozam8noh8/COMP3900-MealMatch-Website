@@ -1,0 +1,17 @@
+<mat-card style="margin: 0 auto; width: 75%;">
+    <h2>Ingredients by Category</h2>
+    <mat-tab-group >
+        <div *ngFor="let category of ingredientService.getAllCategories()">
+                <mat-tab label="{{category.name}}"> 
+                    <div *ngFor="let ingredient of category.items">
+                        <mat-checkbox 
+                        [checked]="ingredient.onList"
+                        (change)="ingredient.onList = !ingredient.onList">
+                            {{ingredient.name}}
+                        </mat-checkbox>
+                    </div>
+                </mat-tab>
+        </div>
+    </mat-tab-group>    
+</mat-card>
+

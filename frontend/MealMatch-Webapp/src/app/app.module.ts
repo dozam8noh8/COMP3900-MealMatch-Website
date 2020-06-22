@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 
 import { IngredientSearchComponent } from './home-page/ingredient-search/ingredient-search.component';
+import { IngredientByCategoryComponent } from './home-page/ingredient-by-category/ingredient-by-category.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {  MatMenuModule } from '@angular/material/menu';
@@ -21,6 +22,8 @@ import { MatInputModule} from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { NavbarComponent } from './navbar/navbar.component';
@@ -44,7 +47,12 @@ const materialModules = [
   MatCardModule,
   MatSlideToggleModule,
   MatSelectModule,
-  MatOptionModule
+  MatOptionModule,
+  MatCardModule,
+  MatInputModule,
+  MatAutocompleteModule,
+  MatCheckboxModule,
+  MatTabsModule
 ]
 @NgModule({
   declarations: [
@@ -53,7 +61,8 @@ const materialModules = [
     LoginComponent,
     SignupComponent,
     NavbarComponent,
-    IngredientSearchComponent
+    IngredientSearchComponent,
+    IngredientByCategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -64,9 +73,6 @@ const materialModules = [
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatInputModule,
-    MatAutocompleteModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
