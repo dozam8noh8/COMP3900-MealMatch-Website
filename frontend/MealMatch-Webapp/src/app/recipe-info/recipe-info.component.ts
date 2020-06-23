@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { RecipeService } from '../recipe.service';
 import {Recipe} from '../recipe';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -14,16 +15,19 @@ export class RecipeInfoComponent implements OnInit {
   recipeService: RecipeService;
   recipe: Recipe;
 
-  constructor(repServ: RecipeService) { 
+  constructor(repServ: RecipeService, private route: ActivatedRoute) { 
     this.recipeService = repServ;
   }
 
   ngOnInit(): void {
-    this.getRecipeDetails();
+    this.route.paramMap.subscribe( params => {
+      this.getRecipeDetails(Number(params.get('id')));
+    });
+    
   }
 
-  getRecipeDetails() {
-    this.recipeService.getRecipeDetails(1)
+  getRecipeDetails(repId: number) {
+    this.recipeService.getRecipeDetails(repId)
     .subscribe( (data: Recipe) => { this.recipe = data }
     );
   }
