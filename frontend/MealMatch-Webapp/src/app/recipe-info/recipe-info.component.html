@@ -1,0 +1,5 @@
+<h1>{{recipe.title}}</h1>
+<div *ngFor="let ingredient of recipe.extendedIngredients">
+    {{ingredient.name}}
+</div>
+{{recipe.instructions}}

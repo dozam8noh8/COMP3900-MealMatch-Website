@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
               <br>
               <br>
               <app-ingredient-by-category></app-ingredient-by-category>
+              Just putting recipe-info page here first because I haven't looked into routing: <app-recipe-info></app-recipe-info>
             `
 })
 export class HomePageComponent implements OnInit {

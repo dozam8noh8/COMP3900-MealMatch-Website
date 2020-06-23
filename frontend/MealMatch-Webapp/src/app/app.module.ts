@@ -32,6 +32,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { from } from 'rxjs';
+import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
 
 
 const materialModules = [
@@ -62,7 +63,8 @@ const materialModules = [
     SignupComponent,
     NavbarComponent,
     IngredientSearchComponent,
-    IngredientByCategoryComponent
+    IngredientByCategoryComponent,
+    RecipeInfoComponent
   ],
   imports: [
     BrowserModule,
