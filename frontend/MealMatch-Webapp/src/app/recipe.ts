@@ -8,4 +8,5 @@ export interface Recipe {
     // owner: User;
     extendedIngredients: Ingredient[];
     instructions: string;
+    image: string;
 }
