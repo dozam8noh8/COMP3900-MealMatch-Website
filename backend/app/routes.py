@@ -6,6 +6,7 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import Ingredient, User
 from app import auth, app, db
+from app.seed import seed_db
 
 
 ###############################################################
@@ -65,7 +66,7 @@ def get_resource():
 
 @app.route('/api/db_seed')
 def db_seed():
-    db.create_all()
+    seed_db()
     return 'DB has been reset'
 
 @app.after_request
