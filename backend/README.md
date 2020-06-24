@@ -67,3 +67,15 @@ Use Postman to send requests. Use BASIC Authentication with username and passwor
 Once the token expires it cannot be used anymore and the client needs to request a new one. Note that in this last example the password is arbitrarily set to `x`, since the password isn't used for token authentication.
 
 An interesting side effect of this implementation is that it is possible to use an unexpired token as authentication to request a new token that extends the expiration time. This effectively allows the client to change from one token to the next and never need to send username and password after the initial token was obtained.
+
+Database Tutorial
+-----------------
+
+    category = Category(name='Pastry')
+    ingredient = Ingredient(name='Puff Pastry')
+    ingredient.categories.append(category)
+    mealtype = Mealtype(name='Hello')
+    user = User(id=1, username='Hello',password_hash='Hello')
+    recipe = Recipe(name='recipename', user=user, image='hello', instruction='stuck in the toaster')
+    recipe.mealtypes.append(mealtype)
+    recipe.ingredients.append(ingredient)
