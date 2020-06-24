@@ -6,6 +6,8 @@ from app.models import Ingredient, User, Ingredient, Category, Recipe, Mealtype
 
 def seed_db():
     db.create_all()
+    db.drop_all()
+    db.create_all()
 
     # Load json
     input_file=open('data_seed/ingredients.json', 'r')
