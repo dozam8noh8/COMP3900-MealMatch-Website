@@ -11,8 +11,11 @@ import { Router } from '@angular/router';
               <br>
               <br>
               <app-ingredient-by-category></app-ingredient-by-category>
+              <br>
               <form [formGroup]="ingredientSearchForm" (ngSubmit)="submitIngredients()">
-                <button type="submit" >Search for recipes</button>              
+                <div style="text-align: center;">
+                  <button mat-raised-button type="submit" color="primary" sytle="margin: 0 auto;">Search for recipes</button>  
+                </div>      
               </form>
             `
 })
