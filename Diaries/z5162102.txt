@@ -1,2 +1,5 @@
 Week 1
 We formed the group and created the Jira, GitHub, FB messenger and google docs groups. I familiarised myself with the specs and the example mealmatch (supercook.com). Thereafter, I then attended a group meeting and was able to begin contributing by drafting out the epic stories with its corresponding user stories. We also chose a tech stack that we would likely use (Angular, SQLite, Flask).
+
+Week 2
+I worked on the user stories which involved splitting, adding and refinding them. In particular, I had wrote the acceptance criterias such that they were quite detailed. This would involve both frontend and backend details. As such, I had to draw upon the storyboards as that had predominantly described the UI/UX experience.

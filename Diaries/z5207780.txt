@@ -36,3 +36,25 @@ working with the Angular CLI to generate the shell for the frontend.
 On Wednesday I added routes for login and signup and pushed up the shell for the frontend
 so that the group could get some ideas on how things work. Currently planning to
 give the group a mini demo for thursday to get them started.
+
+On thursday's tutorial we took the opportunity to ask Eugene (Xin) our mentor some questions
+about formatting of user stories and how specific we have to be with what we declare in our sprints.
+After that we worked on finalising everything in the proposal and moving it to a new
+document. We also added our final sprint plan to the document. I read over the whole proposal
+to make sure it met the marking criteria. At the end of the tutorial, I also gave the team a small
+demo on the angular front end I had set up, and some easy but useful things they can do with it.
+
+Over the weekend I proofread the proposal a few more times, and decided to revamp the background
+a little bit to make it more like a marketing pitch. Unfortunately, I injected some spelling errors
+that I luckily picked up on Saturday. I also designed a draft UI for the login and signup user stories.
+It was my first time using an external library for components so it took a bit of getting used to but
+I think the outcome was not bad and the team seemed to like the look.
+
+On Sunday morning I submitted the proposal after a few touchups and approval from everyone. 
+I'm glad its in because it's a bit of a weight off my chest! The plan for next week is
+to try to hook up the frontend login logic to the back end. I've never done anything like this
+before so it should be a great learning experience. So far the team is doing a GREAT job.
+Everyone is working hard and all we need to work on is our communication a little bit.
+
+
+==================Week 4==============

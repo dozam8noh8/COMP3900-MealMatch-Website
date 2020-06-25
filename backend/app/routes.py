@@ -4,8 +4,9 @@ from flask import abort, request, jsonify, g, url_for
 from flask_httpauth import HTTPBasicAuth
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import User
-from app import auth, app
+from app.models import Ingredient, User
+from app import auth, app, db
+from app.seed import seed_db
 
 
 ###############################################################
@@ -37,16 +38,18 @@ def new_user():
     user.hash_password(password)
     db.session.add(user)
     db.session.commit()
-    return (jsonify({'username': user.username}), 201,
-            {'Location': url_for('get_user', id=user.id, _external=True)})
+    return (jsonify({'username': user.username}), 201)
 
 
-# @app.route('/api/users/<int:id>')
-# def get_user(id):
-#     user = User.query.get(id)
-#     if not user:
-#         abort(400)
-#     return jsonify({'username': user.username})
+@app.route('/api/users/<int:id>')
+@auth.login_required
+def get_user(id):
+    if current_user.id != id:
+        return 'Unauthorized Access', 401
+    user = User.query.get(id)
+    if not user:
+        abort(400)
+    return jsonify({'username': user.username})
 
 # Get Auth Token
 @app.route('/api/token')
@@ -61,6 +64,23 @@ def get_auth_token():
 def get_resource():
     return jsonify({'data': 'Hello, %s!' % g.user.username})
 
+@app.route('/api/db_seed')
+def db_seed():
+    seed_db()
+    return 'DB has been reset'
+
+@app.after_request
+def after_request(response):
+    ''' This method adds the following headers after processing each request
+        it's necessary (until I find a work around) so that the responses
+        back to angular don't get blocked by the browser CORS check. '''
+
+    #print(response.headers)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    #print(response.headers)
+    return response
 
 if __name__ == '__main__':
     # if not os.path.exists('db.sqlite'):
