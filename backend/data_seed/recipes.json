@@ -23,7 +23,7 @@
             "mealtype": "Miscellaneous",
             "ingredients": [
                 {
-                    "name": "Boiling water",
+                    "name": "Boiling Water",
                     "amount": 100,
                     "quantity": "ml"
                 },

@@ -71,6 +71,10 @@ class Category(db.Model):
     name = db.Column(db.String(256), index=True)
     ingredients = db.relationship('Ingredient', secondary=ingredientCategories, backref=db.backref('categories', lazy='dynamic'))
 
+    def json_dump(recipe):
+        schema = RecipeSchema(many=True)
+        return schema.dump(recipe)
+
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
@@ -109,19 +113,25 @@ class Mealtype(db.Model):
 class CategorySchema(ma.ModelSchema):
     class Meta:
         model = Category
+        include_relationships = True
 
 class IngredientSchema(ma.ModelSchema):
     class Meta:
-        model = Ingredient
+        fields = ("id", "name")
 
 class UserSchema(ma.ModelSchema):
     class Meta:
         model = User
+        include_relationships = True
 
 class MealtypeSchema(ma.ModelSchema):
     class Meta:
-        model = Mealtype
+        fields = ("id", "name")
 
 class RecipeSchema(ma.ModelSchema):
+    mealtypes = ma.Nested(MealtypeSchema, many=True)
+    ingredients = ma.Nested(IngredientSchema, many=True)
+
     class Meta:
         model = Recipe 
+        include_relationships = True
