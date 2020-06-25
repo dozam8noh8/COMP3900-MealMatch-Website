@@ -109,7 +109,7 @@ def seed_db():
 
     for item in json_decode['meals']:
         # Make new recipe
-        recipe = Recipe(name=item['strMeal'],instruction=item['strInstructions'])
+        recipe = Recipe(name=item['strMeal'],instruction=item['strInstructions'], image=item['strMealThumb'])
         db.session.add(recipe)
         db.session.commit()
 
