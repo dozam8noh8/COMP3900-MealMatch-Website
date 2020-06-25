@@ -62,6 +62,11 @@ API Documentation
     Return a protected resource.<br>
     This request is only just for an example to look at
 
+- GET **/api/db_seed**
+
+    Seed your local db with the required data.<br>
+    All previous data is REMOVED and replaced with standard data and a user (username: 'admin', password: 'admin')
+
 Use Postman to send requests. Use BASIC Authentication with username and password to login and return a token
 
 Once the token expires it cannot be used anymore and the client needs to request a new one. Note that in this last example the password is arbitrarily set to `x`, since the password isn't used for token authentication.

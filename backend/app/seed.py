@@ -70,7 +70,7 @@ def seed_db():
     input_file=open('data_seed/recipes.json', 'r')
     json_decode=json.load(input_file)
 
-    user = User(username='admin', password_hash='pbkdf2:sha256:150000$V5gA5nPN$3377ab719495472c4b4f6efcdb0066d7591c29f3f5721dcb469ddd5c54fb9232')
+    user = User(username='admin', password_hash='pbkdf2:sha256:150000$V5gA5nPN$3377ab719495472c4b4f6efcdb0066d7591c29f3f5721dcb469ddd5c54fb9232', email='admin@admin.com')
     db.session.add(user)
     db.session.commit()
 

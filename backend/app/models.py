@@ -2,6 +2,7 @@ from app import db, jwt, time, app, generate_password_hash, check_password_hash
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(70), index=True)
     username = db.Column(db.String(32), index=True)
     password_hash = db.Column(db.String(64))
     recipes = db.relationship('Recipe', backref='user', lazy='dynamic')
