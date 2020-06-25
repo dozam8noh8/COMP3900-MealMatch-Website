@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject} from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root' // means this provider is available all throughout the app.
                     // An alternative to putting auth service in the providers in app.module.
@@ -12,7 +13,7 @@ export class AuthService {
   private BASE_URL = 'http://localhost:5000/api'; // Our api calls will go to this URL
   private headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
   private isLoggedInSubject: ReplaySubject<any> = new ReplaySubject(1); // This replays the last emitted thing to subscribers which means
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     if (localStorage.getItem('currentUser')) {
       this.isLoggedInSubject.next(true)
     }
@@ -57,5 +58,6 @@ export class AuthService {
   logout() {
     localStorage.clear();
     this.isLoggedInSubject.next(false);
+    this.router.navigate(['/login'])
   }
 }

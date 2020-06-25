@@ -1,0 +1,4 @@
+- Add spinners for waiting on requests.
+- More feedback for users when waiting in general.
+- Fix colours
+- Return to url that you were on when you modal popup login.
