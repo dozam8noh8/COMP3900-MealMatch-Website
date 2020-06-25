@@ -1,6 +1,7 @@
 import json
 from app import db
 from app.models import Ingredient, User, Ingredient, Category, Recipe, Mealtype
+import random
 
 ########################################### SETUP INGREDIENTS AND CATEGORIES #############################################
 
@@ -32,14 +33,22 @@ def seed_db():
     # Seed the ingredients
     ingredients = []
 
+    # for item in json_decode['ingredients']:
+    #     if (item['strType'] != None):
+    #         ingredients.append(item['strIngredient'])
+    #         category = Category.query.filter_by(name=item['strType']).first()
+    #         ingredient = Ingredient(name=item['strIngredient'])
+    #         ingredient.categories.append(category)
+    #         db.session.add(ingredient)
+    #         db.session.commit()
     for item in json_decode['ingredients']:
-        if (item['strType'] != None):
-            # ingredients.append({item['strIngredient']: item['strType']})
-            category = Category.query.filter_by(name=item['strType']).first()
-            ingredient = Ingredient(name=item['strIngredient'])
-            ingredient.categories.append(category)
-            db.session.add(ingredient)
-            db.session.commit()
+        ingredients.append(item['strIngredient'])
+        cat = random.sample(categories, 1)
+        category = Category.query.filter_by(name=cat[0]).first()
+        ingredient = Ingredient(name=item['strIngredient'])
+        ingredient.categories.append(category)
+        db.session.add(ingredient)
+        db.session.commit()
 
     # print('ingredients: ', ingredients)
 
@@ -93,3 +102,26 @@ def seed_db():
         db.session.commit()
 
     ########################################################################################################################
+
+     # Load json
+    input_file=open('data_seed/recipes2.json', 'r')
+    json_decode=json.load(input_file)
+
+    for item in json_decode['meals']:
+        # Make new recipe
+        recipe = Recipe(name=item['strMeal'],instruction=item['strInstructions'])
+        db.session.add(recipe)
+        db.session.commit()
+
+        mealtype = Mealtype.query.filter_by(name=item['strCategory']).first()
+        recipe.mealtypes.append(mealtype)
+        db.session.commit()
+
+        ingredients = [random.choice(ingredients), random.choice(ingredients)]
+
+        for ingredient in ingredients:
+            db_ingredient = Ingredient.query.filter_by(name=ingredient['name']).first()
+            if db_ingredient:
+                recipe.ingredients.append(db_ingredient)
+        user.recipes.append(recipe)
+        db.session.commit()
