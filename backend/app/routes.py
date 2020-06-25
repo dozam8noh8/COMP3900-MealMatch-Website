@@ -59,14 +59,12 @@ def get_auth_token():
     return jsonify({'token': token.decode('ascii'), 'duration': 12000})
 
 @app.route('/api/recipe_search', methods=['POST'])
-@auth.login_required
 def recipe_search():
     ingredients = request.json.get('ingredients')
     recipes = Recipe.get_recipes(ingredients)
     return jsonify(Recipe.json_dump(recipes))
 
 @app.route('/api/get_category', methods=['GET'])
-@auth.login_required
 def get_category():
     categories = Category.query.all()
     return jsonify(Category.json_dump(categories))
