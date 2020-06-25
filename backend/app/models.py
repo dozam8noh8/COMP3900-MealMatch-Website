@@ -1,4 +1,4 @@
-from app import db, jwt, time, app, generate_password_hash, check_password_hash
+from app import db, jwt, time, app, generate_password_hash, check_password_hash, ma
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -49,10 +49,31 @@ class Ingredient(db.Model):
     name = db.Column(db.String(256), index=True)
     recipes = db.relationship('Recipe', secondary=recipeIngredients, backref=db.backref('ingredients', lazy='dynamic'))
 
+    def get(name):
+        if name == 'Noodle':
+            print("PROBLEM")
+        ingredient = Ingredient.query.filter_by(name=name).first()
+        return ingredient
+
+    def get_all(names):
+        ingredients = []
+        for name in names:
+            ingredient = Ingredient.get(name)
+            if ingredient != None:
+                print('INSIDE ')
+                print(ingredient)
+                ingredients.append(ingredient)
+        print(ingredients)
+        return ingredients
+
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
     ingredients = db.relationship('Ingredient', secondary=ingredientCategories, backref=db.backref('categories', lazy='dynamic'))
+
+    def json_dump(recipe):
+        schema = RecipeSchema(many=True)
+        return schema.dump(recipe)
 
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -61,7 +82,56 @@ class Recipe(db.Model):
     image = db.Column(db.String(100))
     instruction = db.Column(db.String(2000))
 
+    def get_recipes(ingredients):
+        recipes = Recipe.query.join(Recipe.ingredients).filter(Ingredient.name.in_(ingredients)).all()
+        # Need to filter the recipes based on their availability not by numbers
+        filtered = []
+        for recipe in recipes:
+            print(recipe.ingredients.all())
+            res = True
+            ingredients = Ingredient.get_all(ingredients)
+            for ingr in recipe.ingredients.all():
+                if ingr not in ingredients:
+                    res = False
+
+            if res:
+                filtered.append(recipe)
+            
+        return filtered
+
+    def json_dump(recipe):
+        schema = RecipeSchema(many=True)
+        return schema.dump(recipe)
+        
+
 class Mealtype(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
     recipes = db.relationship('Recipe', secondary=recipeMealTypes, backref=db.backref('mealtypes', lazy='dynamic'))
+
+# Marshmallow serialiase the schema
+class CategorySchema(ma.ModelSchema):
+    class Meta:
+        model = Category
+        include_relationships = True
+
+class IngredientSchema(ma.ModelSchema):
+    class Meta:
+        fields = ("id", "name")
+
+class UserSchema(ma.ModelSchema):
+    class Meta:
+        model = User
+        include_relationships = True
+
+class MealtypeSchema(ma.ModelSchema):
+    class Meta:
+        fields = ("id", "name")
+
+class RecipeSchema(ma.ModelSchema):
+    mealtypes = ma.Nested(MealtypeSchema, many=True)
+    ingredients = ma.Nested(IngredientSchema, many=True)
+
+    class Meta:
+        model = Recipe 
+        include_relationships = True
