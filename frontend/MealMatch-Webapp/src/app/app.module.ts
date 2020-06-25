@@ -61,7 +61,6 @@ const materialModules = [
     BrowserAnimationsModule,
     materialModules,
     ReactiveFormsModule,
-
   ],
   providers: [],
   bootstrap: [AppComponent]
