@@ -4,7 +4,7 @@ from flask import abort, request, jsonify, g, url_for
 from flask_httpauth import HTTPBasicAuth
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import Ingredient, User
+from app.models import Ingredient, User, Recipe, Category
 from app import auth, app, db
 from app.seed import seed_db
 
@@ -63,6 +63,15 @@ def get_auth_token():
 @auth.login_required
 def get_resource():
     return jsonify({'data': 'Hello, %s!' % g.user.username})
+
+@app.route('/api/recipe_search', methods=['POST'])
+@auth.login_required
+def recipe_search():
+    ingredients = request.json.get('ingredients')
+    recipes = Recipe.get_recipes(ingredients)
+    return jsonify(Recipe.json_dump(recipes))
+    # return 'hello'
+
 
 @app.route('/api/db_seed')
 def db_seed():
