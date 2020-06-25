@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -40,8 +40,10 @@ export class IngredientSearchComponent implements OnInit {
   }
 
   private _filter(value: string): Ingredient[] {
-    const filterValue = value.toString().toLowerCase();
-    return filterValue==='' ? [] : this.ingredientService.getAllIngredients().filter(item => item.name.startsWith(filterValue) && !item.onList);
+    const filterValue = value.toString()//.toLowerCase();
+    return filterValue==='' ? [] : this.ingredientService.getAllIngredients().filter(item => {
+          return item.name.startsWith(filterValue) && !item.onList
+      });
   }
 
 }

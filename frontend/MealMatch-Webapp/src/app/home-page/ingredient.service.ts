@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import {Ingredient} from './ingredient';
 import { Category } from './category';
+import { HttpClient } from '@angular/common/http';
 
 var ALL_INGREDIENTS: Ingredient[] = [
   { id: 1, name: 'beef', onList: true},
@@ -16,28 +17,37 @@ var ALL_INGREDIENTS: Ingredient[] = [
   { id: 10, name: 'banana', onList: false },   
 ];
 
-const ALL_CATEGORIES: Category[] = [
-  { id: 1, name: 'baking', items: [ALL_INGREDIENTS[2]] },
-  { id: 2, name: 'produce', items: [ALL_INGREDIENTS[7], ALL_INGREDIENTS[8], ALL_INGREDIENTS[9]] },
-  { id: 3, name: 'dairy', items: [ALL_INGREDIENTS[1], ALL_INGREDIENTS[3], ALL_INGREDIENTS[5], ALL_INGREDIENTS[6]] },
-  { id: 4, name: 'meat', items: [ALL_INGREDIENTS[0]] },
-];
-
 @Injectable({
   providedIn: 'root'
 })
 export class IngredientService {
 
+  allIngredients: Ingredient[] = [];
+  allCategories: Category[];
+  // addedIngredients: Ingredient[] = [];
+
+  constructor(private http: HttpClient) { 
+    this.http.get("http://localhost:5000/api/get_category")
+    .subscribe( (data: Category[]) => {
+        this.allCategories = data;
+        this.allCategories.forEach( catergory => {
+          catergory.ingredients = catergory.ingredients.map( item => {
+            item = { ...item, onList: false };
+            this.allIngredients.push(item);
+            return item;
+          });
+        });
+    });
+  }
+  
   ngOnInit() { }
 
-  constructor() { }
-
-  getAllIngredients(): Ingredient[] {
-    return ALL_INGREDIENTS;
+  getAllIngredients() {
+    return this.allIngredients;
   }
 
   getAddedIngredients(): Ingredient[] {
-    return ALL_INGREDIENTS.filter(item => item.onList===true);
+    return this.allIngredients.filter(item => item.onList===true);
   }
 
   addToList(newIngredient: Ingredient) {
@@ -49,7 +59,7 @@ export class IngredientService {
   }
 
   getAllCategories(): Category[] {
-    return ALL_CATEGORIES;
+    return this.allCategories;
   }
 
 }

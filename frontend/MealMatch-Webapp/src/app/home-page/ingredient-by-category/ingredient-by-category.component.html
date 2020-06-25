@@ -3,7 +3,7 @@
     <mat-tab-group >
         <div *ngFor="let category of ingredientService.getAllCategories()">
                 <mat-tab label="{{category.name}}"> 
-                    <div *ngFor="let ingredient of category.items">
+                    <div *ngFor="let ingredient of category.ingredients">
                         <mat-checkbox 
                         [checked]="ingredient.onList"
                         (change)="ingredient.onList = !ingredient.onList">
