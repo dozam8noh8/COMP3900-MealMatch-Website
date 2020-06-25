@@ -25,7 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrivateResourceComponent } from './private-resource/private-resource.component';
-
+import { PopupComponent } from './popup/popup.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const materialModules = [
   MatToolbarModule,
@@ -40,7 +41,8 @@ const materialModules = [
   MatCardModule,
   MatSlideToggleModule,
   MatSelectModule,
-  MatOptionModule
+  MatOptionModule,
+  MatDialogModule
 ]
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ const materialModules = [
     SignupComponent,
     NavbarComponent,
     PrivateResourceComponent,
+    PopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ const materialModules = [
     BrowserAnimationsModule,
     materialModules,
     ReactiveFormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

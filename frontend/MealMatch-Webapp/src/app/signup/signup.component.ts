@@ -6,8 +6,8 @@ import { AuthService } from '../services/auth.service';
   selector: 'app-signup',
   styleUrls: ['signup.component.scss'],
   template: `
-    <div class="signup">
    <mat-card>
+     <div>
    <mat-card-title> Register Here </mat-card-title>
 
      <mat-card-content>
@@ -50,12 +50,13 @@ import { AuthService } from '../services/auth.service';
           Please confirm password.
       </mat-error>
     </mat-form-field>
+    <p>
     <button mat-raised-button color="primary">Sign Up</button>
 
 </form>
 </mat-card-content>
-</mat-card>
 </div>
+</mat-card>
 <h1 *ngIf=showSuccessBanner> CONGRATULATIONS SIGN UP SUCCESS </h1>
 
 
@@ -88,6 +89,7 @@ export class SignupComponent implements OnInit {
           const password = this.form.get('password').value;
           await this.authService.signup({username,password}); // send in an object with username and password to auth service
           this.showSuccessBanner = true;
+          console.log("Showing success banner!", this.showSuccessBanner)
         } catch (err) {
           console.log("An error occurred", err);
         }

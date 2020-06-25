@@ -2,36 +2,35 @@
 mat-card-content {
     display: flex;
     justify-content: center;
-        align-content: space-between;
-    height: 100%;
+    align-items: center;
+
+
+    //align-content: space-between;
+
 
 }
-.signup {
-    display: flex;
-    justify-content: center;
-        align-items: center;
-            width: 80%;
-            height: 80%;
-    text-align: center;
-}
-
 mat-card {
-    width: 80%;
-    height: 80%;
+    display:flex;
     margin: 2em auto;
     text-align: center;
     justify-content: center;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+
 
   }
 
   mat-form-field {
     //If you use display block, you can make the width bigger
     //If you use display flex, you cant.
-    display: block;
     justify-content: center;
     font-size: x-large;
-    width: 600px;
-    //text-align: center; // this aligns text to center, looks weeird imo
+    width: 35vw;
 
+  }
+  mat-card-title {
+      font-size: xx-large;
+      padding-bottom: 1vh;
   }
 
