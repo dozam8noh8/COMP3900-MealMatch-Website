@@ -21,4 +21,17 @@ after going through a bunch of online tutorials. This should be good enough to s
 the whole API as long as we have our modals and endpoints working.
 
 ==============Week 3================
+Pretty much done setting up the backend. We worked on completing the proposal instead
+since that's due this week. We joined in on a session during and after the tute to work
+together and get it done. We split up in groups, one to work on the user stories and me,
+Owen and Manni worked on the story boards, and the other stuff. We were done early so we
+collaborated together to finish the google doc. Once done, we reviewed together and submitted
 
+Spent the remaining of the week working on designing the backend. We designed the ER and schema
+to build the models for the backend. We also found out TheMealDb as an api to populate our backend
+
+==============Week 4================
+I've started working on the backend. I've scrapped themealdb to find out the categories.
+I've pretty much made the schema in the flask, and made a script to populate the db.
+I've also setup the endpoints for searching meals, find all the ingredients and categories.
+My next task is to work on recommendations and setup endpoints to add recipes.
