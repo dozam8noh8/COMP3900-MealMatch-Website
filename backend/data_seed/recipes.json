@@ -33,6 +33,23 @@
                     "quantity": "packet"
                 }
             ]
+        },
+        {
+            "name": "New Recipe",
+            "instruction": "Boil noodles with water",
+            "mealtype": "Miscellaneous",
+            "ingredients": [
+                {
+                    "name": "Bacon",
+                    "amount": 100,
+                    "quantity": "ml"
+                },
+                {
+                    "name": "Asparagus",
+                    "amount": 1,
+                    "quantity": "packet"
+                }
+            ]
         }
     ]
 }
