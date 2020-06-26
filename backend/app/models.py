@@ -1,4 +1,5 @@
 from app import db, jwt, time, app, generate_password_hash, check_password_hash, ma
+import app.constants as constants
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -50,8 +51,6 @@ class Ingredient(db.Model):
     recipes = db.relationship('Recipe', secondary=recipeIngredients, backref=db.backref('ingredients', lazy='dynamic'))
 
     def get(name):
-        if name == 'Noodle':
-            print("PROBLEM")
         ingredient = Ingredient.query.filter_by(name=name).first()
         return ingredient
 
@@ -60,11 +59,28 @@ class Ingredient(db.Model):
         for name in names:
             ingredient = Ingredient.get(name)
             if ingredient != None:
-                print('INSIDE ')
-                print(ingredient)
                 ingredients.append(ingredient)
-        print(ingredients)
         return ingredients
+
+    def find_pair(name):
+        key_pairs = constants.COMMON_PAIRS
+        final_pairs = []
+        for pair in key_pairs:
+            if name in pair:
+                for toAdd in pair:
+                    final_pairs.append(toAdd)
+
+        return final_pairs
+
+    def find_recommendations(name):
+        final_pairs = Ingredient.find_pair(name)
+        for key in final_pairs:
+            new_pair = Ingredient.find_pair(key)
+            final_pairs = final_pairs + new_pair
+
+        final_pairs = set(final_pairs)
+        final_pairs.remove(name)
+        return list(final_pairs)
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -83,16 +99,21 @@ class Recipe(db.Model):
     instruction = db.Column(db.String(2000))
 
     def get_recipes(ingredients):
-        recipes = Recipe.query.join(Recipe.ingredients).filter(Ingredient.name.in_(ingredients)).all()
+        # recipes = Recipe.query.join(Recipe.ingredients).filter(Ingredient.name.in_(ingredients)).all()
+        recipes = Recipe.query.all()
+        ingredients = Ingredient.get_all(ingredients)
+
         # Need to filter the recipes based on their availability not by numbers
         filtered = []
         for recipe in recipes:
-            print(recipe.ingredients.all())
             res = True
-            ingredients = Ingredient.get_all(ingredients)
-            for ingr in recipe.ingredients.all():
-                if ingr not in ingredients:
+            for ingredient in recipe.ingredients.all():
+                if ingredient not in ingredients:
                     res = False
+            # ingredients = Ingredient.get_all(ingredients)
+            # for ingr in recipe.ingredients.all():
+            #     if ingr not in ingredients:
+            #         res = False
 
             if res:
                 filtered.append(recipe)

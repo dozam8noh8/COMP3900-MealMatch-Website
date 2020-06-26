@@ -69,6 +69,11 @@ def get_category():
     categories = Category.query.all()
     return jsonify(Category.json_dump(categories))
 
+@app.route('/api/recommendations')
+def get_recommendations():
+    res = Ingredient.find_recommendations('Cheese Slices')
+    return jsonify({"Recommendations": res})
+
 
 @app.route('/api/db_seed')
 def db_seed():
