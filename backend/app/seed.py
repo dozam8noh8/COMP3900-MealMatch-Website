@@ -1,6 +1,7 @@
 import json
 from app import db
-from app.models import Ingredient, User, Ingredient, Category, Recipe, Mealtype
+from app.models import Ingredient, User, Ingredient, Category, Recipe, Mealtype, RecipeIngredients
+from sqlalchemy import func
 import random
 import datetime
 
@@ -84,50 +85,25 @@ def seed_db():
     db.session.add(user)
     db.session.commit()
 
-    for item in json_decode['meals']:
-        # Make new recipe
-        recipe = Recipe(name=item['name'],instruction=item['instruction'])
-        db.session.add(recipe)
-        db.session.commit()
-
-        mealtype = Mealtype.query.filter_by(name=item['mealtype']).first()
-        recipe.mealtypes.append(mealtype)
-        db.session.commit()
-
-        ingredients = item['ingredients']
-        for ingredient in ingredients:
-            db_ingredient = Ingredient.query.filter_by(name=ingredient['name']).first()
-            if db_ingredient:
-                recipe.ingredients.append(db_ingredient)
-        user.recipes.append(recipe)
-        db.session.commit()
-
-    ########################################################################################################################
-
-     # Load json
-    input_file=open('data_seed/recipes2.json', 'r', encoding='utf8')
-    json_decode=json.load(input_file)
-
+    MAX_INGREDIENTS = 20
     for item in json_decode['meals']:
         # Make new recipe
         recipe = Recipe(name=item['strMeal'],instruction=item['strInstructions'], image=item['strMealThumb'])
         db.session.add(recipe)
-        db.session.commit()
 
         mealtype = Mealtype.query.filter_by(name=item['strCategory']).first()
         recipe.mealtypes.append(mealtype)
-        db.session.commit()
-        # random.seed(datetime.datetime.now())
-        # ing1 = random.choice(ingredients)
-        # random.seed(datetime.datetime.now())
-        # ing2 = random.choice(ingredients)
-        # ingredients = [ing1, ing2]
 
-        ingredients = [item['strIngredient1'], item['strIngredient2']]
-
-        for ingredient in ingredients:
-            db_ingredient = Ingredient.query.filter_by(name=ingredient).first()
-            if db_ingredient:
-                recipe.ingredients.append(db_ingredient)
+        for i in range(1, MAX_INGREDIENTS + 1):
+            ingredient_name = item['strIngredient' + str(i)]
+            measure = item['strMeasure' + str(i)]
+            if ingredient_name and measure:
+                ingredient = Ingredient.query.filter(func.lower(Ingredient.name) == func.lower(ingredient_name)).first()
+                if ingredient:
+                    recipe_ingredient = RecipeIngredients(quantity=measure)
+                    recipe_ingredient.ingredients = ingredient
+                    recipe.ingredients.append(recipe_ingredient)
+            else:
+                break
         user.recipes.append(recipe)
         db.session.commit()
