@@ -12,7 +12,7 @@ def seed_db():
     db.create_all()
 
     # Load json
-    input_file=open('data_seed/ingredients.json', 'r')
+    input_file=open('data_seed/ingredients.json', 'r', encoding='utf8')
     json_decode=json.load(input_file)
 
     # Find all the categories
@@ -58,7 +58,7 @@ def seed_db():
 
     ########################################### SETUP MEALTYPES ############################################################
     # Load json
-    input_file=open('data_seed/mealtypes.json', 'r')
+    input_file=open('data_seed/mealtypes.json', 'r', encoding='utf8')
     json_decode=json.load(input_file)
 
     # Find all the categories
@@ -77,7 +77,7 @@ def seed_db():
     ########################################### SETUP RECIPES ##############################################################
 
     # Load json
-    input_file=open('data_seed/recipes.json', 'r')
+    input_file=open('data_seed/recipes.json', 'r', encoding='utf8')
     json_decode=json.load(input_file)
 
     user = User(username='admin', password_hash='pbkdf2:sha256:150000$V5gA5nPN$3377ab719495472c4b4f6efcdb0066d7591c29f3f5721dcb469ddd5c54fb9232', email='admin@admin.com')
@@ -105,7 +105,7 @@ def seed_db():
     ########################################################################################################################
 
      # Load json
-    input_file=open('data_seed/recipes2.json', 'r')
+    input_file=open('data_seed/recipes2.json', 'r', encoding='utf8')
     json_decode=json.load(input_file)
 
     for item in json_decode['meals']:
