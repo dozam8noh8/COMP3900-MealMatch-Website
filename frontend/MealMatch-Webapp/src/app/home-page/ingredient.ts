@@ -6,4 +6,9 @@ export interface Ingredient {
     name: String;
     onList: Boolean;
 }
+
+export interface RegularIngredient {
+    id: number;
+    name: String;
+}
   

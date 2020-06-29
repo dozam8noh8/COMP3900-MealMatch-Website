@@ -31,6 +31,7 @@ import { IngredientSearchComponent } from './home-page/ingredient-search/ingredi
 import { IngredientByCategoryComponent } from './home-page/ingredient-by-category/ingredient-by-category.component';
 
 import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 
 const materialModules = [
@@ -62,7 +63,8 @@ const materialModules = [
     NavbarComponent,
     IngredientSearchComponent,
     IngredientByCategoryComponent,
-    RecipeInfoComponent
+    RecipeInfoComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,

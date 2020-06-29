@@ -1,0 +1,20 @@
+<p>search-results works!</p>
+
+<div class="columned" style="margin-left: 2%; margin-right: 2%;">
+    <div *ngFor="let recipe of resultingRecipes"> 
+        <a routerLink="/recipe/{{recipe.id}}" style="text-decoration: none;">
+            <mat-card class="recipe">
+                <div *ngIf="recipe.image">
+                    <img src="{{recipe.image}}" style="width: 100%;">
+                </div>
+                
+                <b>{{recipe.name}}</b> <br>
+                <i>Uses:
+                    <span *ngFor="let ingredient of recipe.ingredients">
+                        {{ingredient.name}}, <!-- Should not have comma for last ingredient -->
+                    </span>
+                </i>
+            </mat-card>
+        </a> 
+    </div>    
+</div>
