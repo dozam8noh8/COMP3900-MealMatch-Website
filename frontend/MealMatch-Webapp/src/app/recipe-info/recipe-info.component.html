@@ -1,0 +1,27 @@
+<div style="padding: 10px 0px 0px 10px;"> 
+    <h1>{{recipe.name}}</h1>
+</div>
+
+<mat-card id="image-ingredients">
+    <div>
+        <img src="{{recipe.image}}" style="max-width: 100%;">     
+    </div>
+        
+    <div id="ingredients">
+        <h2>What you need: </h2>
+        <ul style="display: inline-block;">
+            <div *ngFor="let ingredient of recipe.ingredients">
+                <li>{{ingredient.name}}</li>
+            </div>           
+        </ul> 
+    </div>
+</mat-card>
+
+<br>
+<br>
+
+<mat-card id="instructions">
+    <h2>Steps</h2>
+    <!-- <p [innerHTML]="recipe.instructions"></p> -->
+    {{recipe.instruction}}
+</mat-card>

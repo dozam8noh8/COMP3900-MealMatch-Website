@@ -8,6 +8,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import {  MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
@@ -17,13 +18,21 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule} from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-
 import { ReactiveFormsModule } from '@angular/forms';
+
+import { IngredientSearchComponent } from './home-page/ingredient-search/ingredient-search.component';
+import { IngredientByCategoryComponent } from './home-page/ingredient-by-category/ingredient-by-category.component';
+
+import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
+
 import { PrivateResourceComponent } from './private-resource/private-resource.component';
 import { PopupComponent } from './popup/popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -42,6 +51,11 @@ const materialModules = [
   MatSlideToggleModule,
   MatSelectModule,
   MatOptionModule,
+  MatCardModule,
+  MatInputModule,
+  MatAutocompleteModule,
+  MatCheckboxModule,
+  MatTabsModule,
   MatDialogModule
 ]
 @NgModule({
@@ -51,6 +65,10 @@ const materialModules = [
     LoginComponent,
     SignupComponent,
     NavbarComponent,
+    IngredientSearchComponent,
+    IngredientByCategoryComponent,
+    RecipeInfoComponent,
+    SearchResultsComponent,
     PrivateResourceComponent,
     PopupComponent,
   ],
@@ -60,6 +78,8 @@ const materialModules = [
     HttpClientModule,
     BrowserAnimationsModule,
     materialModules,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
   ],
   providers: [],
