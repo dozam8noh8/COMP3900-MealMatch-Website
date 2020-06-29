@@ -86,4 +86,4 @@ Database Tutorial
     # link recipe and ingredient with new attribute of quantity
     recipe_ingredient = RecipeIngredients(quantity='50g')
     recipe_ingredient.ingredients = ingredient
-    recipe.ingredients.append(recipe_ingredientgredient)
+    recipe.ingredients.append(recipe_ingredient)
