@@ -98,6 +98,11 @@ class Recipe(db.Model):
     image = db.Column(db.String(100))
     instruction = db.Column(db.String(2000))
 
+    def get_recipe_by_id(id):
+        recipe = Recipe.query.get(id)
+        schema = RecipeSchema(many=False)
+        return schema.dump(recipe)
+
     def get_recipes(ingredients):
         # recipes = Recipe.query.join(Recipe.ingredients).filter(Ingredient.name.in_(ingredients)).all()
         recipes = Recipe.query.all()
