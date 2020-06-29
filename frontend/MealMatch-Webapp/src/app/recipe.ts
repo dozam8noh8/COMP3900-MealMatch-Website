@@ -1,12 +1,16 @@
-import { Ingredient } from './home-page/ingredient';
+import { Ingredient, RegularIngredient } from './home-page/ingredient';
 
 
 
 export interface Recipe {
     id: number;
-    title: string;
+    name: string;
     // owner: User;
-    extendedIngredients: Ingredient[];
+    ingredients: RegularIngredient[];
     instructions: string;
     image: string;
+
+    // Spoonacular attributes
+    title: string;
+    extendedIngredients: Ingredient[];
 }
