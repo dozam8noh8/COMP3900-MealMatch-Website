@@ -92,6 +92,11 @@ class Recipe(db.Model):
     instruction = db.Column(db.String(2000))
     ingredients = db.relationship('RecipeIngredients', backref=db.backref('recipes'))
 
+    def get_recipe_by_id(id):
+        recipe = Recipe.query.get(id)
+        schema = RecipeSchema(many=False)
+        return schema.dump(recipe)
+
     def get_recipes(ingredients):
         # recipes = Recipe.query.join(Recipe.ingredients).filter(Ingredient.name.in_(ingredients)).all()
         recipes = Recipe.query.all()
