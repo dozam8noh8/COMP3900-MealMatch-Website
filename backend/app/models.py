@@ -28,13 +28,6 @@ class User(db.Model):
             return
         return User.query.get(data['id'])
 
-recipeIngredients = db.Table('recipe_ingredients',
-    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id')),
-    db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredient.id')),
-    db.Column('amount', db.Integer),
-    db.Column('unit', db.String)
-)
-
 ingredientCategories = db.Table('ingredient_categories',
     db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredient.id')),
     db.Column('category.id', db.Integer, db.ForeignKey('category.id'))
@@ -48,7 +41,7 @@ recipeMealTypes = db.Table('recipe_mealtypes',
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
-    recipes = db.relationship('Recipe', secondary=recipeIngredients, backref=db.backref('ingredients', lazy='dynamic'))
+    recipes = db.relationship('RecipeIngredients', backref=db.backref('ingredients'))
 
     def get(name):
         ingredient = Ingredient.query.filter_by(name=name).first()
@@ -97,6 +90,7 @@ class Recipe(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     image = db.Column(db.String(100))
     instruction = db.Column(db.String(2000))
+    ingredients = db.relationship('RecipeIngredients', backref=db.backref('recipes'))
 
     def get_recipe_by_id(id):
         recipe = Recipe.query.get(id)
@@ -129,6 +123,15 @@ class Recipe(db.Model):
         schema = RecipeSchema(many=True)
         return schema.dump(recipe)
         
+class RecipeIngredients(db.Model):
+    __tablename__ = 'recipe_ingredients'
+    id = db.Column(db.Integer, primary_key=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
+    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredient.id'))
+    quantity = db.Column(db.Text)
+
+    recipe = db.relationship('Recipe', backref=db.backref('ingredient'))
+    ingredient = db.relationship('Ingredient', backref=db.backref('recipe'))
 
 class Mealtype(db.Model):
     id = db.Column(db.Integer, primary_key=True)

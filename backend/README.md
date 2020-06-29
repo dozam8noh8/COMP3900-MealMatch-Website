@@ -83,4 +83,7 @@ Database Tutorial
     user = User(id=1, username='Hello',password_hash='Hello')
     recipe = Recipe(name='recipename', user=user, image='hello', instruction='stuck in the toaster')
     recipe.mealtypes.append(mealtype)
-    recipe.ingredients.append(ingredient)
+    # link recipe and ingredient with new attribute of quantity
+    recipe_ingredient = RecipeIngredients(quantity='50g')
+    recipe_ingredient.ingredients = ingredient
+    recipe.ingredients.append(recipe_ingredient)
