@@ -5,6 +5,8 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { PrivateResourceComponent } from './private-resource/private-resource.component';
+import { AuthGuardService } from './auth-guard.service';
 
 
 const routes: Routes = [
@@ -13,12 +15,13 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent}, // Serves Login component at /login
   {path: 'signup', component: SignupComponent},
   {path: 'recipe/:id', component: RecipeInfoComponent},
-  {path: 'search', component: SearchResultsComponent}
+  {path: 'search', component: SearchResultsComponent},
 
+  {path: 'privateResource', component: PrivateResourceComponent, canActivate: [AuthGuardService]}, // This is just to demonstrate a resource only logged in users can access.
 // This is the default "wildcard" if none of the above patterns match, we redirect to '' (home)
 // We could also put a "pageNotFound" component here if we didnt want to confuse
 // the users by redirecting here.
-  //{path: '**', redirectTo: 'home'},
+  {path: '**', redirectTo: 'home'},
 ];
 
 @NgModule({

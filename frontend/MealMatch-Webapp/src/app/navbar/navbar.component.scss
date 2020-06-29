@@ -2,10 +2,7 @@
     justify-content: space-between;
 }
 
-a {
-    padding: 1rem;
-    &.active {
-        color: green;
-        background: purple;
-    }
+.nav-button {
+    margin-right: 2rem;
+    font-size: large;
 }

@@ -6,8 +6,8 @@ import { AuthService } from '../services/auth.service';
   selector: 'app-signup',
   styleUrls: ['signup.component.scss'],
   template: `
-    <div class="signup">
    <mat-card>
+     <div>
    <mat-card-title> Register Here </mat-card-title>
 
      <mat-card-content>
@@ -35,7 +35,7 @@ import { AuthService } from '../services/auth.service';
     <p>
 
     <mat-form-field>
-      <input matInput placeholder="Password" formControlName="password" required>
+      <input matInput type="password" placeholder="Password" formControlName="password" required>
       <mat-error>
           Password cannot be blank.
 </mat-error>
@@ -45,17 +45,19 @@ import { AuthService } from '../services/auth.service';
     <p>
 
     <mat-form-field>
-      <input matInput placeholder="Confirm Password" formControlName="confirmPassword" required>
+      <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
       <mat-error>
           Please confirm password.
       </mat-error>
     </mat-form-field>
+    <p>
     <button mat-raised-button color="primary">Sign Up</button>
 
 </form>
 </mat-card-content>
-</mat-card>
 </div>
+</mat-card>
+<h1 *ngIf=showSuccessBanner> CONGRATULATIONS SIGN UP SUCCESS </h1>
 
 
 
@@ -66,8 +68,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class SignupComponent implements OnInit {
   form: FormGroup;
-  private formSubmitAttempt: boolean;
-
+  showSuccessBanner: boolean;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -82,17 +83,16 @@ export class SignupComponent implements OnInit {
   }
   async onSubmit() {
     console.log('Submitting form');
-      this.formSubmitAttempt = false;
       if (this.form.valid) {
         try {
           const username = this.form.get('username').value; // Get the values entered in the form.
           const password = this.form.get('password').value;
           await this.authService.signup({username,password}); // send in an object with username and password to auth service
+          this.showSuccessBanner = true;
+          console.log("Showing success banner!", this.showSuccessBanner)
         } catch (err) {
           console.log("An error occurred", err);
         }
-      } else {
-        this.formSubmitAttempt = true;
       }
     }
 }

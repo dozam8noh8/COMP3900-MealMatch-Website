@@ -33,6 +33,9 @@ import { IngredientByCategoryComponent } from './home-page/ingredient-by-categor
 import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 
+import { PrivateResourceComponent } from './private-resource/private-resource.component';
+import { PopupComponent } from './popup/popup.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const materialModules = [
   MatToolbarModule,
@@ -52,7 +55,8 @@ const materialModules = [
   MatInputModule,
   MatAutocompleteModule,
   MatCheckboxModule,
-  MatTabsModule
+  MatTabsModule,
+  MatDialogModule
 ]
 @NgModule({
   declarations: [
@@ -64,7 +68,9 @@ const materialModules = [
     IngredientSearchComponent,
     IngredientByCategoryComponent,
     RecipeInfoComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    PrivateResourceComponent,
+    PopupComponent,
   ],
   imports: [
     BrowserModule,
