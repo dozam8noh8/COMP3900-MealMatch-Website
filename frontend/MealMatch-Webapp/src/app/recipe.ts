@@ -4,9 +4,9 @@ import { Ingredient } from './home-page/ingredient';
 
 export interface Recipe {
     id: number;
-    title: string;
+    name: string;
     // owner: User;
-    extendedIngredients: Ingredient[];
-    instructions: string;
+    ingredients: Ingredient[];
+    instruction: string;
     image: string;
 }
