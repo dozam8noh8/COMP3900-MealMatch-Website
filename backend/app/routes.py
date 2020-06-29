@@ -58,6 +58,10 @@ def get_auth_token():
     token = g.user.generate_auth_token(12000)
     return jsonify({'token': token.decode('ascii'), 'duration': 12000})
 
+@app.route('/api/recipes/<int:id>')
+def get_recipe(id):
+    return jsonify(Recipe.get_recipe_by_id(id))
+
 @app.route('/api/recipe_search', methods=['POST'])
 def recipe_search():
     ingredients = request.json.get('ingredients')
@@ -68,6 +72,11 @@ def recipe_search():
 def get_category():
     categories = Category.query.all()
     return jsonify(Category.json_dump(categories))
+
+@app.route('/api/recommendations')
+def get_recommendations():
+    res = Ingredient.find_recommendations('Cheese Slices')
+    return jsonify({"Recommendations": res})
 
 
 @app.route('/api/db_seed')

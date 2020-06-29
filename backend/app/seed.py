@@ -2,6 +2,7 @@ import json
 from app import db
 from app.models import Ingredient, User, Ingredient, Category, Recipe, Mealtype
 import random
+import datetime
 
 ########################################### SETUP INGREDIENTS AND CATEGORIES #############################################
 
@@ -109,18 +110,23 @@ def seed_db():
 
     for item in json_decode['meals']:
         # Make new recipe
-        recipe = Recipe(name=item['strMeal'],instruction=item['strInstructions'])
+        recipe = Recipe(name=item['strMeal'],instruction=item['strInstructions'], image=item['strMealThumb'])
         db.session.add(recipe)
         db.session.commit()
 
         mealtype = Mealtype.query.filter_by(name=item['strCategory']).first()
         recipe.mealtypes.append(mealtype)
         db.session.commit()
+        # random.seed(datetime.datetime.now())
+        # ing1 = random.choice(ingredients)
+        # random.seed(datetime.datetime.now())
+        # ing2 = random.choice(ingredients)
+        # ingredients = [ing1, ing2]
 
-        ingredients = [random.choice(ingredients), random.choice(ingredients)]
+        ingredients = [item['strIngredient1'], item['strIngredient2']]
 
         for ingredient in ingredients:
-            db_ingredient = Ingredient.query.filter_by(name=ingredient['name']).first()
+            db_ingredient = Ingredient.query.filter_by(name=ingredient).first()
             if db_ingredient:
                 recipe.ingredients.append(db_ingredient)
         user.recipes.append(recipe)
