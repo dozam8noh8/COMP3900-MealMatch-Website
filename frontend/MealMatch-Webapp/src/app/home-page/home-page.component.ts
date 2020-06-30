@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
-  template: `<p>This is the home page</p>
+  template: `
               <app-ingredient-search></app-ingredient-search>
               <br>
               <br>
@@ -14,8 +14,8 @@ import { Router } from '@angular/router';
               <br>
               <form [formGroup]="ingredientSearchForm" (ngSubmit)="submitIngredients()">
                 <div style="text-align: center;">
-                  <button mat-raised-button type="submit" color="primary" sytle="margin: 0 auto;">Search for recipes</button>  
-                </div>      
+                  <button mat-raised-button type="submit" color="primary" sytle="margin: 0 auto;">Search for recipes</button>
+                </div>
               </form>
             `
 })
@@ -23,7 +23,7 @@ export class HomePageComponent implements OnInit {
 
   ingredientSearchForm;
 
-  constructor(private router: Router, private ingredientServce: IngredientService, private recipeService: RecipeService) { 
+  constructor(private router: Router, private ingredientServce: IngredientService, private recipeService: RecipeService) {
     this.ingredientSearchForm = new FormGroup({});
   }
 

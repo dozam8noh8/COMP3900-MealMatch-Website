@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -54,13 +55,15 @@ import { AuthService } from '../../services/auth.service';
     <button mat-raised-button [disabled]="loading" color="primary">Sign Up</button>
     <mat-spinner *ngIf=loading> </mat-spinner>
     <mat-error class="submitError" *ngIf=form.errors?.NoPasswordMatch> Please make sure the confirm password field matches the password field. </mat-error>
+    <mat-error class="submitError" *ngIf=error> This username is already taken, please try another. </mat-error>
+    <h1 *ngIf=showSuccessBanner> Sign up successful, redirecting to login </h1>
+
 
 </form>
 </mat-card-content>
 </div>
 
 </mat-card>
-<h1 *ngIf=showSuccessBanner> CONGRATULATIONS SIGN UP SUCCESS </h1>
 
 
 
@@ -77,6 +80,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.form = this.fb.group({  // This builds a reactive form with the given controls (like a big object)
@@ -97,6 +101,7 @@ export class SignupComponent implements OnInit {
         await this.authService.signup({username,password})
         .then(() => {
           this.showSuccessBanner = true;
+          setTimeout(() => this.router.navigate(['/login']), 1000);
         })
         .catch(error => {
           this.error = error;
