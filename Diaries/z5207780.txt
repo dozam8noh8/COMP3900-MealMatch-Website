@@ -68,3 +68,10 @@ I managed to set the login state for a user with observables and subjects. I've 
 on Jira for the team to pick up. We're all doing a great job but Emmanuel seems to have gone MIA for a bit, I hope he's ok!
 Later in the week I also tried to make the primitive login components I had made previously much more usable and aesthetic.
 Looking forward to more!
+
+==================Week 5==============
+This week I've been really busy with other subjects but I've managed to make the auth pages all much more responsive with both observables
+and promises. For example, now whilst the page is submitting a network request, the login button will be disabled and a spinner will be shown
+to the users so that they know that there is something going on in the background. Whilst in terms of functionality this isnt that important,
+I think its key to the user experience that they can see what's happening. I've also implemented an HTTPinterceptor and placed a delay on all
+network requests because there's almost no delay on localhost so it isnt realistic.
