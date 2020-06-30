@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from './services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { PopupComponent } from './popup/popup.component';
+import { PopupComponent } from '../../building-components/login-popup/popup.component';
 
 @Injectable({
   providedIn: 'root'

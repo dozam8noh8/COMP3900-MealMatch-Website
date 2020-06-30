@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject} from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpHeaders, HttpClient, HttpRequest } from '@angular/common/http';
+import { Observable, ReplaySubject, of} from 'rxjs';
+import { map, delay, materialize, dematerialize } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { HelperFunctionsService } from '../helper-functions.service';
 @Injectable({
   providedIn: 'root' // means this provider is available all throughout the app.
                     // An alternative to putting auth service in the providers in app.module.
@@ -13,7 +14,7 @@ export class AuthService {
   private BASE_URL = 'http://localhost:5000/api'; // Our api calls will go to this URL
   private headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
   private isLoggedInSubject: ReplaySubject<any> = new ReplaySubject(1); // This replays the last emitted thing to subscribers which means
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private helper: HelperFunctionsService) {
     if (localStorage.getItem('currentUser')) {
       this.isLoggedInSubject.next(true)
     }
@@ -35,10 +36,8 @@ export class AuthService {
         localStorage.setItem('currentUser', JSON.stringify(response)) // If the promise resolves, store the object with token in local storage!
         console.log("Storing details of response" + localStorage.getItem('currentUser'));
         this.isLoggedInSubject.next(true) // could also just send in true while we're not using things from here.
-        console.log(this.isLoggedInSubject)
         return response;
-
-      })
+      }),
     );
   }
 
@@ -46,6 +45,7 @@ export class AuthService {
   signup(user): Promise<any> {
     let url: string = `${this.BASE_URL}/users`;
     return this.http.post(url, user, {headers: this.headers}).toPromise();
+
   }
 
   // Checks if a user is logged in by seeing if they have a token in local storage.
@@ -60,4 +60,12 @@ export class AuthService {
     this.isLoggedInSubject.next(false);
     this.router.navigate(['/login'])
   }
+
+}
+
+/* This function can be used to add a delay to a promise
+  Use it like
+  delay2(100).then(original promise here) */
+function delay2(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
