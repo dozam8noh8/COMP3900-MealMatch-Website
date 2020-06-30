@@ -98,9 +98,22 @@ class Recipe(db.Model):
         return schema.dump(recipe)
 
     def get_recipes(ingredients):
-        if type(ingredients) is str:
-            ingredients = [ingredients]
-        return Recipe.query.join(RecipeIngredients).join(Ingredient).filter(Ingredient.name.in_(ingredients)).all()
+        ingredients = Ingredient.query.filter(Ingredient.name.in_(ingredients)).all()
+        ingredients_id = [ingredient.id for ingredient in ingredients]
+
+        filtered = []
+        recipes = Recipe.query.all()
+        for recipe in recipes:
+            res = True
+            for recipe_ingredient in recipe.ingredients:
+                if recipe_ingredient.ingredient_id not in ingredients_id:
+                    res = False
+                    break
+            if res:
+                filtered.append(recipe)
+
+        print(len(filtered))
+        return filtered
 
     def json_dump(recipe):
         schema = RecipeSchema(many=True)

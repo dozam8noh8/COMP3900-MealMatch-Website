@@ -11,7 +11,7 @@
         <h2>What you need: </h2>
         <ul style="display: inline-block;">
             <div *ngFor="let ingredient of recipe.ingredients">
-                <li>{{ingredient.name}}</li>
+                <li>{{ingredient["ingredient.name"]}}: {{ingredient["quantity"]}}</li>
             </div>           
         </ul> 
     </div>

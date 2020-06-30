@@ -1,0 +1,56 @@
+{
+    "meals": [
+        {
+            "name": "Grilled Cheese Buns",
+            "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/grilled-cheese-horizontal-jpg-1522266016.jpg",
+            "instruction": "Grill buns with cheese in it",
+            "mealtype": "Miscellaneous",
+            "ingredients": [
+                {
+                    "name": "Buns",
+                    "amount": 1,
+                    "quantity": "bun"
+                },
+                {
+                    "name": "Cheese Slices",
+                    "amount": 1,
+                    "quantity": "slice"
+                }
+            ]
+        },
+        {
+            "name": "Noodles",
+            "instruction": "Boil noodles with water",
+            "mealtype": "Miscellaneous",
+            "ingredients": [
+                {
+                    "name": "Boiling Water",
+                    "amount": 100,
+                    "quantity": "ml"
+                },
+                {
+                    "name": "Noodles",
+                    "amount": 1,
+                    "quantity": "packet"
+                }
+            ]
+        },
+        {
+            "name": "New Recipe",
+            "instruction": "Boil noodles with water",
+            "mealtype": "Miscellaneous",
+            "ingredients": [
+                {
+                    "name": "Bacon",
+                    "amount": 100,
+                    "quantity": "ml"
+                },
+                {
+                    "name": "Asparagus",
+                    "amount": 1,
+                    "quantity": "packet"
+                }
+            ]
+        }
+    ]
+}
