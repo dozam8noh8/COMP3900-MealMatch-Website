@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
+import * as rx from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,7 @@ import { AuthService } from '../services/auth.service';
             Please provide a valid password
           </mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary">Login</button>
+        <button mat-raised-button color="primary" [disabled]="loading">Login</button>
       </form>
     </div>
     <div>
@@ -40,6 +41,8 @@ import { AuthService } from '../services/auth.service';
     <!-- Maybe make this mat-card-footer? -->
   </mat-card-content>
   <h1 *ngIf=showSuccessBanner> CONGRATULATIONS SIGN UP SUCCESS </h1>
+<mat-spinner *ngIf=loading> Showing spinner </mat-spinner>
+<mat-error *ngIf=!!error> {{ error }} </mat-error>
 
 </mat-card>
 
@@ -49,9 +52,10 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   public loginInvalid: boolean;
-  private formSubmitAttempt: boolean;
-  private returnUrl: string;
   showSuccessBanner: boolean;
+  loading: boolean;
+  showFailBanner: boolean;
+  error: String;
 
   constructor(
     private fb: FormBuilder,
@@ -62,8 +66,6 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/game';
-
     this.form = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -75,24 +77,25 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit() {
-    console.log("Submitting?")
-    this.loginInvalid = false;
-    this.formSubmitAttempt = false;
-    this.showSuccessBanner = false;
     if (this.form.valid) {
-      try {
+        this.loading = true;
+        this.showSuccessBanner = false;
+        this.error = '';
         const username = this.form.get('username').value;
         const password = this.form.get('password').value;
-        this.authService.login({username,password}).subscribe(response => {
-          console.log(response);
+
+        this.authService.login({username,password})
+        .pipe(rx.take(1)) // MIGHT NOT NEED THIS AFTER REMOVING ARTIFICIAL DELAY.
+        .subscribe(response => {
+          console.log("Success!", response);
+          this.showSuccessBanner = true; // successful login
+          this.loading = false;
           this.router.navigate(['home']);
+        }, error => {
+          console.log("Error!", error)
+          this.error = "Incorrect username or password, please try again!";
+          this.loading = false; // combine this with the above success function somehow?
         }); // send in an object with username and password to auth service
-        this.showSuccessBanner = true;
-      } catch (err) {
-        this.loginInvalid = true;
-      }
-    } else {
-      this.formSubmitAttempt = true;
     }
   }
 }

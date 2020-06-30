@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -51,7 +51,8 @@ import { AuthService } from '../services/auth.service';
       </mat-error>
     </mat-form-field>
     <p>
-    <button mat-raised-button color="primary">Sign Up</button>
+    <button mat-raised-button [disabled]="loading" color="primary">Sign Up</button>
+    <mat-spinner *ngIf=loading> </mat-spinner>
 
 </form>
 </mat-card-content>
@@ -68,6 +69,8 @@ import { AuthService } from '../services/auth.service';
 })
 export class SignupComponent implements OnInit {
   form: FormGroup;
+  loading: boolean;
+  error: String;
   showSuccessBanner: boolean;
   constructor(
     private fb: FormBuilder,
@@ -83,16 +86,23 @@ export class SignupComponent implements OnInit {
   }
   async onSubmit() {
     console.log('Submitting form');
-      if (this.form.valid) {
-        try {
-          const username = this.form.get('username').value; // Get the values entered in the form.
-          const password = this.form.get('password').value;
-          await this.authService.signup({username,password}); // send in an object with username and password to auth service
+    if (this.form.valid) {
+        this.loading = true;
+        this.error = '';
+        const username = this.form.get('username').value; // Get the values entered in the form.
+        const password = this.form.get('password').value;
+        await this.authService.signup({username,password})
+        .then(() => {
           this.showSuccessBanner = true;
-          console.log("Showing success banner!", this.showSuccessBanner)
-        } catch (err) {
-          console.log("An error occurred", err);
-        }
+        })
+        .catch(error => {
+          this.error = error;
+          console.log("An error occurred", error);
+        })
+        .finally(() => {
+          console.log("DONE")
+          this.loading = false;
+        });
       }
     }
 }

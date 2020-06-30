@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {  MatMenuModule } from '@angular/material/menu';
@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule  } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
 import { MatInputModule} from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -34,8 +34,9 @@ import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 
 import { PrivateResourceComponent } from './private-resource/private-resource.component';
-import { PopupComponent } from './popup/popup.component';
+import { PopupComponent } from '../building-components/login-popup/popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RequestLogInterceptor } from './request-interceptor';
 
 const materialModules = [
   MatToolbarModule,
@@ -56,7 +57,7 @@ const materialModules = [
   MatAutocompleteModule,
   MatCheckboxModule,
   MatTabsModule,
-  MatDialogModule
+  MatDialogModule,
 ]
 @NgModule({
   declarations: [
@@ -82,7 +83,11 @@ const materialModules = [
     BrowserAnimationsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, // This will intercept all http requests and add a delay and log them to simulate a backend delay (during development).
+    useClass: RequestLogInterceptor,
+    multi: true,
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
