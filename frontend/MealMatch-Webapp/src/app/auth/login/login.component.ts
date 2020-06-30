@@ -40,7 +40,7 @@ import * as rx from 'rxjs/operators';
     </div>
     <!-- Maybe make this mat-card-footer? -->
   </mat-card-content>
-  <h1 *ngIf=showSuccessBanner> CONGRATULATIONS SIGN UP SUCCESS </h1>
+  <h1 *ngIf=showSuccessBanner> CONGRATULATIONS LOG IN SUCCESS </h1>
 <mat-spinner *ngIf=loading> Showing spinner </mat-spinner>
 <mat-error *ngIf=!!error> {{ error }} </mat-error>
 
