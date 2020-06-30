@@ -17,11 +17,37 @@ def seed_db():
     json_decode=json.load(input_file)
 
     # Find all the categories
-    all_categories = []
-    for item in json_decode['ingredients']:
-        if (item['strType'] != None):
-            all_categories.append(item['strType'])
-    categories = set(all_categories)
+    # all_categories = []
+    # for item in json_decode['ingredients']:
+    #     if (item['strType'] != None):
+    #         all_categories.append(item['strType'])
+    # categories = set(all_categories)
+
+    # Have categories in an order
+    categories = [
+        'Vegetable',
+        'Fruit',        
+        'Dairy', 
+        # 'Baking',
+        'Sugar',
+        'Vinegar',
+        'Meat', 
+        'Fish', 
+        'Rice', 
+        'Bread', 
+        'Noodles',
+        'Sauce',
+        'Spice',
+        'Fat',
+        'Cereal', 
+        'Pastry', 
+        'Liqueur',
+        'Stock',   
+        'Liquid',
+        'Confectionery', 
+        'Uncategorised 0', 
+        'Uncategorised 1', 
+    ]
 
     for category in categories:
         #add to db
