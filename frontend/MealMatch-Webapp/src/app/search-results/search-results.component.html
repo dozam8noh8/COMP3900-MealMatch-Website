@@ -11,7 +11,7 @@
                 <b>{{recipe.name}}</b> <br>
                 <i>Uses:
                     <span *ngFor="let ingredient of recipe.ingredients">
-                        {{ingredient.name}}, <!-- Should not have comma for last ingredient -->
+                        {{ingredient["ingredient.name"]}}, <!-- Should not have comma for last ingredient -->
                     </span>
                 </i>
             </mat-card>

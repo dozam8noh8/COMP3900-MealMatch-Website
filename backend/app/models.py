@@ -30,7 +30,7 @@ class User(db.Model):
 
 ingredientCategories = db.Table('ingredient_categories',
     db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredient.id')),
-    db.Column('category.id', db.Integer, db.ForeignKey('category.id'))
+    db.Column('category_id', db.Integer, db.ForeignKey('category.id'))
 )
 
 recipeMealTypes = db.Table('recipe_mealtypes',
@@ -81,7 +81,7 @@ class Category(db.Model):
     ingredients = db.relationship('Ingredient', secondary=ingredientCategories, backref=db.backref('categories', lazy='dynamic'))
 
     def json_dump(recipe):
-        schema = RecipeSchema(many=True)
+        schema = CategorySchema(many=True)
         return schema.dump(recipe)
 
 class Recipe(db.Model):
@@ -98,25 +98,21 @@ class Recipe(db.Model):
         return schema.dump(recipe)
 
     def get_recipes(ingredients):
-        # recipes = Recipe.query.join(Recipe.ingredients).filter(Ingredient.name.in_(ingredients)).all()
-        recipes = Recipe.query.all()
-        ingredients = Ingredient.get_all(ingredients)
+        ingredients = Ingredient.query.filter(Ingredient.name.in_(ingredients)).all()
+        ingredients_id = [ingredient.id for ingredient in ingredients]
 
-        # Need to filter the recipes based on their availability not by numbers
         filtered = []
+        recipes = Recipe.query.all()
         for recipe in recipes:
             res = True
-            for ingredient in recipe.ingredients.all():
-                if ingredient not in ingredients:
+            for recipe_ingredient in recipe.ingredients:
+                if recipe_ingredient.ingredient_id not in ingredients_id:
                     res = False
-            # ingredients = Ingredient.get_all(ingredients)
-            # for ingr in recipe.ingredients.all():
-            #     if ingr not in ingredients:
-            #         res = False
-
+                    break
             if res:
                 filtered.append(recipe)
-            
+
+        print(len(filtered))
         return filtered
 
     def json_dump(recipe):
@@ -139,14 +135,15 @@ class Mealtype(db.Model):
     recipes = db.relationship('Recipe', secondary=recipeMealTypes, backref=db.backref('mealtypes', lazy='dynamic'))
 
 # Marshmallow serialiase the schema
-class CategorySchema(ma.ModelSchema):
-    class Meta:
-        model = Category
-        include_relationships = True
-
 class IngredientSchema(ma.ModelSchema):
     class Meta:
         fields = ("id", "name")
+
+class CategorySchema(ma.ModelSchema):
+    ingredients = ma.Nested(IngredientSchema, many=True)
+
+    class Meta:
+        model = Category
 
 class UserSchema(ma.ModelSchema):
     class Meta:
@@ -157,10 +154,16 @@ class MealtypeSchema(ma.ModelSchema):
     class Meta:
         fields = ("id", "name")
 
+class RecipeIngredientsSchema(ma.ModelSchema):
+    ingredient = ma.Nested(IngredientSchema)
+    
+    class Meta:
+        fields = ("ingredient.id", "ingredient.name", "quantity")
+
+
 class RecipeSchema(ma.ModelSchema):
     mealtypes = ma.Nested(MealtypeSchema, many=True)
-    ingredients = ma.Nested(IngredientSchema, many=True)
+    ingredients = ma.Nested(RecipeIngredientsSchema, many=True)
 
     class Meta:
-        model = Recipe 
-        include_relationships = True
+        fields = ("id", "name", "user_id", "image", "instruction", "ingredients", "mealtypes")
