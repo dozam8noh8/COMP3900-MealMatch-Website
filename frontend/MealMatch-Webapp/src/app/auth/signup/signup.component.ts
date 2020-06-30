@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -53,10 +53,12 @@ import { AuthService } from '../../services/auth.service';
     <p>
     <button mat-raised-button [disabled]="loading" color="primary">Sign Up</button>
     <mat-spinner *ngIf=loading> </mat-spinner>
+    <mat-error class="submitError" *ngIf=form.errors?.NoPasswordMatch> Please make sure the confirm password field matches the password field. </mat-error>
 
 </form>
 </mat-card-content>
 </div>
+
 </mat-card>
 <h1 *ngIf=showSuccessBanner> CONGRATULATIONS SIGN UP SUCCESS </h1>
 
@@ -81,8 +83,9 @@ export class SignupComponent implements OnInit {
       username: ['', Validators.required], // These connect to the mat-errors to provide validation error text.
       email: ['', Validators.email],
       password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    });
+      confirmPassword: ['', Validators.required],
+    },
+{    updateOn: 'submit', validators: bothPasswordFieldsMatch,} );
   }
   async onSubmit() {
     console.log('Submitting form');
@@ -105,4 +108,16 @@ export class SignupComponent implements OnInit {
         });
       }
     }
+}
+export function bothPasswordFieldsMatch(f: FormGroup) {
+  let password = f.get('password').value ;
+  let confirmPassword = f.get('confirmPassword').value;
+  console.log("Password = ", password, confirmPassword)
+  if (!password || !confirmPassword) {
+    return null;
+  }
+  if (password === confirmPassword) {
+    return null; // Validator will passs
+  }
+  return { 'NoPasswordMatch': true }; // validator fails here with the message passwords dont match.
 }
