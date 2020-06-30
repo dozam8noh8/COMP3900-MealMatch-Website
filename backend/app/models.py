@@ -98,6 +98,8 @@ class Recipe(db.Model):
         return schema.dump(recipe)
 
     def get_recipes(ingredients):
+        if type(ingredients) is str:
+            ingredients = [ingredients]
         return Recipe.query.join(RecipeIngredients).join(Ingredient).filter(Ingredient.name.in_(ingredients)).all()
 
     def json_dump(recipe):
