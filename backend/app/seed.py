@@ -33,20 +33,11 @@ def seed_db():
     # print('categories: ', categories)
 
     # Seed the ingredients
-    ingredients = []
+    # ingredients = []
 
-    # for item in json_decode['ingredients']:
-    #     if (item['strType'] != None):
-    #         ingredients.append(item['strIngredient'])
-    #         category = Category.query.filter_by(name=item['strType']).first()
-    #         ingredient = Ingredient(name=item['strIngredient'])
-    #         ingredient.categories.append(category)
-    #         db.session.add(ingredient)
-    #         db.session.commit()
     for item in json_decode['ingredients']:
-        ingredients.append(item['strIngredient'])
-        cat = random.sample(categories, 1)
-        category = Category.query.filter_by(name=cat[0]).first()
+        # ingredients.append(item['strIngredient'])
+        category = Category.query.filter_by(name=item['strType']).first()
         ingredient = Ingredient(name=item['strIngredient'])
         ingredient.categories.append(category)
         db.session.add(ingredient)

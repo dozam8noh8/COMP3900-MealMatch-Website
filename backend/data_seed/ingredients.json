@@ -4,25 +4,25 @@
             "idIngredient": "1",
             "strIngredient": "Chicken",
             "strDescription": "The chicken is a type of domesticated fowl, a subspecies of the red junglefowl (Gallus gallus). It is one of the most common and widespread domestic animals, with a total population of more than 19 billion as of 2011. There are more chickens in the world than any other bird or domesticated fowl. Humans keep chickens primarily as a source of food (consuming both their meat and eggs) and, less commonly, as pets. Originally raised for cockfighting or for special ceremonies, chickens were not kept for food until the Hellenistic period (4th–2nd centuries BC).\r\n\r\nGenetic studies have pointed to multiple maternal origins in South Asia, Southeast Asia, and East Asia, but with the clade found in the Americas, Europe, the Middle East and Africa originating in the Indian subcontinent. From ancient India, the domesticated chicken spread to Lydia in western Asia Minor, and to Greece by the 5th century BC. Fowl had been known in Egypt since the mid-15th century BC, with the \"bird that gives birth every day\" having come to Egypt from the land between Syria and Shinar, Babylonia, according to the annals of Thutmose III.",
-            "strType": "Vegetable"
+            "strType": "Meat"
         },
         {
             "idIngredient": "2",
             "strIngredient": "Salmon",
             "strDescription": "Salmon is the common name for several species of ray-finned fish in the family Salmonidae. Other fish in the same family include trout, char, grayling and whitefish. Salmon are native to tributaries of the North Atlantic (genus Salmo) and Pacific Ocean (genus Oncorhynchus). Many species of salmon have been introduced into non-native environments such as the Great Lakes of North America and Patagonia in South America. Salmon are intensively farmed in many parts of the world.\r\n\r\nTypically, salmon are anadromous: they hatch in fresh water, migrate to the ocean, then return to fresh water to reproduce. However, populations of several species are restricted to fresh water through their lives. Folklore has it that the fish return to the exact spot where they hatched to spawn. Tracking studies have shown this to be mostly true. A portion of a returning salmon run may stray and spawn in different freshwater systems; the percent of straying depends on the species of salmon. Homing behavior has been shown to depend on olfactory memory. Salmon date back to the Neogene.",
-            "strType": "Vegetable"
+            "strType": "Fish"
         },
         {
             "idIngredient": "3",
             "strIngredient": "Beef",
             "strDescription": "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times. Beef is a source of high-quality protein and nutrients.\r\n\r\nMost beef skeletal muscle meat can be used as is by merely cutting into certain parts, such as roasts, short ribs or steak (filet mignon, sirloin steak, rump steak, rib steak, rib eye steak, hanger steak, etc.), while other cuts are processed (corned beef or beef jerky). Trimmings, on the other hand, are usually mixed with meat from older, leaner (therefore tougher) cattle, are ground, minced or used in sausages. The blood is used in some varieties called blood sausage. Other parts that are eaten include other muscles and offal, such as the oxtail, liver, tongue, tripe from the reticulum or rumen, glands (particularly the pancreas and thymus, referred to as sweetbread), the heart, the brain (although forbidden where there is a danger of bovine spongiform encephalopathy, BSE, commonly referred to as mad cow disease), the kidneys, and the tender testicles of the bull (known in the United States as calf fries, prairie oysters, or Rocky Mountain oysters). Some intestines are cooked and eaten as is, but are more often cleaned and used as natural sausage casings. The bones are used for making beef stock.",
-            "strType": "Vegetable"
+            "strType": "Meat"
         },
         {
             "idIngredient": "4",
             "strIngredient": "Pork",
             "strDescription": "Pork is the culinary name for the flesh of a domestic pig (Sus scrofa domesticus). It is the most commonly consumed meat worldwide,[1] with evidence of pig husbandry dating back to 5000 BC.\r\n\r\nPork is eaten both freshly cooked and preserved. Curing extends the shelf life of the pork products. Ham, smoked pork, gammon, bacon and sausage are examples of preserved pork. Charcuterie is the branch of cooking devoted to prepared meat products, many from pork.\r\n\r\nPig is the most popular meat in the Eastern and non-Muslim parts of Southeastern Asia (Indochina, Philippines, Singapore, East Timor) and is also very common in the Western world, especially in Central Europe. It is highly prized in Asian cuisines for its fat content and pleasant texture. Consumption of pork is forbidden by Jewish, Muslim and Rastafarian dietary law, for religious reasons, with several suggested possible causes.",
-            "strType": "Vegetable"
+            "strType": "Meat"
         },
         {
             "idIngredient": "5",
@@ -34,7 +34,7 @@
             "idIngredient": "9",
             "strIngredient": "Apple Cider Vinegar",
             "strDescription": "Apple cider vinegar, or cider vinegar, is a vinegar made from fermented apple juice, and used in salad dressings, marinades, vinaigrettes, food preservatives, and chutneys. It is made by crushing apples, then squeezing out the juice. Bacteria and yeast are added to the liquid to start the alcoholic fermentation process, which converts the sugars to alcohol. In a second fermentation step, the alcohol is converted into vinegar by acetic acid-forming bacteria (Acetobacter species). Acetic acid and malic acid combine to give vinegar its sour taste. Apple cider vinegar has no medicinal or nutritional value. There is no high-quality clinical evidence that regular consumption of apple cider vinegar helps to maintain or lose body weight, or is effective to manage blood glucose and lipid levels.",
-            "strType": "Vegetable"
+            "strType": "Vinegar"
         },
         {
             "idIngredient": "10",
@@ -58,19 +58,19 @@
             "idIngredient": "14",
             "strIngredient": "Bacon",
             "strDescription": "Bacon is a type of salt-cured pork. Bacon is prepared from several different cuts of meat, typically from the pork belly or from back cuts, which have less fat than the belly. It is eaten on its own, as a side dish (particularly in breakfasts), or used as a minor ingredient to flavour dishes (e.g., the club sandwich). Bacon is also used for barding and larding roasts, especially game, including venison and pheasant. The word is derived from the Old High German bacho, meaning \"buttock\", \"ham\" or \"side of bacon\", and is cognate with the Old French bacon.",
-            "strType": "Vegetable"
+            "strType": "Meat"
         },
         {
             "idIngredient": "15",
             "strIngredient": "Baking Powder",
             "strDescription": "Baking powder is a dry chemical leavening agent, a mixture of a carbonate or bicarbonate and a weak acid. The base and acid are prevented from reacting prematurely by the inclusion of a buffer such as cornstarch. Baking powder is used to increase the volume and lighten the texture of baked goods. It works by releasing carbon dioxide gas into a batter or dough through an acid-base reaction, causing bubbles in the wet mixture to expand and thus leavening the mixture. The first single-acting baking powder was developed by Birmingham based food manufacturer Alfred Bird in England in 1843. The first double-acting baking powder was developed by Eben Norton Horsford in America in the 1860s.",
-            "strType": "Vegetable"
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "16",
             "strIngredient": "Balsamic Vinegar",
             "strDescription": "Balsamic vinegar (Italian: aceto balsamico), occasionally shortened to balsamic, is a very dark, concentrated, and intensely flavoured vinegar originating in Italy, made wholly or partially from grape must. Grape must is freshly crushed grape juice with all the skins, seeds and stems.",
-            "strType": "Vegetable"
+            "strType": "Vinegar"
         },
         {
             "idIngredient": "17",
@@ -88,2833 +88,2833 @@
             "idIngredient": "19",
             "strIngredient": "Basmati Rice",
             "strDescription": "Basmati is a variety of long, slender-grained aromatic rice which is traditionally from the Indian subcontinent. As of 2018-19, India exported to over 90% of the overseas basmati rice market, while Pakistan accounted for the remainder, according to the Indian state-run Agricultural and Processed Food Products Export Development Authority  and the Pakistan government-run Economic Survey of Pakistan. Many countries use domestically grown basmati rice crops; however, basmati is geographically exclusive to select districts of India, Pakistan, Nepal and Bangladesh.",
-            "strType": "Vegetable"
+            "strType": "Rice"
         },
         {
             "idIngredient": "20",
             "strIngredient": "Bay Leaf",
             "strDescription": "The bay leaf is an aromatic leaf commonly used in cooking. It can be used whole, or as dried and ground.",
-            "strType": "Vegetable"
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "21",
             "strIngredient": "Bay Leaves",
             "strDescription": "The bay leaf is an aromatic leaf commonly used in cooking. It can be used whole, or as dried and ground.",
-            "strType": "Vegetable"
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "23",
             "strIngredient": "Beef Brisket",
             "strDescription": "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times. Beef is a source of high-quality protein and nutrients.\r\n\r\nMost beef skeletal muscle meat can be used as is by merely cutting into certain parts, such as roasts, short ribs or steak (filet mignon, sirloin steak, rump steak, rib steak, rib eye steak, hanger steak, etc.), while other cuts are processed (corned beef or beef jerky). Trimmings, on the other hand, are usually mixed with meat from older, leaner (therefore tougher) cattle, are ground, minced or used in sausages. The blood is used in some varieties called blood sausage. Other parts that are eaten include other muscles and offal, such as the oxtail, liver, tongue, tripe from the reticulum or rumen, glands (particularly the pancreas and thymus, referred to as sweetbread), the heart, the brain (although forbidden where there is a danger of bovine spongiform encephalopathy, BSE, commonly referred to as mad cow disease), the kidneys, and the tender testicles of the bull (known in the United States as calf fries, prairie oysters, or Rocky Mountain oysters). Some intestines are cooked and eaten as is, but are more often cleaned and used as natural sausage casings. The bones are used for making beef stock.",
-            "strType": "Vegetable"
+            "strType": "Meat"
         },
         {
             "idIngredient": "24",
             "strIngredient": "Beef Fillet",
             "strDescription": "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times. Beef is a source of high-quality protein and nutrients.\r\n\r\nMost beef skeletal muscle meat can be used as is by merely cutting into certain parts, such as roasts, short ribs or steak (filet mignon, sirloin steak, rump steak, rib steak, rib eye steak, hanger steak, etc.), while other cuts are processed (corned beef or beef jerky). Trimmings, on the other hand, are usually mixed with meat from older, leaner (therefore tougher) cattle, are ground, minced or used in sausages. The blood is used in some varieties called blood sausage. Other parts that are eaten include other muscles and offal, such as the oxtail, liver, tongue, tripe from the reticulum or rumen, glands (particularly the pancreas and thymus, referred to as sweetbread), the heart, the brain (although forbidden where there is a danger of bovine spongiform encephalopathy, BSE, commonly referred to as mad cow disease), the kidneys, and the tender testicles of the bull (known in the United States as calf fries, prairie oysters, or Rocky Mountain oysters). Some intestines are cooked and eaten as is, but are more often cleaned and used as natural sausage casings. The bones are used for making beef stock.",
-            "strType": "Vegetable"
+            "strType": "Meat"
         },
         {
             "idIngredient": "25",
             "strIngredient": "Beef Gravy",
             "strDescription": "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times. Beef is a source of high-quality protein and nutrients.\r\n\r\nMost beef skeletal muscle meat can be used as is by merely cutting into certain parts, such as roasts, short ribs or steak (filet mignon, sirloin steak, rump steak, rib steak, rib eye steak, hanger steak, etc.), while other cuts are processed (corned beef or beef jerky). Trimmings, on the other hand, are usually mixed with meat from older, leaner (therefore tougher) cattle, are ground, minced or used in sausages. The blood is used in some varieties called blood sausage. Other parts that are eaten include other muscles and offal, such as the oxtail, liver, tongue, tripe from the reticulum or rumen, glands (particularly the pancreas and thymus, referred to as sweetbread), the heart, the brain (although forbidden where there is a danger of bovine spongiform encephalopathy, BSE, commonly referred to as mad cow disease), the kidneys, and the tender testicles of the bull (known in the United States as calf fries, prairie oysters, or Rocky Mountain oysters). Some intestines are cooked and eaten as is, but are more often cleaned and used as natural sausage casings. The bones are used for making beef stock.",
-            "strType": "Vegetable"
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "26",
             "strIngredient": "Beef Stock",
             "strDescription": "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times. Beef is a source of high-quality protein and nutrients.\r\n\r\nMost beef skeletal muscle meat can be used as is by merely cutting into certain parts, such as roasts, short ribs or steak (filet mignon, sirloin steak, rump steak, rib steak, rib eye steak, hanger steak, etc.), while other cuts are processed (corned beef or beef jerky). Trimmings, on the other hand, are usually mixed with meat from older, leaner (therefore tougher) cattle, are ground, minced or used in sausages. The blood is used in some varieties called blood sausage. Other parts that are eaten include other muscles and offal, such as the oxtail, liver, tongue, tripe from the reticulum or rumen, glands (particularly the pancreas and thymus, referred to as sweetbread), the heart, the brain (although forbidden where there is a danger of bovine spongiform encephalopathy, BSE, commonly referred to as mad cow disease), the kidneys, and the tender testicles of the bull (known in the United States as calf fries, prairie oysters, or Rocky Mountain oysters). Some intestines are cooked and eaten as is, but are more often cleaned and used as natural sausage casings. The bones are used for making beef stock.",
-            "strType": "Vegetable"
+            "strType": "Stock"
         },
         {
             "idIngredient": "27",
             "strIngredient": "Bicarbonate Of Soda",
             "strDescription": "Sodium bicarbonate, commonly known as baking soda, is a chemical compound with the formula NaHCO3. It is a salt composed of a sodium cation (Na+) and a bicarbonate anion (HCO3−). Sodium bicarbonate is a white solid that is crystalline, but often appears as a fine powder. It has a slightly salty, alkaline taste resembling that of washing soda (sodium carbonate). The natural mineral form is nahcolite. It is a component of the mineral natron and is found dissolved in many mineral springs.",
-            "strType": "Vegetable"
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "28",
             "strIngredient": "Biryani Masala",
             "strDescription": "Biryani, also known as biriyani, biriani, birani or briyani, is a mixed rice dish with its origins among the Muslims of the Indian subcontinent. It can be compared to mixing a curry, later combining it with semi-cooked rice separately. This dish is especially popular throughout the Indian subcontinent, as well as among the diaspora from the region. It is also prepared in other regions such as Iraqi Kurdistan. It is made with Indian spices, rice, meat (chicken, goat, beef, lamb, prawn, or fish), vegetables or eggs.",
-            "strType": "Vegetable"
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "29",
             "strIngredient": "Black Pepper",
             "strDescription": "Black pepper (Piper nigrum) is a flowering vine in the family Piperaceae, cultivated for its fruit, known as a peppercorn, which is usually dried and used as a spice and seasoning. When fresh and fully mature, it is about 5 mm (0.20 in) in diameter and dark red, and contains a single seed, like all drupes. Peppercorns and the ground pepper derived from them may be described simply as pepper, or more precisely as black pepper (cooked and dried unripe fruit), green pepper (dried unripe fruit), or white pepper (ripe fruit seeds).\r\n\r\nBlack pepper is native to present-day Kerala in Southwestern India, and is extensively cultivated there and elsewhere in tropical regions. Vietnam is the world's largest producer and exporter of pepper, producing 34% of the world's crop, as of 2013.",
-            "strType": "Vegetable"
+            "strType": "Spice"
         },
         {
             "idIngredient": "30",
             "strIngredient": "Black Treacle",
             "strDescription": "Molasses (American English) or black treacle (British English) is a viscous product resulting from refining sugarcane or sugar beets into sugar. Molasses varies by amount of sugar, method of extraction, and age of plant. Sugarcane molasses is primarily used for sweetening and flavoring foods in the United States, Canada, and elsewhere. Molasses is a defining component of fine commercial brown sugar.\r\n\r\nSweet sorghum syrup may be colloquially called \"sorghum molasses\" in the southern United States.[2][3] Similar products include honey, maple syrup, corn syrup, and invert syrup. Most of these alternative syrups have milder flavors.",
-            "strType": "Vegetable"
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "31",
             "strIngredient": "Borlotti Beans",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "32",
             "strIngredient": "Bowtie Pasta",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "33",
             "strIngredient": "Bramley Apples",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "34",
             "strIngredient": "Brandy",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Liqueur"
         },
         {
             "idIngredient": "35",
             "strIngredient": "Bread",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": "null",
+            "strType": "Bread"
         },
         {
             "idIngredient": "36",
             "strIngredient": "Breadcrumbs",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Bread"
         },
         {
             "idIngredient": "37",
             "strIngredient": "Broccoli",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "38",
             "strIngredient": "Brown Lentils",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "39",
             "strIngredient": "Brown Rice",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Rice"
         },
         {
             "idIngredient": "40",
             "strIngredient": "Brown Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sugar"
         },
         {
             "idIngredient": "41",
             "strIngredient": "Butter",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "43",
             "strIngredient": "Cacao",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "44",
             "strIngredient": "Cajun",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "45",
             "strIngredient": "Canned Tomatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "46",
             "strIngredient": "Cannellini Beans",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "47",
             "strIngredient": "Cardamom",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "49",
             "strIngredient": "Carrots",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "50",
             "strIngredient": "Cashew Nuts",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "51",
             "strIngredient": "Cashews",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "52",
             "strIngredient": "Caster Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sugar"
         },
         {
             "idIngredient": "53",
             "strIngredient": "Cayenne Pepper",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "54",
             "strIngredient": "Celeriac",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "55",
             "strIngredient": "Celery",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "56",
             "strIngredient": "Celery Salt",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "57",
             "strIngredient": "Challots",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Bread"
         },
         {
             "idIngredient": "58",
             "strIngredient": "Charlotte Potatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "59",
             "strIngredient": "Cheddar Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "60",
             "strIngredient": "Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "61",
             "strIngredient": "Cheese Curds",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "62",
             "strIngredient": "Cherry Tomatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "63",
             "strIngredient": "Chestnut Mushroom",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "65",
             "strIngredient": "Chicken Breast",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "66",
             "strIngredient": "Chicken Breasts",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "67",
             "strIngredient": "Chicken Legs",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "68",
             "strIngredient": "Chicken Stock",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Stock"
         },
         {
             "idIngredient": "70",
             "strIngredient": "Chicken Thighs",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "71",
             "strIngredient": "Chickpeas",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "72",
             "strIngredient": "Chili Powder",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "73",
             "strIngredient": "Chilled Butter",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "74",
             "strIngredient": "Chilli",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "75",
             "strIngredient": "Chilli Powder",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "76",
             "strIngredient": "Chinese Broccoli",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "77",
             "strIngredient": "Chocolate Chips",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Confectionery"
         },
         {
             "idIngredient": "78",
             "strIngredient": "Chopped Onion",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "79",
             "strIngredient": "Chopped Parsley",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "80",
             "strIngredient": "Chopped Tomatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "81",
             "strIngredient": "Chorizo",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "82",
             "strIngredient": "Christmas Pudding",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "83",
             "strIngredient": "Cilantro",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "84",
             "strIngredient": "Cinnamon",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "85",
             "strIngredient": "Cinnamon Stick",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "87",
             "strIngredient": "Cloves",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "88",
             "strIngredient": "Coco Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sugar"
         },
         {
             "idIngredient": "89",
             "strIngredient": "Cocoa",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "90",
             "strIngredient": "Coconut Cream",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "91",
             "strIngredient": "Coconut Milk",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "92",
             "strIngredient": "Colby Jack Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "93",
             "strIngredient": "Cold Water",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Liquid"
         },
         {
             "idIngredient": "94",
             "strIngredient": "Condensed Milk",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "95",
             "strIngredient": "Coriander",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "96",
             "strIngredient": "Coriander Leaves",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "97",
             "strIngredient": "Coriander Seeds",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "98",
             "strIngredient": "Corn Tortillas",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "99",
             "strIngredient": "Cornstarch",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "100",
             "strIngredient": "Cream",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "101",
             "strIngredient": "Creme Fraiche",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "102",
             "strIngredient": "Cubed Feta Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "103",
             "strIngredient": "Cucumber",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "104",
             "strIngredient": "Cumin",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "105",
             "strIngredient": "Cumin Seeds",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "106",
             "strIngredient": "Curry Powder",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "107",
             "strIngredient": "Dark Brown Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sugar"
         },
         {
             "idIngredient": "108",
             "strIngredient": "Dark Soft Brown Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sugar"
         },
         {
             "idIngredient": "109",
             "strIngredient": "Dark Soy Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "110",
             "strIngredient": "Demerara Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sugar"
         },
         {
             "idIngredient": "111",
             "strIngredient": "Diced Tomatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "112",
             "strIngredient": "Digestive Biscuits",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "113",
             "strIngredient": "Dill",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "114",
             "strIngredient": "Doner Meat",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "115",
             "strIngredient": "Double Cream",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "116",
             "strIngredient": "Dried Oregano",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "117",
             "strIngredient": "Dry White Wine",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Liqueur"
         },
         {
             "idIngredient": "119",
             "strIngredient": "Egg Plants",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "120",
             "strIngredient": "Egg Rolls",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "121",
             "strIngredient": "Egg White",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "122",
             "strIngredient": "Egg Yolks",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "123",
             "strIngredient": "Eggs",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "124",
             "strIngredient": "Enchilada Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "125",
             "strIngredient": "English Mustard",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "126",
             "strIngredient": "Extra Virgin Olive Oil",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "127",
             "strIngredient": "Fajita Seasoning",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "128",
             "strIngredient": "Farfalle",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "129",
             "strIngredient": "Fennel",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "130",
             "strIngredient": "Fennel Bulb",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "131",
             "strIngredient": "Fennel Seeds",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "132",
             "strIngredient": "Fenugreek",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "133",
             "strIngredient": "Feta",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "134",
             "strIngredient": "Fish Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "135",
             "strIngredient": "Flaked Almonds",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "136",
             "strIngredient": "Flax Eggs",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "137",
             "strIngredient": "Flour",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "138",
             "strIngredient": "Flour Tortilla",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Bread"
         },
         {
             "idIngredient": "139",
             "strIngredient": "Floury Potatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "140",
             "strIngredient": "Free-range Egg, Beaten",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "141",
             "strIngredient": "Free-range Eggs, Beaten",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "142",
             "strIngredient": "French Lentils",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "143",
             "strIngredient": "Fresh Basil",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "144",
             "strIngredient": "Fresh Thyme",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "145",
             "strIngredient": "Freshly Chopped Parsley",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "146",
             "strIngredient": "Fries",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "147",
             "strIngredient": "Full Fat Yogurt",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "148",
             "strIngredient": "Garam Masala",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "149",
             "strIngredient": "Garlic",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "150",
             "strIngredient": "Garlic Clove",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "151",
             "strIngredient": "Garlic Powder",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "152",
             "strIngredient": "Garlic Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "153",
             "strIngredient": "Ghee",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "154",
             "strIngredient": "Ginger",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "155",
             "strIngredient": "Ginger Cordial",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "156",
             "strIngredient": "Ginger Garlic Paste",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "157",
             "strIngredient": "Ginger Paste",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "158",
             "strIngredient": "Golden Syrup",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "159",
             "strIngredient": "Gouda Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "160",
             "strIngredient": "Granulated Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "161",
             "strIngredient": "Grape Tomatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "162",
             "strIngredient": "Greek Yogurt",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "163",
             "strIngredient": "Green Beans",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "165",
             "strIngredient": "Green Chilli",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "166",
             "strIngredient": "Green Olives",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "167",
             "strIngredient": "Green Red Lentils",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "168",
             "strIngredient": "Green Salsa",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "169",
             "strIngredient": "Ground Almonds",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "170",
             "strIngredient": "Ground Cumin",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "171",
             "strIngredient": "Ground Ginger",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "172",
             "strIngredient": "Gruyère",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "173",
             "strIngredient": "Hard Taco Shells",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "175",
             "strIngredient": "Harissa Spice",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "176",
             "strIngredient": "Heavy Cream",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "177",
             "strIngredient": "Honey",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "178",
             "strIngredient": "Horseradish",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "179",
             "strIngredient": "Hot Beef Stock",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Stock"
         },
         {
             "idIngredient": "180",
             "strIngredient": "Hotsauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "181",
             "strIngredient": "Ice Cream",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "182",
             "strIngredient": "Italian Fennel Sausages",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "183",
             "strIngredient": "Italian Seasoning",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "184",
             "strIngredient": "Jalapeno",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "185",
             "strIngredient": "Jasmine Rice",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Rice"
         },
         {
             "idIngredient": "186",
             "strIngredient": "Jerusalem Artichokes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "187",
             "strIngredient": "Kale",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "188",
             "strIngredient": "Khus Khus",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "189",
             "strIngredient": "King Prawns",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "190",
             "strIngredient": "Kosher Salt",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "191",
             "strIngredient": "Lamb",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "192",
             "strIngredient": "Lamb Loin Chops",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "193",
             "strIngredient": "Lamb Mince",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "194",
             "strIngredient": "Lasagne Sheets",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Pastry"
         },
         {
             "idIngredient": "195",
             "strIngredient": "Lean Minced Beef",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "196",
             "strIngredient": "Leek",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "197",
             "strIngredient": "Lemon",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "198",
             "strIngredient": "Lemon Juice",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Liquid"
         },
         {
             "idIngredient": "199",
             "strIngredient": "Lemon Zest",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "200",
             "strIngredient": "Lemons",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "201",
             "strIngredient": "Lettuce",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "202",
             "strIngredient": "Lime",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "203",
             "strIngredient": "Little Gem Lettuce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "204",
             "strIngredient": "Macaroni",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "205",
             "strIngredient": "Mackerel",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "206",
             "strIngredient": "Madras Paste",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "207",
             "strIngredient": "Marjoram",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "208",
             "strIngredient": "Massaman Curry Paste",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "209",
             "strIngredient": "Medjool Dates",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "210",
             "strIngredient": "Meringue Nests",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "211",
             "strIngredient": "Milk",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "212",
             "strIngredient": "Minced Garlic",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "213",
             "strIngredient": "Miniature Marshmallows",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "214",
             "strIngredient": "Mint",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "215",
             "strIngredient": "Monterey Jack Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "216",
             "strIngredient": "Mozzarella Balls",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "217",
             "strIngredient": "Muscovado Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sugar"
         },
         {
             "idIngredient": "218",
             "strIngredient": "Mushrooms",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "219",
             "strIngredient": "Mustard",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "220",
             "strIngredient": "Mustard Powder",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "221",
             "strIngredient": "Mustard Seeds",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "222",
             "strIngredient": "Nutmeg",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "223",
             "strIngredient": "Oil",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "224",
             "strIngredient": "Olive Oil",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "226",
             "strIngredient": "Onion Salt",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "227",
             "strIngredient": "Onions",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "228",
             "strIngredient": "Orange",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "229",
             "strIngredient": "Orange Zest",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "230",
             "strIngredient": "Oregano",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "231",
             "strIngredient": "Oyster Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "232",
             "strIngredient": "Paprika",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "233",
             "strIngredient": "Parma Ham",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "234",
             "strIngredient": "Parmesan",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "235",
             "strIngredient": "Parmesan Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "236",
             "strIngredient": "Parmigiano-reggiano",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "237",
             "strIngredient": "Parsley",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "238",
             "strIngredient": "Peanut Butter",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "239",
             "strIngredient": "Peanut Oil",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "240",
             "strIngredient": "Peanuts",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "241",
             "strIngredient": "Peas",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "242",
             "strIngredient": "Pecorino",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "243",
             "strIngredient": "Penne Rigate",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "244",
             "strIngredient": "Pepper",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "245",
             "strIngredient": "Pine Nuts",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "246",
             "strIngredient": "Pitted Black Olives",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "247",
             "strIngredient": "Plain Chocolate",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Confectionery"
         },
         {
             "idIngredient": "248",
             "strIngredient": "Plain Flour",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "249",
             "strIngredient": "Plum Tomatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "252",
             "strIngredient": "Potato Starch",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "253",
             "strIngredient": "Potatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "254",
             "strIngredient": "Prawns",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "255",
             "strIngredient": "Puff Pastry",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Pastry"
         },
         {
             "idIngredient": "256",
             "strIngredient": "Raspberry Jam",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "257",
             "strIngredient": "Raw King Prawns",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "258",
             "strIngredient": "Red Chile Flakes",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "259",
             "strIngredient": "Red Chilli",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "261",
             "strIngredient": "Red Chilli Powder",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "263",
             "strIngredient": "Red Onions",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "264",
             "strIngredient": "Red Pepper",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "265",
             "strIngredient": "Red Pepper Flakes",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "266",
             "strIngredient": "Red Wine",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Liqueur"
         },
         {
             "idIngredient": "267",
             "strIngredient": "Refried Beans",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "268",
             "strIngredient": "Rice",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Rice"
         },
         {
             "idIngredient": "269",
             "strIngredient": "Rice Noodles",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "270",
             "strIngredient": "Rice Stick Noodles",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "271",
             "strIngredient": "Rice Vermicelli",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "272",
             "strIngredient": "Rigatoni",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "273",
             "strIngredient": "Rocket",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "274",
             "strIngredient": "Rolled Oats",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "275",
             "strIngredient": "Rosemary",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "276",
             "strIngredient": "Saffron",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "277",
             "strIngredient": "Sage",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "278",
             "strIngredient": "Sake",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Liqueur"
         },
         {
             "idIngredient": "280",
             "strIngredient": "Salsa",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "281",
             "strIngredient": "Salt",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "282",
             "strIngredient": "Salted Butter",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "283",
             "strIngredient": "Sausages",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "284",
             "strIngredient": "Sea Salt",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "286",
             "strIngredient": "Self-raising Flour",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "287",
             "strIngredient": "Semi-skimmed Milk",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "288",
             "strIngredient": "Sesame Seed",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "289",
             "strIngredient": "Shallots",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "290",
             "strIngredient": "Shredded Mexican Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "291",
             "strIngredient": "Shredded Monterey Jack Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "292",
             "strIngredient": "Small Potatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "293",
             "strIngredient": "Smoked Paprika",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "294",
             "strIngredient": "Smoky Paprika",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "295",
             "strIngredient": "Sour Cream",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "296",
             "strIngredient": "Soy Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "297",
             "strIngredient": "Soya Milk",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "298",
             "strIngredient": "Spaghetti",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "299",
             "strIngredient": "Spinach",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "301",
             "strIngredient": "Spring Onions",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "302",
             "strIngredient": "Squash",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "303",
             "strIngredient": "Stir-fry Vegetables",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "304",
             "strIngredient": "Strawberries",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "305",
             "strIngredient": "Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "306",
             "strIngredient": "Sultanas",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "307",
             "strIngredient": "Sunflower Oil",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "308",
             "strIngredient": "Tamarind Ball",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "309",
             "strIngredient": "Tamarind Paste",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "310",
             "strIngredient": "Thai Fish Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "311",
             "strIngredient": "Thai Green Curry Paste",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "312",
             "strIngredient": "Thai Red Curry Paste",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "313",
             "strIngredient": "Thyme",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "315",
             "strIngredient": "Tomato Ketchup",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "316",
             "strIngredient": "Tomato Puree",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "317",
             "strIngredient": "Tomatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "318",
             "strIngredient": "Toor Dal",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "319",
             "strIngredient": "Tuna",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "320",
             "strIngredient": "Turmeric",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "321",
             "strIngredient": "Turmeric Powder",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "322",
             "strIngredient": "Turnips",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "323",
             "strIngredient": "Vanilla",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "324",
             "strIngredient": "Vanilla Extract",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "325",
             "strIngredient": "Veal",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "326",
             "strIngredient": "Vegan Butter",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "327",
             "strIngredient": "Vegetable Oil",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "328",
             "strIngredient": "Vegetable Stock",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Stock"
         },
         {
             "idIngredient": "329",
             "strIngredient": "Vegetable Stock Cube",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Stock"
         },
         {
             "idIngredient": "330",
             "strIngredient": "Vinaigrette Dressing",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "331",
             "strIngredient": "Vine Leaves",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "332",
             "strIngredient": "Vinegar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Liquid"
         },
         {
             "idIngredient": "333",
             "strIngredient": "Water",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Liquid"
         },
         {
             "idIngredient": "334",
             "strIngredient": "White Chocolate Chips",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Confectionery"
         },
         {
             "idIngredient": "335",
             "strIngredient": "White Fish",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "336",
             "strIngredient": "White Fish Fillets",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "337",
             "strIngredient": "White Vinegar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Vinegar"
         },
         {
             "idIngredient": "338",
             "strIngredient": "White Wine",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Liqueur"
         },
         {
             "idIngredient": "339",
             "strIngredient": "Whole Milk",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "340",
             "strIngredient": "Whole Wheat",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "341",
             "strIngredient": "Wholegrain Bread",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Bread"
         },
         {
             "idIngredient": "342",
             "strIngredient": "Worcestershire Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "343",
             "strIngredient": "Yogurt",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "344",
             "strIngredient": "Zucchini",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "345",
             "strIngredient": "Pretzels",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "346",
             "strIngredient": "Cream Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "347",
             "strIngredient": "Icing Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sugar"
         },
         {
             "idIngredient": "348",
             "strIngredient": "Toffee Popcorn",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "349",
             "strIngredient": "Caramel",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "350",
             "strIngredient": "Caramel Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "351",
             "strIngredient": "Tagliatelle",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "352",
             "strIngredient": "Fettuccine",
             "strDescription": "",
-            "strType": "Vegetable"
+            "strType": "Noodles"
         },
         {
             "idIngredient": "353",
             "strIngredient": "Clotted Cream",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "354",
             "strIngredient": "Corn Flour",
             "strDescription": "",
-            "strType": "Vegetable"
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "355",
             "strIngredient": "Mussels",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "356",
             "strIngredient": "Fideo",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "357",
             "strIngredient": "Monkfish",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "358",
             "strIngredient": "Vermicelli Pasta",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "359",
             "strIngredient": "Baby Squid",
             "strDescription": "",
-            "strType": "Vegetable"
+            "strType": "Fish"
         },
         {
             "idIngredient": "360",
             "strIngredient": "Squid",
             "strDescription": "",
-            "strType": "Vegetable"
+            "strType": "Fish"
         },
         {
             "idIngredient": "361",
             "strIngredient": "Fish Stock",
             "strDescription": "",
-            "strType": "Vegetable"
+            "strType": "Stock"
         },
         {
             "idIngredient": "362",
             "strIngredient": "Pilchards",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "363",
             "strIngredient": "Black Olives",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "364",
             "strIngredient": "Onion",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "365",
             "strIngredient": "Tomato",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "366",
             "strIngredient": "Duck",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "367",
             "strIngredient": "Duck Legs",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "368",
             "strIngredient": "Chicken Stock Cube",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Stock"
         },
         {
             "idIngredient": "369",
             "strIngredient": "Pappardelle Pasta",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "370",
             "strIngredient": "Paccheri Pasta",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "371",
             "strIngredient": "Linguine Pasta",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "373",
             "strIngredient": "Sugar Snap Peas",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "374",
             "strIngredient": "Crusty Bread",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Bread"
         },
         {
             "idIngredient": "375",
             "strIngredient": "Fromage Frais",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "376",
             "strIngredient": "Clams",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "377",
             "strIngredient": "Passata",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "378",
             "strIngredient": "Rapeseed Oil",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "379",
             "strIngredient": "Stilton Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "380",
             "strIngredient": "Lamb Leg",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "381",
             "strIngredient": "Lamb Shoulder",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "382",
             "strIngredient": "Apricot",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "383",
             "strIngredient": "Butternut Squash",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "384",
             "strIngredient": "Couscous",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "387",
             "strIngredient": "Minced Beef",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "388",
             "strIngredient": "Turkey Mince",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "389",
             "strIngredient": "Barbeque Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "390",
             "strIngredient": "Sweetcorn",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "391",
             "strIngredient": "Goose Fat",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fat"
         },
         {
             "idIngredient": "392",
             "strIngredient": "Duck Fat",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fat"
         },
         {
             "idIngredient": "393",
             "strIngredient": "Fennel",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "394",
             "strIngredient": "Red Wine Vinegar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Vinegar"
         },
         {
             "idIngredient": "395",
             "strIngredient": "Haricot Beans",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "396",
             "strIngredient": "Rosemary",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "397",
             "strIngredient": "Butter Beans",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "398",
             "strIngredient": "Pinto Beans",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "399",
             "strIngredient": "Tomato Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "400",
             "strIngredient": "Tomato Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "401",
             "strIngredient": "Mascarpone",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "402",
             "strIngredient": "Mozzarella",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "403",
             "strIngredient": "Ricotta",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "405",
             "strIngredient": "Dried Apricots",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "406",
             "strIngredient": "Capers",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "407",
             "strIngredient": "Banana",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "408",
             "strIngredient": "Raspberries",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "409",
             "strIngredient": "Blueberries",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "410",
             "strIngredient": "Walnuts",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "411",
             "strIngredient": "Pecan Nuts",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "412",
             "strIngredient": "Maple Syrup",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "413",
             "strIngredient": "Light Brown Soft Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sugar"
         },
         {
             "idIngredient": "414",
             "strIngredient": "Dark Brown Soft Sugar",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sugar"
         },
         {
             "idIngredient": "415",
             "strIngredient": "Dark Chocolate Chips",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Confectionery"
         },
         {
             "idIngredient": "416",
             "strIngredient": "Milk Chocolate",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Confectionery"
         },
         {
             "idIngredient": "417",
             "strIngredient": "Dark Chocolate",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Confectionery"
         },
         {
             "idIngredient": "418",
             "strIngredient": "Pumpkin",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "419",
             "strIngredient": "Shortcrust Pastry",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Pastry"
         },
         {
             "idIngredient": "420",
             "strIngredient": "Peanut Cookies",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Confectionery"
         },
         {
             "idIngredient": "421",
             "strIngredient": "Gelatine Leafs",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "422",
             "strIngredient": "Peanut Brittle",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "423",
             "strIngredient": "Peaches",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "424",
             "strIngredient": "Yellow Pepper",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "425",
             "strIngredient": "Green Pepper",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "426",
             "strIngredient": "Courgettes",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "427",
             "strIngredient": "Tinned Tomatos",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "428",
             "strIngredient": "Chestnuts",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "429",
             "strIngredient": "Wild Mushrooms",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "430",
             "strIngredient": "Truffle Oil",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "431",
             "strIngredient": "Paneer",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "432",
             "strIngredient": "Naan Bread",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Bread"
         },
         {
             "idIngredient": "433",
             "strIngredient": "Lentils",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "434",
             "strIngredient": "Roasted Vegetables",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "435",
             "strIngredient": "Kidney Beans",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "436",
             "strIngredient": "Mixed Grain",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "437",
             "strIngredient": "Tahini",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "438",
             "strIngredient": "Tortillas",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Bread"
         },
         {
             "idIngredient": "439",
             "strIngredient": "Udon Noodles",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Noodles"
         },
         {
             "idIngredient": "440",
             "strIngredient": "Cabbage",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "441",
             "strIngredient": "Shiitake Mushrooms",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "442",
             "strIngredient": "Mirin",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "443",
             "strIngredient": "Sesame Seed Oil",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "444",
             "strIngredient": "Baguette",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Bread"
         },
         {
             "idIngredient": "445",
             "strIngredient": "Vine Tomatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "446",
             "strIngredient": "Suet",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "447",
             "strIngredient": "Swede",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "448",
             "strIngredient": "Ham",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "449",
             "strIngredient": "Oysters",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "450",
             "strIngredient": "Stout",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "451",
             "strIngredient": "Lard",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "452",
             "strIngredient": "Lamb Kidney",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "453",
             "strIngredient": "Beef Kidney",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "454",
             "strIngredient": "Haddock",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "455",
             "strIngredient": "Smoked Haddock",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "456",
             "strIngredient": "Brussels Sprouts",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "457",
             "strIngredient": "Raisins",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "458",
             "strIngredient": "Currants",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "459",
             "strIngredient": "Custard",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "460",
             "strIngredient": "Mixed Peel",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "461",
             "strIngredient": "Redcurrants",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "462",
             "strIngredient": "Blackberries",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "463",
             "strIngredient": "Hazlenuts",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "464",
             "strIngredient": "Braeburn Apples",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "465",
             "strIngredient": "Red Food Colouring",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "466",
             "strIngredient": "Pink Food Colouring",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "467",
             "strIngredient": "Blue Food Colouring",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "468",
             "strIngredient": "Yellow Food Colouring",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "469",
             "strIngredient": "Apricot Jam",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "470",
             "strIngredient": "Marzipan",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "471",
             "strIngredient": "Almonds",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "472",
             "strIngredient": "Black Pudding",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "473",
             "strIngredient": "Baked Beans",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "474",
             "strIngredient": "White Flour",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "475",
             "strIngredient": "Yeast",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "476",
             "strIngredient": "Fruit Mix",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "477",
             "strIngredient": "Dried Fruit",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "478",
             "strIngredient": "Cherry",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "479",
             "strIngredient": "Glace Cherry",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "480",
             "strIngredient": "Treacle",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "481",
             "strIngredient": "Oatmeal",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "482",
             "strIngredient": "Oats",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "483",
             "strIngredient": "Egg",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "484",
             "strIngredient": "Beef Shin",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "485",
             "strIngredient": "Bouquet Garni",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "486",
             "strIngredient": "Single Cream",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "487",
             "strIngredient": "Red Wine Jelly",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "488",
             "strIngredient": "Apples",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "489",
             "strIngredient": "Goats Cheese",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "490",
             "strIngredient": "Prosciutto",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "491",
             "strIngredient": "Unsalted Butter",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Dairy"
         },
         {
             "idIngredient": "492",
             "strIngredient": "Brie",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "493",
             "strIngredient": "Tarragon Leaves",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "494",
             "strIngredient": "Chives",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "495",
             "strIngredient": "Pears",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "496",
             "strIngredient": "White Chocolate",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Confectionery"
         },
         {
             "idIngredient": "497",
             "strIngredient": "Star Anise",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "498",
             "strIngredient": "Tiger Prawns",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "499",
             "strIngredient": "Custard Powder",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "500",
             "strIngredient": "Desiccated Coconut",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "501",
             "strIngredient": "Frozen Peas",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "502",
             "strIngredient": "Minced Pork",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "503",
             "strIngredient": "Creamed Corn",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "504",
             "strIngredient": "Sun-Dried Tomatoes",
-            "strDescription": "Vegetable",
+            "strDescription": null,
             "strType": "Vegetable"
         },
         {
             "idIngredient": "505",
             "strIngredient": "Dijon Mustard",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "506",
             "strIngredient": "Tabasco Sauce",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Sauce"
         },
         {
             "idIngredient": "507",
             "strIngredient": "Canola Oil",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "508",
             "strIngredient": "Cod",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "509",
             "strIngredient": "Salt Cod",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fish"
         },
         {
             "idIngredient": "510",
             "strIngredient": "Ackee",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Fruit"
         },
         {
             "idIngredient": "511",
             "strIngredient": "Jerk",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "512",
             "strIngredient": "Ground Beef",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Meat"
         },
         {
             "idIngredient": "513",
@@ -2926,7 +2926,7 @@
             "idIngredient": "514",
             "strIngredient": "Paella Rice",
             "strDescription": "Paella[a] is a Valencian rice dish that has ancient roots but its modern form originated in the mid-19th century in the area around Albufera lagoon on the east coast of Spain, adjacent to the city of Valencia. Many non-Spaniards view paella as Spain's national dish, but most Spaniards consider it to be a regional Valencian dish. Valencians, in turn, regard paella as one of their identifying symbols.\r\n\r\nTypes of paella include Valencian paella, vegetable paella (Spanish: paella de verduras), seafood paella (Spanish: paella de mariscos), and mixed paella (Spanish: paella mixta), among many others. Valencian paella is believed to be the original recipe and consists of white rice, green beans (bajoqueta and tavella), meat (chicken, duck and rabbit), white beans (garrofón), snails, and seasoning such as saffron and rosemary. Another very common but seasonal ingredient is artichokes. Seafood paella replaces meat with seafood and omits beans and green vegetables. Mixed paella is a free-style combination of meat from land animals, seafood, vegetables, and sometimes beans. Most paella chefs use bomba rice due to it being less likely to overcook, but Valencians tend to use a slightly stickier (and thus more susceptible to overcooking) variety known as Senia. All types of paellas use olive oil.",
-            "strType": "Vegetable"
+            "strType": "Rice"
         },
         {
             "idIngredient": "515",
@@ -2956,7 +2956,7 @@
             "idIngredient": "519",
             "strIngredient": "Malt Vinegar",
             "strDescription": "Vinegar is a liquid consisting of about 5–20% acetic acid (CH3COOH), water, and other trace chemicals, which may include flavorings. The acetic acid is produced by the fermentation of ethanol by acetic acid bacteria. Vinegar is now mainly used as a cooking ingredient, or in pickling. As the most easily manufactured mild acid, it has historically had a great variety of industrial, medical, and domestic uses, some of which (such as its use as a general household cleaner) are still commonly practiced today.\r\n\r\nCommercial vinegar is produced either by a fast or a slow fermentation process. In general, slow methods are used in traditional vinegars where fermentation proceeds slowly over the course of a few months or up to a year. The longer fermentation period allows for the accumulation of a non-toxic slime composed of acetic acid bacteria. Fast methods add mother of vinegar (bacterial culture) to the source liquid before adding air to oxygenate and promote the fastest fermentation. In fast production processes, vinegar may be produced between 20 hours to three days.",
-            "strType": "Seasoning"
+            "strType": "Vinegar"
         },
         {
             "idIngredient": "520",
@@ -2968,13 +2968,13 @@
             "idIngredient": "521",
             "strIngredient": "Water Chestnut",
             "strDescription": "Eleocharis dulcis, the Chinese water chestnut or water chestnut, is a grass-like sedge native to Asia (China, Japan, India, Philippines, etc.), Australia, tropical Africa, and various islands of the Pacific and Indian Oceans. It is grown in many countries for its edible corms.\r\n\r\nThe water chestnut is not a nut at all, but an aquatic vegetable that grows in marshes, under water, in the mud. It has stem-like, tubular green leaves that grow to about 1.5 m. The water caltrop, which also is referred to by the same name, is unrelated and often confused with the water chestnut.\r\n\r\nThe small, rounded corms have a crisp, white flesh and may be eaten raw, slightly boiled, or grilled, and often are pickled or tinned. They are a popular ingredient in Chinese dishes. In China, they are most often eaten raw, sometimes sweetened. They also may be ground into a flour form used for making water chestnut cake, which is common as part of dim sum cuisine. They are unusual among vegetables for remaining crisp even after being cooked or canned, because their cell walls are cross-linked and strengthened by certain phenolic compounds, such as oligomers of ferulic acid. This property is shared by other vegetables that remain crisp in this manner, including the tiger nut and lotus root. The corms contain the antibiotic agent puchiin, which is stable to high temperature. Apart from the edible corms, the leaves can be used for cattlefeed, mulch or compost.\r\n\r\nThe corms are rich in carbohydrates (about 90% by dry weight), especially starch (about 60% by dry weight), and are also a good source of dietary fiber, riboflavin, vitamin B6, potassium, copper, and manganese.\r\n\r\nIf eaten uncooked, the surface of the plants may transmit fasciolopsiasis.",
-            "strType": "Sedge"
+            "strType": "Vegetable"
         },
         {
             "idIngredient": "522",
             "strIngredient": "Tofu",
             "strDescription": "Tofu, also known as bean curd, is a food cultivated by coagulating soy milk and then pressing the resulting curds into soft white blocks. It is a component in East Asian and Southeast Asian cuisines. Tofu can be soft, firm, or extra firm. Tofu has a subtle flavor and can be used in savory and sweet dishes. It is often seasoned or marinated to suit the dish.\r\n\r\nTofu has a low calorie count and relatively large amounts of protein. It is high in iron, and it can have a high calcium or magnesium content, depending on the coagulants used in manufacturing (e.g. calcium chloride, calcium sulfate, magnesium sulfate).",
-            "strType": "Curd"
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "523",
@@ -2986,7 +2986,7 @@
             "idIngredient": "524",
             "strIngredient": "Fermented Black Beans",
             "strDescription": "Douchi (Chinese: 豆豉; pinyin: dòuchǐ), or tochi is a type of fermented and salted black soybean. In English, it is known as fermented black soybeans, Chinese fermented black beans (Chinese: 黑豆豆豉; pinyin: hēidòu dòuchǐ), salted black beans, salty black beans, or just black beans. They are a flavoring most popular in the cuisine of China, where they are most widely used for making black bean sauce dishes.[1][page needed]\r\n\r\nDouchi is made by fermenting and salting black soybeans. The black type soybean is most commonly used and the process turns the beans soft, and mostly semi-dry (if the beans are allowed to dry). Regular soybeans (white soybeans) are also used, but this does not produce \"salted black beans\"; instead, these beans become brown. The smell is sharp, pungent, and spicy; the taste is salty, somewhat bitter and sweet.[citation needed] The product made with white soybeans is called mianchi.\r\n\r\nThe process and product are similar to ogiri and iru, both being African fermented bean products[citation needed].\r\n\r\nDouchi, \"Chinese salted black beans\", and \"black soybeans\" should not be confused with the black turtle bean, a variety of common bean that is commonly used in the cuisines of Central America, South America, and the Caribbean.",
-            "strType": "Bean"
+            "strType": "Vegetable"
         },
         {
             "idIngredient": "525",
@@ -3004,25 +3004,25 @@
             "idIngredient": "527",
             "strIngredient": "Wonton Skin",
             "strDescription": "Won ton skin. Paper-thin squares of dough made from flour, water, eggs and salt used to make won tons, egg rolls and gyoza.",
-            "strType": "Pastry"
+            "strType": "Noodles"
         },
         {
             "idIngredient": "528",
             "strIngredient": "Starch",
             "strDescription": "Starch or amylum is a polymeric carbohydrate consisting of a large number of glucose units joined by glycosidic bonds. This polysaccharide is produced by most green plants as energy storage. It is the most common carbohydrate in human diets and is contained in large amounts in staple foods like potatoes, wheat, maize (corn), rice, and cassava.\r\n\r\nPure starch is a white, tasteless and odorless powder that is insoluble in cold water or alcohol. It consists of two types of molecules: the linear and helical amylose and the branched amylopectin. Depending on the plant, starch generally contains 20 to 25% amylose and 75 to 80% amylopectin by weight.[4] Glycogen, the glucose store of animals, is a more highly branched version of amylopectin.\r\n\r\nIn industry, starch is converted into sugars, for example by malting, and fermented to produce ethanol in the manufacture of beer, whisky and biofuel. It is processed to produce many of the sugars used in processed foods. Mixing most starches in warm water produces a paste, such as wheatpaste, which can be used as a thickening, stiffening or gluing agent. The biggest industrial non-food use of starch is as an adhesive in the papermaking process. Starch can be applied to parts of some garments before ironing, to stiffen them.",
-            "strType": "Side"
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "529",
             "strIngredient": "Rice wine",
             "strDescription": "Rice wine is an alcoholic beverage fermented and distilled from rice, traditionally consumed in East Asia, Southeast Asia and South Asia. Rice wine is made from the fermentation of rice starch that has been converted to sugars. Microbes are the source of the enzymes that convert the starches to sugar.[1]\r\n\r\nRice wine typically has an alcohol content of 18–25% ABV. Rice wines are used in Asian gastronomy at formal dinners and banquets and in cooking. They are also used in a religious and ceremonial context.",
-            "strType": "Wine"
+            "strType": "Liqueur"
         },
         {
             "idIngredient": "530",
             "strIngredient": "Cooking wine",
             "strDescription": "Splash into casseroles, sauces and marinades for a rounded vibrant flavour.",
-            "strType": "Wine"
+            "strType": "Liquid"
         },
         {
             "idIngredient": "531",
@@ -3046,7 +3046,7 @@
             "idIngredient": "534",
             "strIngredient": "Noodles",
             "strDescription": "Noodles are a staple food in many cultures. They are made from unleavened dough which is stretched, extruded, or rolled flat and cut into one of a variety of shapes. While long, thin strips may be the most common, many varieties of noodles are cut into waves, helices, tubes, strings, or shells, or folded over, or cut into other shapes. Noodles are usually cooked in boiling water, sometimes with cooking oil or salt added. They are often pan-fried or deep-fried. Noodles are often served with an accompanying sauce or in a soup. Noodles can be refrigerated for short-term storage or dried and stored for future use. The material composition or geocultural origin must be specified when discussing noodles. The word derives from the German word Nudel.[1]",
-            "strType": "Side"
+            "strType": "Noodles"
         },
         {
             "idIngredient": "535",
@@ -3058,19 +3058,19 @@
             "idIngredient": "536",
             "strIngredient": "Dark Rum",
             "strDescription": "Rum is a distilled alcoholic drink made from sugarcane byproducts, such as molasses, or directly from sugarcane juice, by a process of fermentation and distillation. The distillate, a clear liquid, is then usually aged in oak barrels.\r\n\r\nThe majority of the world's rum production occurs in the Caribbean and Latin America. Rum is also produced in Australia, Portugal, Austria, Canada, Fiji, India, Japan, Mauritius, Nepal, New Zealand, the Philippines, Reunion Island, South Africa, Spain, Sweden, Taiwan, Thailand, the United Kingdom and the United States.\r\n\r\nRums are produced in various grades. Light rums are commonly used in cocktails, whereas \"golden\" and \"dark\" rums were typically consumed straight or neat, on the rocks, or used for cooking, but are now commonly consumed with mixers. Premium rums are also available, made to be consumed either straight or iced.\r\n\r\nRum plays a part in the culture of most islands of the West Indies as well as in The Maritimes and Newfoundland. This drink has famous associations with the Royal Navy (where it was mixed with water or beer to make grog) and piracy (where it was consumed as bumbo). Rum has also served as a popular medium of economic exchange, used to help fund enterprises such as slavery (see Triangular trade), organized crime, and military insurgencies (e.g., the American Revolution and Australia's Rum Rebellion).",
-            "strType": "Spirit"
+            "strType": "Liqueur"
         },
         {
             "idIngredient": "537",
             "strIngredient": "Light Rum",
             "strDescription": "Rum is a distilled alcoholic drink made from sugarcane byproducts, such as molasses, or directly from sugarcane juice, by a process of fermentation and distillation. The distillate, a clear liquid, is then usually aged in oak barrels.\r\n\r\nThe majority of the world's rum production occurs in the Caribbean and Latin America. Rum is also produced in Australia, Portugal, Austria, Canada, Fiji, India, Japan, Mauritius, Nepal, New Zealand, the Philippines, Reunion Island, South Africa, Spain, Sweden, Taiwan, Thailand, the United Kingdom and the United States.\r\n\r\nRums are produced in various grades. Light rums are commonly used in cocktails, whereas \"golden\" and \"dark\" rums were typically consumed straight or neat, on the rocks, or used for cooking, but are now commonly consumed with mixers. Premium rums are also available, made to be consumed either straight or iced.\r\n\r\nRum plays a part in the culture of most islands of the West Indies as well as in The Maritimes and Newfoundland. This drink has famous associations with the Royal Navy (where it was mixed with water or beer to make grog) and piracy (where it was consumed as bumbo). Rum has also served as a popular medium of economic exchange, used to help fund enterprises such as slavery (see Triangular trade), organized crime, and military insurgencies (e.g., the American Revolution and Australia's Rum Rebellion).",
-            "strType": "Spirit"
+            "strType": "Liqueur"
         },
         {
             "idIngredient": "538",
             "strIngredient": "Rum",
             "strDescription": "Rum is a distilled alcoholic drink made from sugarcane byproducts, such as molasses, or directly from sugarcane juice, by a process of fermentation and distillation. The distillate, a clear liquid, is then usually aged in oak barrels.\r\n\r\nThe majority of the world's rum production occurs in the Caribbean and Latin America. Rum is also produced in Australia, Portugal, Austria, Canada, Fiji, India, Japan, Mauritius, Nepal, New Zealand, the Philippines, Reunion Island, South Africa, Spain, Sweden, Taiwan, Thailand, the United Kingdom and the United States.\r\n\r\nRums are produced in various grades. Light rums are commonly used in cocktails, whereas \"golden\" and \"dark\" rums were typically consumed straight or neat, on the rocks, or used for cooking, but are now commonly consumed with mixers. Premium rums are also available, made to be consumed either straight or iced.\r\n\r\nRum plays a part in the culture of most islands of the West Indies as well as in The Maritimes and Newfoundland. This drink has famous associations with the Royal Navy (where it was mixed with water or beer to make grog) and piracy (where it was consumed as bumbo). Rum has also served as a popular medium of economic exchange, used to help fund enterprises such as slavery (see Triangular trade), organized crime, and military insurgencies (e.g., the American Revolution and Australia's Rum Rebellion).",
-            "strType": "Spirit"
+            "strType": "Liqueur"
         },
         {
             "idIngredient": "539",
@@ -3088,7 +3088,7 @@
             "idIngredient": "541",
             "strIngredient": "White Wine Vinegar",
             "strDescription": "Wine vinegar is made from red or white wine, and is the most commonly used vinegar in Southern and Central Europe, Cyprus and Israel. As with wine, there is a considerable range in quality. Better-quality wine vinegars are matured in wood for up to two years, and exhibit a complex, mellow flavor. Wine vinegar tends to have a lower acidity than white or cider vinegars. More expensive wine vinegars are made from individual varieties of wine, such as champagne, sherry, or pinot gris.",
-            "strType": "Dressing"
+            "strType": "Vinegar"
         },
         {
             "idIngredient": "542",
@@ -3111,20 +3111,20 @@
         {
             "idIngredient": "545",
             "strIngredient": "Ancho Chillies",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 1"
         },
         {
             "idIngredient": "546",
             "strIngredient": "Almond Milk",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "548",
             "strIngredient": "Allspice",
-            "strDescription": "Vegetable",
-            "strType": "Vegetable"
+            "strDescription": null,
+            "strType": "Spice"
         },
         {
             "idIngredient": "550",
@@ -3148,7 +3148,7 @@
             "idIngredient": "554",
             "strIngredient": "Black Beans",
             "strDescription": "The black turtle bean is a small, shiny variety of the common bean (Phaseolus vulgaris) especially popular in Latin American cuisine, though it can also be found in the Cajun and Creole cuisines of south Louisiana. Like most common beans, it is native to the Americas, but has been introduced around the world. It is also used in East Indian cooking, Punjabi cuisine, and in Maharashtrian cuisine, it is known as Kala Ghevada. It is used interchangeably with vigna mungo (black gram) in countries such as the United States. The black turtle bean is often simply called the black bean (frijoles negros, zaragoza, judía negra, poroto negro, or caraota o habichuela negra in Spanish; and feijão preto in Portuguese), although this terminology can cause confusion with other black beans.",
-            "strType": "Bean"
+            "strType": "Vegetable"
         },
         {
             "idIngredient": "555",
@@ -3159,7 +3159,7 @@
         {
             "idIngredient": "556",
             "strIngredient": "Ras el hanout",
-            "strDescription": "Ras el hanout or rass el hanout (Arabic: راس الحانوت\u200e raʾs al-ḥānūt, pronounced [rɑʔs ælħɑːnuːt] (About this soundlisten)) is a spice mix found in varying forms in Tunisia, Algeria, and Morocco.[1] It plays a similar role in North African cuisine as garam masala does in Indian cuisine. The name in Arabic means \"head of the shop\" and implies a mixture of the best spices the seller has to offer. Ras el hanout is used in many savory dishes, sometimes rubbed on meat or fish, or stirred into couscous or rice.\r\n\r\nThere is no definitive composition of spices that makes up ras el hanout. Each shop, company, or family may have their own blend. The mixture usually consists of over a dozen spices, in different proportions. Commonly used ingredients include cardamom, cumin, clove, cinnamon, nutmeg, mace, allspice, dry ginger, chili peppers, coriander seed, peppercorn, sweet and hot paprika, fenugreek, and dry turmeric. Some spices may be particular to the region, such as ash berries, chufa, grains of paradise, orris root, monk's pepper, cubebs, dried rosebud, fennel seed or aniseed, galangal, long pepper. Ingredients may be toasted before being ground or pounded in a mortar and mixed together. Some preparations include salt or sugar, but that is generally not the accepted practice. Garlic, saffron, nuts or dry herbs are generally not included, as they are usually added to dishes individually, but some commercial preparations, particularly in Europe and North America, may contain them.\r\n\r\nThe composition of ras el hanout differs somewhat from the Baharat spice mix, but they differ more by the types of dishes they are associated with and by region rather than the ingredients in them. Although used by Berber people, it should not be confused with \"berbere\" spice mix from Ethiopia.\r\n\r\nCertain supposed aphrodisiacs, including the notoriously dangerous \"green metallic beetles\", cantharides, have appeared in many Moroccan prescriptions, but these seem to be irrelevant for flavouring purposes.",
+            "strDescription": "Ras el hanout or rass el hanout (Arabic: راس الحانوت‎ raʾs al-ḥānūt, pronounced [rɑʔs ælħɑːnuːt] (About this soundlisten)) is a spice mix found in varying forms in Tunisia, Algeria, and Morocco.[1] It plays a similar role in North African cuisine as garam masala does in Indian cuisine. The name in Arabic means \"head of the shop\" and implies a mixture of the best spices the seller has to offer. Ras el hanout is used in many savory dishes, sometimes rubbed on meat or fish, or stirred into couscous or rice.\r\n\r\nThere is no definitive composition of spices that makes up ras el hanout. Each shop, company, or family may have their own blend. The mixture usually consists of over a dozen spices, in different proportions. Commonly used ingredients include cardamom, cumin, clove, cinnamon, nutmeg, mace, allspice, dry ginger, chili peppers, coriander seed, peppercorn, sweet and hot paprika, fenugreek, and dry turmeric. Some spices may be particular to the region, such as ash berries, chufa, grains of paradise, orris root, monk's pepper, cubebs, dried rosebud, fennel seed or aniseed, galangal, long pepper. Ingredients may be toasted before being ground or pounded in a mortar and mixed together. Some preparations include salt or sugar, but that is generally not the accepted practice. Garlic, saffron, nuts or dry herbs are generally not included, as they are usually added to dishes individually, but some commercial preparations, particularly in Europe and North America, may contain them.\r\n\r\nThe composition of ras el hanout differs somewhat from the Baharat spice mix, but they differ more by the types of dishes they are associated with and by region rather than the ingredients in them. Although used by Berber people, it should not be confused with \"berbere\" spice mix from Ethiopia.\r\n\r\nCertain supposed aphrodisiacs, including the notoriously dangerous \"green metallic beetles\", cantharides, have appeared in many Moroccan prescriptions, but these seem to be irrelevant for flavouring purposes.",
             "strType": "Spice"
         },
         {
@@ -3172,7 +3172,7 @@
             "idIngredient": "558",
             "strIngredient": "Orange Blossom Water",
             "strDescription": "Orange flower water, or orange blossom water, is the clear, perfumed by-product of the distillation of fresh bitter-orange blossoms for their essential oil.\r\n\r\nUses\r\nMediterranean Relief.jpg\r\nThis essential water has traditionally been used as an aromatizer in many Mediterranean traditional dessert dishes, such as in France for the gibassier and pompe à l'huile or in Spain for the Roscón de Reyes (King cake), or the Samsa in Tunisia or in Moroccan coffee, but has more recently found its way into other cuisines. For example, orange flower water is used in Europe to flavor madeleines, in Mexico to flavor little wedding cakes and Pan de muerto, and in the United States to make orange blossom scones and marshmallows. Orange flower water is also used as an ingredient in some cocktails, such as the Ramos Gin Fizz. In Malta and many North African as well as Middle Eastern countries, orange blossom water is widely used as medicine for stomach ache and given to small children as well as adults.\r\n\r\nOrange flower water has been a traditional ingredient used often in North African as well as in Middle Eastern cooking. In Arab variants of baklava, orange blossom water is often mixed with the sweet syrup for flavor. Orange blossoms are believed to be used in this manner because they are seen as the traditional bridal flower and, therefore, symbolize purity (white, small and delicate). It is also added to plain water in the Middle East to mask high mineral content and other unpleasant flavors (e.g. those arising from storage in a qulla, a type of clay jug that keeps water cool in a manner similar to the zeer); some add the fragrance irrespective of the taste of the plain water.",
-            "strType": "Drink"
+            "strType": "Liquid"
         },
         {
             "idIngredient": "559",
@@ -3190,13 +3190,13 @@
             "idIngredient": "561",
             "strIngredient": "Sherry",
             "strDescription": "Sherry is a fortified wine made from white grapes that are grown near the city of Jerez de la Frontera in Andalusia, Spain.",
-            "strType": "Wine"
+            "strType": "Liqueur"
         },
         {
             "idIngredient": "562",
             "strIngredient": "Rose water",
             "strDescription": "Rose water is a flavoured water made by steeping rose petals in water. Additionally, it is the hydrosol portion of the distillate of rose petals, a by-product of the production of rose oil for use in perfume. It is used to flavour food, as a component in some cosmetic and medical preparations, and for religious purposes throughout Europe and Asia.",
-            "strType": "Drink"
+            "strType": "Liquid"
         },
         {
             "idIngredient": "563",
@@ -3214,7 +3214,7 @@
             "idIngredient": "565",
             "strIngredient": "Sweet Potatoes",
             "strDescription": "The sweet potato or sweetpotato is a dicotyledonous plant that belongs to the bindweed or morning glory family, Convolvulaceae. Its large, starchy, sweet-tasting, tuberous roots are a root vegetable. The young leaves and shoots are sometimes eaten as greens.",
-            "strType": "Root Vegetable"
+            "strType": "Vegetable"
         },
         {
             "idIngredient": "566",
@@ -3250,7 +3250,7 @@
             "idIngredient": "571",
             "strIngredient": "Yukon Gold Potatoes",
             "strDescription": "Yukon Gold is a large cultivar of potato most distinctly characterized by its thin, smooth, eye-free skin and yellow-tinged flesh. This potato was developed in the 1960s by Garnet Johnston in Guelph, Ontario, Canada, with the help of Geoff Rowberry at the University of Guelph. The official cross was made in 1966 and Yukon Gold was finally released into the market in 1980.",
-            "strType": "Root Vegetable"
+            "strType": "Vegetable"
         },
         {
             "idIngredient": "572",
@@ -3310,7 +3310,7 @@
             "idIngredient": "581",
             "strIngredient": "Quinoa",
             "strDescription": "Quinoa is a flowering plant in the amaranth family. It is an herbaceous annual plant grown as a crop primarily for its edible seeds; the seeds are rich in protein, dietary fiber, B vitamins, and dietary minerals in amounts greater than in many grains.",
-            "strType": "Grain"
+            "strType": "Uncategorised 0"
         },
         {
             "idIngredient": "582",
@@ -3346,7 +3346,7 @@
             "idIngredient": "588",
             "strIngredient": "Cheese Slices",
             "strDescription": "Processed cheese is a food product made from cheese and other unfermented dairy ingredients mixed with emulsifiers. Additional ingredients, such as vegetable oils, salt, food coloring, or sugar may be included. As a result, many flavors, colors, and textures of processed cheese exist.",
-            "strType": "Cheese"
+            "strType": "Dairy"
         },
         {
             "idIngredient": "589",
@@ -3370,7 +3370,7 @@
             "idIngredient": "592",
             "strIngredient": "Pickle Juice",
             "strDescription": "Pickling is the process of preserving or extending the shelf life of food by either anaerobic fermentation in brine or immersion in vinegar. In East Asia, vinaigrette is also used as a pickling medium. The pickling procedure typically affects the food's texture, taste and flavor.",
-            "strType": "Juice"
+            "strType": "Liquid"
         },
         {
             "idIngredient": "593",
