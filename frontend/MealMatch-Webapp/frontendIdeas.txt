@@ -1,15 +1,12 @@
-- Add spinners for waiting on requests.
 - More feedback for users when waiting in general.
 - Fix colours
 - Return to url that you were on when you modal popup login.
-
-
 - A user logging in without internet?
 - A user logging in with slow internet?
 - A user logging in with the wrong password?
 - User shouldn't be able to click login button multiple times.
 
-
+- Password should be sent over http
 
 
 

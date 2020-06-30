@@ -5,6 +5,7 @@ __pycache__/
 
 # DB
 app/db.sqlite
+db.sqlite
 
 # C extensions
 *.so
