@@ -2,7 +2,7 @@
     "meals": [
         {
             "name": "Grilled Cheese Buns",
-            "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/grilled-cheese-horizontal-jpg-1522266016.jpg",
+            "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Grilled_Cheese_with_hoisin.jpg",
             "instruction": "Grill buns with cheese in it",
             "mealtype": "Miscellaneous",
             "ingredients": [
@@ -20,6 +20,7 @@
         },
         {
             "name": "Noodles",
+            "image": "https://live.staticflickr.com/4814/30979161127_65de182a52_b.jpg",
             "instruction": "Boil noodles with water",
             "mealtype": "Miscellaneous",
             "ingredients": [

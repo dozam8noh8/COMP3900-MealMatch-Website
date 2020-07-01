@@ -112,7 +112,6 @@ class Recipe(db.Model):
             if res:
                 filtered.append(recipe)
 
-        print(len(filtered))
         return filtered
 
     def json_dump(recipe):
