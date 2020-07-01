@@ -4,8 +4,8 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
-import {Ingredient} from '../ingredient';
-import { IngredientService } from '../ingredient.service';
+import {Ingredient} from '../../models/ingredient';
+import { IngredientService } from '../../services/ingredient.service';
 
 @Component({
   selector: 'app-ingredient-search',

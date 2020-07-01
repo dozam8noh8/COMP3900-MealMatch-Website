@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Recipe } from '../recipe';
+import { Recipe } from '../models/recipe';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

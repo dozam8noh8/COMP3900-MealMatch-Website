@@ -64,7 +64,7 @@ def get_auth_token():
     token = g.user.generate_auth_token(12000)
     return jsonify({'token': token.decode('ascii'), 'duration': 12000})
 
-@app.route('/api/recipes/<int:id>')
+@app.route('/api/recipe/<int:id>')
 def get_recipe(id):
     return jsonify(Recipe.get_recipe_by_id(id))
 

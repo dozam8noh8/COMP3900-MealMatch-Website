@@ -7,7 +7,7 @@
                     <div *ngFor="let ingredient of category.ingredients">
                         <mat-checkbox 
                         [checked]="ingredient.onList"
-                        (change)="ingredient.onList = !ingredient.onList">
+                        (change)="ingredientService.addOrRemove(ingredient)">
                             {{ingredient.name}}
                         </mat-checkbox>                                
                     </div>                        

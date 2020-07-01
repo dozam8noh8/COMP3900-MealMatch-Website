@@ -1,21 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import {Ingredient} from './ingredient';
-import { Category } from './category';
+import {Ingredient} from '../models/ingredient';
+import { Category } from '../home-page/category';
 import { HttpClient } from '@angular/common/http';
-
-var ALL_INGREDIENTS: Ingredient[] = [
-  { id: 1, name: 'beef', onList: true},
-  { id: 2, name: 'milk', onList: false },
-  { id: 3, name: 'flour', onList: false },
-  { id: 4, name: 'butter', onList: false },
-  { id: 5, name: 'sugar', onList: false },
-  { id: 6, name: 'cream', onList: false },
-  { id: 7, name: 'egg', onList: false },
-  { id: 8, name: 'apple', onList: false },
-  { id: 9, name: 'pear', onList: false },
-  { id: 10, name: 'banana', onList: false },   
-];
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +11,7 @@ export class IngredientService {
 
   allIngredients: Ingredient[] = [];
   allCategories: Category[];
-  // addedIngredients: Ingredient[] = [];
+  addedIngredients: Ingredient[] = [];
 
   constructor(private http: HttpClient) { 
     this.http.get("http://localhost:5000/api/get_category")
@@ -47,15 +34,21 @@ export class IngredientService {
   }
 
   getAddedIngredients(): Ingredient[] {
-    return this.allIngredients.filter(item => item.onList===true);
+    return this.addedIngredients;
+  }
+
+  addOrRemove(ingredient: Ingredient) {
+    ingredient.onList ? this.removeFromList(ingredient) : this.addToList(ingredient);
   }
 
   addToList(newIngredient: Ingredient) {
     newIngredient.onList = true;
+    this.addedIngredients.push(newIngredient);
   }
 
   removeFromList(ingredient: Ingredient) {
     ingredient.onList = false;
+    this.addedIngredients = this.addedIngredients.filter(item => item!=ingredient);
   }
 
   getAllCategories(): Category[] {

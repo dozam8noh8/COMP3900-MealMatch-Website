@@ -1,4 +1,4 @@
-import { Ingredient, RegularIngredient } from './home-page/ingredient';
+import { Ingredient, RegularIngredient } from './ingredient';
 
 
 

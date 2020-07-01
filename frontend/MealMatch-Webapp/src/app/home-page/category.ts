@@ -1,5 +1,5 @@
 
-import {Ingredient} from './ingredient';
+import {Ingredient} from '../models/ingredient';
 
 export interface Category {
     id: number;
