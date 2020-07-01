@@ -40,9 +40,9 @@ export class IngredientSearchComponent implements OnInit {
   }
 
   private _filter(value: string): Ingredient[] {
-    const filterValue = value.toString()//.toLowerCase();
+    const filterValue = value.toString().toLowerCase();
     return filterValue==='' ? [] : this.ingredientService.getAllIngredients().filter(item => {
-          return item.name.startsWith(filterValue) && !item.onList
+          return item.name.toLowerCase().startsWith(filterValue) && !item.onList
       });
   }
 
