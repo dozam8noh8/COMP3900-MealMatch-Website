@@ -6,3 +6,13 @@ I worked on the user stories which involved splitting, adding and refinding them
 
 Week 3
 After some confusion with the delegation of tasks, I began investing on how to populate our DB of recipe data. I looked through a few APIs and determined their suitability. This had involved considering the requirements as it was important that the API data we scraped from had considered whether was comprehensive enough to consider things like a meal type or an ingredient category. If they did not include this information, then we would have to manually input these types of data. Thereafter, it was determined that Spoonacular satisfied all the criteria and so I began work on scraping this data. I began drafting up a DB schema and scripts so that it could directly call Spoonacular's API and store the corresponding data. I first began on storing the 1000 most popular ingredients as this would provide the most abundant type of recipes. Restricting the number of ingredients also ensured that when searching up an ingredient, the user would not be overwhelmed with too many ingredients.
+
+Week 4
+I finished off the scripts that enabled the scraping of Spoonacular's API data into the databases. This involved storing the data of the recipes, recipe's ingredients and meal types into their respective tables. It was important to ensure that the data remained consistent and upheld its integrity. Recipes that involved ingredients that had obscure ingredients and were not in the ingredient database could not be added. Whilst I was finalising the scripts, I read through Spoonacular's TOS (who even reads these things) and found that we its usage forbade the storage of its data. Despite emailing for formal permission, we were still not allowed. Looks like all this work went down the drain. :)
+
+Thereafter, our team started using TheMealDB to store our data. I helped scraped a list of recipes from it into a single JSON list for easy usage. Additionally, 90% of the 500 or so ingredients didn't specify a category, so it was decided to manually input them in. Thus, I began the tedious job of categorising this data. Furthermore, I also worked on the new schema that created an association table to link the Ingredient and Recipe tables. This involved learning SQLAlchemy and fixing up the scripts that seeded the database.
+
+Week 5
+I added many more categories into our list of ingredients to sort them further. Unfortunately, my schema changes ended up breaking an API. Marshmallow was used to serialise the database data and its high level made it quite difficult to understand how to implement it. Though, in the end I managed to fix the API whilst adding new data to it.
+
+WIP...
