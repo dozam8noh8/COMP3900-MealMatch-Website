@@ -18,9 +18,9 @@ import * as rx from 'rxjs/operators';
           The username and password were not recognised
         </mat-error>
         <mat-form-field class="full-width-input">
-          <input matInput placeholder="Username or Email" formControlName="username" required>
+          <input matInput placeholder="Username" formControlName="username" required>
           <mat-error>
-            Please provide a valid username or email address
+            Please provide a valid username
           </mat-error>
         </mat-form-field>
         </div>
