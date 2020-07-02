@@ -35,3 +35,18 @@ I've started working on the backend. I've scrapped themealdb to find out the cat
 I've pretty much made the schema in the flask, and made a script to populate the db.
 I've also setup the endpoints for searching meals, find all the ingredients and categories.
 My next task is to work on recommendations and setup endpoints to add recipes.
+
+The recommendations endpoint is setup on the backend but I'm waiting for the frontend tasks to finish.
+Once we get that page up, we can connect to the endpoint we can connect and it should be up on the page.
+
+==============Week 5================
+We got to the point where we were updating some requirements for our ingredients amounts. So we had to
+change a bit of the db schema then push the things up again. TheMealDb is a bit of a pain to work with
+Me and Kenny had to spend quite a lot of time parsing the stuff and repopulating it again. We ended up
+finishing all of our tasks on Jira and ended up doing more than we expected but if TheMealDb stuff was
+working from the first it would've been easier for both of us. Me and Kenny also spent a bit of time to
+fix up the shape of some of the endpoints to ensure the demo goes well and we can tick off tickets. My
+next task would be return meaningful error messages and setup some endpoints for users to add new recipes.
+The feedback from Eugene mentioned about improving our UI which we decided to do after we finish most
+of our tickets. I am planning on spending some time on that if I'm free from tasks. Demo went pretty well,
+retro was good as well.
