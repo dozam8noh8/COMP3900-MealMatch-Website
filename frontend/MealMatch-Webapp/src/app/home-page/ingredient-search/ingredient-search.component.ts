@@ -19,7 +19,7 @@ export class IngredientSearchComponent implements OnInit {
   ingredientControl = new FormControl();
   filteredOptions: Observable<Ingredient[]>;
 
-  constructor(ingService: IngredientService) { 
+  constructor(ingService: IngredientService) {
     this.ingredientService = ingService;
   }
 
@@ -27,12 +27,13 @@ export class IngredientSearchComponent implements OnInit {
     this.filteredOptions = this.ingredientControl.valueChanges
       .pipe(
         map(value => this._filter(value)),
-      );  
+      );
   }
 
+  // Investigate this, was just a temporary fix for the demo.
   displayIngredient(ingredient: Ingredient): String {
-    return ingredient.name;
-  } 
+    return ingredient?.name;
+  }
 
   addToList(newIngredient: Ingredient) {
     this.ingredientService.addToList(newIngredient);

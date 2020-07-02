@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, AbstractControl, ValidatorFn } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -54,8 +54,7 @@ import { Router } from '@angular/router';
     <p>
     <button mat-raised-button [disabled]="loading" color="primary">Sign Up</button>
     <mat-spinner *ngIf=loading> </mat-spinner>
-    <mat-error class="submitError" *ngIf=form.errors?.NoPasswordMatch> Please make sure the confirm password field matches the password field. </mat-error>
-    <mat-error class="submitError" *ngIf=error> This username is already taken, please try another. </mat-error>
+    <mat-error class="submitError" *ngIf=error> {{error}} </mat-error>
     <h1 *ngIf=showSuccessBanner> Sign up successful, redirecting to login </h1>
 
 
@@ -75,7 +74,8 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit {
   form: FormGroup;
   loading: boolean;
-  error: String;
+  error: String; // Refactor errors!
+  passwordMatchError: boolean;
   showSuccessBanner: boolean;
   constructor(
     private fb: FormBuilder,
@@ -89,11 +89,16 @@ export class SignupComponent implements OnInit {
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
     },
-{    updateOn: 'submit', validators: bothPasswordFieldsMatch,} );
-  }
+//{    updateOn: 'submit', validators: bothPasswordFieldsMatch,} );
+    )}
   async onSubmit() {
-    console.log('Submitting form');
     if (this.form.valid) {
+      // Extra validation. FIX THE USE OF SET TIMEOUT.
+      if (this.form.get('password').value !== this.form.get('confirmPassword').value) {
+        this.error = 'Please make sure the confirm password field matches the password field.';
+        //setTimeout(() => this.error = '', 4000);
+        return;
+      }
         this.loading = true;
         this.error = '';
         const username = this.form.get('username').value; // Get the values entered in the form.
@@ -101,14 +106,14 @@ export class SignupComponent implements OnInit {
         await this.authService.signup({username,password})
         .then(() => {
           this.showSuccessBanner = true;
+          // FIX THIS SO YOU CAN'T CLICK IT MULTIPLE TIMES!
           setTimeout(() => this.router.navigate(['/login']), 1000);
         })
         .catch(error => {
-          this.error = error;
+          this.error = 'This username is already taken, please try another.';
           console.log("An error occurred", error);
         })
         .finally(() => {
-          console.log("DONE")
           this.loading = false;
         });
       }
@@ -125,4 +130,17 @@ export function bothPasswordFieldsMatch(f: FormGroup) {
     return null; // Validator will passs
   }
   return { 'NoPasswordMatch': true }; // validator fails here with the message passwords dont match.
+
+}
+/* Haven't got this working yet but might be useful at some stage */
+export function controlNotSameAs(otherControl: AbstractControl): ValidatorFn {
+  return function inner (control: AbstractControl) {
+    if (!control.value || !otherControl.value) {
+      return null;
+    }
+    if (control.value === otherControl.value){
+      return null;
+    }
+    return { 'NoPasswordMatch': true }; // validator fails here with the message passwords dont match.
+  }
 }
