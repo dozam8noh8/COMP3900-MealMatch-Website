@@ -22,7 +22,8 @@
 </div>
 <div *ngIf="resultingRecipes?.length === 0 && searchComplete">
     <h1>Sorry, we couldn't find any recipes with the following items</h1>
-    <ul *ngFor="let ingredient of searchState?.ingredients">
-        <li>ingredient</li>
+    <ul *ngFor="let ingredient of searchState?.searchIngredients">
+        <li>{{ingredient}}</li>
     </ul>
+    <a routerLink="/home">Return to Ingredients Select</a>
 </div>
