@@ -24,13 +24,11 @@
             "ingredients": [
                 {
                     "name": "Boiling Water",
-                    "amount": 100,
-                    "quantity": "ml"
+                    "quantity": "100 ml"
                 },
                 {
                     "name": "Noodles",
-                    "amount": 1,
-                    "quantity": "packet"
+                    "quantity": "1 packet"
                 }
             ]
         },
@@ -41,13 +39,11 @@
             "ingredients": [
                 {
                     "name": "Bacon",
-                    "amount": 100,
-                    "quantity": "ml"
+                    "quantity": "100 ml"
                 },
                 {
                     "name": "Asparagus",
-                    "amount": 1,
-                    "quantity": "packet"
+                    "quantity": "1 packet"
                 }
             ]
         }
