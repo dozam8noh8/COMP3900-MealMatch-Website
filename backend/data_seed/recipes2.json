@@ -8,13 +8,11 @@
             "ingredients": [
                 {
                     "name": "Buns",
-                    "amount": 1,
-                    "quantity": "bun"
+                    "quantity": "1 bun"
                 },
                 {
                     "name": "Cheese Slices",
-                    "amount": 1,
-                    "quantity": "slice"
+                    "quantity": "1 slice"
                 }
             ]
         },
