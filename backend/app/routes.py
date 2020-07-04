@@ -57,7 +57,7 @@ def new_user():
 
 @app.route('/api/users/<int:id>', methods=['GET'])
 @auth.login_required
-def get_user(id):
+def get_user_info(id):
     '''
     Given a user's id, return the details associated with that user.
 
@@ -125,8 +125,8 @@ def recipe_search():
     recipes = Recipe.get_recipes(ingredients)
     return jsonify(Recipe.json_dump(recipes))
 
-@app.route('/api/get_category', methods=['GET'])
-def get_category():
+@app.route('/api/get_ingredients_in_categories', methods=['GET'])
+def get_ingredients_in_categories():
     '''
         Returns a nested json object of all categories with each ingredient within that category inside.
 
@@ -136,8 +136,6 @@ def get_category():
                 "id":       -> The id of the actual ingredient within the category.
                 "name":     -> The name of the ingredient.
             ]
-
-        (TODO) Rename this endpoint to get_ingredients_by_category.
 
     '''
     categories = Category.query.all()

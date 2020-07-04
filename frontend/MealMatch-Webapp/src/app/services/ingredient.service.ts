@@ -14,7 +14,7 @@ export class IngredientService {
   addedIngredients: Ingredient[] = [];
 
   constructor(private http: HttpClient) { 
-    this.http.get("http://localhost:5000/api/get_category")
+    this.http.get("http://localhost:5000/api/get_ingredients_in_categories")
     .subscribe( (data: Category[]) => {
         this.allCategories = data;
         this.allCategories.forEach( catergory => {
