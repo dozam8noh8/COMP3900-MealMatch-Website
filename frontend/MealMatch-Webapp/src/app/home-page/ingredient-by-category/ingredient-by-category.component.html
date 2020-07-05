@@ -1,7 +1,8 @@
 <mat-card style="margin: 0 auto; width: 75%;">
     <h2>Ingredients by Category</h2>
     <mat-tab-group >
-        <div *ngFor="let category of ingredientService.getAllCategories()">
+        <ng-container *ngIf="ingredientService.requestSuccessful">
+        <div  *ngFor="let category of ingredientService.getAllCategories()">
             <mat-tab label="{{category.name}}">
                 <ul class="columned">
                     <div *ngFor="let ingredient of category.ingredients">
@@ -14,6 +15,19 @@
                 </ul>
             </mat-tab>
         </div>
+    </ng-container>
     </mat-tab-group>    
+    <div *ngIf="ingredientService.requestLoading">
+        <h1>Fetching ingredients</h1>
+        <mat-spinner> Showing spinner </mat-spinner>
+    </div>
+
+        <div *ngIf="!ingredientService.requestSuccessful && !ingredientService.requestLoading">
+            <mat-error>Getting ingredients failed, please refresh page.
+                        {{ ingredientService.error.status }}
+                        {{ ingredientService.error.message }}
+            </mat-error>
+        </div>
+
 </mat-card>
 

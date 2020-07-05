@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { IngredientService } from '../../services/ingredient.service';
 
 @Component({

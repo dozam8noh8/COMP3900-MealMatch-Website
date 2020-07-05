@@ -9,7 +9,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class IngredientService {
 
-  requestComplete = false;
+  requestLoading = true;
   requestSuccessful = false;
   error = null;
   allIngredients: Ingredient[] = [];
@@ -20,7 +20,6 @@ export class IngredientService {
     this.http.get("http://localhost:5000/api/get_ingredients_in_categories")
     .subscribe( 
       (data: Category[]) => {
-        this.requestComplete = true;
         this.requestSuccessful = true;
         this.allCategories = data;
         this.allCategories.forEach( category => {
@@ -30,9 +29,10 @@ export class IngredientService {
             return item;
           });
         });
+        this.requestLoading = false;
       },
       (err: HttpErrorResponse) => {
-        this.requestComplete = true;
+        this.requestLoading = false;
         this.requestSuccessful = false;
         this.error = err;
       }
