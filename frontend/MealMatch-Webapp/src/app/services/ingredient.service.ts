@@ -17,8 +17,8 @@ export class IngredientService {
     this.http.get("http://localhost:5000/api/get_ingredients_in_categories")
     .subscribe( (data: Category[]) => {
         this.allCategories = data;
-        this.allCategories.forEach( catergory => {
-          catergory.ingredients = catergory.ingredients.map( item => {
+        this.allCategories.forEach( category => {
+          category.ingredients = category.ingredients.map( item => {
             item = { ...item, onList: false };
             this.allIngredients.push(item);
             return item;
@@ -53,6 +53,10 @@ export class IngredientService {
 
   getAllCategories(): Category[] {
     return this.allCategories;
+  }
+  
+  removeAllFromList() {
+    this.addedIngredients.map(ingredient => this.removeFromList(ingredient));
   }
 
 }
