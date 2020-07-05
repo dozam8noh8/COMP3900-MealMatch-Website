@@ -2,20 +2,26 @@ import { Injectable } from '@angular/core';
 
 import {Ingredient} from '../models/ingredient';
 import { Category } from '../home-page/category';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IngredientService {
 
+  requestComplete = false;
+  requestSuccessful = false;
+  error = null;
   allIngredients: Ingredient[] = [];
   allCategories: Category[];
   addedIngredients: Ingredient[] = [];
 
   constructor(private http: HttpClient) { 
     this.http.get("http://localhost:5000/api/get_ingredients_in_categories")
-    .subscribe( (data: Category[]) => {
+    .subscribe( 
+      (data: Category[]) => {
+        this.requestComplete = true;
+        this.requestSuccessful = true;
         this.allCategories = data;
         this.allCategories.forEach( category => {
           category.ingredients = category.ingredients.map( item => {
@@ -24,7 +30,13 @@ export class IngredientService {
             return item;
           });
         });
-    });
+      },
+      (err: HttpErrorResponse) => {
+        this.requestComplete = true;
+        this.requestSuccessful = false;
+        this.error = err;
+      }
+    )
   }
   
   ngOnInit() { }
