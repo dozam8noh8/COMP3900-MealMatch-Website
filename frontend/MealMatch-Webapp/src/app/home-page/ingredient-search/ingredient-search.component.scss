@@ -15,6 +15,14 @@
     width: 75%; 
     overflow: auto;
     align-content: center;
+    // This makes the text padding the same as the user list item padding
+    // So that when an item is selected for the first time, it doesnt make the
+    // Whole UI shift.
+    .ingredient-text {
+        margin-right: 7px;
+        margin-bottom: 10px;
+        padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+    }
 }
 
 .user-list-item {
@@ -23,7 +31,7 @@
     margin-right: 7px;
     margin-bottom: 10px;
     border-radius: 5px;
-    padding: 5px 5px 5px 5px;
+    padding: 0.5vh 0.5vw 0.5vh 0.5vw;
 }
 
 .remove-button {
@@ -31,6 +39,16 @@
     // background-color: skyblue;
     background-color: transparent;
     border-width: 0;
+}
+.ingredientsAndButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .remove-all {
+        height: 75%; // No idea why this makes it a good size..
+        margin-left:3vw;
+        margin-right: 0.5vw
+    }
 }
 
 // button:hover {
