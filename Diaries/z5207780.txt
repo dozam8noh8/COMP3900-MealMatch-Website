@@ -75,3 +75,12 @@ and promises. For example, now whilst the page is submitting a network request, 
 to the users so that they know that there is something going on in the background. Whilst in terms of functionality this isnt that important,
 I think its key to the user experience that they can see what's happening. I've also implemented an HTTPinterceptor and placed a delay on all
 network requests because there's almost no delay on localhost so it isnt realistic.
+This week we also had the demo so most of the week was spent making sure that all the user stories we had set out to do got completed. This meant I was refining the error handling on my Auth Pages. I had a lot of troubles getting validators to work as I intended because I wasn't sure how to mix some validators that update on "change" and others on "submit". I wrote the demo outline so we would know exactly what we were doing and the team helped attach the corresponding user stories. I presented the demo and the feedback for our work was that it was impressive functionally but the UI looked a bit unprofressional. I can't say I disagree but I am definitely more of a functionality sort of person. We checked with Eugene if it was ok to work on functionality first and then work on the UI later, he said this was ok. We also checked with Eugene if Emmanuel (who has been absent for 2 weeks now) is still in the course, he said he didn't know but he'd follow it up.
+
+Our team had the retro right after our tute. We reflected on the week and found a few issues with communication and doubling up on tasks but overall everyone (Emmanuel still wasnt present) thought we had a great sprint. I'd agree.
+
+Pretty good week all in all.
+
+==================Week 6==============
+This week is quiet week so I have a bit more time to work on things, but I also don't want to spend too long. I've worked with Manni to make the home page more capable of error handling and done a few small UI related tasks that were found at the end of last sprint. One thing I've been doing a lot of but havent really spoken about is Jira Management. I'm constantly creating tasks for people to do on Jira, and when people have time, they assign themselves. Since everyone in our group is dilligent this seems to be working. The plan for the rest of this week is to start thinking about how we might make a profile page.
+
