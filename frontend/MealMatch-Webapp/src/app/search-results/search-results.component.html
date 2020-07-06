@@ -1,0 +1,29 @@
+
+<mat-spinner *ngIf=!searchComplete> Showing spinner </mat-spinner>
+<div *ngIf="resultingRecipes?.length !== 0">
+    <div class="columned" style="margin-left: 2%; margin-right: 2%;">
+        <div *ngFor="let recipe of resultingRecipes">
+            <a routerLink="/recipe/{{recipe.id}}" style="text-decoration: none;">
+                <mat-card class="recipe">
+                    <div *ngIf="recipe.image">
+                        <img src="{{recipe.image}}" style="width: 100%;">
+                    </div>
+
+                    <b>{{recipe.name}}</b> <br>
+                    <i>Uses:
+                        <span *ngFor="let ingredient of recipe.ingredients">
+                            {{ingredient["ingredient.name"]}}, <!-- Should not have comma for last ingredient -->
+                        </span>
+                    </i>
+                </mat-card>
+            </a>
+        </div>
+    </div>
+</div>
+<div *ngIf="resultingRecipes?.length === 0 && searchComplete">
+    <h1>Sorry, we couldn't find any recipes with the following items</h1>
+    <ul *ngFor="let ingredient of searchState?.searchIngredients">
+        <li>{{ingredient}}</li>
+    </ul>
+    <a routerLink="/home">Return to Ingredients Select</a>
+</div>

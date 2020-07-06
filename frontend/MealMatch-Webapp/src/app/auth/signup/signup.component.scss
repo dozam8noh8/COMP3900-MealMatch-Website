@@ -1,0 +1,39 @@
+
+mat-card-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    //align-content: space-between;
+
+
+}
+mat-card {
+    display:flex;
+    margin: 2em auto;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+  .submitError {
+    margin-top: 3em;
+    font-size: x-large;
+  }
+
+  }
+
+  mat-form-field {
+    //If you use display block, you can make the width bigger
+    //If you use display flex, you cant.
+    justify-content: center;
+    font-size: x-large;
+    width: 35vw;
+
+  }
+  mat-card-title {
+      font-size: xx-large;
+      padding-bottom: 1vh;
+  }
+

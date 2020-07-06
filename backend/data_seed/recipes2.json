@@ -1,0 +1,51 @@
+{
+    "meals": [
+        {
+            "name": "Grilled Cheese Buns",
+            "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Grilled_Cheese_with_hoisin.jpg",
+            "instruction": "Grill buns with cheese in it",
+            "mealtype": "Miscellaneous",
+            "ingredients": [
+                {
+                    "name": "Buns",
+                    "quantity": "1 bun"
+                },
+                {
+                    "name": "Cheese Slices",
+                    "quantity": "1 slice"
+                }
+            ]
+        },
+        {
+            "name": "Noodles",
+            "image": "https://live.staticflickr.com/4814/30979161127_65de182a52_b.jpg",
+            "instruction": "Boil noodles with water",
+            "mealtype": "Miscellaneous",
+            "ingredients": [
+                {
+                    "name": "Boiling Water",
+                    "quantity": "100 ml"
+                },
+                {
+                    "name": "Noodles",
+                    "quantity": "1 packet"
+                }
+            ]
+        },
+        {
+            "name": "New Recipe",
+            "instruction": "Boil noodles with water",
+            "mealtype": "Miscellaneous",
+            "ingredients": [
+                {
+                    "name": "Bacon",
+                    "quantity": "100 ml"
+                },
+                {
+                    "name": "Asparagus",
+                    "quantity": "1 packet"
+                }
+            ]
+        }
+    ]
+}

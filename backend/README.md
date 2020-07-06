@@ -1,3 +1,13 @@
+#TLDR
+1. Make a venv using `virtualenv <venv here>`
+2. Activate venv `source <venvName>/bin/activate`
+3. install requirements with pip or pip3 `pip3 install -r requirements.txt`
+4. Run program with `python run.py`
+
+#Common issues
+- Address already in use -> Find the process and kill it using `kill -9 <pid>`
+- ImportError: cannot import name 'Feature' -> Download an earlier version of setup tools `pip3 install setuptools==45`
+
 Restful Authentication skeleton modified from REST-Auth [RESTful Authentication with Flask](http://blog.miguelgrinberg.com/post/restful-authentication-with-flask) article.
 =========
 Installation
@@ -53,8 +63,28 @@ API Documentation
     Return a protected resource.<br>
     This request is only just for an example to look at
 
+- GET **/api/db_seed**
+
+    Seed your local db with the required data.<br>
+    All previous data is REMOVED and replaced with standard data and a user (username: 'admin', password: 'admin')
+
 Use Postman to send requests. Use BASIC Authentication with username and password to login and return a token
 
 Once the token expires it cannot be used anymore and the client needs to request a new one. Note that in this last example the password is arbitrarily set to `x`, since the password isn't used for token authentication.
 
 An interesting side effect of this implementation is that it is possible to use an unexpired token as authentication to request a new token that extends the expiration time. This effectively allows the client to change from one token to the next and never need to send username and password after the initial token was obtained.
+
+Database Tutorial
+-----------------
+
+    category = Category(name='Pastry')
+    ingredient = Ingredient(name='Puff Pastry')
+    ingredient.categories.append(category)
+    mealtype = Mealtype(name='Hello')
+    user = User(id=1, username='Hello',password_hash='Hello')
+    recipe = Recipe(name='recipename', user=user, image='hello', instruction='stuck in the toaster')
+    recipe.mealtypes.append(mealtype)
+    # link recipe and ingredient with new attribute of quantity
+    recipe_ingredient = RecipeIngredients(quantity='50g')
+    recipe_ingredient.ingredients = ingredient
+    recipe.ingredients.append(recipe_ingredient)
