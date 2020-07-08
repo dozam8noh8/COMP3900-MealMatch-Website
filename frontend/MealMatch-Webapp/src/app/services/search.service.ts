@@ -12,7 +12,6 @@ export class SearchService {
   
   searchComplete = false;
   inputIngredients: Ingredient[];
-  mealType: String;
   allResults: Recipe[];
 
   constructor(private http: HttpClient) { }

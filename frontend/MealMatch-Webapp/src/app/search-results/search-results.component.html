@@ -1,4 +1,17 @@
 
+<mat-form-field appearance="fill">
+    <mat-label>Meal Type</mat-label>
+    <mat-select 
+    matNativeControl
+    (selectionChange)="updateMealType($event.value)"
+    [(value)] = "selectedMealType">
+        <mat-option *ngFor="let mealtype of getAllMealTypes()" 
+        [value]="mealtype">
+            {{mealtype}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
 <mat-spinner *ngIf=!searchComplete()> Showing spinner </mat-spinner>
 
 <div *ngIf="searchComplete() && getResults().length > 0">
@@ -23,7 +36,9 @@
 </div>
 
 <div *ngIf="searchComplete() && getResults().length === 0">
-    <h1>Sorry, we couldn't find any recipes with the following items</h1>
+    <h1>Sorry, we couldn't find any 
+        <span *ngIf="selectedMealType !== 'All'"> "{{selectedMealType}}" </span>
+        recipes with just: </h1>
     <ul *ngFor="let ingredient of getSearchedIngredients()">
         <li>{{ingredient}}</li>
     </ul>
