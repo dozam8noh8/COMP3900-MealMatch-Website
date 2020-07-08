@@ -1,8 +1,9 @@
 
-<mat-spinner *ngIf=!searchComplete> Showing spinner </mat-spinner>
-<div *ngIf="resultingRecipes?.length !== 0">
+<mat-spinner *ngIf=!searchComplete()> Showing spinner </mat-spinner>
+
+<div *ngIf="searchComplete() && getResults().length > 0">
     <div class="columned" style="margin-left: 2%; margin-right: 2%;">
-        <div *ngFor="let recipe of resultingRecipes">
+        <div *ngFor="let recipe of getResults()">
             <a routerLink="/recipe/{{recipe.id}}" style="text-decoration: none;">
                 <mat-card class="recipe">
                     <div *ngIf="recipe.image">
@@ -18,11 +19,12 @@
                 </mat-card>
             </a>
         </div>
-    </div>
+    </div>    
 </div>
-<div *ngIf="resultingRecipes?.length === 0 && searchComplete">
+
+<div *ngIf="searchComplete() && getResults().length === 0">
     <h1>Sorry, we couldn't find any recipes with the following items</h1>
-    <ul *ngFor="let ingredient of searchState?.searchIngredients">
+    <ul *ngFor="let ingredient of getSearchedIngredients()">
         <li>{{ingredient}}</li>
     </ul>
     <a routerLink="/home">Return to Ingredients Select</a>
