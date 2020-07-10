@@ -15,4 +15,7 @@ Thereafter, our team started using TheMealDB to store our data. I helped scraped
 Week 5
 I added many more categories into our list of ingredients to sort them further. Unfortunately, my schema changes ended up breaking an API. Marshmallow was used to serialise the database data and its high level made it quite difficult to understand how to implement it. Though, in the end I managed to fix the API whilst adding new data to it.
 
-WIP...
+Throughout the past two weeks, I quickly went through two Flask tutorials to refresh my memory of it. Though most of it was quite irrelevant due to our team's implementation strategy, it was quite refreshing. To prepare for our demo A this week, I spent some time fixing up more of the raw data to make it more aesthetically pleasing. Additionally, I tested a lot of the functionality to ensure that nothing would break during the demo. Right after our demo, we did our retro A where I set up the Trello board for easy reflection management.
+
+Week 6
+Flexibility week! Busy with other uni assignments so I did not get anything done. Seeing as how this sprint is 3 weeks, I think our velocity will be fine. Regardless, I attended a group meeting for progress updates and to assign work on Jira.
