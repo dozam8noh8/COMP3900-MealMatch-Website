@@ -141,6 +141,19 @@ def get_ingredients_in_categories():
     categories = Category.query.all()
     return jsonify(Category.json_dump(categories))
 
+@app.route('/api/add_recipe', methods=['POST'])
+@auth.login_required
+def add_recipe():
+    name = request.json.get('name')
+    instruction = request.json.get('instruction')
+    mealType = request.json.get('mealType')
+    ingredients = request.json.get('ingredients')
+    user = 'admin@admin.com'
+    recipe = Recipe.add_recipe(name, instruction, mealType, ingredients, user)
+    if type(recipe) == str:
+        return recipe # Error message
+    return "Recipe has been added. Recipe_id: " + str(recipe.id)
+
 # ENDPOINT IS CURRENTLY HARDCODED FOR CHEESE SLICES 
 @app.route('/api/recommendations', methods=['GET'])
 def get_recommendations():
