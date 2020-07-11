@@ -114,10 +114,34 @@ class Recipe(db.Model):
 
         return filtered
 
+    # Make new recipe
+    def add_recipe(name, instruction, mealType, ingredients, user):
+        recipe = Recipe(name=name, instruction=instruction)
+
+        mealtype = Mealtype.query.filter_by(name=mealType).first()
+        recipe.mealtypes.append(mealtype)
+
+        # user = User.query.filter_by(email=user).first()
+        # for ingredient in ingredients:
+        #     print(ingredient)
+        #     print(ingredient['name'])
+        #     db_ingredient = Ingredient.query.filter_by(name=ingredient['name']).first()
+        #     if db_ingredient:
+        #         recipe_ingredient = RecipeIngredients(quantity=ingredient['quantity'])
+        #         db.session.add(recipe_ingredient)
+        #         recipe_ingredient.ingredients = db_ingredient
+        #         # recipe.ingredients.append(recipe_ingredient)
+        # user.recipes.append(recipe)
+        # db.session.add(recipe)
+        # db.session.commit()
+        return recipe
+
     def json_dump(recipe):
         schema = RecipeSchema(many=True)
         return schema.dump(recipe)
         
+
+
 class RecipeIngredients(db.Model):
     __tablename__ = 'recipe_ingredients'
     id = db.Column(db.Integer, primary_key=True)

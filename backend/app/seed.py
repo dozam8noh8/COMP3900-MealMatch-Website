@@ -5,7 +5,7 @@ from sqlalchemy import func
 import random
 import datetime
 
-########################################### SETUP INGREDIENTS AND CATEGORIES #############################################
+########################################### SETUP INGREDIENTS AND CATEGORIES #############################################    
 
 def seed_db():
     db.drop_all()
