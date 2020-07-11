@@ -15,18 +15,13 @@ export class AuthGuardService implements CanActivate{
 
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    console.log("You've activated the auth service guard");
-    //this.authService.isLoggedIn().subscribe(x => console.log("In auth guard, first can activate", x))
     return this.authService.isLoggedIn().pipe(map( loggedIn => {
-      console.log("User is logged in")
       if (!loggedIn) {
-        console.log("Returning false")
         this.dialog.open(PopupComponent);
         //this.router.navigate(['/login'],  { queryParams: { returnUrl: state.url }});
         return false;
       }
       else {
-        console.log("Returning true")
         return true; // We let them access the route.
       }
     }));

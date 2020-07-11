@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-private-resource',
   template: `<h1> This is a private resource!! </h1>`
 })
-export class PrivateResourceComponent implements OnInit {
+export class ProfilePageComponent implements OnInit {
 
   constructor() { }
 

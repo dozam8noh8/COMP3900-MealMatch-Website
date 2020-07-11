@@ -33,7 +33,7 @@ import { IngredientByCategoryComponent } from './home-page/ingredient-by-categor
 import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 
-import { PrivateResourceComponent } from './private-resource/private-resource.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { PopupComponent } from '../building-components/login-popup/popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RequestLogInterceptor } from './request-interceptor';
@@ -70,7 +70,7 @@ const materialModules = [
     IngredientByCategoryComponent,
     RecipeInfoComponent,
     SearchResultsComponent,
-    PrivateResourceComponent,
+    ProfilePageComponent,
     PopupComponent,
   ],
   imports: [
