@@ -1,5 +1,6 @@
 from app import db, jwt, time, app, generate_password_hash, check_password_hash, ma
 import app.constants as constants
+from sqlalchemy import func
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -117,23 +118,28 @@ class Recipe(db.Model):
     # Make new recipe
     def add_recipe(name, instruction, mealType, ingredients, user):
         recipe = Recipe(name=name, instruction=instruction)
+        db.session.add(recipe)
 
-        mealtype = Mealtype.query.filter_by(name=mealType).first()
+        mealtype = Mealtype.query.filter(func.lower(Mealtype.name) == func.lower(mealType)).first()
+        if not mealtype:
+            db.session.rollback()
+            return 'Mealtype does not exist: ' + mealType
+
         recipe.mealtypes.append(mealtype)
+        user = User.query.filter_by(email=user).first()
 
-        # user = User.query.filter_by(email=user).first()
-        # for ingredient in ingredients:
-        #     print(ingredient)
-        #     print(ingredient['name'])
-        #     db_ingredient = Ingredient.query.filter_by(name=ingredient['name']).first()
-        #     if db_ingredient:
-        #         recipe_ingredient = RecipeIngredients(quantity=ingredient['quantity'])
-        #         db.session.add(recipe_ingredient)
-        #         recipe_ingredient.ingredients = db_ingredient
-        #         # recipe.ingredients.append(recipe_ingredient)
-        # user.recipes.append(recipe)
-        # db.session.add(recipe)
-        # db.session.commit()
+        for ingredient in ingredients:
+            db_ingredient = Ingredient.query.filter(func.lower(Ingredient.name) == func.lower(ingredient['name'])).first()
+            if not db_ingredient:
+                db.session.rollback()
+                return 'Ingredient does not exist: ' + ingredient['name']
+
+            recipe_ingredient = RecipeIngredients(quantity=ingredient['quantity'])
+            recipe_ingredient.ingredients = db_ingredient
+            recipe.ingredients.append(recipe_ingredient)
+
+        user.recipes.append(recipe)
+        db.session.commit()
         return recipe
 
     def json_dump(recipe):

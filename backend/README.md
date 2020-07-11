@@ -51,6 +51,31 @@ API Documentation
     - The password is hashed before it is stored in the database. Once hashed, the original password is discarded.
     - In a production deployment secure HTTP must be used to protect the password in transit.
 
+- POST **/api/add_recipe**
+
+    Adds a new recipe.
+    `mealtype` and `ingredients.name` must already exist in the database and are case insensitive when adding.
+    Returns a string indicating success or failure.
+    Example Success message: `Recipe has been added. Recipe_id: 254`
+    Example failure message: `Ingredient does not exist: Frog`
+
+    Example usage:
+    {
+        "name": "Chicken Noodles",
+        "instruction": "Boil Water and place noodles inside. Serve with chicken",
+        "mealType": "Chicken",
+        "ingredients": [
+            {
+                "name": "Noodles",
+                "quantity": "1 packet"
+            },
+            {
+                "name": "Chicken",
+                "quantity": "100g"
+            }
+        ]
+    }
+
 - GET **/api/token**
 
     Return an authentication token.<br>
