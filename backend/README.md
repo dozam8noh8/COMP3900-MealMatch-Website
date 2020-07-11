@@ -53,13 +53,14 @@ API Documentation
 
 - POST **/api/add_recipe**
 
-    Adds a new recipe.
-    `mealtype` and `ingredients.name` must already exist in the database and are case insensitive when adding.
-    Returns a string indicating success or failure.
-    Example Success message: `Recipe has been added. Recipe_id: 254`
-    Example failure message: `Ingredient does not exist: Frog`
+    Adds a new recipe.  
+    `mealtype` and `ingredients.name` must already exist in the database and are case insensitive when adding.  
+    Returns a string indicating success or failure.  
+    Example success message: `Recipe has been added. Recipe_id: 254`  
+    Example failure message: `Ingredient does not exist: Frog`  
 
-    Example usage:
+    Example usage:  
+    ```
     {
         "name": "Chicken Noodles",
         "instruction": "Boil Water and place noodles inside. Serve with chicken",
@@ -75,6 +76,7 @@ API Documentation
             }
         ]
     }
+    ```
 
 - GET **/api/token**
 
