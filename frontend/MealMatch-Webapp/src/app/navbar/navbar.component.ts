@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
   template: `
   <mat-toolbar color="primary" class="nav">
   <button routerLink="/home" mat-raised-button routerLinkActive="active" class="nav-button"> Home </button>
-  <button routerLink="/privateResource" mat-raised-button routerLinkActive="active" class="nav-button"> Private </button>
+  <button routerLink="/dashboard" mat-raised-button routerLinkActive="active" class="nav-button"> Private </button>
   <div class="nav-right" >
   <button *ngIf="!(loggedIn | async)" mat-raised-button routerLink="/login" routerLinkActive="active" class="nav-button"> Login </button>
   <button  *ngIf="!loggedInTest"  mat-raised-button routerLink="/signup" routerLinkActive="active" class="nav-button"> Sign Up </button>

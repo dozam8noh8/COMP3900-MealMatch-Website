@@ -11,5 +11,7 @@ export class RecipeService {
   getRecipeDetails(recipeId: number) {
     return this.http.get("http://localhost:5000/api/recipe/"+recipeId);
   }
+  getRecipesByUserId(userId: number) {
 
+  }
 }
