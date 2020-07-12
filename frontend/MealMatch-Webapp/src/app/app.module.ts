@@ -37,6 +37,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { PopupComponent } from '../building-components/login-popup/popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RequestLogInterceptor } from './request-interceptor';
+import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -72,6 +73,7 @@ const materialModules = [
     SearchResultsComponent,
     ProfilePageComponent,
     PopupComponent,
+    RecipeViewCardComponent,
   ],
   imports: [
     BrowserModule,
