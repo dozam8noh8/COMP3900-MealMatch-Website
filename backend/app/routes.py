@@ -29,12 +29,12 @@ def verify_password(username_or_token, password):
 # Register a user
 @app.route('/api/users', methods=['POST'])
 def new_user():
-    ''' 
+    '''
     Given the signup details of a user, register them in the database so that login attempts can be made.
 
     @params username, password, (email coming soon?)
 
-    @Returns 
+    @Returns
         - the username of the created user
     @Return codes
         - 400 - the correct signup details were not submitted OR the username already exists in the system.
@@ -67,17 +67,19 @@ def get_user_info(id):
      - Returns the username of the user.
      - (TODO) Return email of user
      - (TODO) Return any recipes/photos associated with a user
-    
+
     @Return Codes
      - 401 - user is unauthorised (A user isn't logged in or trying to view someone elses information)
      - 400 - the requested user does not exist in the DB.
     '''
-    if current_user.id != id:
+    # If the requesting user is not the user who's info is requested.
+    if g.user.id != id:
         return 'Unauthorized Access', 401
     user = User.query.get(id)
+    # Can't find user in db.
     if not user:
         abort(400)
-    return jsonify({'username': user.username})
+    return jsonify({'user_id': user.id, 'email': user.email, 'username': user.username, 'recipes': "return recipes here" })
 
 # Get Auth Token
 @app.route('/api/token', methods=['GET'])
@@ -99,7 +101,7 @@ def get_auth_token():
 
     '''
     token = g.user.generate_auth_token(12000)
-    return jsonify({'token': token.decode('ascii'), 'duration': 12000})
+    return jsonify({'user_id': g.user.id, 'token': token.decode('ascii'), 'duration': 12000})
 
 @app.route('/api/recipe/<int:id>', methods=['GET'])
 def get_recipe(id):
@@ -116,7 +118,7 @@ def recipe_search():
         Consider the body of requests to contain the ingredients in your fridge, the response will contain all recipes
         you can make using only the ingredients in your fridge.
         E.g. If you have cheese slices, buns, noodles. You can make cheese buns, but not noodles because you need water.
-             If you have cheese slices, buns, noodles, water and carrots. 
+             If you have cheese slices, buns, noodles, water and carrots.
                 You can make cheese buns and noodles, but not a salad because you don't have the other vegetables.
 
         (TODO) - Add the schema recipes will be returned in once it is finalised.
@@ -154,7 +156,7 @@ def add_recipe():
         return recipe # Error message
     return "Recipe has been added. Recipe_id: " + str(recipe.id)
 
-# ENDPOINT IS CURRENTLY HARDCODED FOR CHEESE SLICES 
+# ENDPOINT IS CURRENTLY HARDCODED FOR CHEESE SLICES
 @app.route('/api/recommendations', methods=['GET'])
 def get_recommendations():
     '''

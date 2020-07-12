@@ -4,6 +4,7 @@ import { Observable, ReplaySubject, of} from 'rxjs';
 import { map, delay, materialize, dematerialize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { HelperFunctionsService } from '../helper-functions.service';
+import { User } from '../models/user';
 @Injectable({
   providedIn: 'root' // means this provider is available all throughout the app.
                     // An alternative to putting auth service in the providers in app.module.
@@ -27,10 +28,10 @@ export class AuthService {
   // Sends request to log in a user and places json web token in session storage.
   login(user): Observable<any> {
     var authData = 'Basic ' + window.btoa(`${user.username}:${user.password}`); // Establish auth data from username and pw (required to get token from endpoint.).
-    this.headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': authData}); //Make a new header from old header + auth data.
-    let url = `${this.BASE_URL}/token`; // auth/login is the endpoint
+    let authHeaders = this.headers.append('Authorization', authData); //Make a new header from old header + auth data.
+    let url = `${this.BASE_URL}/token`;
 
-    return this.http.get(url, {headers: this.headers})
+    return this.http.get(url, {headers: authHeaders})
     // Do the following, then return the response (So we can log things if we need.)
     .pipe(map(response => {
         localStorage.setItem('currentUser', JSON.stringify(response)) // If the promise resolves, store the object with token in local storage!
@@ -54,11 +55,28 @@ export class AuthService {
     return this.isLoggedInSubject.asObservable().pipe(map( state => !!state)); //cast state to boolean (it already is)
   }
 
+  getJWTToken(): string | undefined {
+    console.log(localStorage.getItem('currentUser'))
+    return JSON.parse(localStorage.getItem('currentUser'))?.token;
+  }
   // Should we log out of the backend aswell?
   logout() {
-    localStorage.clear();
+    localStorage.removeItem('currentUser'); // just clear what we have added, we don't want to clear users other things!
     this.isLoggedInSubject.next(false);
     this.router.navigate(['/login'])
+  }
+
+  getLoggedInUserId() : number | undefined {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    return user?.user_id;
+  }
+
+  getUserDetails() : Observable<any> {
+    const userId = this.getLoggedInUserId();
+    let url = `${this.BASE_URL}/users/${userId}`
+    return this.http.get(url, {headers: this.headers}).pipe(map(response => {
+      console.log(response);
+    }));
   }
 
 }
