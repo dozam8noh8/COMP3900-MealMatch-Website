@@ -133,6 +133,12 @@ class Recipe(db.Model):
 
         return filtered
 
+    def get_recipes_by_user_id(user_id):
+        recipes = Recipe.query.filter_by(user_id=1).limit(10).all()
+        schema = RecipeSchema(many=True)
+        return schema.dump(recipes)
+
+
     # Make new recipe
     def add_recipe(name, instruction, mealType, ingredients, user, image=None):
         recipe = ''
@@ -172,7 +178,7 @@ class Recipe(db.Model):
     def json_dump(recipe):
         schema = RecipeSchema(many=True)
         return schema.dump(recipe)
-        
+
 
 
 class RecipeIngredients(db.Model):
@@ -240,7 +246,7 @@ class MealtypeSchema(ma.ModelSchema):
 
 class RecipeIngredientsSchema(ma.ModelSchema):
     ingredient = ma.Nested(IngredientSchema)
-    
+
     class Meta:
         fields = ("ingredient.id", "ingredient.name", "quantity")
 

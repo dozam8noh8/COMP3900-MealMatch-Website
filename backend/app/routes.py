@@ -86,7 +86,10 @@ def get_user_info(id):
     # Can't find user in db.
     if not user:
         abort(400)
-    return jsonify({'user_id': user.id, 'email': user.email, 'username': user.username, 'recipes': "return recipes here" })
+    # Currently limits recipes to 10, we should apply proper pagination if possible.
+    recipes = Recipe.get_recipes_by_user_id(id)
+
+    return jsonify({'user_id': user.id, 'email': user.email, 'username': user.username, 'recipes': recipes })
 
 # Get Auth Token
 @app.route('/api/token', methods=['GET'])
