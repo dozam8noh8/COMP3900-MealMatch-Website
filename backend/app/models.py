@@ -27,7 +27,10 @@ class User(db.Model):
                               algorithms=['HS256'])
         except:
             return
-        return User.query.get(data['id'])
+        if 'exp' in data:
+            if (time.time() <= data['exp']):
+                return User.query.get(data['id'])
+        return     
 
 ingredientCategories = db.Table('ingredient_categories',
     db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredient.id')),
