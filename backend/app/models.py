@@ -192,19 +192,15 @@ class RecipeIngredients(db.Model):
                       .filter(RecipeIngredients.ingredient_id.in_((search_ids)))
                       .subquery()
         )
-        ingredient_ids = (RecipeIngredients
-                          .query
-                          .with_entities(RecipeIngredients.ingredient_id)
-                          .filter(RecipeIngredients.recipe_id.in_(recipe_ids))
-                          .filter(RecipeIngredients.ingredient_id.notin_((search_ids)))
-                          .group_by(RecipeIngredients.ingredient_id)
-                          .order_by(func.count().desc())
-                          .limit(5)
-                          .subquery()
-        )
-        ingredients = (Ingredient
+        ingredients = (RecipeIngredients
                        .query
-                       .filter(Ingredient.id.in_(ingredient_ids))
+                       .with_entities(Ingredient.id, Ingredient.name)
+                       .filter(RecipeIngredients.recipe_id.in_(recipe_ids))
+                       .filter(RecipeIngredients.ingredient_id.notin_((search_ids)))
+                       .filter(RecipeIngredients.ingredient_id == Ingredient.id)
+                       .group_by(RecipeIngredients.ingredient_id)
+                       .order_by(func.count().desc())
+                       .limit(5)
                        .all()
         )
         return ingredients
