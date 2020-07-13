@@ -29,7 +29,7 @@ class User(db.Model):
         if 'exp' in data:
             if (time.time() <= data['exp']):
                 return User.query.get(data['id'])
-        return     
+        return
 
 ingredientCategories = db.Table('ingredient_categories',
     db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredient.id')),
@@ -169,6 +169,11 @@ class Recipe(db.Model):
         user.recipes.append(recipe)
         db.session.commit()
         return recipe
+
+    def recipe_delete(recipe_id):
+        Recipe.query.filter_by(id=recipe_id).delete()
+        db.session.commit()
+        return True #TODO change this to actually return false if the id isnt found.
 
     def upload_recipe_image(id, image):
         recipe = Recipe.query.filter_by(id=id).first()

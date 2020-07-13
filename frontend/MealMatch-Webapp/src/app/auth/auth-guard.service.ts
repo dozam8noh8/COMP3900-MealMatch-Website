@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { PopupComponent } from '../../building-components/login-popup/popup.component';
+import { LoginPopupComponent } from '../../building-components/login-popup/login-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class AuthGuardService implements CanActivate{
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.isLoggedIn().pipe(map( loggedIn => {
       if (!loggedIn) {
-        this.dialog.open(PopupComponent);
+        this.dialog.open(LoginPopupComponent);
         //this.router.navigate(['/login'],  { queryParams: { returnUrl: state.url }});
         return false;
       }

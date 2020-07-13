@@ -137,6 +137,20 @@ def recipe_search():
     recipes = Recipe.get_recipes(ingredients)
     return jsonify(Recipe.json_dump(recipes))
 
+@app.route('/api/recipe_delete/<int:recipe_id>', methods=['DELETE'])
+@auth.login_required
+def recipe_delete(recipe_id):
+    recipe_id = request.json.get('recipe_id')
+    recipe = Recipe.get_recipe_by_id(recipe_id)
+
+    if g.user.id != recipe.user_id :
+        return 'Unauthorized Access', 401 # Cant delete a recipe that isn't yours
+    if Recipe.recipe_delete(recipe_id):
+        return 'Recipe Deleted'
+    else:
+        return 'Recipe Id not found', 204
+
+
 @app.route('/api/popular_ingredient_pairs', methods=['GET'])
 @auth.login_required
 def popular_ingredient_pairs():
@@ -192,7 +206,7 @@ def recipe_image_update():
     recipe = request.json.get('recipe_id')
     Recipe.upload_recipe_image(recipe, picture_path)
     return {"pic": picture_path}
-    
+
 
 @app.route('/api/recommendations', methods=['POST'])
 def get_recommendations():

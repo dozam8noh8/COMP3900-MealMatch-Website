@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-popup',
-  styleUrls: ['popup.component.scss'],
+  selector: 'app-login-popup',
+  styleUrls: ['login-popup.component.scss'],
   template: `
   <mat-card>
   <mat-card-title> Looks like you're trying to access a logged in page </mat-card-title>
@@ -19,7 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 
   `
 })
-export class PopupComponent implements OnInit {
+export class LoginPopupComponent implements OnInit {
 
   constructor(private router: Router, public dialog: MatDialog ) { }
 
