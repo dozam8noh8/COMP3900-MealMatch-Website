@@ -77,10 +77,29 @@ API Documentation
         ]
     }
     ```
+- POST **/api/recommendations**
 
-- GET **/api/token**
+    Given a list of ingredient ids, returns 5 ingredient recommendations.  
+    Recommendations are based on the most frequent ingredients that are used within the list and other recipes.  
 
-    Returns a JSON list of all distinct mealtypes
+    Example request:  
+    ```
+    {   "ingredients": [1, 3]   }
+    ```
+    Example return:
+    ```
+    [
+    {
+        "id": 36,
+        "name": "Butter"
+    },
+    ...
+    ```
+
+
+- GET **/api/get_all_mealtypes**
+
+    Returns a JSON list of all distinct mealtypes  
     Example return value
     ```
     [

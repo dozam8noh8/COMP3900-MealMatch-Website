@@ -195,7 +195,7 @@ def recipe_image_update():
 def get_recommendations():
     '''
         This endpoint takes a list of ingredient ids that represent a user's current search set
-        and return at 5 suggestions for an ingredient that is used in a recipe with some of the
+        and return 5 suggestions for an ingredient that is used in a recipe with some of the
         ingredients within that set.
     '''
     ingredient_ids = request.json.get('ingredients')
