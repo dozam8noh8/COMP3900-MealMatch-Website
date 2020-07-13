@@ -80,6 +80,19 @@ API Documentation
 
 - GET **/api/token**
 
+    Returns a JSON list of all distinct mealtypes
+    Example return value
+    ```
+    [
+        {
+            "id": 1,
+            "name": "Beef"
+        },
+        ...
+    ```
+
+- GET **/api/token**
+
     Return an authentication token.<br>
     This request must be authenticated using a HTTP Basic Authentication header.<br>
     On success a JSON object is returned with a field `token` set to the authentication token for the user and a field `duration` set to the (approximate) number of seconds the token is valid.<br>

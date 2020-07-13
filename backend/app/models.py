@@ -175,6 +175,10 @@ class Mealtype(db.Model):
     name = db.Column(db.String(256), index=True)
     recipes = db.relationship('Recipe', secondary=recipeMealTypes, backref=db.backref('mealtypes', lazy='dynamic'))
 
+    def json_dump(mealtypes):
+        schema = MealtypeSchema(many=True)
+        return schema.dump(mealtypes)
+
 # Marshmallow serialiase the schema
 class IngredientSchema(ma.ModelSchema):
     class Meta:
