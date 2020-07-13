@@ -155,6 +155,20 @@ def get_ingredients_in_categories():
     categories = Category.query.all()
     return jsonify(Category.json_dump(categories))
 
+@app.route('/api/get_all_mealtypes', methods=['GET'])
+def get_all_mealtypes():
+    '''
+    Returns a json list of all distinct mealtypes
+    [
+        {
+            "id": 1,
+            "name": "Beef"
+        },
+        ...
+    '''
+    mealtypes = Mealtype.query.all()
+    return jsonify(Mealtype.json_dump(mealtypes))
+
 @app.route('/api/add_recipe', methods=['POST'])
 @auth.login_required
 def add_recipe():
