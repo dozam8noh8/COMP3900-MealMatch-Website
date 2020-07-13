@@ -1,5 +1,4 @@
 from app import db, jwt, time, app, generate_password_hash, check_password_hash, ma
-import app.constants as constants
 from sqlalchemy import func
 
 class User(db.Model):
@@ -59,25 +58,9 @@ class Ingredient(db.Model):
                 ingredients.append(ingredient)
         return ingredients
 
-    def find_pair(name):
-        key_pairs = constants.COMMON_PAIRS
-        final_pairs = []
-        for pair in key_pairs:
-            if name in pair:
-                for toAdd in pair:
-                    final_pairs.append(toAdd)
-
-        return final_pairs
-
-    def find_recommendations(name):
-        final_pairs = Ingredient.find_pair(name)
-        for key in final_pairs:
-            new_pair = Ingredient.find_pair(key)
-            final_pairs = final_pairs + new_pair
-
-        final_pairs = set(final_pairs)
-        final_pairs.remove(name)
-        return list(final_pairs)
+    def json_dump(ingr):
+        schema = IngredientSchema(many=True)
+        return schema.dump(ingr)
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -102,15 +85,15 @@ class Recipe(db.Model):
         return schema.dump(recipe)
 
     def get_recipes(ingredients):
-        ingredients = Ingredient.query.filter(Ingredient.name.in_(ingredients)).all()
-        ingredients_id = [ingredient.id for ingredient in ingredients]
+        ingredient_ids = Ingredient.query.with_entities(Ingredient.id).filter(Ingredient.name.in_(ingredients)).all()
+        ingredient_ids = (x[0] for x in ingredient_ids)
 
         filtered = []
         recipes = Recipe.query.all()
         for recipe in recipes:
             res = True
             for recipe_ingredient in recipe.ingredients:
-                if recipe_ingredient.ingredient_id not in ingredients_id:
+                if recipe_ingredient.ingredient_id not in ingredient_ids:
                     res = False
                     break
             if res:
@@ -169,6 +152,30 @@ class RecipeIngredients(db.Model):
 
     recipe = db.relationship('Recipe', backref=db.backref('ingredient'))
     ingredient = db.relationship('Ingredient', backref=db.backref('recipe'))
+
+    def get_recommendations(search_ids):
+        recipe_ids = (RecipeIngredients
+                      .query
+                      .with_entities(RecipeIngredients.recipe_id)
+                      .filter(RecipeIngredients.ingredient_id.in_((search_ids)))
+                      .subquery()
+        )
+        ingredient_ids = (RecipeIngredients
+                          .query
+                          .with_entities(RecipeIngredients.ingredient_id)
+                          .filter(RecipeIngredients.recipe_id.in_(recipe_ids))
+                          .filter(RecipeIngredients.ingredient_id.notin_((search_ids)))
+                          .group_by(RecipeIngredients.ingredient_id)
+                          .order_by(func.count().desc())
+                          .limit(5)
+                          .subquery()
+        )
+        ingredients = (Ingredient
+                       .query
+                       .filter(Ingredient.id.in_(ingredient_ids))
+                       .all()
+        )
+        return ingredients
 
 class Mealtype(db.Model):
     id = db.Column(db.Integer, primary_key=True)
