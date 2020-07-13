@@ -4,9 +4,12 @@ from flask import abort, request, jsonify, g, url_for
 from flask_httpauth import HTTPBasicAuth
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import ImmutableMultiDict
 from app.models import Ingredient, User, Recipe, Category, Mealtype
 from app import auth, app, db
 from app.seed import seed_db
+import secrets
 
 
 ###############################################################
@@ -184,6 +187,22 @@ def db_seed():
     ''' Create database file and corresponding tables (used on startup of app) since db is not kept on github. '''
     seed_db()
     return 'DB has been reset'
+
+@app.route('/api/picture_save', methods=['POST'])
+def picture_save():
+    if 'file' not in request.files:
+        return 'File could not be uploaded', 201 # Fix error code
+    file = request.files['file']
+    if file.filename == '':
+        return 'No file was uploaded', 201 # Fix error code
+    if file:
+        random_hex = secrets.token_hex(8)
+        _, f_ext = os.path.splitext(file.filename)
+        picture_fn = random_hex + f_ext
+        picture_path = os.path.join(app.root_path, 'static', picture_fn)
+        file.save(picture_path)
+        return picture_fn
+    return 'No file was uploaded', 201 # Fix error code
 
 #########INTERNAL FUNCTION#########
 @app.after_request
