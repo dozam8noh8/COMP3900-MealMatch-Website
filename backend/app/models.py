@@ -1,6 +1,6 @@
 from app import db, jwt, time, app, generate_password_hash, check_password_hash, ma
 import app.constants as constants
-from sqlalchemy import func
+from sqlalchemy import func, desc
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -88,6 +88,35 @@ class Category(db.Model):
         schema = CategorySchema(many=True)
         return schema.dump(recipe)
 
+class IngredientPairs(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    pairs = db.Column(db.String(2000), index=True)
+    count = db.Column(db.Integer, default=1)
+
+    def increment_count(pair):
+        ingr_pair = IngredientPairs.query.filter_by(pairs=str(pair).strip('[]')).first()
+        if ingr_pair:
+            ingr_pair.count = ingr_pair.count + 1
+        else:
+            ingr_pair = IngredientPairs(pairs=str(pair).strip('[]'), count=1)
+            db.session.add(ingr_pair)
+        db.session.commit()
+
+    def get_highest_pairs():
+        pairs = IngredientPairs.query.order_by(desc(IngredientPairs.count)).limit(5).all()
+        list = []
+        for pair in pairs:
+            pair_to_find = pair.pairs.split(", ")
+            new_pair = []
+            for in_pair in pair_to_find:
+                new_pair.append(Ingredient.query.filter_by(id=in_pair).first().name)
+            list.append(new_pair)
+        return list
+
+    def json_dump(pairs):
+        schema = IngredientPairsSchema(many=True)
+        return schema.dump(pairs)
+
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
@@ -102,7 +131,7 @@ class Recipe(db.Model):
         return schema.dump(recipe)
 
     def get_recipes(ingredients):
-        ingredients = Ingredient.query.filter(Ingredient.name.in_(ingredients)).all()
+        ingredients = Ingredient.query.filter(Ingredient.name.in_(ingredients)).order_by("id").all()
         ingredients_id = [ingredient.id for ingredient in ingredients]
 
         filtered = []
@@ -115,6 +144,9 @@ class Recipe(db.Model):
                     break
             if res:
                 filtered.append(recipe)
+
+        if len(filtered) == 0:
+            IngredientPairs.increment_count(ingredients_id)
 
         return filtered
 
@@ -201,6 +233,9 @@ class RecipeIngredientsSchema(ma.ModelSchema):
     class Meta:
         fields = ("ingredient.id", "ingredient.name", "quantity")
 
+class IngredientPairsSchema(ma.ModelSchema):
+    class Meta:
+        model = IngredientPairs
 
 class RecipeSchema(ma.ModelSchema):
     mealtypes = ma.Nested(MealtypeSchema, many=True)

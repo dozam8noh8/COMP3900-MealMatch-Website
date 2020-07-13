@@ -6,7 +6,7 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import ImmutableMultiDict
-from app.models import Ingredient, User, Recipe, Category, Mealtype
+from app.models import Ingredient, User, Recipe, Category, Mealtype, IngredientPairs
 from app import auth, app, db
 from app.seed import seed_db
 import secrets
@@ -133,6 +133,11 @@ def recipe_search():
     ingredients = request.json.get('ingredients')
     recipes = Recipe.get_recipes(ingredients)
     return jsonify(Recipe.json_dump(recipes))
+
+@app.route('/api/popular_ingredient_pairs', methods=['GET'])
+@auth.login_required
+def popular_ingredient_pairs():
+    return jsonify(IngredientPairs.get_highest_pairs())
 
 @app.route('/api/get_ingredients_in_categories', methods=['GET'])
 def get_ingredients_in_categories():
