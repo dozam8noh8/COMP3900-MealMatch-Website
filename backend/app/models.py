@@ -19,6 +19,10 @@ class User(db.Model):
             {'id': self.id, 'exp': time.time() + expires_in},
             app.config['SECRET_KEY'], algorithm='HS256')
 
+    def json_dump(user):
+        schema = UserSchema()
+        return schema.dump(user)
+
     @staticmethod
     def verify_auth_token(token):
         try:
@@ -225,11 +229,6 @@ class CategorySchema(ma.ModelSchema):
     class Meta:
         model = Category
 
-class UserSchema(ma.ModelSchema):
-    class Meta:
-        model = User
-        include_relationships = True
-
 class MealtypeSchema(ma.ModelSchema):
     class Meta:
         fields = ("id", "name")
@@ -250,3 +249,10 @@ class RecipeSchema(ma.ModelSchema):
 
     class Meta:
         fields = ("id", "name", "user_id", "image", "instruction", "ingredients", "mealtypes")
+
+class UserSchema(ma.ModelSchema):
+    recipes = ma.Nested(RecipeSchema, many=True)
+
+    class Meta:
+        fields = ("id", "email", "recipes")
+        include_relationships = True
