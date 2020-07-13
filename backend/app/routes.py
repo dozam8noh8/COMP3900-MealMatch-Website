@@ -88,6 +88,25 @@ def get_user_info(id):
         abort(400)
     return jsonify(User.json_dump(user))
 
+@app.route('/api/edit_user/<int:id>', methods=['POST'])
+@auth.login_required
+def edit_user(id):
+    # If the requesting user is not the user who's info is requested.
+    if g.user.id != id:
+        return 'Unauthorized Access', 401
+    user = User.query.get(id)
+    # Can't find user in db.
+    if not user:
+        abort(400)
+    old_pass = request.json.get('old_password')
+    new_pass = request.json.get('new_password')
+    if user.verify_password(old_pass):
+        user.hash_password(new_pass)
+    else:
+        return "Old password does not match", 201
+    db.session.commit()
+    return "Success", 200
+
 # Get Auth Token
 @app.route('/api/token', methods=['GET'])
 @auth.login_required
