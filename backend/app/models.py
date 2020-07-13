@@ -119,8 +119,12 @@ class Recipe(db.Model):
         return filtered
 
     # Make new recipe
-    def add_recipe(name, instruction, mealType, ingredients, user):
-        recipe = Recipe(name=name, instruction=instruction)
+    def add_recipe(name, instruction, mealType, ingredients, user, image=None):
+        recipe = ''
+        if image:
+            recipe = Recipe(name=name, instruction=instruction, image=image)
+        else:
+            recipe = Recipe(name=name, instruction=instruction)
         db.session.add(recipe)
 
         mealtype = Mealtype.query.filter(func.lower(Mealtype.name) == func.lower(mealType)).first()
@@ -144,6 +148,11 @@ class Recipe(db.Model):
         user.recipes.append(recipe)
         db.session.commit()
         return recipe
+
+    def upload_recipe_image(id, image):
+        recipe = Recipe.query.filter_by(id=id).first()
+        recipe.image = image
+        db.session.commit()
 
     def json_dump(recipe):
         schema = RecipeSchema(many=True)

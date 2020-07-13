@@ -29,6 +29,10 @@ def verify_password(username_or_token, password):
     g.user = user
     return True
 
+@app.route('/healthz', methods=['GET'])
+def healthz():
+    return 'Server is up'
+
 # Register a user
 @app.route('/api/users', methods=['POST'])
 def new_user():
@@ -156,8 +160,17 @@ def add_recipe():
     user = 'admin@admin.com'
     recipe = Recipe.add_recipe(name, instruction, mealType, ingredients, user)
     if type(recipe) == str:
-        return recipe # Error message
-    return "Recipe has been added. Recipe_id: " + str(recipe.id)
+        return recipe, 201 # Error message FIX error code
+    return {'recipe_id' : recipe.id, 'message': 'Recipe has been added'}
+
+@app.route('/api/recipe_image_update', methods=['POST'])
+@auth.login_required
+def recipe_image_update():
+    picture_path = 'http://localhost:5000' + url_for('static', filename=request.json.get('filename'))
+    recipe = request.json.get('recipe_id')
+    Recipe.upload_recipe_image(recipe, picture_path)
+    return {"pic": picture_path}
+    
 
 # ENDPOINT IS CURRENTLY HARDCODED FOR CHEESE SLICES
 @app.route('/api/recommendations', methods=['GET'])
@@ -189,7 +202,9 @@ def db_seed():
     return 'DB has been reset'
 
 @app.route('/api/picture_save', methods=['POST'])
+@auth.login_required
 def picture_save():
+    image = ''
     if 'file' not in request.files:
         return 'File could not be uploaded', 201 # Fix error code
     file = request.files['file']
@@ -201,6 +216,7 @@ def picture_save():
         picture_fn = random_hex + f_ext
         picture_path = os.path.join(app.root_path, 'static', picture_fn)
         file.save(picture_path)
+        print(request.form['name'])
         return picture_fn
     return 'No file was uploaded', 201 # Fix error code
 
