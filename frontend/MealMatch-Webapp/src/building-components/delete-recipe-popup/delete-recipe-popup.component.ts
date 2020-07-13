@@ -23,6 +23,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 export class DeleteRecipePopupComponent implements OnInit {
     @Input() description: string;
     @Input() question: string;
+    @Input() recipeId: number;
     // @Output() yesClicked: EventEmitter<any>;
     // @Output() noClicked: EventEmitter<any>;
     constructor(private dialogRef: MatDialogRef<any>) {}
@@ -30,10 +31,10 @@ export class DeleteRecipePopupComponent implements OnInit {
         console.log(this.description)
     }
     emitYes() {
-        this.dialogRef.close('Yes');
+        this.dialogRef.close({behaviour: 'Yes', recipeId: this.recipeId});
     }
     emitNo() {
-        this.dialogRef.close('No');
+        this.dialogRef.close({behaviour: 'No', recipeId: this.recipeId});
         //this.noClicked.emit();
     }
 

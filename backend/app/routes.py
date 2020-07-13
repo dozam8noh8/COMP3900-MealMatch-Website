@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os
-from flask import abort, request, jsonify, g, url_for
+from flask import abort, request, jsonify, g, url_for, Response
 from flask_httpauth import HTTPBasicAuth
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -140,15 +140,15 @@ def recipe_search():
 @app.route('/api/recipe_delete/<int:recipe_id>', methods=['DELETE'])
 @auth.login_required
 def recipe_delete(recipe_id):
-    recipe_id = request.json.get('recipe_id')
     recipe = Recipe.get_recipe_by_id(recipe_id)
-
-    if g.user.id != recipe.user_id :
+    if not recipe:
+        return 'Recipe Id not found', 204
+    print(recipe)
+    if g.user.id != recipe["user_id"] :
         return 'Unauthorized Access', 401 # Cant delete a recipe that isn't yours
     if Recipe.recipe_delete(recipe_id):
-        return 'Recipe Deleted'
-    else:
-        return 'Recipe Id not found', 204
+        return Response(status=200)
+
 
 
 @app.route('/api/popular_ingredient_pairs', methods=['GET'])

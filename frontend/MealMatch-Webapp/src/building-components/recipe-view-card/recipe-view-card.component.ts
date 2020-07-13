@@ -31,8 +31,8 @@ import { EventEmitter } from '@angular/core';
 export class RecipeViewCardComponent implements OnInit{
     @Input() recipe: Recipe;
     @Input() showDeleteEdit = false; // Might need an observable here for login/logout.
-    @Output() editEmitter = new EventEmitter<void>();
-    @Output() deleteEmitter = new EventEmitter<void>();
+    @Output() editEmitter = new EventEmitter<number>();
+    @Output() deleteEmitter = new EventEmitter<number>();
 
     recipeImagePlaceholder = 'assets/images/user_placeholder.jpg';
     ngOnInit() {
@@ -40,11 +40,11 @@ export class RecipeViewCardComponent implements OnInit{
     }
     editRecipe() {
         console.log("Editing recipe")
-        this.editEmitter.emit();
+        this.editEmitter.emit(this.recipe.id);
     }
 
     deleteRecipe() {
-        this.deleteEmitter.emit();
+        this.deleteEmitter.emit(this.recipe.id);
     }
 
 }

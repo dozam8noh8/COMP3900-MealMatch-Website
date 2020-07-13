@@ -16,7 +16,7 @@ import { map } from 'rxjs/operators';
 
   <div class="all-recipes-container">
     <div class="container" *ngFor="let recipe of recipes">
-      <app-recipe-view-card [recipe]="recipe" [showDeleteEdit]="true" (editEmitter)="handleEditRecipe()" (deleteEmitter)="handleDeleteRecipe()">
+      <app-recipe-view-card [recipe]="recipe" [showDeleteEdit]="true" (editEmitter)="handleEditRecipe($event)" (deleteEmitter)="handleDeleteRecipe($event)">
       </app-recipe-view-card>
     </div>
   </div>
@@ -29,8 +29,8 @@ export class ProfilePageComponent implements OnInit {
   email: string;
   userImage = "assets/images/user_placeholder.jpg";
   recipes: Recipe[];
-  private BASE_URL = 'http://localhost:5000/api'; // Our api calls will go to this URL //Move to service
-  constructor(private authService: AuthService, private dialog: MatDialog, private http: HttpClient) { }
+
+  constructor(private authService: AuthService, private dialog: MatDialog, private http: HttpClient, private recipeService: RecipeService) { }
 
   ngOnInit(): void {
     console.log("INITIALISING PROFILE PAGE");
@@ -46,27 +46,37 @@ export class ProfilePageComponent implements OnInit {
     });
 
   }
-  handleEditRecipe() {
-    console.log("Handling the edit");
+  handleEditRecipe(recipeId: number) {
+    console.log("Attempting to edit", event);
     //send api call
   }
-  handleDeleteRecipe() {
+  handleDeleteRecipe(recipeId: number) {
+    console.log(recipeId)
     let dialogRef = this.dialog.open(DeleteRecipePopupComponent, {
-      data : {
-        description: "",
-        question: "Are you sure you want to delete the recipe? It's permanent",
-      }
+      // data : {
+      //   description: "",
+      //   question: "Are you sure you want to delete the recipe? It's permanent",
+      // }
     });
     dialogRef.componentInstance.description ="Deleting Recipe";
     dialogRef.componentInstance.question = "Are you sure you want to delete the recipe? It's permanent"
+    dialogRef.componentInstance.recipeId = recipeId;
     //dialogRef.componentInstance.emitYes.subscribe(emission => {}
     dialogRef.afterClosed().subscribe(emission => {
-      if (emission === "Yes") {
+      if (emission.behaviour === "Yes") {
         console.log("Clicked yes");
-        let recipeId = 1; // FIX ME!! TODO
-        let url = `${this.BASE_URL}/api/recipe_delete/${recipeId}`;
-        this.http.delete(url).pipe(map( response => console.log(response))).subscribe();
-        // Make API call.
+        this.recipeService.deleteRecipe(emission.recipeId)
+        .subscribe(response => {
+          console.log(response.status);
+          if (response.status === 200) {
+            console.log("Deleting recipe");
+            this.recipes = this.recipes.filter(recipe => recipe.id !== emission.recipeId)
+            //Add loading bar
+          }
+          else {
+            console.log("Couldn't delete recipe")
+          }
+        });
       }
       else {
         console.log("Clicked No");
