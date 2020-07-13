@@ -1,6 +1,13 @@
 
 .recipe {
     width: 300px;
+    button {
+        margin-right: 1vw;
+    }
+    img {
+        width: 20vw;
+        height: 20vh;
+    }
 }
 
 .recipe:hover {

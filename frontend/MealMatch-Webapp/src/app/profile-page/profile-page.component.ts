@@ -5,23 +5,16 @@ import { Recipe } from '../models/recipe';
 
 @Component({
   selector: 'app-private-resource',
+  styleUrls: ['profile-page.component.scss'],
   template: `<h1> This is a private resource!! </h1>
   <h1>  Welcome to your recipe dashboard {{ username }}!</h1>
   <img alt="user placeholder image" [src]="userImage">
 
-  <div class="container" *ngFor="let recipe of recipes">
-        <mat-card class="recipe">
-          <div *ngIf="recipe.image">
-              <img src="{{recipe.image}}" style="width: 100%;">
-          </div>
-
-          <b>{{recipe.name}}</b> <br>
-          <i>Uses:
-              <span *ngFor="let ingredient of recipe.ingredients">
-                  {{ingredient["ingredient.name"]}}, <!-- Should not have comma for last ingredient -->
-              </span>
-          </i>
-        </mat-card>
+  <div class="all-recipes-container">
+    <div class="container" *ngFor="let recipe of recipes">
+      <app-recipe-view-card [recipe]="recipe" [showDeleteEdit]="true" (editRecipe)="handleEditRecipe()" (deleteRecipe)="handleDeleteRecipe()">
+      </app-recipe-view-card>
+    </div>
   </div>
 
 `
@@ -46,6 +39,14 @@ export class ProfilePageComponent implements OnInit {
       }
       this.recipes = res.recipes;
     });
+
+  }
+  handleEditRecipe() {
+    console.log("Handling the edit");
+    //send api call
+  }
+  handleDeleteRecipe() {
+    console.log("Handling the delete")
 
   }
 
