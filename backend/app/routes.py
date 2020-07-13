@@ -6,7 +6,7 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import ImmutableMultiDict
-from app.models import Ingredient, User, Recipe, Category, Mealtype, IngredientPairs
+from app.models import Ingredient, User, Recipe, Category, Mealtype, RecipeIngredients, IngredientPairs
 from app import auth, app, db
 from app.seed import seed_db
 import secrets
@@ -191,27 +191,16 @@ def recipe_image_update():
     return {"pic": picture_path}
     
 
-# ENDPOINT IS CURRENTLY HARDCODED FOR CHEESE SLICES
-@app.route('/api/recommendations', methods=['GET'])
+@app.route('/api/recommendations', methods=['POST'])
 def get_recommendations():
     '''
-        This endpoint should take a list of ingredients that represent a user's current search set
-        and return at least one suggestion for an ingredient that is used in a recipe with some of the
+        This endpoint takes a list of ingredient ids that represent a user's current search set
+        and return 5 suggestions for an ingredient that is used in a recipe with some of the
         ingredients within that set.
-
-        We will likely need to change this endpoint to a post request.
-        (TODO) Fix up this endpoint according to the requirements.
-
-        == FROM SPEC ==
-        "Once the recipe explorer has input 1 or more ingredients
-        to their running list, the system must be able to suggest the next ingredient or ingredients to input based on: what
-        has already been inputted, and ingredients on recipes that have started to match. Eg: if the explorer has input
-        "eggs", this can partially match a recipe that has the ingredients list of "eggs", "cream", then "cream" could be the
-        next suggested ingredient. "
-
     '''
-    res = Ingredient.find_recommendations('Cheese Slices')
-    return jsonify({"Recommendations": res})
+    ingredient_ids = request.json.get('ingredients')
+    ingredients = RecipeIngredients.get_recommendations(ingredient_ids)
+    return jsonify(Ingredient.json_dump(ingredients))
 
 
 @app.route('/api/db_seed', methods=['GET'])
