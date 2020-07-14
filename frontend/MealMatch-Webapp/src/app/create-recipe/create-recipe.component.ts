@@ -1,15 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../models/ingredient';
 
+interface IngredientSlot {
+  ingredient: Ingredient;
+  quantity: String;
+}
+
 @Component({
   selector: 'app-create-recipe',
   styleUrls: ['./create-recipe.component.scss'],
   template: `
-              <div *ngFor="let slot of allSlots">
+              <div *ngFor="let slot of allSlots; let index=index; trackBy:trackIngredient">
+                {{slot.ingredient}}
+                {{slot.quantity}}
+                <div *ngIf="allSlots[index].ingredient">
+                  you ingredient is {{allSlots[index].ingredient.name}}
+                </div>
                 <app-add-ingredient
-                [addedIngredients]="addedIngredients"
+                [position]="index"
+                (updateIngredient)="updateSlotIngredient($event)"
+                (updateQuantity)="updateSlotQuantity($event)"
                 (removeFromList)="removeValidIngredient($event)"
-                > </app-add-ingredient>        
+                [addedIngredients]="addedIngredients"> </app-add-ingredient>        
               </div>
               <button
               (click)="addSlot()"
@@ -22,7 +34,7 @@ import { Ingredient } from '../models/ingredient';
 })
 export class CreateRecipeComponent implements OnInit {
 
-  allSlots = [];
+  allSlots: IngredientSlot[] = [];
   addedIngredients: Ingredient[] = [];
 
   constructor() { }
@@ -31,7 +43,27 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   addSlot() {
-    this.allSlots.push("dfs")
+    this.allSlots.push( { ingredient: null, quantity: "" } )
+  }
+
+  updateSlotIngredient($event) {
+    console.log($event)
+    this.allSlots[$event.index] = {
+      ingredient: $event.newIngredient,
+      quantity: this.allSlots[$event.index].quantity
+    }
+    console.log(this.allSlots)
+  }
+
+  updateSlotQuantity($event) {
+    this.allSlots[$event.index] = {
+      ingredient: this.allSlots[$event].ingredient,
+      quantity: $event.newQuantity
+    }
+  }
+
+  trackIngredient(index: any, item: any) {
+    return index;
   }
 
   removeValidIngredient(ingredient: Ingredient) {

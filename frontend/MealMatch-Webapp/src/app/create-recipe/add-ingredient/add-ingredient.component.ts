@@ -11,7 +11,8 @@ import { map } from 'rxjs/operators';
   template: `
               <div *ngIf="!ingredientIsValid"> 
                 <em>This ingredient does not exist</em>
-              </div>              
+              </div>
+              <input type="text" placeholder="quantity" />
               <mat-form-field style="width: 50%;">
                   <input type="text"
                   placeholder="Input an ingredient"
@@ -37,9 +38,14 @@ export class AddIngredientComponent implements OnInit {
 
   @Input() addedIngredients: Ingredient[];
   @Output() removeFromList = new EventEmitter<Ingredient>();
+  @Output() updateIngredient = new EventEmitter<any>();
 
   // Keep track of whether a valid ingredient
-  currentIngredient: Ingredient;
+  @Input() position: number;
+  @Input() currentIngredient: Ingredient;
+  @Input() quantity: string;
+
+
   ingredientIsValid: boolean = true;
   // currentSearch: string;
 
@@ -57,7 +63,8 @@ export class AddIngredientComponent implements OnInit {
 
 
   addToList(newIngredient: Ingredient) {
-    this.currentIngredient = newIngredient;
+    // this.currentIngredient = newIngredient;
+    this.updateIngredient.emit( {index: this.position, newIngredient: newIngredient} );
     this.ingredientIsValid = true;
     // Add ingredient to parent's list ingredients for the recipe
     this.addedIngredients.push(newIngredient);
