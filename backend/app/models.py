@@ -54,6 +54,7 @@ class Ingredient(db.Model):
         ingredient = Ingredient.query.filter_by(name=name).first()
         return ingredient
 
+    # unused method? cleanup?
     def get_all(names):
         ingredients = []
         for name in names:
@@ -61,6 +62,17 @@ class Ingredient(db.Model):
             if ingredient != None:
                 ingredients.append(ingredient)
         return ingredients
+    
+    def add_ingredient(name, category):
+        db_category = Category.query.filter(func.lower(Category.name) == func.lower(category)).first()
+        if not db_category:
+            return 'Category does not exist: ' + category
+
+        ingredient = Ingredient(name=name)
+        ingredient.categories.append(db_category)
+        db.session.add(ingredient)
+        db.session.commit()
+        return ingredient
 
     def json_dump(ingr):
         schema = IngredientSchema(many=True)

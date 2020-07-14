@@ -189,6 +189,18 @@ def get_all_mealtypes():
     mealtypes = Mealtype.query.all()
     return jsonify(Mealtype.json_dump(mealtypes))
 
+@app.route('/api/add_ingredient', methods=['POST'])
+def add_ingredient():
+    '''
+        Given an ingredient `name` and `category`, adds it to the database.
+    '''
+    name = request.json.get('name')
+    category = request.json.get('category')
+    ingredient = Ingredient.add_ingredient(name, category)
+    if type(ingredient) is str:
+        return ingredient, 201 # Error message FIX error code
+    return {'ingredient_id' : ingredient.id, 'message': 'Ingredient has been added'}
+
 @app.route('/api/add_recipe', methods=['POST'])
 @auth.login_required
 def add_recipe():
