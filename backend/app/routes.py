@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os
-from flask import abort, request, jsonify, g, url_for
+from flask import abort, request, jsonify, g, url_for, Response
 from flask_httpauth import HTTPBasicAuth
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -107,6 +107,7 @@ def edit_user(id):
     db.session.commit()
     return "Success", 200
 
+
 # Get Auth Token
 @app.route('/api/token', methods=['GET'])
 @auth.login_required
@@ -152,6 +153,20 @@ def recipe_search():
     ingredients = request.json.get('ingredients')
     recipes = Recipe.get_recipes(ingredients)
     return jsonify(Recipe.json_dump(recipes))
+
+@app.route('/api/recipe_delete/<int:recipe_id>', methods=['DELETE'])
+@auth.login_required
+def recipe_delete(recipe_id):
+    recipe = Recipe.get_recipe_by_id(recipe_id)
+    if not recipe:
+        return 'Recipe Id not found', 204
+    print(recipe)
+    if g.user.id != recipe["user_id"] :
+        return 'Unauthorized Access', 401 # Cant delete a recipe that isn't yours
+    if Recipe.recipe_delete(recipe_id):
+        return Response(status=200)
+
+
 
 @app.route('/api/popular_ingredient_pairs', methods=['GET'])
 @auth.login_required
@@ -221,7 +236,7 @@ def recipe_image_update():
     recipe = request.json.get('recipe_id')
     Recipe.upload_recipe_image(recipe, picture_path)
     return {"pic": picture_path}
-    
+
 
 @app.route('/api/recommendations', methods=['POST'])
 def get_recommendations():

@@ -75,7 +75,7 @@ export class AuthService {
     const userId = this.getLoggedInUserId();
     let url = `${this.BASE_URL}/users/${userId}`
     return this.http.get(url, {headers: this.headers}).pipe(map(response => {
-      console.log(response);
+      return response;
     }));
   }
 

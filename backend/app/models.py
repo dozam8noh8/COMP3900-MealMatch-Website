@@ -33,7 +33,7 @@ class User(db.Model):
         if 'exp' in data:
             if (time.time() <= data['exp']):
                 return User.query.get(data['id'])
-        return     
+        return
 
 ingredientCategories = db.Table('ingredient_categories',
     db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredient.id')),
@@ -149,6 +149,12 @@ class Recipe(db.Model):
 
         return filtered
 
+    def get_recipes_by_user_id(user_id):
+        recipes = Recipe.query.filter_by(user_id=1).limit(10).all()
+        schema = RecipeSchema(many=True)
+        return schema.dump(recipes)
+
+
     # Make new recipe
     def add_recipe(name, instruction, mealType, ingredients, user, image=None):
         recipe = ''
@@ -180,6 +186,11 @@ class Recipe(db.Model):
         db.session.commit()
         return recipe
 
+    def recipe_delete(recipe_id):
+        Recipe.query.filter_by(id=recipe_id).delete()
+        db.session.commit()
+        return True #TODO change this to actually return false if the id isnt found.
+
     def upload_recipe_image(id, image):
         recipe = Recipe.query.filter_by(id=id).first()
         recipe.image = image
@@ -188,7 +199,7 @@ class Recipe(db.Model):
     def json_dump(recipe):
         schema = RecipeSchema(many=True)
         return schema.dump(recipe)
-        
+
 
 
 class RecipeIngredients(db.Model):
@@ -247,7 +258,7 @@ class MealtypeSchema(ma.ModelSchema):
 
 class RecipeIngredientsSchema(ma.ModelSchema):
     ingredient = ma.Nested(IngredientSchema)
-    
+
     class Meta:
         fields = ("ingredient.id", "ingredient.name", "quantity")
 

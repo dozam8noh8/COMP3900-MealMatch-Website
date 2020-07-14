@@ -15,7 +15,7 @@ export class RecipeInfoComponent implements OnInit {
   recipeService: RecipeService;
   recipe: Recipe;
 
-  constructor(repServ: RecipeService, private route: ActivatedRoute) { 
+  constructor(repServ: RecipeService, private route: ActivatedRoute) {
     this.recipeService = repServ;
   }
 
@@ -23,12 +23,15 @@ export class RecipeInfoComponent implements OnInit {
     this.route.paramMap.subscribe( params => {
       this.getRecipeDetails(Number(params.get('id')));
     });
-    
+
   }
 
   getRecipeDetails(repId: number) {
     this.recipeService.getRecipeDetails(repId)
-    .subscribe( (data: Recipe) => { this.recipe = data }
+    .subscribe( (data: Recipe) => {
+      this.recipe = data
+
+    }
     );
   }
 

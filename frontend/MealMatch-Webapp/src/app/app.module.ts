@@ -33,10 +33,12 @@ import { IngredientByCategoryComponent } from './home-page/ingredient-by-categor
 import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 
-import { PrivateResourceComponent } from './private-resource/private-resource.component';
-import { PopupComponent } from '../building-components/login-popup/popup.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { LoginPopupComponent } from '../building-components/login-popup/login-popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RequestLogInterceptor } from './request-interceptor';
+import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
+import { DeleteRecipePopupComponent } from 'src/building-components/delete-recipe-popup/delete-recipe-popup.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -70,8 +72,10 @@ const materialModules = [
     IngredientByCategoryComponent,
     RecipeInfoComponent,
     SearchResultsComponent,
-    PrivateResourceComponent,
-    PopupComponent,
+    ProfilePageComponent,
+    LoginPopupComponent,
+    RecipeViewCardComponent,
+    DeleteRecipePopupComponent,
   ],
   imports: [
     BrowserModule,
