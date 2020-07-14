@@ -7,23 +7,28 @@ import { EventEmitter } from '@angular/core';
     styleUrls: ['recipe-view-card.component.scss'],
     template: `
     <mat-card class="recipe">
-    <div *ngIf="recipe.image">
-        <img src="{{recipe.image}}" style="width: 100%;">
-    </div>
-    <div *ngIf="!recipe.image">
-        <img [src]="recipeImagePlaceholder" style="width: 100%;">
-    </div>
+    <ng-container *ngIf="!loading">
+        <div *ngIf="recipe.image">
+            <img src="{{recipe.image}}" style="width: 100%;">
+        </div>
+        <div *ngIf="!recipe.image">
+            <img [src]="recipeImagePlaceholder" style="width: 100%;">
+        </div>
 
-    <b>{{recipe.name}}</b> <br>
-    <i>Uses:
-        <span *ngFor="let ingredient of recipe.ingredients">
-            {{ingredient["ingredient.name"]}}, <!-- Should not have comma for last ingredient -->
-        </span>
-    </i>
-    <div *ngIf="showDeleteEdit">
-    <button mat-raised-button (click)="editRecipe()" color="primary"> Edit </button>
-    <button mat-raised-button (click)="deleteRecipe()" color="primary"> Delete </button>
-    </div>
+        <b>{{recipe.name}}</b> <br>
+        <i>Uses:
+            <span *ngFor="let ingredient of recipe.ingredients">
+                {{ingredient["ingredient.name"]}}, <!-- Should not have comma for last ingredient -->
+            </span>
+        </i>
+        <div *ngIf="showDeleteEdit">
+        <button mat-raised-button (click)="editRecipe()" color="primary"> Edit </button>
+        <button mat-raised-button (click)="deleteRecipe()" color="primary"> Delete </button>
+        <mat-error> {{error}} </mat-error>
+        </div>
+    </ng-container>
+    <mat-spinner *ngIf=loading> Showing spinner </mat-spinner>
+
   </mat-card>
   `
 })
@@ -35,6 +40,8 @@ export class RecipeViewCardComponent implements OnInit{
     @Output() deleteEmitter = new EventEmitter<number>();
 
     recipeImagePlaceholder = 'assets/images/user_placeholder.jpg';
+    loading = false;
+    error: string = '';
     ngOnInit() {
         console.log("Instantiating card component")
     }
@@ -45,6 +52,9 @@ export class RecipeViewCardComponent implements OnInit{
 
     deleteRecipe() {
         this.deleteEmitter.emit(this.recipe.id);
+    }
+    test() {
+        console.log("OWEN IT WORKS")
     }
 
 }

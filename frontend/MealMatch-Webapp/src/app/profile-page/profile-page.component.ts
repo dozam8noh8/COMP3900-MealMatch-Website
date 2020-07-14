@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChildren, QueryList } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { RecipeService } from '../services/recipe.service';
 import { Recipe } from '../models/recipe';
@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteRecipePopupComponent } from 'src/building-components/delete-recipe-popup/delete-recipe-popup.component';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { DOCUMENT } from '@angular/common';
+import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
 
 @Component({
   selector: 'app-profile-page',
@@ -30,10 +32,11 @@ export class ProfilePageComponent implements OnInit {
   userImage = "assets/images/user_placeholder.jpg";
   recipes: Recipe[];
 
-  constructor(private authService: AuthService, private dialog: MatDialog, private http: HttpClient, private recipeService: RecipeService) { }
+  @ViewChildren(RecipeViewCardComponent) recipeCards: QueryList<RecipeViewCardComponent>;
+
+  constructor(private authService: AuthService, private dialog: MatDialog, private http: HttpClient, private recipeService: RecipeService, @Inject(DOCUMENT) document) { }
 
   ngOnInit(): void {
-    console.log("INITIALISING PROFILE PAGE");
     this.userId = this.authService.getLoggedInUserId();
     this.authService.getUserDetails().subscribe(res => {
       this.username = res.username;
@@ -61,29 +64,31 @@ export class ProfilePageComponent implements OnInit {
     dialogRef.componentInstance.description ="Deleting Recipe";
     dialogRef.componentInstance.question = "Are you sure you want to delete the recipe? It's permanent"
     dialogRef.componentInstance.recipeId = recipeId;
-    //dialogRef.componentInstance.emitYes.subscribe(emission => {}
     dialogRef.afterClosed().subscribe(emission => {
       if (emission.behaviour === "Yes") {
-        console.log("Clicked yes");
-        this.recipeService.deleteRecipe(emission.recipeId)
-        .subscribe(response => {
-          console.log(response.status);
-          if (response.status === 200) {
-            console.log("Deleting recipe");
-            this.recipes = this.recipes.filter(recipe => recipe.id !== emission.recipeId)
-            //Add loading bar
-          }
-          else {
-            console.log("Couldn't delete recipe")
-          }
-        });
+        this.deleteRecipe(emission.recipeId);
       }
       else {
-        console.log("Clicked No");
         // Do nothing.
       }
     })
-
   }
 
+
+
+  deleteRecipe(recipeToDelete: number) {
+    let selectedCard = this.recipeCards.filter(item => item.recipe.id === recipeToDelete)[0];
+    selectedCard.loading = true;
+    this.recipeService.deleteRecipe(recipeToDelete)
+    .subscribe(response => {
+      selectedCard.loading = false;
+      if (response.status === 200) {
+        this.recipes = this.recipes.filter(recipe => recipe.id !== recipeToDelete)
+      }
+      else {
+          console.log("Couldn't delete recipe");
+      }
+      //Add Error handling?
+  });
+  }
 }
