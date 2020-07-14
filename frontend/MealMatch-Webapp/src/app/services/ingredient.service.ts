@@ -17,9 +17,9 @@ export class IngredientService {
     this.http.get("http://localhost:5000/api/get_ingredients_in_categories")
     .subscribe( (data: Category[]) => {
         this.allCategories = data;
-        this.allCategories.forEach( category => {
-          category.ingredients = category.ingredients.map( item => {
-            item = { ...item, onList: false };
+        this.allCategories.forEach( currCategory => {
+          currCategory.ingredients = currCategory.ingredients.map( item => {
+            item = { ...item, onList: false, category: currCategory.name };
             this.allIngredients.push(item);
             return item;
           });

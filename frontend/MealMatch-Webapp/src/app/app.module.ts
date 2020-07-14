@@ -37,6 +37,8 @@ import { PrivateResourceComponent } from './private-resource/private-resource.co
 import { PopupComponent } from '../building-components/login-popup/popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RequestLogInterceptor } from './request-interceptor';
+import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
+import { AddIngredientComponent } from './create-recipe/add-ingredient/add-ingredient.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -72,6 +74,8 @@ const materialModules = [
     SearchResultsComponent,
     PrivateResourceComponent,
     PopupComponent,
+    CreateRecipeComponent,
+    AddIngredientComponent,
   ],
   imports: [
     BrowserModule,
