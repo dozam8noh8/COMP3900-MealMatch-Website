@@ -19,6 +19,10 @@ class User(db.Model):
             {'id': self.id, 'exp': time.time() + expires_in},
             app.config['SECRET_KEY'], algorithm='HS256')
 
+    def json_dump(user):
+        schema = UserSchema()
+        return schema.dump(user)
+
     @staticmethod
     def verify_auth_token(token):
         try:
@@ -50,6 +54,7 @@ class Ingredient(db.Model):
         ingredient = Ingredient.query.filter_by(name=name).first()
         return ingredient
 
+    # unused method? cleanup?
     def get_all(names):
         ingredients = []
         for name in names:
@@ -57,6 +62,17 @@ class Ingredient(db.Model):
             if ingredient != None:
                 ingredients.append(ingredient)
         return ingredients
+    
+    def add_ingredient(name, category):
+        db_category = Category.query.filter(func.lower(Category.name) == func.lower(category)).first()
+        if not db_category:
+            return 'Category does not exist: ' + category
+
+        ingredient = Ingredient(name=name)
+        ingredient.categories.append(db_category)
+        db.session.add(ingredient)
+        db.session.commit()
+        return ingredient
 
     def json_dump(ingr):
         schema = IngredientSchema(many=True)
@@ -203,19 +219,15 @@ class RecipeIngredients(db.Model):
                       .filter(RecipeIngredients.ingredient_id.in_((search_ids)))
                       .subquery()
         )
-        ingredient_ids = (RecipeIngredients
-                          .query
-                          .with_entities(RecipeIngredients.ingredient_id)
-                          .filter(RecipeIngredients.recipe_id.in_(recipe_ids))
-                          .filter(RecipeIngredients.ingredient_id.notin_((search_ids)))
-                          .group_by(RecipeIngredients.ingredient_id)
-                          .order_by(func.count().desc())
-                          .limit(5)
-                          .subquery()
-        )
-        ingredients = (Ingredient
+        ingredients = (RecipeIngredients
                        .query
-                       .filter(Ingredient.id.in_(ingredient_ids))
+                       .with_entities(Ingredient.id, Ingredient.name)
+                       .filter(RecipeIngredients.recipe_id.in_(recipe_ids))
+                       .filter(RecipeIngredients.ingredient_id.notin_((search_ids)))
+                       .filter(RecipeIngredients.ingredient_id == Ingredient.id)
+                       .group_by(RecipeIngredients.ingredient_id)
+                       .order_by(func.count().desc())
+                       .limit(5)
                        .all()
         )
         return ingredients
@@ -240,11 +252,6 @@ class CategorySchema(ma.ModelSchema):
     class Meta:
         model = Category
 
-class UserSchema(ma.ModelSchema):
-    class Meta:
-        model = User
-        include_relationships = True
-
 class MealtypeSchema(ma.ModelSchema):
     class Meta:
         fields = ("id", "name")
@@ -265,3 +272,10 @@ class RecipeSchema(ma.ModelSchema):
 
     class Meta:
         fields = ("id", "name", "user_id", "image", "instruction", "ingredients", "mealtypes")
+
+class UserSchema(ma.ModelSchema):
+    recipes = ma.Nested(RecipeSchema, many=True)
+
+    class Meta:
+        fields = ("id", "email", "recipes")
+        include_relationships = True

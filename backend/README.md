@@ -77,6 +77,16 @@ API Documentation
         ]
     }
     ```
+
+- POST **/api/add_ingredient**
+
+    Adds a new ingredient to the database, given a `name` and `category`.  
+    Category must already exist in the database and the search is case insensitive.  
+    Example usage:  
+    ```
+    {    "name": "Blue Cheese", "category": "Dairy"     }
+    ```
+
 - POST **/api/recommendations**
 
     Given a list of ingredient ids, returns 5 ingredient recommendations.  

@@ -86,10 +86,27 @@ def get_user_info(id):
     # Can't find user in db.
     if not user:
         abort(400)
-    # Currently limits recipes to 10, we should apply proper pagination if possible.
-    recipes = Recipe.get_recipes_by_user_id(id)
+    return jsonify(User.json_dump(user))
 
-    return jsonify({'user_id': user.id, 'email': user.email, 'username': user.username, 'recipes': recipes })
+@app.route('/api/edit_user/<int:id>', methods=['POST'])
+@auth.login_required
+def edit_user(id):
+    # If the requesting user is not the user who's info is requested.
+    if g.user.id != id:
+        return 'Unauthorized Access', 401
+    user = User.query.get(id)
+    # Can't find user in db.
+    if not user:
+        abort(400)
+    old_pass = request.json.get('old_password')
+    new_pass = request.json.get('new_password')
+    if user.verify_password(old_pass):
+        user.hash_password(new_pass)
+    else:
+        return "Old password does not match", 201
+    db.session.commit()
+    return "Success", 200
+
 
 # Get Auth Token
 @app.route('/api/token', methods=['GET'])
@@ -156,6 +173,7 @@ def recipe_delete(recipe_id):
 def popular_ingredient_pairs():
     return jsonify(IngredientPairs.get_highest_pairs())
 
+
 @app.route('/api/get_ingredients_in_categories', methods=['GET'])
 def get_ingredients_in_categories():
     '''
@@ -185,6 +203,18 @@ def get_all_mealtypes():
     '''
     mealtypes = Mealtype.query.all()
     return jsonify(Mealtype.json_dump(mealtypes))
+
+@app.route('/api/add_ingredient', methods=['POST'])
+def add_ingredient():
+    '''
+        Given an ingredient `name` and `category`, adds it to the database.
+    '''
+    name = request.json.get('name')
+    category = request.json.get('category')
+    ingredient = Ingredient.add_ingredient(name, category)
+    if type(ingredient) is str:
+        return ingredient, 201 # Error message FIX error code
+    return {'ingredient_id' : ingredient.id, 'message': 'Ingredient has been added'}
 
 @app.route('/api/add_recipe', methods=['POST'])
 @auth.login_required
