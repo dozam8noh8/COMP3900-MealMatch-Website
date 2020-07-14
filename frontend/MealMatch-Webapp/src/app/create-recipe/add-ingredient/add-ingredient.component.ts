@@ -30,9 +30,6 @@ import { map } from 'rxjs/operators';
                       </mat-option>
                   </mat-autocomplete>
               </mat-form-field>
-              <span *ngIf="currentIngredient">
-                {{currentIngredient.category}}
-              </span> 
             `
 })
 export class AddIngredientComponent implements OnInit {
@@ -40,7 +37,6 @@ export class AddIngredientComponent implements OnInit {
   // Keep track of whether a valid ingredient
   @Input() position: number;
   @Input() quantity: string;  
-  @Input() currentIngredient: Ingredient;
 
   @Input() addedIngredients: Ingredient[];
   @Output() removeFromList = new EventEmitter<Ingredient>();
@@ -48,7 +44,6 @@ export class AddIngredientComponent implements OnInit {
   @Output() updateQuantity = new EventEmitter<any>();
 
   ingredientIsValid: boolean = true;
-  // currentSearch: string;
 
   filteredOptions: Observable<Ingredient[]>;
   ingredientControl = new FormControl()
@@ -63,7 +58,6 @@ export class AddIngredientComponent implements OnInit {
   }
 
   addToList(newIngredient: Ingredient) {
-    // this.currentIngredient = newIngredient;
     this.updateIngredient.emit( {index: this.position, newIngredient: newIngredient} );
     this.ingredientIsValid = true;
     // Add ingredient to parent's list ingredients for the recipe
@@ -72,22 +66,16 @@ export class AddIngredientComponent implements OnInit {
 
   private _filter(value: string): Ingredient[] {
     const filterValue = value.toString().toLowerCase();
+
+    // If not an existing ingredient
     if(!this.ingredientService.getAllIngredients().some( elem => (elem.name.toLowerCase()===filterValue))) {
-      console.log("NOT A VALID INGREDIENT: " + value);
+      // Update the ingredient for slot at this position
+      this.updateIngredient.emit( {index: this.position, newIngredient: null} );
       this.ingredientIsValid = false;
     }
 
-    // If an ingredient is associated with this slot and the search value is not an existing ingredient
-    if(this.currentIngredient && !this.ingredientService.getAllIngredients().some( elem => (elem.name.toLowerCase()===filterValue))) {
-      console.log("REMOVING valid ingredient: " + this.currentIngredient.name);
-      // Ingredient should be removed from recipe creation in parent
-      this.removeFromList.emit(this.currentIngredient);
-      this.currentIngredient = null;
-
-    }
-
     if(filterValue)
-    return filterValue==='' ? [] : this.ingredientService.getAllIngredients().filter(item => {
+      return filterValue==='' ? [] : this.ingredientService.getAllIngredients().filter(item => {
           return item.name.toLowerCase().startsWith(filterValue) && !this.addedIngredients.includes(item)
       });
   }

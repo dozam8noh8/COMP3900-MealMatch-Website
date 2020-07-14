@@ -25,7 +25,7 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { IngredientSearchComponent } from './home-page/ingredient-search/ingredient-search.component';
 import { IngredientByCategoryComponent } from './home-page/ingredient-by-category/ingredient-by-category.component';
