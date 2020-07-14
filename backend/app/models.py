@@ -1,6 +1,16 @@
 from app import db, jwt, time, app, generate_password_hash, check_password_hash, ma
 from sqlalchemy import func, desc
 
+userRatings = db.Table('user_ratings',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('rating_id', db.Integer, db.ForeignKey('rating.id'), primary_key=True)
+)
+
+recipeRatings = db.Table('recipe_ratings',
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id'), primary_key=True),
+    db.Column('rating_id', db.Integer, db.ForeignKey('rating.id'), primary_key=True)
+)
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(70), index=True)
@@ -86,6 +96,17 @@ class Category(db.Model):
     def json_dump(recipe):
         schema = CategorySchema(many=True)
         return schema.dump(recipe)
+
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    rating = db.Column(db.String(256))
+    comment = db.Column(db.String(2000))
+    user = db.relationship('User', secondary=userRatings, backref=db.backref('rating', lazy='dynamic'))
+    recipe = db.relationship('Recipe', secondary=recipeRatings, backref=db.backref('rating', lazy='dynamic'))
+
+    def json_dump(rating):
+        schema = RatingSchema(many=True)
+        return schema.dump(rating)
 
 class IngredientPairs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -265,6 +286,10 @@ class RecipeIngredientsSchema(ma.ModelSchema):
 class IngredientPairsSchema(ma.ModelSchema):
     class Meta:
         model = IngredientPairs
+
+class RatingSchema(ma.ModelSchema):
+    class Meta:
+        model = Rating
 
 class RecipeSchema(ma.ModelSchema):
     mealtypes = ma.Nested(MealtypeSchema, many=True)
