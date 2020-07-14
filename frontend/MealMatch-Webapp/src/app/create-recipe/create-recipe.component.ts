@@ -22,7 +22,8 @@ interface IngredientSlot {
                   [position]="index"
                   (updateIngredient)="updateSlotIngredient($event)"
                   (updateQuantity)="updateSlotQuantity($event)"
-                  [addedIngredients]="slotsToIngredients()"> </app-add-ingredient>     
+                  [addedIngredients]="slotsToIngredients()"> </app-add-ingredient>  
+                  <button type="button" (click)="removeSlot(index)">Remove this ingredient</button>
                 </div>
                 <button type="button" (click)="addSlot()">Add an ingredient</button>
 
@@ -79,6 +80,10 @@ export class CreateRecipeComponent implements OnInit {
 
   addSlot() {
     this.allSlots.push( { ingredient: null, quantity: "" } )
+  }
+
+  removeSlot(index: number) {
+    this.allSlots.splice(index, 1);
   }
 
   updateSlotIngredient($event) {
