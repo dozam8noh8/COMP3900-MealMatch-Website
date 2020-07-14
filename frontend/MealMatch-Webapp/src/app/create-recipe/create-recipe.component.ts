@@ -57,9 +57,10 @@ export class CreateRecipeComponent implements OnInit {
 
   updateSlotQuantity($event) {
     this.allSlots[$event.index] = {
-      ingredient: this.allSlots[$event].ingredient,
+      ingredient: this.allSlots[$event.index].ingredient,
       quantity: $event.newQuantity
     }
+    console.log(this.allSlots)
   }
 
   trackIngredient(index: any, item: any) {

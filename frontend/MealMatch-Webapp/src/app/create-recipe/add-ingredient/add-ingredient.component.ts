@@ -12,7 +12,8 @@ import { map } from 'rxjs/operators';
               <div *ngIf="!ingredientIsValid"> 
                 <em>This ingredient does not exist</em>
               </div>
-              <input type="text" placeholder="quantity" />
+              <input type="text" placeholder="quantity" 
+              (keyup)="changeQuantity($event)"/>
               <mat-form-field style="width: 50%;">
                   <input type="text"
                   placeholder="Input an ingredient"
@@ -29,22 +30,22 @@ import { map } from 'rxjs/operators';
                       </mat-option>
                   </mat-autocomplete>
               </mat-form-field>
-              <span *ngIf="currentIngredient"> 
+              <span *ngIf="currentIngredient">
                 {{currentIngredient.category}}
               </span> 
             `
 })
 export class AddIngredientComponent implements OnInit {
 
+  // Keep track of whether a valid ingredient
+  @Input() position: number;
+  @Input() quantity: string;  
+  @Input() currentIngredient: Ingredient;
+
   @Input() addedIngredients: Ingredient[];
   @Output() removeFromList = new EventEmitter<Ingredient>();
   @Output() updateIngredient = new EventEmitter<any>();
-
-  // Keep track of whether a valid ingredient
-  @Input() position: number;
-  @Input() currentIngredient: Ingredient;
-  @Input() quantity: string;
-
+  @Output() updateQuantity = new EventEmitter<any>();
 
   ingredientIsValid: boolean = true;
   // currentSearch: string;
@@ -61,17 +62,12 @@ export class AddIngredientComponent implements OnInit {
       );
   }
 
-
   addToList(newIngredient: Ingredient) {
     // this.currentIngredient = newIngredient;
     this.updateIngredient.emit( {index: this.position, newIngredient: newIngredient} );
     this.ingredientIsValid = true;
     // Add ingredient to parent's list ingredients for the recipe
     this.addedIngredients.push(newIngredient);
-  }
-
-  displayIngredient(ingredient: Ingredient): String {
-    return ingredient?.name;
   }
 
   private _filter(value: string): Ingredient[] {
@@ -94,6 +90,14 @@ export class AddIngredientComponent implements OnInit {
     return filterValue==='' ? [] : this.ingredientService.getAllIngredients().filter(item => {
           return item.name.toLowerCase().startsWith(filterValue) && !this.addedIngredients.includes(item)
       });
+  }
+
+  changeQuantity(keyboardEvent) {
+    this.updateQuantity.emit( {index: this.position, newQuantity: keyboardEvent.target.value} );
+  }
+
+  displayIngredient(ingredient: Ingredient): String {
+    return ingredient?.name;
   }
 
 }
