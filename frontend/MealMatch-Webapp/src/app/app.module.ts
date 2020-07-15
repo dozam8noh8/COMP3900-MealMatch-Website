@@ -39,6 +39,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RequestLogInterceptor } from './request-interceptor';
 import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 import { AddIngredientComponent } from './create-recipe/add-ingredient/add-ingredient.component';
+import { NewIngredientPopupComponent } from './create-recipe/new-ingredient-popup/new-ingredient-popup.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -76,6 +77,7 @@ const materialModules = [
     PopupComponent,
     CreateRecipeComponent,
     AddIngredientComponent,
+    NewIngredientPopupComponent,
   ],
   imports: [
     BrowserModule,

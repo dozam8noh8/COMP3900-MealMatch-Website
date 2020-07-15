@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../models/ingredient';
 import { FormGroup, FormControl } from '@angular/forms';
+import { RecipeService } from '../services/recipe.service';
 
 interface IngredientSlot {
   ingredient: Ingredient;
@@ -16,19 +17,24 @@ interface IngredientSlot {
                   Name of recipe: <input type="text" formControlName="recipeName"> </h2>
                 <h2> Upload an image ... </h2>
                 <h2> Mealtype </h2>
+                  <select formControlName="mealType">
+                    <option *ngFor="let mealtype of getAllMealTypes()" [value]="mealtype">
+                      {{mealtype}}
+                    </option>
+                  </select>
                 <h2> Ingredients </h2>
-                <div *ngFor="let slot of allSlots; let index=index; trackBy:trackIngredient">
-                  <app-add-ingredient
-                  [position]="index"
-                  (updateIngredient)="updateSlotIngredient($event)"
-                  (updateQuantity)="updateSlotQuantity($event)"
-                  [addedIngredients]="slotsToIngredients()"> </app-add-ingredient>  
-                  <button type="button" (click)="removeSlot(index)">Remove this ingredient</button>
-                </div>
+                  <div *ngFor="let slot of allSlots; let index=index; trackBy:trackIngredient">
+                    <app-add-ingredient
+                    [position]="index"
+                    (updateIngredient)="updateSlotIngredient($event)"
+                    (updateQuantity)="updateSlotQuantity($event)"
+                    [addedIngredients]="slotsToIngredients()"> </app-add-ingredient>  
+                    <button type="button" (click)="removeSlot(index)">Remove this ingredient</button>
+                  </div>
                 <button type="button" (click)="addSlot()">Add an ingredient</button>
 
                 <h2> Instructions </h2>
-                <textarea formControlName="instructions"></textarea>
+                  <textarea formControlName="instructions"></textarea>
 
                 <br/> <button type="submit">Save</button>              
               </form>
@@ -51,10 +57,10 @@ export class CreateRecipeComponent implements OnInit {
   allSlots: IngredientSlot[] = [];
   addedIngredients: Ingredient[] = [];
 
-  constructor() { 
+  constructor(private recipeService: RecipeService) { 
     this.recipeFormGroup = new FormGroup({
       recipeName: new FormControl(),
-      mealtype: new FormControl(),
+      mealType: new FormControl(),
       instructions: new FormControl()
     });
   }
@@ -69,13 +75,14 @@ export class CreateRecipeComponent implements OnInit {
     const new_recipe = {
       name: this.recipeFormGroup.get('recipeName').value,
       instruction: this.recipeFormGroup.get('instructions').value,
-      mealtype: this.recipeFormGroup.get('mealtype').value,
+      mealType: this.recipeFormGroup.get('mealType').value,
       // Convert slots to appropriate ingredient format
       ingredients: this.allSlots.map(slot => {
         return {name: slot.ingredient.name, quantity: slot.quantity}
       })
     }
     // Send to endpoint to create new recipe
+    console.log(new_recipe)
   }
 
   addSlot() {
@@ -106,6 +113,10 @@ export class CreateRecipeComponent implements OnInit {
 
   slotsToIngredients() {
     return this.allSlots.map(elem => elem.ingredient);
+  }
+
+  getAllMealTypes() {
+    return this.recipeService.getAllMealTypes()
   }
 
 }

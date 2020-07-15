@@ -4,14 +4,14 @@ import { Observable } from 'rxjs';
 import { Ingredient } from 'src/app/models/ingredient';
 import { FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { NewIngredientPopupComponent } from '../new-ingredient-popup/new-ingredient-popup.component';
+
 
 @Component({
   selector: 'app-add-ingredient',
   styleUrls: ['./add-ingredient.component.scss'],
   template: `
-              <div *ngIf="!ingredientIsValid"> 
-                <em>This ingredient does not exist</em>
-              </div>
               <input type="text" placeholder="quantity" 
               (keyup)="changeQuantity($event)"/>
               <mat-form-field style="width: 50%;">
@@ -30,6 +30,10 @@ import { map } from 'rxjs/operators';
                       </mat-option>
                   </mat-autocomplete>
               </mat-form-field>
+              <div *ngIf="!ingredientIsValid"> 
+                <em>This ingredient does not exist. Would you like to add to our collection of ingredients?</em>
+                <button type="button" (click)="openNewIngredientDialog()">Yes</button>
+              </div>
             `
 })
 export class AddIngredientComponent implements OnInit {
@@ -48,7 +52,7 @@ export class AddIngredientComponent implements OnInit {
   filteredOptions: Observable<Ingredient[]>;
   ingredientControl = new FormControl()
 
-  constructor(private ingredientService: IngredientService) { }
+  constructor(private ingredientService: IngredientService, private newIngredientDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.filteredOptions = this.ingredientControl.valueChanges
@@ -86,6 +90,10 @@ export class AddIngredientComponent implements OnInit {
 
   displayIngredient(ingredient: Ingredient): String {
     return ingredient?.name;
+  }
+
+  openNewIngredientDialog() {
+    this.newIngredientDialog.open(NewIngredientPopupComponent);
   }
 
 }

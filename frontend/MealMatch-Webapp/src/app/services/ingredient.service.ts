@@ -26,6 +26,10 @@ export class IngredientService {
         });
     });
   }
+
+  createNewIngredient(ingredientName: string, ingredientCategory: string) {
+    // TODO
+  }
   
   ngOnInit() { }
 
