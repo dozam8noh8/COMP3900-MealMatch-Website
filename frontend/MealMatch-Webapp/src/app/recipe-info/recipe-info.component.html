@@ -1,19 +1,21 @@
-<div style="padding: 10px 0px 0px 10px;"> 
+<!-- Added this so when recipe isnt defined (when api request is loading ) we dont get an undefined error -->
+<ng-container *ngIf="recipe">
+<div style="padding: 10px 0px 0px 10px;">
     <h1>{{recipe.name}}</h1>
 </div>
 
 <mat-card id="image-ingredients">
     <div>
-        <img src="{{recipe.image}}" style="max-width: 100%;">     
+        <img src="{{recipe.image}}" style="max-width: 100%;">
     </div>
-        
+
     <div id="ingredients">
         <h2>What you need: </h2>
         <ul style="display: inline-block;">
             <div *ngFor="let ingredient of recipe.ingredients">
                 <li>{{ingredient["ingredient.name"]}}: {{ingredient["quantity"]}}</li>
-            </div>           
-        </ul> 
+            </div>
+        </ul>
     </div>
 </mat-card>
 
@@ -25,3 +27,4 @@
     <!-- <p [innerHTML]="recipe.instructions"></p> -->
     {{recipe.instruction}}
 </mat-card>
+</ng-container>

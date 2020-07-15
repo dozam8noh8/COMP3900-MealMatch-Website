@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 import os
-from flask import abort, request, jsonify, g, url_for
+from flask import abort, request, jsonify, g, url_for, Response
 from flask_httpauth import HTTPBasicAuth
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import ImmutableMultiDict
-from app.models import Ingredient, User, Recipe, Category, Mealtype, RecipeIngredients, IngredientPairs
+from app.models import Ingredient, User, Recipe, Category, Mealtype, RecipeIngredients, IngredientPairs, Rating
 from app import auth, app, db
 from app.seed import seed_db
 import secrets
@@ -107,6 +107,7 @@ def edit_user(id):
     db.session.commit()
     return "Success", 200
 
+
 # Get Auth Token
 @app.route('/api/token', methods=['GET'])
 @auth.login_required
@@ -153,6 +154,20 @@ def recipe_search():
     recipes = Recipe.get_recipes(ingredients)
     return jsonify(Recipe.json_dump(recipes))
 
+@app.route('/api/recipe_delete/<int:recipe_id>', methods=['DELETE'])
+@auth.login_required
+def recipe_delete(recipe_id):
+    recipe = Recipe.get_recipe_by_id(recipe_id)
+    if not recipe:
+        return 'Recipe Id not found', 204
+    print(recipe)
+    if g.user.id != recipe["user_id"] :
+        return 'Unauthorized Access', 401 # Cant delete a recipe that isn't yours
+    if Recipe.recipe_delete(recipe_id):
+        return Response(status=200)
+
+
+
 @app.route('/api/popular_ingredient_pairs', methods=['GET'])
 @auth.login_required
 def popular_ingredient_pairs():
@@ -189,6 +204,52 @@ def get_all_mealtypes():
     mealtypes = Mealtype.query.all()
     return jsonify(Mealtype.json_dump(mealtypes))
 
+@app.route('/api/add_ingredient', methods=['POST'])
+def add_ingredient():
+    '''
+        Given an ingredient `name` and `category`, adds it to the database.
+    '''
+    name = request.json.get('name')
+    category = request.json.get('category')
+    ingredient = Ingredient.add_ingredient(name, category)
+    if type(ingredient) is str:
+        return ingredient, 201 # Error message FIX error code
+    return {'ingredient_id' : ingredient.id, 'message': 'Ingredient has been added'}
+
+@app.route('/api/rating/<int:id>', methods=['GET', 'POST'])
+def rating(id):
+    '''
+        On a GET request with /rating/recipe_id it will return all the ratings for a recipe
+
+        On a POST request with /rating/recipe_id will add a new rating
+            for post, please supply 'rating' between 1 and 5, 'comment', 'user_id' as a JSON
+    '''
+    if request.method == 'POST':
+        rating = request.json.get('rating')
+        if int(rating) > 5 or int(rating) < 1:
+            return 'Ratings must be between 1 and 5', 201 # Fix error code
+        comment = request.json.get('comment')
+        user = User.query.filter_by(id=request.json.get('user_id')).first()
+        recipe = Recipe.query.filter_by(id=id).first()
+        new_rating = Rating(rating=rating, comment=comment)
+        # Check if rating already exists by a user
+        for user_rating in user.rating:
+            for rating_recipe in user_rating.recipe:
+                if rating_recipe == recipe:
+                    user_rating.rating = rating
+                    user_rating.comment = comment
+                    db.session.commit()
+                    return jsonify({'id':user_rating.id, 'rating':user_rating.rating, 'comment': user_rating.comment})
+        return jsonify(Rating.json_dump(user.rating))
+        recipe.rating.append(new_rating)
+        user.rating.append(new_rating)
+        db.session.add(new_rating)
+        db.session.commit()
+        return jsonify(Rating.json_dump(new_rating))
+    recipe = Recipe.query.filter_by(id=id).first()
+    ratings = recipe.rating
+    return jsonify(Rating.json_dump(ratings))
+
 @app.route('/api/add_recipe', methods=['POST'])
 @auth.login_required
 def add_recipe():
@@ -209,7 +270,7 @@ def recipe_image_update():
     recipe = request.json.get('recipe_id')
     Recipe.upload_recipe_image(recipe, picture_path)
     return {"pic": picture_path}
-    
+
 
 @app.route('/api/recommendations', methods=['POST'])
 def get_recommendations():

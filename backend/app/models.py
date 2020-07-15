@@ -1,6 +1,16 @@
 from app import db, jwt, time, app, generate_password_hash, check_password_hash, ma
 from sqlalchemy import func, desc
 
+userRatings = db.Table('user_ratings',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('rating_id', db.Integer, db.ForeignKey('rating.id'), primary_key=True)
+)
+
+recipeRatings = db.Table('recipe_ratings',
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id'), primary_key=True),
+    db.Column('rating_id', db.Integer, db.ForeignKey('rating.id'), primary_key=True)
+)
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(70), index=True)
@@ -33,7 +43,7 @@ class User(db.Model):
         if 'exp' in data:
             if (time.time() <= data['exp']):
                 return User.query.get(data['id'])
-        return     
+        return
 
 ingredientCategories = db.Table('ingredient_categories',
     db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredient.id')),
@@ -54,6 +64,7 @@ class Ingredient(db.Model):
         ingredient = Ingredient.query.filter_by(name=name).first()
         return ingredient
 
+    # unused method? cleanup?
     def get_all(names):
         ingredients = []
         for name in names:
@@ -61,6 +72,17 @@ class Ingredient(db.Model):
             if ingredient != None:
                 ingredients.append(ingredient)
         return ingredients
+    
+    def add_ingredient(name, category):
+        db_category = Category.query.filter(func.lower(Category.name) == func.lower(category)).first()
+        if not db_category:
+            return 'Category does not exist: ' + category
+
+        ingredient = Ingredient(name=name)
+        ingredient.categories.append(db_category)
+        db.session.add(ingredient)
+        db.session.commit()
+        return ingredient
 
     def json_dump(ingr):
         schema = IngredientSchema(many=True)
@@ -74,6 +96,17 @@ class Category(db.Model):
     def json_dump(recipe):
         schema = CategorySchema(many=True)
         return schema.dump(recipe)
+
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    rating = db.Column(db.String(256))
+    comment = db.Column(db.String(2000))
+    user = db.relationship('User', secondary=userRatings, backref=db.backref('rating', lazy='dynamic'))
+    recipe = db.relationship('Recipe', secondary=recipeRatings, backref=db.backref('rating', lazy='dynamic'))
+
+    def json_dump(rating):
+        schema = RatingSchema(many=True)
+        return schema.dump(rating)
 
 class IngredientPairs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -137,6 +170,12 @@ class Recipe(db.Model):
 
         return filtered
 
+    def get_recipes_by_user_id(user_id):
+        recipes = Recipe.query.filter_by(user_id=1).limit(10).all()
+        schema = RecipeSchema(many=True)
+        return schema.dump(recipes)
+
+
     # Make new recipe
     def add_recipe(name, instruction, mealType, ingredients, user, image=None):
         recipe = ''
@@ -168,6 +207,11 @@ class Recipe(db.Model):
         db.session.commit()
         return recipe
 
+    def recipe_delete(recipe_id):
+        Recipe.query.filter_by(id=recipe_id).delete()
+        db.session.commit()
+        return True #TODO change this to actually return false if the id isnt found.
+
     def upload_recipe_image(id, image):
         recipe = Recipe.query.filter_by(id=id).first()
         recipe.image = image
@@ -176,7 +220,7 @@ class Recipe(db.Model):
     def json_dump(recipe):
         schema = RecipeSchema(many=True)
         return schema.dump(recipe)
-        
+
 
 
 class RecipeIngredients(db.Model):
@@ -235,13 +279,17 @@ class MealtypeSchema(ma.ModelSchema):
 
 class RecipeIngredientsSchema(ma.ModelSchema):
     ingredient = ma.Nested(IngredientSchema)
-    
+
     class Meta:
         fields = ("ingredient.id", "ingredient.name", "quantity")
 
 class IngredientPairsSchema(ma.ModelSchema):
     class Meta:
         model = IngredientPairs
+
+class RatingSchema(ma.ModelSchema):
+    class Meta:
+        model = Rating
 
 class RecipeSchema(ma.ModelSchema):
     mealtypes = ma.Nested(MealtypeSchema, many=True)
