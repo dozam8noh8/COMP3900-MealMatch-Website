@@ -28,8 +28,8 @@ interface IngredientSlot {
                     [position]="index"
                     (updateIngredient)="updateSlotIngredient($event)"
                     (updateQuantity)="updateSlotQuantity($event)"
+                    (removeIngredient)="removeSlot($event)"
                     [addedIngredients]="slotsToIngredients()"> </app-add-ingredient>  
-                    <button type="button" (click)="removeSlot(index)">Remove this ingredient</button>
                   </div>
                 <button type="button" (click)="addSlot()">Add an ingredient</button>
 

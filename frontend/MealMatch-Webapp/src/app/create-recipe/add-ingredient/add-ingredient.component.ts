@@ -30,6 +30,8 @@ import { NewIngredientPopupComponent } from '../new-ingredient-popup/new-ingredi
                       </mat-option>
                   </mat-autocomplete>
               </mat-form-field>
+              <button type="button" (click)="removeSelf()">Remove this ingredient</button>
+
               <div *ngIf="!ingredientIsValid"> 
                 <em>This ingredient does not exist. Would you like to add to our collection of ingredients?</em>
                 <button type="button" (click)="openNewIngredientDialog()">Yes</button>
@@ -43,7 +45,7 @@ export class AddIngredientComponent implements OnInit {
   @Input() quantity: string;  
 
   @Input() addedIngredients: Ingredient[];
-  @Output() removeFromList = new EventEmitter<Ingredient>();
+  @Output() removeIngredient = new EventEmitter<number>();
   @Output() updateIngredient = new EventEmitter<any>();
   @Output() updateQuantity = new EventEmitter<any>();
 
@@ -94,6 +96,10 @@ export class AddIngredientComponent implements OnInit {
 
   openNewIngredientDialog() {
     this.newIngredientDialog.open(NewIngredientPopupComponent);
+  }
+
+  removeSelf() {
+    this.removeIngredient.emit(this.position);
   }
 
 }
