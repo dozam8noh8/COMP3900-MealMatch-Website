@@ -159,6 +159,7 @@ def recipe_search():
 @app.route('/api/recipe_delete/<int:recipe_id>', methods=['DELETE'])
 @auth.login_required
 def recipe_delete(recipe_id):
+    """ Delete a recipe by its id"""
     recipe = Recipe.get_recipe_by_id(recipe_id)
     if not recipe:
         return 'Recipe Id not found', 204
@@ -291,7 +292,7 @@ def profile_pic_upload():
         picture_path = 'http://localhost:5000' + url_for('static', filename=msg)
         user_id = g.user.id
         User.upload_profile_image(user_id, picture_path)
-    return msg, code
+    return jsonify({'msg':msg}), code
 
 @app.route('/api/recipe_image_upload/<int:recipe_id>', methods=['POST'])
 @auth.login_required
@@ -300,7 +301,7 @@ def recipe_image_upload(recipe_id):
     if code == 200: #TODO HANDLE ERRORS - Turn into objects?
         picture_path = 'http://localhost:5000' + url_for('static', filename=msg)
         Recipe.upload_recipe_image(recipe_id, picture_path)
-    return msg, code
+    return jsonify({'msg':msg}), code
 
 
 
