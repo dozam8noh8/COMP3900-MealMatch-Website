@@ -14,7 +14,9 @@ import { RecipeViewCardComponent } from 'src/building-components/recipe-view-car
   styleUrls: ['profile-page.component.scss'],
   template: `<h1> This is a private resource!! </h1>
   <h1>  Welcome to your recipe dashboard {{ username }}!</h1>
-  <img alt="user placeholder image" [src]="userImage">
+  <app-photo-upload>
+</app-photo-upload>
+  <img alt="user placeholder image" [src]="profile_pic">
 
   <div class="all-recipes-container">
     <div class="container" *ngFor="let recipe of recipes">
@@ -29,7 +31,7 @@ export class ProfilePageComponent implements OnInit {
   userId: number;
   username: string;
   email: string;
-  userImage = "assets/images/user_placeholder.jpg";
+  profile_pic = "assets/images/user_placeholder.jpg";
   recipes: Recipe[];
 
   @ViewChildren(RecipeViewCardComponent) recipeCards: QueryList<RecipeViewCardComponent>;
@@ -41,8 +43,8 @@ export class ProfilePageComponent implements OnInit {
     this.authService.getUserDetails().subscribe(res => {
       this.username = res.username;
       this.email = res.email;
-      if (res.userImage){
-        this.userImage = res.userImage;
+      if (res.profile_pic){
+        this.profile_pic = res.profile_pic;
 
       }
       this.recipes = res.recipes;
