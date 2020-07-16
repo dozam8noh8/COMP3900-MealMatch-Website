@@ -1,17 +1,34 @@
 
-<mat-spinner *ngIf=!searchComplete> Showing spinner </mat-spinner>
-<div *ngIf="resultingRecipes?.length !== 0">
+<mat-form-field appearance="fill">
+    <mat-label>Meal Type</mat-label>
+    <mat-select 
+    matNativeControl
+    (selectionChange)="updateMealType($event.value)"
+    [(value)] = "selectedMealType">
+        <mat-option *ngFor="let mealtype of getAllMealTypes()" 
+        [value]="mealtype">
+            {{mealtype}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-spinner *ngIf=!searchComplete()> Showing spinner </mat-spinner>
+
+<div *ngIf="searchComplete() && getResults().length > 0">
     <div class="columned" style="margin-left: 2%; margin-right: 2%;">
-        <div *ngFor="let recipe of resultingRecipes">
+        <div *ngFor="let recipe of getResults()">
             <a routerLink="/recipe/{{recipe.id}}" style="text-decoration: none;">
                 <app-recipe-view-card [recipe]="recipe"></app-recipe-view-card>
             </a>
         </div>
-    </div>
+    </div>    
 </div>
-<div *ngIf="resultingRecipes?.length === 0 && searchComplete">
-    <h1>Sorry, we couldn't find any recipes with the following items</h1>
-    <ul *ngFor="let ingredient of searchState?.searchIngredients">
+
+<div *ngIf="searchComplete() && getResults().length === 0">
+    <h1>Sorry, we couldn't find any 
+        <span *ngIf="selectedMealType !== 'All'"> "{{selectedMealType}}" </span>
+        recipes with just: </h1>
+    <ul *ngFor="let ingredient of getSearchedIngredients()">
         <li>{{ingredient}}</li>
     </ul>
     <a routerLink="/home">Return to Ingredients Select</a>
