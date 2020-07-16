@@ -82,5 +82,24 @@ Our team had the retro right after our tute. We reflected on the week and found 
 Pretty good week all in all.
 
 ==================Week 6==============
-This week is quiet week so I have a bit more time to work on things, but I also don't want to spend too long. I've worked with Manni to make the home page more capable of error handling and done a few small UI related tasks that were found at the end of last sprint. One thing I've been doing a lot of but havent really spoken about is Jira Management. I'm constantly creating tasks for people to do on Jira, and when people have time, they assign themselves. Since everyone in our group is dilligent this seems to be working. The plan for the rest of this week is to start thinking about how we might make a profile page.
+This week is quiet week so I have a bit more time to work on things, but I also don't want to spend too long.
+I've worked with Manni to make the home page more capable of error handling and done a few small
+UI related tasks that were found at the end of last sprint. One thing I've been doing a lot of 
+but havent really spoken about is Jira Management. I'm constantly creating tasks for people to do
+on Jira, and when people have time, they assign themselves. Since everyone in our group is dilligent this seems to be working.
+The plan for the rest of this week is to start thinking about how we might make a profile page.
 
+The rest of the week I did little tangible work other than familiarising myself with SQLAlchemy.
+With Emmanuel well and truly gone, we only have 4 people and that means that we don't have enough people to fully
+separate backend and frontend work. So I've got to know the backend a bit so I can get things done for myself when
+I'm blocked by the backend on frontend work. Most of the team took week 6 off a bit since it was flexibility week 
+which is fine as long as we pick back up next sprint!
+
+==================Week 7==============
+At the start of this week, I finalised the retrospective A document (it was pretty small and simple) and ran it by the group to make sure we hadn't missed
+anything. I wrote out a bunch of tickets for everyone to do in case they weren't sure what areas we needed to work on. I also made huge progress on the profile
+page, it works but I haven't spent any time on the UI because I feel like we will change the whole UI style later anyway. My biggest struggle this week was
+working out the best way to delete a component off the page based on an action in a different component. I ended up using a combination of the MatDialog (and
+subscriptions) and EventEmitters to propagate the change to the required components. I also did some work on the backend to create the endpoints that I required,
+like the user_info endpoint and some methods on the models that it would require to get the information. We don't have many user stories left but we definitely
+have a lot of UI work to do :/
