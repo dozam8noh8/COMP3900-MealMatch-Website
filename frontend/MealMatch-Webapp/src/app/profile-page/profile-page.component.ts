@@ -59,8 +59,6 @@ export class ProfilePageComponent implements OnInit {
   }
 
   handleProfileUpload(file: File) {
-    console.log(file)
     this.imageService.uploadProfileImage(file).subscribe(res => console.log(res))
-    //this.imageService.uploadProfileImage(event.data).subscribe()
   }
 }
