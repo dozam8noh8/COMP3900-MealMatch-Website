@@ -19,3 +19,8 @@ Throughout the past two weeks, I quickly went through two Flask tutorials to ref
 
 Week 6
 Flexibility week! Busy with other uni assignments so I did not get anything done. Seeing as how this sprint is 3 weeks, I think our velocity will be fine. Regardless, I attended a group meeting for progress updates and to assign work on Jira.
+
+Week 7
+Resumed my tickets right on Monday and completed a few tickets in terms of backend. I implemented API calls for getting all the distinct mealtypes, recommendation system based on an input of ingredients, adding a new ingredient and a skeleton for the creation of recipes to help Waqif out.
+
+WIP...
