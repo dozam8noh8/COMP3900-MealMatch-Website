@@ -34,7 +34,7 @@ export class ProfilePageComponent implements OnInit {
 
   @ViewChildren(RecipeViewCardComponent) recipeCards: QueryList<RecipeViewCardComponent>;
 
-  constructor(private authService: AuthService, private dialog: MatDialog, private http: HttpClient, private recipeService: RecipeService, @Inject(DOCUMENT) document) { }
+  constructor(private authService: AuthService, private http: HttpClient, private recipeService: RecipeService, @Inject(DOCUMENT) document) { }
 
   ngOnInit(): void {
     this.userId = this.authService.getLoggedInUserId();
@@ -53,42 +53,8 @@ export class ProfilePageComponent implements OnInit {
     console.log("Attempting to edit", event);
     //send api call
   }
-  handleDeleteRecipe(recipeId: number) {
-    console.log(recipeId)
-    let dialogRef = this.dialog.open(DeleteRecipePopupComponent, {
-      // data : {
-      //   description: "",
-      //   question: "Are you sure you want to delete the recipe? It's permanent",
-      // }
-    });
-    dialogRef.componentInstance.description ="Deleting Recipe";
-    dialogRef.componentInstance.question = "Are you sure you want to delete the recipe? It's permanent"
-    dialogRef.componentInstance.recipeId = recipeId;
-    dialogRef.afterClosed().subscribe(emission => {
-      if (emission.behaviour === "Yes") {
-        this.deleteRecipe(emission.recipeId);
-      }
-      else {
-        // Do nothing.
-      }
-    })
-  }
-
-
-
-  deleteRecipe(recipeToDelete: number) {
-    let selectedCard = this.recipeCards.filter(item => item.recipe.id === recipeToDelete)[0];
-    selectedCard.loading = true;
-    this.recipeService.deleteRecipe(recipeToDelete)
-    .subscribe(response => {
-      selectedCard.loading = false;
-      if (response.status === 200) {
-        this.recipes = this.recipes.filter(recipe => recipe.id !== recipeToDelete)
-      }
-      else {
-          console.log("Couldn't delete recipe");
-      }
-      //Add Error handling?
-  });
+  // Delete the recipe that was emitted by child to be deleted.
+  handleDeleteRecipe(recipeToDelete: number) {
+    this.recipes = this.recipes.filter(recipe => recipe.id !== recipeToDelete)
   }
 }
