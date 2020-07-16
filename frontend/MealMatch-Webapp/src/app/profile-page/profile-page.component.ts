@@ -12,8 +12,9 @@ import { ImageService } from '../image.service';
   styleUrls: ['profile-page.component.scss'],
   template: `<h1> This is a private resource!! </h1>
   <h1>  Welcome to your recipe dashboard {{ username }}!</h1>
-  <app-photo-upload (uploadEmitter)="handleProfileUpload($event)">
+  <app-photo-upload (uploadEmitter)="setProfilePhoto($event)">
 </app-photo-upload>
+<button (click)="uploadPhoto()" [disabled]="!recipeImage"> Upload Photo </button>
   <img alt="user placeholder image" [src]="profile_pic">
 
   <div class="all-recipes-container">
@@ -31,6 +32,7 @@ export class ProfilePageComponent implements OnInit {
   email: string;
   profile_pic = "assets/images/user_placeholder.jpg";
   recipes: Recipe[];
+  recipeImage: File;
 
   @ViewChildren(RecipeViewCardComponent) recipeCards: QueryList<RecipeViewCardComponent>;
 
@@ -58,7 +60,14 @@ export class ProfilePageComponent implements OnInit {
     this.recipes = this.recipes.filter(recipe => recipe.id !== recipeToDelete)
   }
 
-  handleProfileUpload(file: File) {
-    this.imageService.uploadProfileImage(file).subscribe(res => console.log(res))
+  setProfilePhoto(file: File) {
+    console.log("Setting profile photo")
+    this.recipeImage = file;
+  }
+  uploadPhoto(){
+    console.log("Uploading photo")
+    if (this.recipeImage){
+      this.imageService.uploadProfileImage(this.recipeImage).subscribe(res => console.log(res))
+    }
   }
 }

@@ -17,7 +17,6 @@ class ImageSnippet {
          accept="image/*"
          (change)="processFile(imageInput)">
 </label>
-<button (click)="handleUploadButton()"> Upload File </button>
 `
 })
 // https://www.freecodecamp.org/news/how-to-make-image-upload-easy-with-angular-1ed14cb2773b/
@@ -35,15 +34,9 @@ export class PhotoUploadComponent {
     reader.addEventListener('load', (event: any) => {
 
       this.selectedFile = new ImageSnippet(event.target.result, file);
-      //this.uploadEmitter.emit(this.selectedFile.file);
+      this.uploadEmitter.emit(this.selectedFile.file);
     });
 
     reader.readAsDataURL(file);
-  }
-  handleUploadButton() {
-    if (this.selectedFile){
-      this.uploadEmitter.emit(this.selectedFile.file);
-
-    }
   }
 }
