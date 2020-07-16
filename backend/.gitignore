@@ -7,6 +7,9 @@ __pycache__/
 app/db.sqlite
 db.sqlite
 
+# Static images
+app/static
+
 # C extensions
 *.so
 

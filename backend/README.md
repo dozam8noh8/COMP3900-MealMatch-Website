@@ -51,6 +51,75 @@ API Documentation
     - The password is hashed before it is stored in the database. Once hashed, the original password is discarded.
     - In a production deployment secure HTTP must be used to protect the password in transit.
 
+- POST **/api/add_recipe**
+
+    Adds a new recipe.  
+    `mealtype` and `ingredients.name` must already exist in the database and are case insensitive when adding.  
+    Returns a string indicating success or failure.  
+    Example success message: `Recipe has been added. Recipe_id: 254`  
+    Example failure message: `Ingredient does not exist: Frog`  
+
+    Example usage:  
+    ```
+    {
+        "name": "Chicken Noodles",
+        "instruction": "Boil Water and place noodles inside. Serve with chicken",
+        "mealType": "Chicken",
+        "ingredients": [
+            {
+                "name": "Noodles",
+                "quantity": "1 packet"
+            },
+            {
+                "name": "Chicken",
+                "quantity": "100g"
+            }
+        ]
+    }
+    ```
+
+- POST **/api/add_ingredient**
+
+    Adds a new ingredient to the database, given a `name` and `category`.  
+    Category must already exist in the database and the search is case insensitive.  
+    Example usage:  
+    ```
+    {    "name": "Blue Cheese", "category": "Dairy"     }
+    ```
+
+- POST **/api/recommendations**
+
+    Given a list of ingredient ids, returns 5 ingredient recommendations.  
+    Recommendations are based on the most frequent ingredients that are used within the list and other recipes.  
+
+    Example request:  
+    ```
+    {   "ingredients": [1, 3]   }
+    ```
+    Example return:
+    ```
+    [
+    {
+        "id": 36,
+        "name": "Butter"
+    },
+    ...
+    ```
+
+
+- GET **/api/get_all_mealtypes**
+
+    Returns a JSON list of all distinct mealtypes  
+    Example return value
+    ```
+    [
+        {
+            "id": 1,
+            "name": "Beef"
+        },
+        ...
+    ```
+
 - GET **/api/token**
 
     Return an authentication token.<br>

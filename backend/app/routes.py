@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 import os
-from flask import abort, request, jsonify, g, url_for
+from flask import abort, request, jsonify, g, url_for, Response
 from flask_httpauth import HTTPBasicAuth
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import Ingredient, User, Recipe, Category, Mealtype
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import ImmutableMultiDict
+from app.models import Ingredient, User, Recipe, Category, Mealtype, RecipeIngredients, IngredientPairs, Rating
 from app import auth, app, db
 from app.seed import seed_db
+import secrets
 
 
 ###############################################################
@@ -26,15 +29,19 @@ def verify_password(username_or_token, password):
     g.user = user
     return True
 
+@app.route('/healthz', methods=['GET'])
+def healthz():
+    return 'Server is up'
+
 # Register a user
 @app.route('/api/users', methods=['POST'])
 def new_user():
-    ''' 
+    '''
     Given the signup details of a user, register them in the database so that login attempts can be made.
 
     @params username, password, (email coming soon?)
 
-    @Returns 
+    @Returns
         - the username of the created user
     @Return codes
         - 400 - the correct signup details were not submitted OR the username already exists in the system.
@@ -67,17 +74,39 @@ def get_user_info(id):
      - Returns the username of the user.
      - (TODO) Return email of user
      - (TODO) Return any recipes/photos associated with a user
-    
+
     @Return Codes
      - 401 - user is unauthorised (A user isn't logged in or trying to view someone elses information)
      - 400 - the requested user does not exist in the DB.
     '''
-    if current_user.id != id:
+    # If the requesting user is not the user who's info is requested.
+    if g.user.id != id:
         return 'Unauthorized Access', 401
     user = User.query.get(id)
+    # Can't find user in db.
     if not user:
         abort(400)
-    return jsonify({'username': user.username})
+    return jsonify(User.json_dump(user))
+
+@app.route('/api/edit_user/<int:id>', methods=['POST'])
+@auth.login_required
+def edit_user(id):
+    # If the requesting user is not the user who's info is requested.
+    if g.user.id != id:
+        return 'Unauthorized Access', 401
+    user = User.query.get(id)
+    # Can't find user in db.
+    if not user:
+        abort(400)
+    old_pass = request.json.get('old_password')
+    new_pass = request.json.get('new_password')
+    if user.verify_password(old_pass):
+        user.hash_password(new_pass)
+    else:
+        return "Old password does not match", 201
+    db.session.commit()
+    return "Success", 200
+
 
 # Get Auth Token
 @app.route('/api/token', methods=['GET'])
@@ -99,7 +128,7 @@ def get_auth_token():
 
     '''
     token = g.user.generate_auth_token(12000)
-    return jsonify({'token': token.decode('ascii'), 'duration': 12000})
+    return jsonify({'user_id': g.user.id, 'token': token.decode('ascii'), 'duration': 12000})
 
 @app.route('/api/recipe/<int:id>', methods=['GET'])
 def get_recipe(id):
@@ -116,7 +145,7 @@ def recipe_search():
         Consider the body of requests to contain the ingredients in your fridge, the response will contain all recipes
         you can make using only the ingredients in your fridge.
         E.g. If you have cheese slices, buns, noodles. You can make cheese buns, but not noodles because you need water.
-             If you have cheese slices, buns, noodles, water and carrots. 
+             If you have cheese slices, buns, noodles, water and carrots.
                 You can make cheese buns and noodles, but not a salad because you don't have the other vegetables.
 
         (TODO) - Add the schema recipes will be returned in once it is finalised.
@@ -124,6 +153,26 @@ def recipe_search():
     ingredients = request.json.get('ingredients')
     recipes = Recipe.get_recipes(ingredients)
     return jsonify(Recipe.json_dump(recipes))
+
+@app.route('/api/recipe_delete/<int:recipe_id>', methods=['DELETE'])
+@auth.login_required
+def recipe_delete(recipe_id):
+    recipe = Recipe.get_recipe_by_id(recipe_id)
+    if not recipe:
+        return 'Recipe Id not found', 204
+    print(recipe)
+    if g.user.id != recipe["user_id"] :
+        return 'Unauthorized Access', 401 # Cant delete a recipe that isn't yours
+    if Recipe.recipe_delete(recipe_id):
+        return Response(status=200)
+
+
+
+@app.route('/api/popular_ingredient_pairs', methods=['GET'])
+@auth.login_required
+def popular_ingredient_pairs():
+    return jsonify(IngredientPairs.get_highest_pairs())
+
 
 @app.route('/api/get_ingredients_in_categories', methods=['GET'])
 def get_ingredients_in_categories():
@@ -141,27 +190,98 @@ def get_ingredients_in_categories():
     categories = Category.query.all()
     return jsonify(Category.json_dump(categories))
 
-# ENDPOINT IS CURRENTLY HARDCODED FOR CHEESE SLICES 
-@app.route('/api/recommendations', methods=['GET'])
+@app.route('/api/get_all_mealtypes', methods=['GET'])
+def get_all_mealtypes():
+    '''
+    Returns a json list of all distinct mealtypes
+    [
+        {
+            "id": 1,
+            "name": "Beef"
+        },
+        ...
+    '''
+    mealtypes = Mealtype.query.all()
+    return jsonify(Mealtype.json_dump(mealtypes))
+
+@app.route('/api/add_ingredient', methods=['POST'])
+def add_ingredient():
+    '''
+        Given an ingredient `name` and `category`, adds it to the database.
+    '''
+    name = request.json.get('name')
+    category = request.json.get('category')
+    ingredient = Ingredient.add_ingredient(name, category)
+    if type(ingredient) is str:
+        return ingredient, 201 # Error message FIX error code
+    return {'ingredient_id' : ingredient.id, 'message': 'Ingredient has been added'}
+
+@app.route('/api/rating/<int:id>', methods=['GET', 'POST'])
+def rating(id):
+    '''
+        On a GET request with /rating/recipe_id it will return all the ratings for a recipe
+
+        On a POST request with /rating/recipe_id will add a new rating
+            for post, please supply 'rating' between 1 and 5, 'comment', 'user_id' as a JSON
+    '''
+    if request.method == 'POST':
+        rating = request.json.get('rating')
+        if int(rating) > 5 or int(rating) < 1:
+            return 'Ratings must be between 1 and 5', 201 # Fix error code
+        comment = request.json.get('comment')
+        user = User.query.filter_by(id=request.json.get('user_id')).first()
+        recipe = Recipe.query.filter_by(id=id).first()
+        new_rating = Rating(rating=rating, comment=comment)
+        # Check if rating already exists by a user
+        for user_rating in user.rating:
+            for rating_recipe in user_rating.recipe:
+                if rating_recipe == recipe:
+                    user_rating.rating = rating
+                    user_rating.comment = comment
+                    db.session.commit()
+                    return jsonify({'id':user_rating.id, 'rating':user_rating.rating, 'comment': user_rating.comment})
+        return jsonify(Rating.json_dump(user.rating))
+        recipe.rating.append(new_rating)
+        user.rating.append(new_rating)
+        db.session.add(new_rating)
+        db.session.commit()
+        return jsonify(Rating.json_dump(new_rating))
+    recipe = Recipe.query.filter_by(id=id).first()
+    ratings = recipe.rating
+    return jsonify(Rating.json_dump(ratings))
+
+@app.route('/api/add_recipe', methods=['POST'])
+@auth.login_required
+def add_recipe():
+    name = request.json.get('name')
+    instruction = request.json.get('instruction')
+    mealType = request.json.get('mealType')
+    ingredients = request.json.get('ingredients')
+    user = 'admin@admin.com'
+    recipe = Recipe.add_recipe(name, instruction, mealType, ingredients, user)
+    if type(recipe) == str:
+        return recipe, 201 # Error message FIX error code
+    return {'recipe_id' : recipe.id, 'message': 'Recipe has been added'}
+
+@app.route('/api/recipe_image_update', methods=['POST'])
+@auth.login_required
+def recipe_image_update():
+    picture_path = 'http://localhost:5000' + url_for('static', filename=request.json.get('filename'))
+    recipe = request.json.get('recipe_id')
+    Recipe.upload_recipe_image(recipe, picture_path)
+    return {"pic": picture_path}
+
+
+@app.route('/api/recommendations', methods=['POST'])
 def get_recommendations():
     '''
-        This endpoint should take a list of ingredients that represent a user's current search set
-        and return at least one suggestion for an ingredient that is used in a recipe with some of the
+        This endpoint takes a list of ingredient ids that represent a user's current search set
+        and return 5 suggestions for an ingredient that is used in a recipe with some of the
         ingredients within that set.
-
-        We will likely need to change this endpoint to a post request.
-        (TODO) Fix up this endpoint according to the requirements.
-
-        == FROM SPEC ==
-        "Once the recipe explorer has input 1 or more ingredients
-        to their running list, the system must be able to suggest the next ingredient or ingredients to input based on: what
-        has already been inputted, and ingredients on recipes that have started to match. Eg: if the explorer has input
-        "eggs", this can partially match a recipe that has the ingredients list of "eggs", "cream", then "cream" could be the
-        next suggested ingredient. "
-
     '''
-    res = Ingredient.find_recommendations('Cheese Slices')
-    return jsonify({"Recommendations": res})
+    ingredient_ids = request.json.get('ingredients')
+    ingredients = RecipeIngredients.get_recommendations(ingredient_ids)
+    return jsonify(Ingredient.json_dump(ingredients))
 
 
 @app.route('/api/db_seed', methods=['GET'])
@@ -169,6 +289,25 @@ def db_seed():
     ''' Create database file and corresponding tables (used on startup of app) since db is not kept on github. '''
     seed_db()
     return 'DB has been reset'
+
+@app.route('/api/picture_save', methods=['POST'])
+@auth.login_required
+def picture_save():
+    image = ''
+    if 'file' not in request.files:
+        return 'File could not be uploaded', 201 # Fix error code
+    file = request.files['file']
+    if file.filename == '':
+        return 'No file was uploaded', 201 # Fix error code
+    if file:
+        random_hex = secrets.token_hex(8)
+        _, f_ext = os.path.splitext(file.filename)
+        picture_fn = random_hex + f_ext
+        picture_path = os.path.join(app.root_path, 'static', picture_fn)
+        file.save(picture_path)
+        print(request.form['name'])
+        return picture_fn
+    return 'No file was uploaded', 201 # Fix error code
 
 #########INTERNAL FUNCTION#########
 @app.after_request
