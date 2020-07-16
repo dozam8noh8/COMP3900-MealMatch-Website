@@ -35,4 +35,8 @@ export class RecipeService {
     // return this.allMealTypes;
     return this.http.get(`${this.BASE_URL}/get_all_mealtypes`);
   }
+
+  createRecipe(data: any) {
+    return this.http.post(`${this.BASE_URL}/add_recipe`, data);
+  }
 }

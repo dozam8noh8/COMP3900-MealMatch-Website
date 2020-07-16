@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../models/ingredient';
 import { FormGroup, FormControl } from '@angular/forms';
 import { RecipeService } from '../services/recipe.service';
+import { HttpClient } from '@angular/common/http';
 
 interface IngredientSlot {
   ingredient: Ingredient;
@@ -16,6 +17,7 @@ interface IngredientSlot {
                 <h2> 
                   Name of recipe: <input type="text" formControlName="recipeName"> </h2>
                 <h2> Upload an image ... </h2>
+                  <app-photo-upload></app-photo-upload>
                 <h2> Mealtype </h2>
                   <select formControlName="mealType">
                     <option *ngFor="let mealtype of allMealTypes" [value]="mealtype">
@@ -84,7 +86,14 @@ export class CreateRecipeComponent implements OnInit {
       })
     }
     // Send to endpoint to create new recipe
-    console.log(new_recipe)
+    this.recipeService.createRecipe(new_recipe)
+    .subscribe(
+      data => {
+        console.log(data)
+        // Use recipe id to upload image
+      },
+      err => { console.log(err) }
+    )
   }
 
   addSlot() {
