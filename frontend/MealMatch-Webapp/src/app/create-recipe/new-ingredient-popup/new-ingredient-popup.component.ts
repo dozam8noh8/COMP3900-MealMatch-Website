@@ -8,7 +8,6 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
   selector: 'app-new-ingredient-popup',
   styleUrls: ['./new-ingredient-popup.component.scss'],
   template: `
-              <div *ngIf="!creatingIngredient && !ingredientCreated">
                 <h1> Adding a new ingredient </h1>
                 <form [formGroup]="newIngredientForm" (ngSubmit)="createNewIngredient()">
                   Name of ingredient: <input type="text" formControlName="ingredientName"/>
@@ -20,20 +19,26 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
                   </select>
 
                   <br/>
-                  <button type="button" mat-dialog-close="true">Cancel</button>
-                  <button> Create new ingredient</button>              
-                </form>              
-              </div>
 
-              <div *ngIf="creatingIngredient"> Adding your ingredient </div>
-              <div *ngIf="!creatingIngredient && ingredientCreated"> your ingredient has been created, go back</div>
+                  <div *ngIf="!creatingIngredient && !creationSuccessful">   
+                    <button type="button" mat-dialog-close="true">Cancel</button><button> Create new ingredient</button> 
+                  </div>
+
+                  <div *ngIf="creatingIngredient"> Adding your ingredient... </div>
+                  
+                  <div *ngIf="!creatingIngredient && creationSuccessful"> 
+                    your ingredient has been created
+                    <button type="button" mat-dialog-close="true">Back</button>
+                  </div>
+                               
+                </form>  
               `
 })
 export class NewIngredientPopupComponent implements OnInit {
 
   newIngredientForm: FormGroup;
   creatingIngredient = false;
-  ingredientCreated = false;
+  creationSuccessful = false;
   // error
 
   constructor(private ingredientService: IngredientService, @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -60,11 +65,13 @@ export class NewIngredientPopupComponent implements OnInit {
       data => {
         console.log(data);
         this.creatingIngredient = false;
-        this.ingredientCreated = true;
+        this.creationSuccessful = true;
+        // Reload ingredientService to include latest ingredient
+        this.ingredientService.getFromDB();
       },
       err => {
         this.creatingIngredient = false;
-        this.ingredientCreated = false;
+        this.creationSuccessful = false;
       }
     )
     // Send to endpoint and handle error

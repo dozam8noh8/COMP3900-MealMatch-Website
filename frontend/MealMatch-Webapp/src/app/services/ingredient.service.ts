@@ -21,7 +21,10 @@ export class IngredientService {
     if(storedData) {
       this.addedIngredients = JSON.parse(storedData);
     }
-    
+    this.getFromDB();
+  }
+
+  getFromDB() {
     this.http.get("http://localhost:5000/api/get_ingredients_in_categories")
     .subscribe( (data: Category[]) => {
         this.allCategories = data;
