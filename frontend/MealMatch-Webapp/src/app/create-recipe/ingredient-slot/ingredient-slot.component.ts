@@ -9,8 +9,8 @@ import { NewIngredientPopupComponent } from '../new-ingredient-popup/new-ingredi
 
 
 @Component({
-  selector: 'app-add-ingredient',
-  styleUrls: ['./add-ingredient.component.scss'],
+  selector: 'app-ingredient-slot',
+  styleUrls: ['./ingredient-slot.component.scss'],
   template: `
               <input type="text" placeholder="quantity" 
               (keyup)="changeQuantity($event)"/>
@@ -38,7 +38,7 @@ import { NewIngredientPopupComponent } from '../new-ingredient-popup/new-ingredi
               </div>
             `
 })
-export class AddIngredientComponent implements OnInit {
+export class IngredientSlotComponent implements OnInit {
 
   // Keep track of whether a valid ingredient
   @Input() position: number;

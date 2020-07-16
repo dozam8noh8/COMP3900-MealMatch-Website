@@ -27,12 +27,12 @@ interface IngredientSlot {
                   </select>
                 <h2> Ingredients </h2>
                   <div *ngFor="let slot of allSlots; let index=index; trackBy:trackIngredient">
-                    <app-add-ingredient
+                    <app-ingredient-slot
                     [position]="index"
                     (updateIngredient)="updateSlotIngredient($event)"
                     (updateQuantity)="updateSlotQuantity($event)"
                     (removeIngredient)="removeSlot($event)"
-                    [addedIngredients]="slotsToIngredients()"> </app-add-ingredient>  
+                    [addedIngredients]="slotsToIngredients()"> </app-ingredient-slot>  
                   </div>
                 <button type="button" (click)="addSlot()">Add an ingredient</button>
 

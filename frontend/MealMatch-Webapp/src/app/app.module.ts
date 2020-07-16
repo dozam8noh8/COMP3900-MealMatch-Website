@@ -38,11 +38,11 @@ import { LoginPopupComponent } from '../building-components/login-popup/login-po
 import { MatDialogModule } from '@angular/material/dialog';
 import { RequestLogInterceptor } from './request-interceptor';
 import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
-import { AddIngredientComponent } from './create-recipe/add-ingredient/add-ingredient.component';
 import { NewIngredientPopupComponent } from './create-recipe/new-ingredient-popup/new-ingredient-popup.component';
 import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
 import { DeleteRecipePopupComponent } from 'src/building-components/delete-recipe-popup/delete-recipe-popup.component';
 import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
+import { IngredientSlotComponent } from './create-recipe/ingredient-slot/ingredient-slot.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -77,13 +77,13 @@ const materialModules = [
     RecipeInfoComponent,
     SearchResultsComponent,
     CreateRecipeComponent,
-    AddIngredientComponent,
     NewIngredientPopupComponent,
     ProfilePageComponent,
     LoginPopupComponent,
     RecipeViewCardComponent,
     DeleteRecipePopupComponent,
     PhotoUploadComponent,
+    IngredientSlotComponent,
   ],
   imports: [
     BrowserModule,
