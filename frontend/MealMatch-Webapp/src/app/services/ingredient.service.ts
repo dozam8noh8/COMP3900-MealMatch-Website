@@ -39,7 +39,7 @@ export class IngredientService {
   }
 
   createNewIngredient(ingredientName: string, ingredientCategory: string) {
-    // TODO
+    return this.http.post("http://localhost:5000/api/add_ingredient", { name: ingredientName, category: ingredientCategory});
   }
   
   ngOnInit() { }
