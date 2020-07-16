@@ -2,20 +2,19 @@ import { Component, OnInit, Inject, ViewChildren, QueryList } from '@angular/cor
 import { AuthService } from '../services/auth.service';
 import { RecipeService } from '../services/recipe.service';
 import { Recipe } from '../models/recipe';
-import { MatDialog } from '@angular/material/dialog';
-import { DeleteRecipePopupComponent } from 'src/building-components/delete-recipe-popup/delete-recipe-popup.component';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { DOCUMENT } from '@angular/common';
 import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
+import { ImageService } from '../image.service';
 
 @Component({
   selector: 'app-profile-page',
   styleUrls: ['profile-page.component.scss'],
   template: `<h1> This is a private resource!! </h1>
   <h1>  Welcome to your recipe dashboard {{ username }}!</h1>
-  <app-photo-upload>
+  <app-photo-upload (uploadEmitter)="setProfilePhoto($event)">
 </app-photo-upload>
+<button (click)="uploadPhoto()" [disabled]="!recipeImage"> Upload Photo </button>
   <img alt="user placeholder image" [src]="profile_pic">
 
   <div class="all-recipes-container">
@@ -33,10 +32,11 @@ export class ProfilePageComponent implements OnInit {
   email: string;
   profile_pic = "assets/images/user_placeholder.jpg";
   recipes: Recipe[];
+  recipeImage: File;
 
   @ViewChildren(RecipeViewCardComponent) recipeCards: QueryList<RecipeViewCardComponent>;
 
-  constructor(private authService: AuthService, private http: HttpClient, private recipeService: RecipeService, @Inject(DOCUMENT) document) { }
+  constructor(private authService: AuthService, private http: HttpClient, private recipeService: RecipeService, private imageService: ImageService) { }
 
   ngOnInit(): void {
     this.userId = this.authService.getLoggedInUserId();
@@ -58,5 +58,16 @@ export class ProfilePageComponent implements OnInit {
   // Delete the recipe that was emitted by child to be deleted.
   handleDeleteRecipe(recipeToDelete: number) {
     this.recipes = this.recipes.filter(recipe => recipe.id !== recipeToDelete)
+  }
+
+  setProfilePhoto(file: File) {
+    console.log("Setting profile photo")
+    this.recipeImage = file;
+  }
+  uploadPhoto(){
+    console.log("Uploading photo")
+    if (this.recipeImage){
+      this.imageService.uploadProfileImage(this.recipeImage).subscribe(res => console.log(res))
+    }
   }
 }

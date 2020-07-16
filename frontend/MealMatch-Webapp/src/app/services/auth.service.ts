@@ -56,7 +56,6 @@ export class AuthService {
   }
 
   getJWTToken(): string | undefined {
-    console.log(localStorage.getItem('currentUser'))
     return JSON.parse(localStorage.getItem('currentUser'))?.token;
   }
   // Should we log out of the backend aswell?

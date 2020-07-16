@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ImageService } from '../image.service';
 
 
@@ -24,8 +24,8 @@ class ImageSnippet {
 export class PhotoUploadComponent {
 
   selectedFile: ImageSnippet;
-
-  constructor(private imageService: ImageService){}
+  @Output() uploadEmitter = new EventEmitter<File>();
+  constructor(){}
 
   processFile(imageInput: any) {
     const file: File = imageInput.files[0];
@@ -34,14 +34,7 @@ export class PhotoUploadComponent {
     reader.addEventListener('load', (event: any) => {
 
       this.selectedFile = new ImageSnippet(event.target.result, file);
-
-      this.imageService.uploadProfileImage(this.selectedFile.file).subscribe(
-        (res) => {
-
-        },
-        (err) => {
-
-        })
+      this.uploadEmitter.emit(this.selectedFile.file);
     });
 
     reader.readAsDataURL(file);
