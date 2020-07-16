@@ -95,7 +95,9 @@ export class AddIngredientComponent implements OnInit {
   }
 
   openNewIngredientDialog() {
-    this.newIngredientDialog.open(NewIngredientPopupComponent);
+    this.newIngredientDialog.open(NewIngredientPopupComponent, {
+      data: { inputString: this.ingredientControl.value }
+    });
   }
 
   removeSelf() {

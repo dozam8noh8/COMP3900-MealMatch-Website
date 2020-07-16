@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, Inject } from '@angular/core';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { IngredientService } from 'src/app/services/ingredient.service';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-new-ingredient-popup',
@@ -28,9 +29,9 @@ export class NewIngredientPopupComponent implements OnInit {
 
   newIngredientForm: FormGroup;
 
-  constructor(private ingredientService: IngredientService) {
+  constructor(private ingredientService: IngredientService, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.newIngredientForm = new FormGroup({
-      ingredientName: new FormControl(),
+      ingredientName: new FormControl(data.inputString),
       ingredientCategory: new FormControl()
     })
   }
