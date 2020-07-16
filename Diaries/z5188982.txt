@@ -50,3 +50,25 @@ next task would be return meaningful error messages and setup some endpoints for
 The feedback from Eugene mentioned about improving our UI which we decided to do after we finish most
 of our tickets. I am planning on spending some time on that if I'm free from tasks. Demo went pretty well,
 retro was good as well.
+
+==============Week 6===============
+During the start of the flexibility week I decided to work on some of the stuff early to take the weekend
+off. Since this sprint is 3 weeks, we have a lot more tickets to work on and more importantly I decided to
+finish the backend work altogether in this sprint and leave not much for the next sprint so I can take over
+some of the frontend tasks, mainly UI updating since our UI isn't very aesthetic now. I finished up all of
+the recipe endpoints on the backend (create recipe, add ingredients, add mealtypes, etc) where Kenny helped
+me with some of the tasks too. This should essentially make sure most of our 'essential' endpoints for the
+demo and user stories are completed, however, we decided to add new features outside our user stories too
+so I should be working on those from next week.
+
+=============Week 7===============
+This week I made sure the backend was 90% finished. Setting up endpoints, backend and database work was done
+to make sure the most commonly searched for ingredient pairs with no recipes are recommended to recipe authors. This was probably one of the most challenging tasks since the entire thing is done on the backend and the
+frontend only needs to consume the data returned. There was also an issue with our authentication regarding
+security and our JWT tokens and I looked at the bug and fixed it in between tasks. After that, the only 
+remaining page I had to work on was the profile page where I setup the backend for viewing profile data,
+updating, etc. Owen decided to add a ratings feature for recipes too so I spend the remaining time of the
+week with finishing up the ratings system. Everything seems to be working for now and looks like we are
+done with most of the backend work. We will need to make new endpoints every now and then because the
+frontend might need help but backend work can sort of wrap up here and I can move on to UI work from next
+sprint.
