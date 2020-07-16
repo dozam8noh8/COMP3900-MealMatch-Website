@@ -48,7 +48,6 @@ export class RecipeViewCardComponent implements OnInit{
 
     constructor(private dialog: MatDialog, private recipeService: RecipeService) {}
     ngOnInit() {
-        console.log("Instantiating card component")
     }
     editRecipe() {
         console.log("Editing recipe")
