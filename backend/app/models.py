@@ -16,6 +16,7 @@ class User(db.Model):
     email = db.Column(db.String(70), index=True)
     username = db.Column(db.String(32), index=True)
     password_hash = db.Column(db.String(64))
+    profile_pic = db.Column(db.String(64))
     recipes = db.relationship('Recipe', backref='user', lazy='dynamic')
 
     def hash_password(self, password):
@@ -32,6 +33,10 @@ class User(db.Model):
     def json_dump(user):
         schema = UserSchema()
         return schema.dump(user)
+
+    def upload_profile_image(user_id, path):
+        user = User.query.filter_by(id=user_id).first()
+        user.profile_pic = path
 
     @staticmethod
     def verify_auth_token(token):
@@ -72,7 +77,7 @@ class Ingredient(db.Model):
             if ingredient != None:
                 ingredients.append(ingredient)
         return ingredients
-    
+
     def add_ingredient(name, category):
         db_category = Category.query.filter(func.lower(Category.name) == func.lower(category)).first()
         if not db_category:

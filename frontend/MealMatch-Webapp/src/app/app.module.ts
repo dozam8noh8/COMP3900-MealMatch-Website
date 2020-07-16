@@ -39,6 +39,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RequestLogInterceptor } from './request-interceptor';
 import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
 import { DeleteRecipePopupComponent } from 'src/building-components/delete-recipe-popup/delete-recipe-popup.component';
+import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -76,6 +77,7 @@ const materialModules = [
     LoginPopupComponent,
     RecipeViewCardComponent,
     DeleteRecipePopupComponent,
+    PhotoUploadComponent,
   ],
   imports: [
     BrowserModule,

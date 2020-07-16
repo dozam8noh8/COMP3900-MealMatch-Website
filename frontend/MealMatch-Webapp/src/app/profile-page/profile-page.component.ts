@@ -14,7 +14,9 @@ import { RecipeViewCardComponent } from 'src/building-components/recipe-view-car
   styleUrls: ['profile-page.component.scss'],
   template: `<h1> This is a private resource!! </h1>
   <h1>  Welcome to your recipe dashboard {{ username }}!</h1>
-  <img alt="user placeholder image" [src]="userImage">
+  <app-photo-upload>
+</app-photo-upload>
+  <img alt="user placeholder image" [src]="profile_pic">
 
   <div class="all-recipes-container">
     <div class="container" *ngFor="let recipe of recipes">
@@ -29,20 +31,20 @@ export class ProfilePageComponent implements OnInit {
   userId: number;
   username: string;
   email: string;
-  userImage = "assets/images/user_placeholder.jpg";
+  profile_pic = "assets/images/user_placeholder.jpg";
   recipes: Recipe[];
 
   @ViewChildren(RecipeViewCardComponent) recipeCards: QueryList<RecipeViewCardComponent>;
 
-  constructor(private authService: AuthService, private dialog: MatDialog, private http: HttpClient, private recipeService: RecipeService, @Inject(DOCUMENT) document) { }
+  constructor(private authService: AuthService, private http: HttpClient, private recipeService: RecipeService, @Inject(DOCUMENT) document) { }
 
   ngOnInit(): void {
     this.userId = this.authService.getLoggedInUserId();
     this.authService.getUserDetails().subscribe(res => {
       this.username = res.username;
       this.email = res.email;
-      if (res.userImage){
-        this.userImage = res.userImage;
+      if (res.profile_pic){
+        this.profile_pic = res.profile_pic;
 
       }
       this.recipes = res.recipes;
@@ -53,42 +55,8 @@ export class ProfilePageComponent implements OnInit {
     console.log("Attempting to edit", event);
     //send api call
   }
-  handleDeleteRecipe(recipeId: number) {
-    console.log(recipeId)
-    let dialogRef = this.dialog.open(DeleteRecipePopupComponent, {
-      // data : {
-      //   description: "",
-      //   question: "Are you sure you want to delete the recipe? It's permanent",
-      // }
-    });
-    dialogRef.componentInstance.description ="Deleting Recipe";
-    dialogRef.componentInstance.question = "Are you sure you want to delete the recipe? It's permanent"
-    dialogRef.componentInstance.recipeId = recipeId;
-    dialogRef.afterClosed().subscribe(emission => {
-      if (emission.behaviour === "Yes") {
-        this.deleteRecipe(emission.recipeId);
-      }
-      else {
-        // Do nothing.
-      }
-    })
-  }
-
-
-
-  deleteRecipe(recipeToDelete: number) {
-    let selectedCard = this.recipeCards.filter(item => item.recipe.id === recipeToDelete)[0];
-    selectedCard.loading = true;
-    this.recipeService.deleteRecipe(recipeToDelete)
-    .subscribe(response => {
-      selectedCard.loading = false;
-      if (response.status === 200) {
-        this.recipes = this.recipes.filter(recipe => recipe.id !== recipeToDelete)
-      }
-      else {
-          console.log("Couldn't delete recipe");
-      }
-      //Add Error handling?
-  });
+  // Delete the recipe that was emitted by child to be deleted.
+  handleDeleteRecipe(recipeToDelete: number) {
+    this.recipes = this.recipes.filter(recipe => recipe.id !== recipeToDelete)
   }
 }
