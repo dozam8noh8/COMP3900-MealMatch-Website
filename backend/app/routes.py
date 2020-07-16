@@ -86,7 +86,8 @@ def get_user_info(id):
     # Can't find user in db.
     if not user:
         abort(400)
-    return jsonify(User.json_dump(user))
+    return jsonify({'user_id': user.id, 'email': user.email, 'username': user.username, 'recipes': recipes, 'profile_pic': user.profile_pic })
+    # return jsonify(User.json_dump(user)), we want it to be obvious what we return for now.
 
 @app.route('/api/edit_user/<int:id>', methods=['POST'])
 @auth.login_required
@@ -263,15 +264,6 @@ def add_recipe():
         return recipe, 201 # Error message FIX error code
     return {'recipe_id' : recipe.id, 'message': 'Recipe has been added'}
 
-@app.route('/api/recipe_image_update', methods=['POST'])
-@auth.login_required
-def recipe_image_update():
-    picture_path = 'http://localhost:5000' + url_for('static', filename=request.json.get('filename'))
-    recipe = request.json.get('recipe_id')
-    Recipe.upload_recipe_image(recipe, picture_path)
-    return {"pic": picture_path}
-
-
 @app.route('/api/recommendations', methods=['POST'])
 def get_recommendations():
     '''
@@ -290,24 +282,42 @@ def db_seed():
     seed_db()
     return 'DB has been reset'
 
-@app.route('/api/picture_save', methods=['POST'])
+@app.route('/api/profile_pic_upload', methods=['POST'])
 @auth.login_required
-def picture_save():
-    image = ''
+def profile_pic_upload():
+    msg, code = extract_photo(request)
+    if code == 200: #TODO HANDLE ERRORS
+        picture_path = 'http://localhost:5000' + url_for('static', filename=msg)
+        user_id = g.user.id
+        User.upload_profile_image(user_id, picture_path)
+    return msg, code
+
+@app.route('/api/recipe_image_upload/<int:recipe_id>', methods=['POST'])
+@auth.login_required
+def recipe_image_upload(recipe_id):
+    msg, code = extract_photo(request)
+    if code == 200: #TODO HANDLE ERRORS - Turn into objects?
+        picture_path = 'http://localhost:5000' + url_for('static', filename=msg)
+        Recipe.upload_recipe_image(recipe_id, picture_path)
+    return msg, code
+
+
+
+def extract_photo(request):
     if 'file' not in request.files:
-        return 'File could not be uploaded', 201 # Fix error code
+        return 'No File could not be uploaded', 500 # Fix error code
     file = request.files['file']
     if file.filename == '':
-        return 'No file was uploaded', 201 # Fix error code
+        return 'No File could not be uploaded', 500, # Fix error code
     if file:
         random_hex = secrets.token_hex(8)
         _, f_ext = os.path.splitext(file.filename)
         picture_fn = random_hex + f_ext
         picture_path = os.path.join(app.root_path, 'static', picture_fn)
         file.save(picture_path)
-        print(request.form['name'])
-        return picture_fn
-    return 'No file was uploaded', 201 # Fix error code
+        return picture_fn, 200 # If we change code, change in update functions too!
+    return 'No File could not be uploaded', 500 # Fix error code
+
 
 #########INTERNAL FUNCTION#########
 @app.after_request
