@@ -151,8 +151,15 @@ class Recipe(db.Model):
         return schema.dump(recipe)
 
     def get_recipes(ingredients):
-        ingredients_id = Ingredient.query.with_entities(Ingredient.id).filter(Ingredient.name.in_(ingredients)).order_by("id").all()
-        ingredients_id = (x[0] for x in ingredients_id)
+        ingredients = [x.lower() for x in ingredients]
+        ingredients_id = (Ingredient
+                          .query
+                          .with_entities(Ingredient.id)
+                          .filter(func.lower(Ingredient.name).in_(ingredients))
+                          .order_by("id")
+                          .all()
+        )
+        ingredients_id = [x[0] for x in ingredients_id]
 
         filtered = []
         recipes = Recipe.query.all()
@@ -167,7 +174,6 @@ class Recipe(db.Model):
 
         if len(filtered) == 0:
             IngredientPairs.increment_count(ingredients_id)
-
         return filtered
 
     def get_recipes_by_user_id(user_id):
