@@ -56,12 +56,8 @@ export class RecipeViewCardComponent implements OnInit{
     }
 
     deleteRecipe() {
-        let dialogRef = this.dialog.open(DeleteRecipePopupComponent, {
-            // data : {
-            //   description: "",
-            //   question: "Are you sure you want to delete the recipe? It's permanent",
-            // }
-          });
+        let dialogRef = this.dialog.open(DeleteRecipePopupComponent);
+        // Set attributes of popup.
           dialogRef.componentInstance.description ="Deleting Recipe";
           dialogRef.componentInstance.question = "Are you sure you want to delete the recipe? It's permanent"
           dialogRef.componentInstance.recipeId = this.recipe.id;

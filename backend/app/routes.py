@@ -86,8 +86,9 @@ def get_user_info(id):
     # Can't find user in db.
     if not user:
         abort(400)
+    recipes = Recipe.get_recipes_by_user_id(g.user.id)
     return jsonify({'user_id': user.id, 'email': user.email, 'username': user.username, 'recipes': recipes, 'profile_pic': user.profile_pic })
-    # return jsonify(User.json_dump(user)), we want it to be obvious what we return for now.
+    #return jsonify(User.json_dump(user)) # We dont want all 10000 recipes for user, only 10 for now.
 
 @app.route('/api/edit_user/<int:id>', methods=['POST'])
 @auth.login_required
