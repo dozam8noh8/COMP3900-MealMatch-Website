@@ -42,6 +42,7 @@ import { AddIngredientComponent } from './create-recipe/add-ingredient/add-ingre
 import { NewIngredientPopupComponent } from './create-recipe/new-ingredient-popup/new-ingredient-popup.component';
 import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
 import { DeleteRecipePopupComponent } from 'src/building-components/delete-recipe-popup/delete-recipe-popup.component';
+import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -82,6 +83,7 @@ const materialModules = [
     LoginPopupComponent,
     RecipeViewCardComponent,
     DeleteRecipePopupComponent,
+    PhotoUploadComponent,
   ],
   imports: [
     BrowserModule,

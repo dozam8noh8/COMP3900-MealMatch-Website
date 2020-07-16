@@ -5,7 +5,7 @@ from sqlalchemy import func
 import random
 import datetime
 
-########################################### SETUP INGREDIENTS AND CATEGORIES #############################################    
+########################################### SETUP INGREDIENTS AND CATEGORIES #############################################
 
 def seed_db():
     db.drop_all()
@@ -24,27 +24,27 @@ def seed_db():
     # Have categories in an order
     categories = [
         'Vegetable',
-        'Fruit',        
-        'Dairy', 
+        'Fruit',
+        'Dairy',
         # 'Baking',
-        'Meat',         
+        'Meat',
         'Sugar',
         'Vinegar',
-        'Fish', 
-        'Rice', 
-        'Bread', 
+        'Fish',
+        'Rice',
+        'Bread',
         'Noodles',
         'Sauce',
         'Spice',
         'Fat',
-        'Cereal', 
-        'Pastry', 
+        'Cereal',
+        'Pastry',
         'Liqueur',
-        'Stock',   
+        'Stock',
         'Liquid',
-        'Confectionery', 
-        'Uncategorised 0', 
-        'Uncategorised 1', 
+        'Confectionery',
+        'Uncategorised 0',
+        'Uncategorised 1',
     ]
 
     for category in categories:
@@ -93,7 +93,7 @@ def seed_db():
     input_file=open('data_seed/recipes2.json', 'r', encoding='utf8')
     json_decode=json.load(input_file)
 
-    user = User(username='admin', password_hash='pbkdf2:sha256:150000$V5gA5nPN$3377ab719495472c4b4f6efcdb0066d7591c29f3f5721dcb469ddd5c54fb9232', email='admin@admin.com')
+    user = User(username='admin', password_hash='pbkdf2:sha256:150000$V5gA5nPN$3377ab719495472c4b4f6efcdb0066d7591c29f3f5721dcb469ddd5c54fb9232', email='admin@admin.com', profile_pic=None)
     db.session.add(user)
 
     for item in json_decode['meals']:

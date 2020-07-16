@@ -9,4 +9,5 @@ export interface Recipe {
     ingredients: Ingredient[];
     instruction: string;
     image: string;
+    mealtypes: any[];
 }
