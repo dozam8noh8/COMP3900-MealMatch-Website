@@ -113,6 +113,7 @@ export class CreateRecipeComponent implements OnInit {
     this.recipeService.createRecipe(new_recipe)
     .subscribe(
       (creation_response: any) => {
+        console.log(creation_response.recipe_id);
 
         if(!this.recipeImage) {
           this.creatingRecipe = false;

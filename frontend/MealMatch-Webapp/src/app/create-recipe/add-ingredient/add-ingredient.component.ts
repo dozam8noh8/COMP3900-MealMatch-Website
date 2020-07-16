@@ -97,6 +97,14 @@ export class AddIngredientComponent implements OnInit {
   openNewIngredientDialog() {
     this.newIngredientDialog.open(NewIngredientPopupComponent, {
       data: { inputString: this.ingredientControl.value }
+    }).afterClosed()
+    .subscribe( (newCreatedIngredient: Ingredient) => {
+      // If not an ingredient being passed in
+      // console.log(typeof newCreatedIngredient)
+      if(typeof newCreatedIngredient === 'string') {
+      } else {
+        this.addToList(newCreatedIngredient);
+      }
     });
   }
 
