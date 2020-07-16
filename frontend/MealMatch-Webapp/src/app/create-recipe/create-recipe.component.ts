@@ -3,6 +3,7 @@ import { Ingredient } from '../models/ingredient';
 import { FormGroup, FormControl } from '@angular/forms';
 import { RecipeService } from '../services/recipe.service';
 import { HttpClient } from '@angular/common/http';
+import { ImageService } from '../image.service';
 
 interface IngredientSlot {
   ingredient: Ingredient;
@@ -17,7 +18,7 @@ interface IngredientSlot {
                 <h2> 
                   Name of recipe: <input type="text" formControlName="recipeName"> </h2>
                 <h2> Upload an image ... </h2>
-                  <app-photo-upload></app-photo-upload>
+                  <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
                 <h2> Mealtype </h2>
                   <select formControlName="mealType">
                     <option *ngFor="let mealtype of allMealTypes" [value]="mealtype">
@@ -38,7 +39,24 @@ interface IngredientSlot {
                 <h2> Instructions </h2>
                   <textarea formControlName="instructions"></textarea>
 
-                <br/> <button type="submit">Save</button>              
+                <br/> 
+
+                <div *ngIf="creatingRecipe"> Creating recipe... </div>
+
+                <div *ngIf="!creatingRecipe">
+                  <div *ngIf="!creationSuccessful"> 
+                    <button type="submit">Save</button>
+                    <div *ngIf="API_message"> 
+                      {{API_message}} 
+                    </div> 
+                  </div>
+                  
+                  <div *ngIf="creationSuccessful"> 
+                    Your recipe has been created <br/>
+                    <a routerLink="/dashboard">Back to Dashboard</a>
+                  </div>
+                </div>
+
               </form>
 
               <br/> All ingredients used:
@@ -58,15 +76,19 @@ export class CreateRecipeComponent implements OnInit {
 
   allMealTypes: string[];
 
-  recipeName: string;
-  //image
-  mealtype: string;
-  instructions: string;
+  recipeImage: File;
 
   allSlots: IngredientSlot[] = [];
   addedIngredients: Ingredient[] = [];
 
-  constructor(private recipeService: RecipeService) { }
+  API_message: string;
+  creatingRecipe: boolean = false;
+  creationSuccessful: boolean = false;
+
+  constructor(
+    private recipeService: RecipeService,
+    private imageService: ImageService
+    ) { }
 
   ngOnInit(): void {
     this.getAllMealTypes();
@@ -85,14 +107,38 @@ export class CreateRecipeComponent implements OnInit {
         return {name: slot.ingredient.name, quantity: slot.quantity}
       })
     }
+
+    this.creatingRecipe = true;
     // Send to endpoint to create new recipe
     this.recipeService.createRecipe(new_recipe)
     .subscribe(
-      data => {
-        console.log(data)
-        // Use recipe id to upload image
+      (creation_response: any) => {
+
+        if(!this.recipeImage) {
+          this.creatingRecipe = false;
+          this.API_message = creation_response.message;
+          this.creationSuccessful = true;
+        }
+
+        if(this.recipeImage) {
+          // Use recipe id to upload image
+          this.imageService.uploadRecipeImage(creation_response.recipe_id, this.recipeImage)
+          .subscribe(
+            (upload_response: any) => {
+              this.creatingRecipe = false;
+              this.API_message = creation_response.message;
+              this.creationSuccessful = true;
+            },
+            err => { 
+              console.log(err);
+            }
+          )
+        }
+
       },
-      err => { console.log(err) }
+      err => { 
+        console.log(err);
+      }
     )
   }
 
@@ -138,6 +184,10 @@ export class CreateRecipeComponent implements OnInit {
         instructions: new FormControl()
       });
     })
+  }
+
+  maintainRecipeImage(file: File){
+    this.recipeImage = file;
   }
 
 }
