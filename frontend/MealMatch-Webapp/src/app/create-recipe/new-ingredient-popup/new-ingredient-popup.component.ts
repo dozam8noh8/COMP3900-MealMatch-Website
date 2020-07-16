@@ -32,7 +32,7 @@ export class NewIngredientPopupComponent implements OnInit {
   constructor(private ingredientService: IngredientService, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.newIngredientForm = new FormGroup({
       ingredientName: new FormControl(data.inputString),
-      ingredientCategory: new FormControl()
+      ingredientCategory: new FormControl(ingredientService.allCategories[0].name)
     })
   }
 

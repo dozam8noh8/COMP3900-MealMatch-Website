@@ -18,7 +18,7 @@ interface IngredientSlot {
                 <h2> Upload an image ... </h2>
                 <h2> Mealtype </h2>
                   <select formControlName="mealType">
-                    <option *ngFor="let mealtype of getAllMealTypes()" [value]="mealtype">
+                    <option *ngFor="let mealtype of allMealTypes" [value]="mealtype">
                       {{mealtype}}
                     </option>
                   </select>
@@ -47,7 +47,14 @@ interface IngredientSlot {
 })
 export class CreateRecipeComponent implements OnInit {
 
-  recipeFormGroup: FormGroup;
+  recipeFormGroup: FormGroup = new FormGroup(
+    { 
+      recipeName: new FormControl(),
+      mealType: new FormControl(),
+      instructions: new FormControl()
+    });
+
+  allMealTypes: string[];
 
   recipeName: string;
   //image
@@ -57,15 +64,10 @@ export class CreateRecipeComponent implements OnInit {
   allSlots: IngredientSlot[] = [];
   addedIngredients: Ingredient[] = [];
 
-  constructor(private recipeService: RecipeService) { 
-    this.recipeFormGroup = new FormGroup({
-      recipeName: new FormControl(),
-      mealType: new FormControl(),
-      instructions: new FormControl()
-    });
-  }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
+    this.getAllMealTypes();
   }
 
   saveRecipeDetails() {
@@ -116,7 +118,17 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   getAllMealTypes() {
-    return this.recipeService.getAllMealTypes()
+    this.recipeService.getAllMealTypes()
+    .subscribe( (data: any[]) => {
+      this.allMealTypes = data.map(elem => (elem.name));
+
+      // Once the data comes in, any default values for form fields can be set
+      this.recipeFormGroup = new FormGroup({
+        recipeName: new FormControl(),
+        mealType: new FormControl(this.allMealTypes[0]),
+        instructions: new FormControl()
+      });
+    })
   }
 
 }
