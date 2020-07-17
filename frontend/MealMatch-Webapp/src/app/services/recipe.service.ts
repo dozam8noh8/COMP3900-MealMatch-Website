@@ -8,7 +8,14 @@ import { map } from 'rxjs/operators';
 })
 export class RecipeService {
   private BASE_URL = 'http://localhost:5000/api'; // Our api calls will go to this URL //Move to service
-  constructor(private http: HttpClient) { }
+  allMealTypes: string[];
+
+  constructor(private http: HttpClient) {
+    // this.http.get(`${this.BASE_URL}/get_all_mealtypes`)
+    // .subscribe( (data: any[]) => {
+    //   this.allMealTypes = data.map(elem => (elem.name));
+    // }) // error handling here?
+  }
 
   getRecipeDetails(recipeId: number) {
     return this.http.get(`${this.BASE_URL}/recipe/${recipeId}`);
@@ -22,5 +29,14 @@ export class RecipeService {
         console.log(x)
         return x
       })) // Type casting to get headers from response aswell.
+  }
+
+  getAllMealTypes() {
+    // return this.allMealTypes;
+    return this.http.get(`${this.BASE_URL}/get_all_mealtypes`);
+  }
+
+  createRecipe(data: any) {
+    return this.http.post(`${this.BASE_URL}/add_recipe`, data);
   }
 }

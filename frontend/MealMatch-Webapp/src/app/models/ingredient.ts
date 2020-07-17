@@ -5,6 +5,7 @@ export interface Ingredient {
     id: number;
     name: String;
     onList: Boolean;
+    category: String;
 }
 
 export interface RegularIngredient {

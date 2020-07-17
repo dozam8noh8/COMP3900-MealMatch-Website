@@ -21,21 +21,30 @@ export class IngredientService {
     if(storedData) {
       this.addedIngredients = JSON.parse(storedData);
     }
-    
+    this.getFromDB();
+  }
+
+  getFromDB(callback=null) {
     this.http.get("http://localhost:5000/api/get_ingredients_in_categories")
     .subscribe( (data: Category[]) => {
-        this.allCategories = data;
-        this.allCategories.forEach( category => {
-          category.ingredients = category.ingredients.map( item => {
-            item = { ...item, 
-                              // Make sure ingredients (if on localStorage ingredient list) is checked off
-                      onList: this.addedIngredients.some(elem => (elem.id===item.id)) ? true : false
-                    };
-            this.allIngredients.push(item);
-            return item;
-          });
+      this.allCategories = data;
+      this.allCategories.forEach( category => {
+        category.ingredients = category.ingredients.map( item => {
+          item = { ...item, 
+                            // Make sure ingredients (if on localStorage ingredient list) is checked off
+                    onList: this.addedIngredients.some(elem => (elem.id===item.id)) ? true : false
+                  };
+          this.allIngredients.push(item);
+          return item;
         });
+      });
+      
+      if(callback) callback(this.allIngredients);
     });
+  }
+
+  createNewIngredient(ingredientName: string, ingredientCategory: string) {
+    return this.http.post("http://localhost:5000/api/add_ingredient", { name: ingredientName, category: ingredientCategory});
   }
   
   ngOnInit() { }
