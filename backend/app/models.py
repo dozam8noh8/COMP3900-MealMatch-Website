@@ -218,6 +218,43 @@ class Recipe(db.Model):
         db.session.commit()
         return recipe
 
+    def edit_recipe(recipe_id, name, instruction, mealType, ingredients):
+        recipe = Recipe.query.get(recipe_id)
+        if not recipe:
+            return 'Recipe id does not exist:' + recipe(recipe_id)
+        
+        recipe.name = name
+        recipe.instruction = instruction
+
+        db_mealtype = Mealtype.query.filter(func.lower(Mealtype.name) == func.lower(mealType)).first()
+        if db_mealtype:
+            recipe.mealtypes = [db_mealtype]
+        
+        # Check if any of the ingredients have been updated to avoid an additional delete and write
+        recipe_ingredients = (RecipeIngredients
+                              .query
+                              .with_entities(Ingredient.name, RecipeIngredients.quantity)
+                              .filter(RecipeIngredients.ingredient_id == Ingredient.id)
+                              .filter(RecipeIngredients.recipe_id == recipe.id)
+                              .all()
+        )
+        recipe_ingredients.sort()
+
+        ingredients = [(x['name'], x['quantity']) for x in ingredients]
+        ingredients.sort()
+        if recipe_ingredients != ingredients:
+            RecipeIngredients.query.filter_by(recipe_id=recipe.id).delete()
+            for name, quantity in ingredients:
+                ingredient = Ingredient.query.filter(func.lower(Ingredient.name) == func.lower(name)).first()
+                # doesn't support ingredient creation
+                if ingredient:
+                    recipe_ingredient = RecipeIngredients(quantity=quantity)
+                    recipe_ingredient.ingredients = ingredient
+                    recipe.ingredients.append(recipe_ingredient)
+        
+        db.session.commit()
+        return recipe
+
     def recipe_delete(recipe_id):
         Recipe.query.filter_by(id=recipe_id).delete()
         db.session.commit()

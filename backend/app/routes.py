@@ -266,6 +266,19 @@ def add_recipe():
         return recipe, 201 # Error message FIX error code
     return {'recipe_id' : recipe.id, 'message': 'Recipe has been added'}
 
+@app.route('/api/edit_recipe', methods=['POST'])
+@auth.login_required
+def edit_recipe():
+    recipe_id = request.json.get('id')
+    name = request.json.get('name')
+    instruction = request.json.get('instruction')
+    mealType = request.json.get('mealType')
+    ingredients = request.json.get('ingredients')
+    recipe = Recipe.edit_recipe(recipe_id, name, instruction, mealType, ingredients)
+    if type(recipe) is str:
+        return recipe, 201 # Error message FIX error code
+    return {'recipe_id' : recipe.id, 'message': 'Recipe has been edited'}
+
 @app.route('/api/recommendations', methods=['POST'])
 def get_recommendations():
     '''
