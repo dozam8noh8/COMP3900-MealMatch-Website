@@ -78,6 +78,36 @@ API Documentation
     }
     ```
 
+- POST **/api/add_recipe**
+
+    Edits an existing recipe.  
+    If an attribute is to remain the same, the original attribute still must be passed in.  
+    `mealtype` and `ingredients.name` must already exist in the database and are case insensitive when editing.  
+
+    Example usage:  
+    ```
+    {
+        "id": 1,
+        "name": "Grilled Cheese w/ Chicken",
+        "instruction": "Go Maccas and buy a mcchicken.",
+        "mealType": "Chicken",
+        "ingredients": [
+            {
+                "name": "Buns",
+                "quantity": "1 Bun"
+            },
+            {
+                "name": "Cheese Slices",
+                "quantity": "1 fat slice"
+            },
+            {
+                "name": "chicken",
+                "quantity": "a whole"
+            },
+        ]
+    }
+    ```
+
 - POST **/api/add_ingredient**
 
     Adds a new ingredient to the database, given a `name` and `category`.  
