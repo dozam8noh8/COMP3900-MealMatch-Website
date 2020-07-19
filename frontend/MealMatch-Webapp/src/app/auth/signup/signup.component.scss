@@ -21,7 +21,11 @@ mat-card {
     margin-top: 3em;
     font-size: x-large;
   }
-
+  margin: 10%;
+     padding: 0;
+     height: 700px;
+     width: 50%;
+     border-radius: 25px;
   }
 
   mat-form-field {
@@ -37,3 +41,28 @@ mat-card {
       padding-bottom: 1vh;
   }
 
+.main-div{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("bg.jpg");
+}
+
+.inputFields {
+    margin: auto; font-weight:lighter;
+}
+
+.submitButton {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    width: 170px;
+    font-size: 17px;
+    font-weight: lighter;
+}
+
+input[type="text"]
+{
+    font-size:24px;
+}

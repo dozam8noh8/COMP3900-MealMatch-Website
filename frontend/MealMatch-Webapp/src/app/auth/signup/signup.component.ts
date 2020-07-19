@@ -7,15 +7,16 @@ import { Router } from '@angular/router';
   selector: 'app-signup',
   styleUrls: ['signup.component.scss'],
   template: `
-   <mat-card>
+  <div class="main-div">
+   <mat-card style="text-align: center; margin: 2em;">
      <div>
-   <mat-card-title> Register Here </mat-card-title>
+   <mat-card-title style="font-weight:lighter; font-size: 3em; margin-top: 35px; padding-bottom: 10px;"> Register Here! </mat-card-title>
 
-     <mat-card-content>
+     <mat-card-content style="padding-top: 30px;">
      <form [formGroup]="form" (ngSubmit)="onSubmit()">
      <p>
 
-      <mat-form-field>
+      <mat-form-field class="inputFields">
       <input matInput placeholder="Username" formControlName="username" required>
       <mat-error>
           Please provide a valid email username
@@ -24,8 +25,8 @@ import { Router } from '@angular/router';
 </p>
     <p>
 
-    <mat-form-field>
-      <input matInput placeholder="Email" formControlName="email" required>
+    <mat-form-field class="inputFields">
+      <input matInput style="font-weight: lighter;" placeholder="Email" formControlName="email" required>
       <mat-error>
           Please provide a valid email address
       </mat-error>
@@ -35,7 +36,7 @@ import { Router } from '@angular/router';
 
     <p>
 
-    <mat-form-field>
+    <mat-form-field class="inputFields">
       <input matInput type="password" placeholder="Password" formControlName="password" required>
       <mat-error>
           Password cannot be blank.
@@ -45,14 +46,14 @@ import { Router } from '@angular/router';
 
     <p>
 
-    <mat-form-field>
+    <mat-form-field class="inputFields">
       <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
       <mat-error>
           Please confirm password.
       </mat-error>
     </mat-form-field>
     <p>
-    <button mat-raised-button [disabled]="loading" color="primary">Sign Up</button>
+    <button mat-raised-button class="submitButton" [disabled]="loading" color="primary">Sign Up</button>
     <mat-spinner *ngIf=loading> </mat-spinner>
     <mat-error class="submitError" *ngIf=error> {{error}} </mat-error>
     <h1 *ngIf=showSuccessBanner> Sign up successful, redirecting to login </h1>
@@ -63,12 +64,7 @@ import { Router } from '@angular/router';
 </div>
 
 </mat-card>
-
-
-
-
-
-
+</div>
   `
 })
 export class SignupComponent implements OnInit {

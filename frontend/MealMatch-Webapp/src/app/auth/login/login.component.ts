@@ -13,7 +13,7 @@ import * as rx from 'rxjs/operators';
     <mat-card-content>
       <div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <mat-card-title style="font-weight:lighter; font-size: 3.5em; padding-bottom: 15%; padding-top: 25px;">Welcome Back!</mat-card-title>
+          <mat-card-title style="font-weight:lighter; font-size: 3.5em; padding-bottom: 15%; padding-top: 30px;">Welcome Back!</mat-card-title>
           <div>
           <mat-error *ngIf="loginInvalid">
             The username and password were not recognised
