@@ -12,8 +12,13 @@ mat-card {
     a {
         padding-top: 2vh;
         display: inline-block;
-        font-size: x-large; // makes the "Don't have an account? Sign Up text bigger.
+        font-weight: lighter; // makes the "Don't have an account? Sign Up text bigger.
      }
+     margin: 0;
+     padding: 0;
+     height: 55%;
+     width: 50%;
+     border-radius: 25px;
 }
 
 mat-card-content {
@@ -57,3 +62,28 @@ mat-form-field {
     border-top-color: #000000;
     animation: spinner .8s linear infinite;
   }
+
+.submitButton {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    width: 170px;
+    font-weight: lighter;
+}
+
+.loginCard {
+    margin: auto; width: 50%; height: 50%; margin-top: 10%;
+    align-content: center
+}
+
+.main-div{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("loginBackground2.jpg");
+}
+
+.inputFields {
+    margin: auto;width: 100%; font-weight:lighter;
+}
