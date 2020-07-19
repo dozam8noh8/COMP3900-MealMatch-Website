@@ -43,6 +43,8 @@ import { RecipeViewCardComponent } from 'src/building-components/recipe-view-car
 import { DeleteRecipePopupComponent } from 'src/building-components/delete-recipe-popup/delete-recipe-popup.component';
 import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
 import { IngredientSlotComponent } from './create-recipe/ingredient-slot/ingredient-slot.component';
+import { AddRecipePopupComponent } from 'src/building-components/add-recipe-popup/add-recipe-popup.component';
+import { LovelessSetsComponent } from './loveless-sets/loveless-sets.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -84,6 +86,8 @@ const materialModules = [
     DeleteRecipePopupComponent,
     PhotoUploadComponent,
     IngredientSlotComponent,
+    AddRecipePopupComponent,
+    LovelessSetsComponent,
   ],
   imports: [
     BrowserModule,
