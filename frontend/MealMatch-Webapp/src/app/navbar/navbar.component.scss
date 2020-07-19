@@ -1,8 +1,17 @@
 .nav {
     justify-content: space-between;
+    height: 10%;
 }
 
 .nav-button {
     margin-right: 2rem;
-    font-size: large;
+    color: white;
+    font-size: 1em;
+    font-weight: lighter;
+}
+
+.logo {
+    height: 200px;
+    border: none;
+    outline: none;
 }

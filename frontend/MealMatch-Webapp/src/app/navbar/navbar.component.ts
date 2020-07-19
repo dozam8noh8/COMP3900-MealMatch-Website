@@ -9,12 +9,12 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./navbar.component.scss'],
   template: `
   <mat-toolbar color="primary" class="nav">
-  <button routerLink="/home" mat-raised-button routerLinkActive="active" class="nav-button"> Home </button>
-  <button routerLink="/dashboard" mat-raised-button routerLinkActive="active" class="nav-button"> Dashboard </button>
+  <a routerLink="/home" routerLinkActive="active"><img src="assets/images/logo3.png" class="logo"></a>
   <div class="nav-right" >
-  <button *ngIf="!(loggedIn | async)" mat-raised-button routerLink="/login" routerLinkActive="active" class="nav-button"> Login </button>
-  <button  *ngIf="!loggedInTest"  mat-raised-button routerLink="/signup" routerLinkActive="active" class="nav-button"> Sign Up </button>
-  <button *ngIf="loggedInTest" (click)="logout()" mat-raised-button color="primary" class="nav-button">Logout</button>
+  <button *ngIf="loggedInTest" mat-button routerLink="/dashboard" routerLinkActive="active" class="nav-button"> Dashboard </button>
+  <button *ngIf="!(loggedIn | async)" mat-button routerLink="/login" routerLinkActive="active" class="nav-button"> Login </button>
+  <button  *ngIf="!loggedInTest"  mat-button routerLink="/signup" routerLinkActive="active" class="nav-button"> Sign Up </button>
+  <button *ngIf="loggedInTest" (click)="logout()" mat-button color="primary" class="nav-button">Logout</button>
   </div>
   </mat-toolbar>`
 })
