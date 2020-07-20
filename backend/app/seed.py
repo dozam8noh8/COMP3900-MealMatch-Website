@@ -12,45 +12,16 @@ def seed_db():
     db.create_all()
 
     # Load json
-    input_file=open('data_seed/ingredients.json', 'r', encoding='utf8')
+    input_file=open('data_seed/categories.json', 'r', encoding='utf8')
     json_decode=json.load(input_file)
 
-    # Find all the categories
-    # categories = set()
-    # for item in json_decode['ingredients']:
-    #     if item['strType']:
-    #        categories.add(item['strType'])
-
-    # Have categories in an order
-    categories = [
-        'Vegetable',
-        'Fruit',
-        'Dairy',
-        # 'Baking',
-        'Meat',
-        'Sugar',
-        'Vinegar',
-        'Fish',
-        'Rice',
-        'Bread',
-        'Noodles',
-        'Sauce',
-        'Spice',
-        'Fat',
-        'Cereal',
-        'Pastry',
-        'Liqueur',
-        'Stock',
-        'Liquid',
-        'Confectionery',
-        'Uncategorised 0',
-        'Uncategorised 1',
-    ]
-
-    for category in categories:
-        #add to db
-        category_object = Category(name=category)
+    for item in json_decode['categories']:
+        category_object = Category(name=item)
         db.session.add(category_object)
+
+    # Load json
+    input_file=open('data_seed/ingredients.json', 'r', encoding='utf8')
+    json_decode=json.load(input_file)
 
     # To view all categories added uncomment this line
     # print('categories: ', categories)

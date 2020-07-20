@@ -134,7 +134,7 @@ class IngredientPairs(db.Model):
             pair_to_find = pair.pairs.split(", ")
             new_pair = []
             for in_pair in pair_to_find:
-                new_pair.append(Ingredient.query.filter_by(id=in_pair).first().name)
+                new_pair.append(Ingredient.query.filter_by(id=in_pair).first())
             list.append(new_pair)
         return list
 
