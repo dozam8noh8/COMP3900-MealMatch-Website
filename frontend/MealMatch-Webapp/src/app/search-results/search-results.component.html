@@ -16,9 +16,9 @@
 </div>
 
 <div *ngIf="searchComplete() && getResults().length > 0">
-    <div class="columned" style="margin-left: 2%; margin-right: 2%;">
-        <div *ngFor="let recipe of getResults()">
-            <a routerLink="/recipe/{{recipe.id}}" style="text-decoration: none;">
+    <div class="columned" style="margin-left: 2%;">
+        <div *ngFor="let recipe of getResults()" style="width: 400px">
+            <a routerLink="/recipe/{{recipe.id}}" style="text-decoration: none; margin-top: 2%;">
                 <app-recipe-view-card [recipe]="recipe"></app-recipe-view-card>
             </a>
         </div>

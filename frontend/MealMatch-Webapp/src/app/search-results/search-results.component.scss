@@ -1,11 +1,8 @@
 .columned {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
-    // need to fix to not allow horizontal overflow
-    max-width: 25vw;
-    height: 1800px;
-    max-height: 600%;
+    margin-right: 2%;
 }
 
 .copperplate {
@@ -28,7 +25,8 @@ img {
 }
 
 .example-card {
-  max-width: 400px;
+  max-width: 25vh;
+  margin: 2%;
 }
 
 .example-header-image {

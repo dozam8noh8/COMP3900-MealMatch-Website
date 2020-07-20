@@ -30,12 +30,12 @@ import { map, finalize } from 'rxjs/operators';
             </span>
         </p>
     </mat-card-content>
-
+    <div *ngIf="showDeleteEdit">
         <mat-card-actions>
             <button mat-button (click)="editRecipe()">Edit</button>
             <button mat-button (click)="deleteRecipe()">Delete</button>
         </mat-card-actions>
-
+    </div>
     </mat-card>
 </ng-container>
     <mat-spinner *ngIf=loading> Showing spinner </mat-spinner>
