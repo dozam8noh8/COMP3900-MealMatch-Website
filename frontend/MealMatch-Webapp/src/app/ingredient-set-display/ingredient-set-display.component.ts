@@ -13,7 +13,7 @@ import { Recipe } from '../models/recipe';
         <mat-card-title> Ingredients </mat-card-title>
         <mat-card-content>
           <ol>
-            <li *ngFor="let ingredient of set.ingredients"> {{ ingredient }} </li>
+            <li *ngFor="let ingredient of set.ingredients"> {{ ingredient.name }} </li>
           </ol>
         </mat-card-content>
         <button mat-raised-button color="primary" (click)=emitCreateRecipe()> Create Recipe </button>

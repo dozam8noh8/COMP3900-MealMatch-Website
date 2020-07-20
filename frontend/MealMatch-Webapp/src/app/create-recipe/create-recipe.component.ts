@@ -102,7 +102,7 @@ export class CreateRecipeComponent implements OnInit {
     this.ingredientSlots = this.fb.array([]); // Initialise ingredientSlots to be an empty array.
     this.recipeFormGroup = this.fb.group({
       recipeName: ["", Validators.required],
-      mealType: [],
+      mealType: [], //need to fix this
       instructions: ["", Validators.required],
       ingredientSlots: this.ingredientSlots, // Nest form array inside formGroup to keep everything together :)
     })
@@ -111,7 +111,7 @@ export class CreateRecipeComponent implements OnInit {
         this.loadRecipeFromRedirect(JSON.parse(res.contents));
       }
     })
-    this.getAllMealTypes();
+    //this.getAllMealTypes();
   }
 
   saveRecipeDetails() {
@@ -193,21 +193,24 @@ export class CreateRecipeComponent implements OnInit {
     return index;
   }
 
+  // Make this an observable so we dont have to call the function 69 million times.
   slotsToIngredients() {
-    return this.allSlots.map(elem => elem.ingredient);
+    //console.log( this.ingredientSlots.controls.map(control => control.get('name').value));
+    return this.ingredientSlots.controls.map(control => control.get('name').value);
   }
 
+  // This might be messing up the form group by reinstantiating it.
   getAllMealTypes() {
     this.recipeService.getAllMealTypes()
     .subscribe( (data: any[]) => {
       this.allMealTypes = data.map(elem => (elem.name));
 
-      // Once the data comes in, any default values for form fields can be set
-      this.recipeFormGroup = new FormGroup({
-        recipeName: new FormControl(),
-        mealType: new FormControl(this.allMealTypes[0]),
-        instructions: new FormControl()
-      });
+      // // Once the data comes in, any default values for form fields can be set
+      // this.recipeFormGroup = new FormGroup({
+      //   recipeName: new FormControl(),
+      //   mealType: new FormControl(this.allMealTypes[0]),
+      //   instructions: new FormControl()
+      // });
     })
   }
 
@@ -224,7 +227,7 @@ export class CreateRecipeComponent implements OnInit {
 
     recipe.ingredients.forEach(element => {
       console.log("Adding ingredient");
-      this.allSlots.push({quantity: "", ingredient: element})
+      //this.allSlots.push({quantity: "", ingredient: element})
           // Add a slot to the formArray
       // Nest a formgroup within the formArray that is in the main formgroup.
       let newSlot = this.createIngredientGroup(element);
@@ -233,7 +236,7 @@ export class CreateRecipeComponent implements OnInit {
 
   }
   createIngredientGroup(ingredient?: Ingredient) {
-    console.log(ingredient.name);
+    console.log(ingredient?.name);
     let form = this.fb.group({
       id: ingredient?.id || -1,
       name: ingredient?.name || "",

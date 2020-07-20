@@ -27,7 +27,11 @@ export class LovelessSetsComponent implements OnInit {
       // Turn each json key into an array.
       var keys = Object.keys(res); // TODO make this a function?
       keys.forEach(function(key){
-        arr.push({setId: key, ingredients: res[key]})
+        let obj: LovelessSet = {
+            setId: Number(key),
+            ingredients: res[key]
+          }
+        arr.push(obj)
       });
     this.sets = arr;
     console.log(this.sets)

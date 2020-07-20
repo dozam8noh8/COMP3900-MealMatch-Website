@@ -61,11 +61,12 @@ export class IngredientSlotComponent implements OnInit {
   constructor(private ingredientService: IngredientService, private newIngredientDialog: MatDialog) { }
 
   ngOnInit(): void {
-    // this.filteredOptions = this.ingredientControl.valueChanges
-    //   .pipe(
-    //     map(value => this._filter(value)),
-    //   );
-    this.filteredOptions = new Observable<Ingredient[]>();
+    this.filteredOptions = this.ingredientControl.valueChanges
+      .pipe(
+        map(value => this._filter(value)),
+      );
+      console.log(this.filteredOptions.pipe(map(x => console.log(x))));
+    //this.filteredOptions = new Observable<Ingredient[]>();
   }
 
   addToList(newIngredient: Ingredient) {
