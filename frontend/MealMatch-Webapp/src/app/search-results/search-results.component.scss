@@ -7,3 +7,31 @@
     height: 1800px;
     max-height: 600%;
 }
+
+.copperplate {
+  font-family: Copperplate
+}
+
+.submitButton {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    width: 230px;
+    font-weight: lighter;
+}
+
+img {
+  height: fit-content; //so that it takes up full space
+  width: 25vw !important; // this prevents the image from being extremely big
+  object-fit: cover; 
+  object-position: center; /* this centers and crops the image so that it doesn't break the aspect ratio */
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}

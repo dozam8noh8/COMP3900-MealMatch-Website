@@ -9,30 +9,36 @@ import { map, finalize } from 'rxjs/operators';
     selector: 'app-recipe-view-card',
     styleUrls: ['recipe-view-card.component.scss'],
     template: `
-    <mat-card class="recipe">
-    <ng-container *ngIf="!loading">
-        <div *ngIf="recipe.image">
-            <img src="{{recipe.image}}" style="width: 100%;">
-        </div>
-        <div *ngIf="!recipe.image">
-            <img [src]="recipeImagePlaceholder" style="width: 100%;">
-        </div>
-
-        <b>{{recipe.name}}</b> <br>
-        <i>Uses:
+  <ng-container *ngIf="!loading">
+    <mat-card class="example-card">
+    <mat-card-header>
+        <div mat-card-avatar style="background-image: url({{recipe.image}});background-size: cover;"></div>
+        <mat-card-title>{{recipe.name}}</mat-card-title>
+        <mat-card-subtitle>Primary Mealtype: {{recipe.mealtypes[0].name}}</mat-card-subtitle>
+    </mat-card-header>
+    <div *ngIf="recipe.image">
+        <img mat-card-image src={{recipe.image}} alt="Photo of a Shiba Inu">
+    </div>
+    <div *ngIf="!recipe.image">
+        <img mat-card-image [src]="recipeImagePlaceholder alt="Photo of a Shiba Inu">
+    </div>
+    <mat-card-content>
+        <p style="font-weight: lighter; font-size: 1em;">
+        Ingredients include:
             <span *ngFor="let ingredient of recipe.ingredients">
                 {{ingredient["ingredient.name"]}}, <!-- Should not have comma for last ingredient -->
             </span>
-        </i>
-        <div *ngIf="showDeleteEdit">
-        <button mat-raised-button (click)="editRecipe()" color="primary"> Edit </button>
-        <button mat-raised-button (click)="deleteRecipe()" color="primary"> Delete </button>
-        <mat-error> {{error}} </mat-error>
-        </div>
-    </ng-container>
-    <mat-spinner *ngIf=loading> Showing spinner </mat-spinner>
+        </p>
+    </mat-card-content>
 
-  </mat-card>
+        <mat-card-actions>
+            <button mat-button (click)="editRecipe()">Edit</button>
+            <button mat-button (click)="deleteRecipe()">Delete</button>
+        </mat-card-actions>
+
+    </mat-card>
+</ng-container>
+    <mat-spinner *ngIf=loading> Showing spinner </mat-spinner>
   `
 })
 
