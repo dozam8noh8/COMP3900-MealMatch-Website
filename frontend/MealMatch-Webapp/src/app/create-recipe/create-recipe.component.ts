@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../models/ingredient';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { RecipeService } from '../services/recipe.service';
 import { HttpClient } from '@angular/common/http';
 import { ImageService } from '../image.service';
+import { LovelessSet } from '../loveless-sets/loveless-sets.component';
+import { Recipe } from '../models/recipe';
+import { ActivatedRoute } from '@angular/router';
 
 interface IngredientSlot {
   ingredient: Ingredient;
@@ -15,7 +18,7 @@ interface IngredientSlot {
   styleUrls: ['./create-recipe.component.scss'],
   template: `
               <form [formGroup]="recipeFormGroup" (ngSubmit)="saveRecipeDetails()">
-                <h2> 
+                <h2>
                   Name of recipe: <input type="text" formControlName="recipeName"> </h2>
                 <h2> Upload an image ... </h2>
                   <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
@@ -26,32 +29,33 @@ interface IngredientSlot {
                     </option>
                   </select>
                 <h2> Ingredients </h2>
-                  <div *ngFor="let slot of allSlots; let index=index; trackBy:trackIngredient">
+                  <div *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIngredient">
                     <app-ingredient-slot
+                    [formGroup]="slot"
                     [position]="index"
                     (updateIngredient)="updateSlotIngredient($event)"
                     (updateQuantity)="updateSlotQuantity($event)"
                     (removeIngredient)="removeSlot($event)"
-                    [addedIngredients]="slotsToIngredients()"> </app-ingredient-slot>  
+                    [addedIngredients]="slotsToIngredients()"> </app-ingredient-slot>
                   </div>
                 <button type="button" (click)="addSlot()">Add an ingredient</button>
 
                 <h2> Instructions </h2>
                   <textarea formControlName="instructions"></textarea>
 
-                <br/> 
+                <br/>
 
                 <div *ngIf="creatingRecipe"> Creating recipe... </div>
 
                 <div *ngIf="!creatingRecipe">
-                  <div *ngIf="!creationSuccessful"> 
+                  <div *ngIf="!creationSuccessful">
                     <button type="submit">Save</button>
-                    <div *ngIf="API_message"> 
-                      {{API_message}} 
-                    </div> 
+                    <div *ngIf="API_message">
+                      {{API_message}}
+                    </div>
                   </div>
-                  
-                  <div *ngIf="creationSuccessful"> 
+
+                  <div *ngIf="creationSuccessful">
                     Your recipe has been created <br/>
                     <a routerLink="/dashboard">Back to Dashboard</a>
                   </div>
@@ -61,14 +65,14 @@ interface IngredientSlot {
 
               <br/> All ingredients used:
               <div *ngFor="let ing of allSlots">
-                {{ing.ingredient?.name}}    
+                {{ing.ingredient?.name}}
               </div>
             `
 })
 export class CreateRecipeComponent implements OnInit {
 
   recipeFormGroup: FormGroup = new FormGroup(
-    { 
+    {
       recipeName: new FormControl(),
       mealType: new FormControl(),
       instructions: new FormControl()
@@ -79,18 +83,34 @@ export class CreateRecipeComponent implements OnInit {
   recipeImage: File;
 
   allSlots: IngredientSlot[] = [];
-  addedIngredients: Ingredient[] = [];
 
   API_message: string;
   creatingRecipe: boolean = false;
   creationSuccessful: boolean = false;
+  ingredientSlots: FormArray;
 
   constructor(
     private recipeService: RecipeService,
-    private imageService: ImageService
-    ) { }
+    private imageService: ImageService,
+    private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    ) {    }
 
   ngOnInit(): void {
+
+    // Build formGroup
+    this.ingredientSlots = this.fb.array([]); // Initialise ingredientSlots to be an empty array.
+    this.recipeFormGroup = this.fb.group({
+      recipeName: ["", Validators.required],
+      mealType: [],
+      instructions: ["", Validators.required],
+      ingredientSlots: this.ingredientSlots, // Nest form array inside formGroup to keep everything together :)
+    })
+    this.activatedRoute.queryParams.subscribe(res => {
+      if (res?.contents) {
+        this.loadRecipeFromRedirect(JSON.parse(res.contents));
+      }
+    })
     this.getAllMealTypes();
   }
 
@@ -130,14 +150,14 @@ export class CreateRecipeComponent implements OnInit {
               this.API_message = creation_response.message;
               this.creationSuccessful = true;
             },
-            err => { 
+            err => {
               console.log(err);
             }
           )
         }
 
       },
-      err => { 
+      err => {
         console.log(err);
       }
     )
@@ -145,6 +165,10 @@ export class CreateRecipeComponent implements OnInit {
 
   addSlot() {
     this.allSlots.push( { ingredient: null, quantity: "" } )
+    // Add a slot to the formArray
+    // Nest a formgroup within the formArray that is in the main formgroup.
+    let newSlot = this.createIngredientGroup()
+    this.ingredientSlots.push(newSlot);
   }
 
   removeSlot(index: number) {
@@ -189,6 +213,34 @@ export class CreateRecipeComponent implements OnInit {
 
   maintainRecipeImage(file: File){
     this.recipeImage = file;
+  }
+
+  loadRecipeFromRedirect(recipe: Recipe) {
+    // ID will be set to -1 if we need an ID from api.
+    console.log(recipe);
+    this.recipeFormGroup.get('recipeName').setValue(recipe.name);
+    this.recipeFormGroup.get('mealType').setValue(recipe?.mealtypes); // Will this be an array?
+    this.recipeFormGroup.get('instructions').setValue(recipe?.instruction);
+
+    recipe.ingredients.forEach(element => {
+      console.log("Adding ingredient");
+      this.allSlots.push({quantity: "", ingredient: element})
+          // Add a slot to the formArray
+      // Nest a formgroup within the formArray that is in the main formgroup.
+      let newSlot = this.createIngredientGroup(element);
+      this.ingredientSlots.push(newSlot);
+    });
+
+  }
+  createIngredientGroup(ingredient?: Ingredient) {
+    console.log(ingredient.name);
+    let form = this.fb.group({
+      id: ingredient?.id || -1,
+      name: ingredient?.name || "",
+      quantity: "",
+    })
+    console.log(form.get('name').value);
+    return form;
   }
 
 }

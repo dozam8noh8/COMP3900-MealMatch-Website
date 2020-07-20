@@ -22,6 +22,7 @@ export class LovelessSetsComponent implements OnInit {
   ngOnInit(): void {
     // POPULATE SETS
     this.ingredientService.getLovelessSets().subscribe( res => {
+      console.log(res);
       let arr = []
       // Turn each json key into an array.
       var keys = Object.keys(res); // TODO make this a function?
