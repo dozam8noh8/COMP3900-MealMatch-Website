@@ -174,7 +174,9 @@ def recipe_delete(recipe_id):
 @app.route('/api/popular_ingredient_pairs', methods=['GET'])
 @auth.login_required
 def popular_ingredient_pairs():
-    return jsonify(IngredientPairs.get_highest_pairs())
+    ingredients = IngredientPairs.get_highest_pairs()
+    ingredients = [Ingredient.json_dump(x) for x in ingredients]
+    return jsonify(ingredients)
 
 
 @app.route('/api/get_ingredients_in_categories', methods=['GET'])
