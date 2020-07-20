@@ -8,6 +8,6 @@ export interface Recipe {
     // owner: User;
     ingredients: Ingredient[];
     instruction: string;
-    image: string;
-    mealtypes: any[];
+    image?: string;
+    mealtypes?: any[];
 }

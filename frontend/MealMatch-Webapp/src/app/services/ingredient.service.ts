@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {Ingredient} from '../models/ingredient';
 import { Category } from '../home-page/category';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,12 @@ import { HttpClient } from '@angular/common/http';
 export class IngredientService {
 
   private ingredientsListStorage: string = "StoredIngredients";
-
+  BASE_URL = 'http://localhost:5000/api'
   allIngredients: Ingredient[] = [];
   allCategories: Category[];
   addedIngredients: Ingredient[] = [];
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     // If there is ingredientList from previous session, restore it
     let storedData = localStorage.getItem(this.ingredientsListStorage);
     if(storedData) {
@@ -30,7 +31,7 @@ export class IngredientService {
       this.allCategories = data;
       this.allCategories.forEach( category => {
         category.ingredients = category.ingredients.map( item => {
-          item = { ...item, 
+          item = { ...item,
                             // Make sure ingredients (if on localStorage ingredient list) is checked off
                     onList: this.addedIngredients.some(elem => (elem.id===item.id)) ? true : false
                   };
@@ -38,7 +39,7 @@ export class IngredientService {
           return item;
         });
       });
-      
+
       if(callback) callback(this.allIngredients);
     });
   }
@@ -46,7 +47,7 @@ export class IngredientService {
   createNewIngredient(ingredientName: string, ingredientCategory: string) {
     return this.http.post("http://localhost:5000/api/add_ingredient", { name: ingredientName, category: ingredientCategory});
   }
-  
+
   ngOnInit() { }
 
   getAllIngredients() {
@@ -76,13 +77,17 @@ export class IngredientService {
   getAllCategories(): Category[] {
     return this.allCategories;
   }
-  
+
   removeAllFromList() {
     this.addedIngredients.map(ingredient => this.removeFromList(ingredient));
   }
 
   saveIngredients() {
     localStorage.setItem(this.ingredientsListStorage, JSON.stringify(this.addedIngredients));
+  }
+
+  getLovelessSets() {
+    return this.http.get(`${this.BASE_URL}/popular_ingredient_pairs`);
   }
 
 }

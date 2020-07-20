@@ -45,6 +45,7 @@ import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
 import { IngredientSlotComponent } from './create-recipe/ingredient-slot/ingredient-slot.component';
 import { AddRecipePopupComponent } from 'src/building-components/add-recipe-popup/add-recipe-popup.component';
 import { LovelessSetsComponent } from './loveless-sets/loveless-sets.component';
+import { IngredientSetDisplayComponent } from './ingredient-set-display/ingredient-set-display.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -88,6 +89,7 @@ const materialModules = [
     IngredientSlotComponent,
     AddRecipePopupComponent,
     LovelessSetsComponent,
+    IngredientSetDisplayComponent,
   ],
   imports: [
     BrowserModule,

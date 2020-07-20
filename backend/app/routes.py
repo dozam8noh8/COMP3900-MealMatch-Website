@@ -170,7 +170,7 @@ def recipe_delete(recipe_id):
         return Response(status=200)
 
 
-
+# Actually returns sets as required. TODO Change variable names
 @app.route('/api/popular_ingredient_pairs', methods=['GET'])
 @auth.login_required
 def popular_ingredient_pairs():
@@ -333,7 +333,7 @@ def extract_photo(request):
         picture_path = os.path.join(app.root_path, 'static', picture_fn)
         file.save(picture_path)
         return picture_fn, 200 # If we change code, change in update functions too!
-    return 'No File could not be uploaded', 500 # Fix error code
+    return 'No File could be uploaded', 500 # Fix error code
 
 
 #########INTERNAL FUNCTION#########
