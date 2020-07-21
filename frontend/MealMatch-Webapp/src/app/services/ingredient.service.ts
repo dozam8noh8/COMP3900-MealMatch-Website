@@ -50,7 +50,10 @@ export class IngredientService {
 
   ngOnInit() { }
 
-  getAllIngredients() {
+  getAllIngredients(flush=false) {
+    if (flush){
+      this.getFromDB()
+    }
     return this.allIngredients;
   }
 

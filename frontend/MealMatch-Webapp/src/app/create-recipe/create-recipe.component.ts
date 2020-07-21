@@ -7,6 +7,7 @@ import { ImageService } from '../image.service';
 import { LovelessSet } from '../loveless-sets/loveless-sets.component';
 import { Recipe } from '../models/recipe';
 import { ActivatedRoute } from '@angular/router';
+import { IngredientService } from '../services/ingredient.service';
 
 interface IngredientSlot {
   ingredient: Ingredient;
@@ -33,8 +34,6 @@ interface IngredientSlot {
                     <app-ingredient-slot
                     [formGroup]="slot"
                     [position]="index"
-                    (updateIngredient)="updateSlotIngredient($event)"
-                    (updateQuantity)="updateSlotQuantity($event)"
                     (removeIngredient)="removeSlot($event)"
                     [addedIngredients]="slotsToIngredients()"> </app-ingredient-slot>
                   </div>
@@ -71,12 +70,7 @@ interface IngredientSlot {
 })
 export class CreateRecipeComponent implements OnInit {
 
-  recipeFormGroup: FormGroup = new FormGroup(
-    {
-      recipeName: new FormControl(),
-      mealType: new FormControl(),
-      instructions: new FormControl()
-    });
+  recipeFormGroup: FormGroup;
 
   allMealTypes: string[];
 
@@ -94,6 +88,7 @@ export class CreateRecipeComponent implements OnInit {
     private imageService: ImageService,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
+    private ingredientService: IngredientService,
     ) {    }
 
   ngOnInit(): void {
@@ -102,7 +97,7 @@ export class CreateRecipeComponent implements OnInit {
     this.ingredientSlots = this.fb.array([]); // Initialise ingredientSlots to be an empty array.
     this.recipeFormGroup = this.fb.group({
       recipeName: ["", Validators.required],
-      mealType: [], //need to fix this
+      mealType: [Validators.required], //need to fix this
       instructions: ["", Validators.required],
       ingredientSlots: this.ingredientSlots, // Nest form array inside formGroup to keep everything together :)
     })
@@ -111,22 +106,24 @@ export class CreateRecipeComponent implements OnInit {
         this.loadRecipeFromRedirect(JSON.parse(res.contents));
       }
     })
-    //this.getAllMealTypes();
+    this.getAllMealTypes();
   }
 
   saveRecipeDetails() {
     // Only keep slots with valid ingredients
-    this.allSlots = this.allSlots.filter(item => (item.ingredient));
+
+    this.checkValidIngredients()
     // Format into JSON object
     const new_recipe = {
       name: this.recipeFormGroup.get('recipeName').value,
       instruction: this.recipeFormGroup.get('instructions').value,
       mealType: this.recipeFormGroup.get('mealType').value,
       // Convert slots to appropriate ingredient format
-      ingredients: this.allSlots.map(slot => {
-        return {name: slot.ingredient.name, quantity: slot.quantity}
+      ingredients: this.ingredientSlots.controls.map(slot => {
+        return {name: slot.get('name').value, quantity: slot.get('quantity').value}
       })
     }
+    console.log(new_recipe)
 
     this.creatingRecipe = true;
     // Send to endpoint to create new recipe
@@ -164,7 +161,6 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   addSlot() {
-    this.allSlots.push( { ingredient: null, quantity: "" } )
     // Add a slot to the formArray
     // Nest a formgroup within the formArray that is in the main formgroup.
     let newSlot = this.createIngredientGroup()
@@ -172,21 +168,7 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   removeSlot(index: number) {
-    this.allSlots.splice(index, 1);
-  }
-
-  updateSlotIngredient($event) {
-    this.allSlots[$event.index] = {
-      ingredient: $event.newIngredient,
-      quantity: this.allSlots[$event.index].quantity
-    }
-  }
-
-  updateSlotQuantity($event) {
-    this.allSlots[$event.index] = {
-      ingredient: this.allSlots[$event.index].ingredient,
-      quantity: $event.newQuantity
-    }
+    this.ingredientSlots.controls.splice(index, 1);
   }
 
   trackIngredient(index: any, item: any) {
@@ -195,23 +177,27 @@ export class CreateRecipeComponent implements OnInit {
 
   // Make this an observable so we dont have to call the function 69 million times.
   slotsToIngredients() {
-    //console.log( this.ingredientSlots.controls.map(control => control.get('name').value));
-    return this.ingredientSlots.controls.map(control => control.get('name').value);
+    return this.ingredientSlots.controls.map(control => {
+      let ingredientName = control.get('name').value;
+      let ingredientId = control.get('id').value;
+      let ingredient: Ingredient = {
+        name: ingredientName,
+        id: ingredientId,
+      }
+      return ingredient;
+    });
   }
 
-  // This might be messing up the form group by reinstantiating it.
   getAllMealTypes() {
     this.recipeService.getAllMealTypes()
     .subscribe( (data: any[]) => {
       this.allMealTypes = data.map(elem => (elem.name));
 
-      // // Once the data comes in, any default values for form fields can be set
-      // this.recipeFormGroup = new FormGroup({
-      //   recipeName: new FormControl(),
-      //   mealType: new FormControl(this.allMealTypes[0]),
-      //   instructions: new FormControl()
-      // });
-    })
+      // Once the data comes in, any default values for form fields can be set
+      this.recipeFormGroup.patchValue({
+        mealType: this.allMealTypes[0]
+      })
+    });
   }
 
   maintainRecipeImage(file: File){
@@ -226,9 +212,6 @@ export class CreateRecipeComponent implements OnInit {
     this.recipeFormGroup.get('instructions').setValue(recipe?.instruction);
 
     recipe.ingredients.forEach(element => {
-      console.log("Adding ingredient");
-      //this.allSlots.push({quantity: "", ingredient: element})
-          // Add a slot to the formArray
       // Nest a formgroup within the formArray that is in the main formgroup.
       let newSlot = this.createIngredientGroup(element);
       this.ingredientSlots.push(newSlot);
@@ -236,14 +219,22 @@ export class CreateRecipeComponent implements OnInit {
 
   }
   createIngredientGroup(ingredient?: Ingredient) {
-    console.log(ingredient?.name);
-    let form = this.fb.group({
+    let ingredientSlotForm = this.fb.group({
       id: ingredient?.id || -1,
       name: ingredient?.name || "",
       quantity: "",
     })
-    console.log(form.get('name').value);
-    return form;
+    return ingredientSlotForm;
+  }
+
+  checkValidIngredients(){
+    let allIngredientIds = this.ingredientService.getAllIngredients(true).map(ingredient => ingredient.id);
+    this.ingredientSlots.controls = this.ingredientSlots.controls.filter(control => {
+      console.log("Id is ",control.get('id').value)
+      return allIngredientIds.includes(control.get('id').value)
+    })
+    // Get freshest set of ingredients.
+
   }
 
 }

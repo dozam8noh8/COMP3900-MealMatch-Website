@@ -56,24 +56,23 @@ export class IngredientSlotComponent implements OnInit {
   ingredientIsValid: boolean = true;
 
   filteredOptions: Observable<Ingredient[]>;
-  ingredientControl = new FormControl()
 
   constructor(private ingredientService: IngredientService, private newIngredientDialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.filteredOptions = this.ingredientControl.valueChanges
+    this.filteredOptions = this.formGroup.get('name').valueChanges
       .pipe(
         map(value => this._filter(value)),
       );
-      console.log(this.filteredOptions.pipe(map(x => console.log(x))));
-    //this.filteredOptions = new Observable<Ingredient[]>();
+    console.log("Name is ", this.formGroup.get('name').value);
   }
 
   addToList(newIngredient: Ingredient) {
-    this.updateIngredient.emit( {index: this.position, newIngredient: newIngredient} );
+    // Set the id of the ingredient that we get returned in the response.
+    this.formGroup.controls.id.setValue(newIngredient.id)
+    // Remove "ingredient does not exist message"
     this.ingredientIsValid = true;
-    // Add ingredient to parent's list ingredients for the recipe
-    this.addedIngredients.push(newIngredient);
+
   }
 
   private _filter(value: string): Ingredient[] {
@@ -92,17 +91,19 @@ export class IngredientSlotComponent implements OnInit {
       });
   }
 
-  changeQuantity(keyboardEvent) {
-    this.updateQuantity.emit( {index: this.position, newQuantity: keyboardEvent.target.value} );
-  }
-
+  // This is hacky, hopefully we can improve but I don't know how the auto selector emits an object when a form control cant.
   displayIngredient(ingredient: Ingredient): String {
-    return ingredient?.name;
+    if (typeof ingredient === 'string') {
+      return ingredient;
+    }
+    else {
+      return ingredient?.name;
+    }
   }
 
   openNewIngredientDialog() {
     this.newIngredientDialog.open(NewIngredientPopupComponent, {
-      data: { inputString: this.ingredientControl.value }
+      data: { inputString: this.formGroup.get('name').value }
     }).afterClosed()
     .subscribe( (newCreatedIngredient: Ingredient) => {
       // If not an ingredient being passed in
