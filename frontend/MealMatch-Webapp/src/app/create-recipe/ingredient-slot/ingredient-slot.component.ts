@@ -64,11 +64,13 @@ export class IngredientSlotComponent implements OnInit {
       .pipe(
         map(value => this._filter(value)),
       );
+      this.formGroup.get('name').valueChanges.subscribe(x=> console.log(x));
   }
 
   addToList(newIngredient: Ingredient) {
     // Set the id of the ingredient that we get returned in the response.
     this.formGroup.controls.id.setValue(newIngredient.id)
+    this.formGroup.get('name').setValue(newIngredient.name) // set the name manually because the selector passes in the whole ingredient.
     // Remove "ingredient does not exist message"
     this.ingredientIsValid = true;
 

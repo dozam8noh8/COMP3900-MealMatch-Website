@@ -39,4 +39,8 @@ export class RecipeService {
   createRecipe(data: any) {
     return this.http.post(`${this.BASE_URL}/add_recipe`, data);
   }
+
+  editRecipe(recipeDetails){
+    return this.http.post(`${this.BASE_URL}/edit_recipe`, recipeDetails);
+  }
 }

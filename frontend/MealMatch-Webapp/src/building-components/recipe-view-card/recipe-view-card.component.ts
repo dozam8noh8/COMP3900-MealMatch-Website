@@ -9,38 +9,41 @@ import { map, finalize } from 'rxjs/operators';
     selector: 'app-recipe-view-card',
     styleUrls: ['recipe-view-card.component.scss'],
     template: `
-  <ng-container *ngIf="!loading">
-    <mat-card class="example-card">
-    <mat-card-header>
-        <div mat-card-avatar style="background-image: url({{recipe.image}});background-size: cover;"></div>
-        <mat-card-title>{{recipe.name}}</mat-card-title>
-        <mat-card-subtitle>Primary Mealtype: {{recipe.mealtypes[0].name}}</mat-card-subtitle>
-    </mat-card-header>
-    <div *ngIf="recipe.image">
-        <img mat-card-image src={{recipe.image}} alt="Photo of a Shiba Inu">
+
+<mat-card class="recipe" >
+<ng-container *ngIf="!loading">
+<mat-card-header [routerLink]="link" style="cursor: pointer">
+<div mat-card-avatar style="background-image: url({{recipe.image}});background-size: cover;"></div>
+<mat-card-title>{{recipe.name}}</mat-card-title>
+<mat-card-subtitle>Primary Mealtype: {{recipe.mealtypes[0].name}}</mat-card-subtitle>
+</mat-card-header>
+    <div class="clickableLink" [routerLink]="link" style="cursor: pointer">
+    <div *ngIf="recipe.image" >
+        <img src="{{recipe.image}}" style="width: 100%;">
     </div>
     <div *ngIf="!recipe.image">
-        <img mat-card-image [src]="recipeImagePlaceholder alt="Photo of a Shiba Inu">
+        <img [src]="recipeImagePlaceholder" style="width: 100%;">
     </div>
-    <mat-card-content>
-        <p style="font-weight: lighter; font-size: 1em;">
-        Ingredients include:
-            <span *ngFor="let ingredient of recipe.ingredients">
-                {{ingredient["ingredient.name"]}}, <!-- Should not have comma for last ingredient -->
-            </span>
-        </p>
-    </mat-card-content>
+
+    <b>{{recipe.name}}</b> <br>
+    <i>Uses:
+        <span *ngFor="let ingredient of recipe.ingredients">
+            {{ingredient["ingredient.name"]}}, <!-- Should not have comma for last ingredient -->
+        </span>
+    </i>
+    </div>
     <div *ngIf="showDeleteEdit">
-        <mat-card-actions>
-            <button mat-button (click)="editRecipe()">Edit</button>
-            <button mat-button (click)="deleteRecipe()">Delete</button>
-        </mat-card-actions>
+    <button mat-raised-button (click)="editRecipe()" color="primary" [routerLink]="null"> Edit </button>
+    <button mat-raised-button (click)="deleteRecipe()" color="warn" [routerLink]="null"> Delete </button>
+    <mat-error> {{error}} </mat-error>
     </div>
-    </mat-card>
 </ng-container>
-    <mat-spinner *ngIf=loading> Showing spinner </mat-spinner>
+<mat-spinner *ngIf=loading> Showing spinner </mat-spinner>
+
+</mat-card>
   `
 })
+
 
 export class RecipeViewCardComponent implements OnInit{
     @Input() recipe: Recipe;
@@ -51,9 +54,10 @@ export class RecipeViewCardComponent implements OnInit{
     recipeImagePlaceholder = 'assets/images/user_placeholder.jpg';
     loading = false;
     error: string = '';
-
+    link: string;
     constructor(private dialog: MatDialog, private recipeService: RecipeService) {}
     ngOnInit() {
+        this.link = `/recipe/${this.recipe.id}`;
     }
     editRecipe() {
         console.log("Editing recipe")

@@ -79,7 +79,9 @@ export class ProfilePageComponent implements OnInit {
   uploadPhoto(){
     console.log("Uploading photo")
     if (this.recipeImage){
-      this.imageService.uploadProfileImage(this.recipeImage).subscribe(res => console.log(res))
+      this.imageService.uploadProfileImage(this.recipeImage).subscribe((res:any) => {
+        this.profile_pic = `http://localhost:5000/static/${res.msg}`
+      })
     }
   }
   handleAddRecipe() {

@@ -23,11 +23,17 @@ import { IngredientService } from '../services/ingredient.service';
                 </mat-error>
               </mat-form-field>
 
-                <img *ngIf="recipeDetails && recipeDetails.image" alt="user placeholder image" [src]="recipeDetails.image">
 
-                <h2> Upload an image ... </h2>
+                <div #Image *ngIf="recipeDetails && recipeDetails.image; else noImage">
+                <h2 > Change recipe image ... </h2>
+                  <img alt="user placeholder image" [src]="recipeDetails.image">
                   <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
+                </div>
 
+                <ng-template #noImage>
+                <h2 > Upload an image ... </h2>
+                  <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
+                </ng-template>
 
 
                 <h2> Mealtype </h2>
@@ -58,8 +64,8 @@ import { IngredientService } from '../services/ingredient.service';
 
 
                 <h2> Instructions </h2>
-                <mat-form-field class="inputFields">
-                  <textarea matInput formControlName="instructions"></textarea>
+                <mat-form-field class="inputFields" style="width: 50%;">
+                  <textarea matInput rows="10" formControlName="instructions"></textarea>
                   <mat-error>
                     Enter some instructions
                   </mat-error>
@@ -106,7 +112,7 @@ export class RecipeFormComponent implements OnInit {
   ingredientSlots: FormArray;
 
   @Output() buildRecipeEmitter = new EventEmitter<any>();
-  recipeImagePath: any;
+  recipeImagePath: string;
   constructor(
     private recipeService: RecipeService,
     private imageService: ImageService,
