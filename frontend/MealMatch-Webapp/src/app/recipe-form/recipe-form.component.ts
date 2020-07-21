@@ -61,7 +61,7 @@ import { IngredientService } from '../services/ingredient.service';
                 <mat-form-field class="inputFields">
                   <textarea matInput formControlName="instructions"></textarea>
                   <mat-error>
-                    Choose a mealtype
+                    Enter some instructions
                   </mat-error>
                 </mat-form-field>
                 <br/>
@@ -124,14 +124,11 @@ export class RecipeFormComponent implements OnInit {
       mealType: ["", Validators.required], //need to fix this
       instructions: ["", Validators.required],
       ingredientSlots: this.ingredientSlots, // Nest form array inside formGroup to keep everything together :)
-    }, {
-      updateOn: "submit"
     })
 
 
     // If we are using this component to edit a recipe, we need to set everything in the form.
     if (this.recipeDetails){
-      console.log("RECIPE DETAILS")
       this.loadRecipeFromData(this.recipeDetails)
     }
 
@@ -157,7 +154,6 @@ export class RecipeFormComponent implements OnInit {
     }
     this.formInvalid = false;
     this.checkValidIngredients()
-    console.log(this.recipeFormGroup.get('recipeName').errors)
     // Format into JSON object
     const new_recipe = {
       name: this.recipeFormGroup.get('recipeName').value,
@@ -169,6 +165,7 @@ export class RecipeFormComponent implements OnInit {
       }),
       image: this.recipeImage || null
     }
+    // Emit the created object to parent that will make the api call.
     this.buildRecipeEmitter.emit({
       recipe: new_recipe,
       image: this.recipeImage || undefined,

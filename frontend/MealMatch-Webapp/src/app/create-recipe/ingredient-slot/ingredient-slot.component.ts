@@ -13,7 +13,7 @@ import { NewIngredientPopupComponent } from '../new-ingredient-popup/new-ingredi
   styleUrls: ['./ingredient-slot.component.scss'],
   template: `
               <input type="text" placeholder="quantity"
-              [formControl]="formGroup.get('quantity')"/>
+              [formControl]="formGroup.get('quantity')">
               <mat-form-field style="width: 50%;">
                   <input type="text"
                   placeholder="Input an ingredient"
@@ -64,7 +64,6 @@ export class IngredientSlotComponent implements OnInit {
       .pipe(
         map(value => this._filter(value)),
       );
-    console.log("Name is ", this.formGroup.get('name').value);
   }
 
   addToList(newIngredient: Ingredient) {
@@ -77,7 +76,6 @@ export class IngredientSlotComponent implements OnInit {
 
   private _filter(value: string): Ingredient[] {
     const filterValue = value.toString().toLowerCase();
-    console.log("calling filter with ", value)
     // If not an existing ingredient
     if(!this.ingredientService.getAllIngredients().some( elem => (elem.name.toLowerCase()===filterValue))) {
       // Update the ingredient for slot at this position
