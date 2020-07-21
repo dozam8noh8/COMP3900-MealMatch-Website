@@ -6,16 +6,23 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
 import { ImageService } from '../image.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddRecipePopupComponent } from 'src/building-components/add-recipe-popup/add-recipe-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-page',
   styleUrls: ['profile-page.component.scss'],
-  template: `<h1> This is a private resource!! </h1>
+  template: `
   <h1>  Welcome to your recipe dashboard {{ username }}!</h1>
-  <app-photo-upload (uploadEmitter)="setProfilePhoto($event)">
-</app-photo-upload>
-<button (click)="uploadPhoto()" [disabled]="!recipeImage"> Upload Photo </button>
+  <div>
+    <app-photo-upload (uploadEmitter)="setProfilePhoto($event)">
+    </app-photo-upload>
+    <button (click)="uploadPhoto()" [disabled]="!recipeImage"> Upload Photo </button>
+  </div>
   <img alt="user placeholder image" [src]="profile_pic">
+
+  <button (click)="handleAddRecipe()"> Add a new recipe </button>
 
   <div class="all-recipes-container">
     <div class="container" *ngFor="let recipe of recipes">
@@ -36,7 +43,9 @@ export class ProfilePageComponent implements OnInit {
 
   @ViewChildren(RecipeViewCardComponent) recipeCards: QueryList<RecipeViewCardComponent>;
 
-  constructor(private authService: AuthService, private http: HttpClient, private recipeService: RecipeService, private imageService: ImageService) { }
+  constructor(private authService: AuthService, private http: HttpClient,
+           private recipeService: RecipeService, private imageService: ImageService,
+           private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.userId = this.authService.getLoggedInUserId();
@@ -52,7 +61,10 @@ export class ProfilePageComponent implements OnInit {
 
   }
   handleEditRecipe(recipeId: number) {
-    console.log("Attempting to edit", event);
+    // Redirect to create recipe page.
+    let recipe = this.recipes.filter(recipe => recipe.id === recipeId);
+    let paramObject = JSON.stringify(recipe); // Contains stringified object
+    this.router.navigate(['/edit', recipeId]);
     //send api call
   }
   // Delete the recipe that was emitted by child to be deleted.
@@ -69,5 +81,8 @@ export class ProfilePageComponent implements OnInit {
     if (this.recipeImage){
       this.imageService.uploadProfileImage(this.recipeImage).subscribe(res => console.log(res))
     }
+  }
+  handleAddRecipe() {
+    this.dialog.open(AddRecipePopupComponent);
   }
 }
