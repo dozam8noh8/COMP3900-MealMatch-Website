@@ -18,7 +18,7 @@ import { IngredientService } from '../services/ingredient.service';
                 <h2>
                   Name of recipe: <input type="text" formControlName="recipeName"> </h2>
 
-                <img *ngIf="recipeDetails.image" alt="user placeholder image" [src]="recipeDetails.image">
+                <img *ngIf="recipeDetails && recipeDetails.image" alt="user placeholder image" [src]="recipeDetails.image">
 
                 <h2> Upload an image ... </h2>
                   <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
@@ -96,7 +96,7 @@ export class RecipeFormComponent implements OnInit {
     this.ingredientSlots = this.fb.array([]); // Initialise ingredientSlots to be an empty array.
     this.recipeFormGroup = this.fb.group({
       recipeName: ["", Validators.required],
-      mealType: [Validators.required], //need to fix this
+      mealType: ["", Validators.required], //need to fix this
       instructions: ["", Validators.required],
       ingredientSlots: this.ingredientSlots, // Nest form array inside formGroup to keep everything together :)
     })
@@ -137,7 +137,6 @@ export class RecipeFormComponent implements OnInit {
       }),
       image: this.recipeImage || null
     }
-    console.log("Emitting");
     this.buildRecipeEmitter.emit({
       recipe: new_recipe,
       image: this.recipeImage || undefined,
@@ -178,11 +177,14 @@ export class RecipeFormComponent implements OnInit {
       this.allMealTypes = data.map(elem => (elem.name));
 
       // Only patch value if we don't already have a mealtype
-      if (!this.recipeFormGroup.controls.mealType.value){
+      if (!this.recipeFormGroup.get('mealType').value){
         // Once the data comes in, any default values for form fields can be set
         this.recipeFormGroup.patchValue({
           mealType: this.allMealTypes[0]
-      })
+        })
+      }
+      else{
+        console.log(this.recipeFormGroup.get('mealType').value)
       }
 
     });
