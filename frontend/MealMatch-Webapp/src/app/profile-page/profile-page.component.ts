@@ -24,12 +24,16 @@ import { Router } from '@angular/router';
 
   <button (click)="handleAddRecipe()"> Add a new recipe </button>
 
-  <div class="all-recipes-container">
+  <div *ngIf="recipes && recipes.length > 0; else noRecipes" class="all-recipes-container">
     <div class="container" *ngFor="let recipe of recipes">
       <app-recipe-view-card [recipe]="recipe" [showDeleteEdit]="true" (editEmitter)="handleEditRecipe($event)" (deleteEmitter)="handleDeleteRecipe($event)">
       </app-recipe-view-card>
     </div>
   </div>
+  <ng-template #noRecipes >
+    <h1 *ngIf="!loading"> You have no recipes </h1>
+    <mat-spinner *ngIf="loading"> </mat-spinner>
+  </ng-template>
 
 `
 })
@@ -40,6 +44,7 @@ export class ProfilePageComponent implements OnInit {
   profile_pic = "assets/images/user_placeholder.jpg";
   recipes: Recipe[];
   recipeImage: File;
+  loading = true;
 
   @ViewChildren(RecipeViewCardComponent) recipeCards: QueryList<RecipeViewCardComponent>;
 
@@ -49,7 +54,9 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.authService.getLoggedInUserId();
+    console.log(this.userId);
     this.authService.getUserDetails().subscribe(res => {
+      this.loading = false;
       this.username = res.username;
       this.email = res.email;
       if (res.profile_pic){

@@ -163,7 +163,6 @@ def recipe_delete(recipe_id):
     recipe = Recipe.get_recipe_by_id(recipe_id)
     if not recipe:
         return 'Recipe Id not found', 204
-    print(recipe)
     if g.user.id != recipe["user_id"] :
         return 'Unauthorized Access', 401 # Cant delete a recipe that isn't yours
     if Recipe.recipe_delete(recipe_id):

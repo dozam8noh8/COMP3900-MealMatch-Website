@@ -182,7 +182,7 @@ class Recipe(db.Model):
         return filtered
 
     def get_recipes_by_user_id(user_id):
-        recipes = Recipe.query.filter_by(user_id=1).limit(10).all()
+        recipes = Recipe.query.filter_by(user_id=user_id).limit(10).all()
         schema = RecipeSchema(many=True)
         return schema.dump(recipes)
 
@@ -222,14 +222,14 @@ class Recipe(db.Model):
         recipe = Recipe.query.get(recipe_id)
         if not recipe:
             return 'Recipe id does not exist:' + recipe(recipe_id)
-        
+
         recipe.name = name
         recipe.instruction = instruction
 
         db_mealtype = Mealtype.query.filter(func.lower(Mealtype.name) == func.lower(mealType)).first()
         if db_mealtype:
             recipe.mealtypes = [db_mealtype]
-        
+
         # Check if any of the ingredients have been updated to avoid an additional delete and write
         recipe_ingredients = (RecipeIngredients
                               .query
@@ -251,7 +251,7 @@ class Recipe(db.Model):
                     recipe_ingredient = RecipeIngredients(quantity=quantity)
                     recipe_ingredient.ingredients = ingredient
                     recipe.ingredients.append(recipe_ingredient)
-        
+
         db.session.commit()
         return recipe
 
