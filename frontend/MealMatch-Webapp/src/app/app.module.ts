@@ -49,6 +49,7 @@ import { IngredientSetDisplayComponent } from './ingredient-set-display/ingredie
 import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 import { FormSubmitComponent } from './form-submit/form-submit.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -96,6 +97,7 @@ const materialModules = [
     RecipeFormComponent,
     FormSubmitComponent,
     RecipeEditComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
