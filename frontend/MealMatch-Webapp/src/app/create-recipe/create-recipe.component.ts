@@ -229,8 +229,8 @@ export class CreateRecipeComponent implements OnInit {
 
   checkValidIngredients(){
     let allIngredientIds = this.ingredientService.getAllIngredients(true).map(ingredient => ingredient.id);
+    // Remove controls that did not have valid ingredient ids.
     this.ingredientSlots.controls = this.ingredientSlots.controls.filter(control => {
-      console.log("Id is ",control.get('id').value)
       return allIngredientIds.includes(control.get('id').value)
     })
     // Get freshest set of ingredients.

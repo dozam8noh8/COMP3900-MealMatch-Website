@@ -2,7 +2,6 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Ingredient } from '../models/ingredient';
 import { LovelessSet } from '../loveless-sets/loveless-sets.component';
 import { Router } from '@angular/router';
-import { query } from '@angular/animations';
 import { Recipe } from '../models/recipe';
 
 @Component({
@@ -23,14 +22,14 @@ import { Recipe } from '../models/recipe';
 })
 export class IngredientSetDisplayComponent implements OnInit {
   @Input() set: LovelessSet;
-  @Output() createEmitter: EventEmitter<LovelessSet> = new EventEmitter();
+  //@Output() createEmitter: EventEmitter<LovelessSet> = new EventEmitter();
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   emitCreateRecipe() {
-    this.createEmitter.emit(this.set);
+    //this.createEmitter.emit(this.set);
     let recipe: Recipe = {
       id: -1, // negative id in database means the recipe is being created.
       name: `Loveless Set ${this.set.setId}`,

@@ -8,6 +8,7 @@ import { RecipeViewCardComponent } from 'src/building-components/recipe-view-car
 import { ImageService } from '../image.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRecipePopupComponent } from 'src/building-components/add-recipe-popup/add-recipe-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-page',
@@ -44,7 +45,7 @@ export class ProfilePageComponent implements OnInit {
 
   constructor(private authService: AuthService, private http: HttpClient,
            private recipeService: RecipeService, private imageService: ImageService,
-           private dialog: MatDialog) { }
+           private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.userId = this.authService.getLoggedInUserId();
@@ -60,7 +61,10 @@ export class ProfilePageComponent implements OnInit {
 
   }
   handleEditRecipe(recipeId: number) {
-    console.log("Attempting to edit", event);
+    // Redirect to create recipe page.
+    let recipe = this.recipes.filter(recipe => recipe.id === recipeId);
+    let paramObject = JSON.stringify(recipe); // Contains stringified object
+    this.router.navigate(['/edit', recipeId]);
     //send api call
   }
   // Delete the recipe that was emitted by child to be deleted.
