@@ -47,6 +47,8 @@ import { AddRecipePopupComponent } from 'src/building-components/add-recipe-popu
 import { LovelessSetsComponent } from './loveless-sets/loveless-sets.component';
 import { IngredientSetDisplayComponent } from './ingredient-set-display/ingredient-set-display.component';
 import { RecipeFormComponent } from './recipe-form/recipe-form.component';
+import { FormSubmitComponent } from './form-submit/form-submit.component';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -92,6 +94,8 @@ const materialModules = [
     LovelessSetsComponent,
     IngredientSetDisplayComponent,
     RecipeFormComponent,
+    FormSubmitComponent,
+    RecipeEditComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 import { LovelessSetsComponent } from './loveless-sets/loveless-sets.component';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,7 @@ const routes: Routes = [
   {path: 'recipe/:id', component: RecipeInfoComponent},
   {path: 'search', component: SearchResultsComponent},
   {path: 'create', component: CreateRecipeComponent, canActivate: [AuthGuardService]},
-  {path: 'edit/:id', component: CreateRecipeComponent, canActivate: [AuthGuardService]},
+  {path: 'edit/:id', component: RecipeEditComponent, canActivate: [AuthGuardService]},
   {path: 'lovelesssets', component: LovelessSetsComponent}, // Component for sets with no recipes
   {path: 'dashboard', component: ProfilePageComponent, canActivate: [AuthGuardService]}, // This is just to demonstrate a resource only logged in users can access.
 // This is the default "wildcard" if none of the above patterns match, we redirect to '' (home)
