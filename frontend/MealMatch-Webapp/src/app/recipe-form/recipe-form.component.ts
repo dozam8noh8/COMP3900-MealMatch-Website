@@ -15,19 +15,35 @@ import { IngredientService } from '../services/ingredient.service';
   styleUrls: ['./recipe-form.component.scss'],
   template: `
               <form [formGroup]="recipeFormGroup" (ngSubmit)="saveRecipeDetails()">
-                <h2>
-                  Name of recipe: <input type="text" formControlName="recipeName"> </h2>
+                <h2> Recipe Name </h2>
+                <mat-form-field class="inputFields">
+                <input matInput type="text" placeholder="Recipe Name" formControlName="recipeName" required>
+                <mat-error>
+                    Please give your recipe a title.
+                </mat-error>
+              </mat-form-field>
 
                 <img *ngIf="recipeDetails && recipeDetails.image" alt="user placeholder image" [src]="recipeDetails.image">
 
                 <h2> Upload an image ... </h2>
                   <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
+
+
+
                 <h2> Mealtype </h2>
-                  <select formControlName="mealType">
-                    <option *ngFor="let mealtype of allMealTypes" [value]="mealtype">
+                <mat-form-field appearance="fill" class="select">
+                  <mat-select formControlName="mealType">
+                    <mat-option *ngFor="let mealtype of allMealTypes" [value]="mealtype">
                       {{mealtype}}
-                    </option>
-                  </select>
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    Choose a mealtype
+                  </mat-error>
+                </mat-form-field>
+
+
+
                 <h2> Ingredients </h2>
                   <div *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIngredient">
                     <app-ingredient-slot
@@ -38,10 +54,18 @@ import { IngredientService } from '../services/ingredient.service';
                   </div>
                 <button type="button" (click)="addSlot()">Add an ingredient</button>
 
-                <h2> Instructions </h2>
-                  <textarea formControlName="instructions"></textarea>
 
+
+
+                <h2> Instructions </h2>
+                <mat-form-field class="inputFields">
+                  <textarea matInput formControlName="instructions"></textarea>
+                  <mat-error>
+                    Choose a mealtype
+                  </mat-error>
+                </mat-form-field>
                 <br/>
+
 
                 <div *ngIf="!submitting">
                   <div *ngIf="!submissionComplete">
@@ -55,6 +79,7 @@ import { IngredientService } from '../services/ingredient.service';
                   {{completionSuccessMessage}} <br/>
                   <a routerLink="/dashboard">Back to Dashboard</a>
                 </div>
+                <mat-error *ngIf="formInvalid && !recipeFormGroup.valid"> Please make sure all fields are filled </mat-error>
               </div>
           </form>
 
@@ -75,7 +100,7 @@ export class RecipeFormComponent implements OnInit {
   allMealTypes: string[];
 
   recipeImage: File;
-
+  formInvalid: boolean = false;
   // Contains an array of formGroup (name, id and quantity form controls)
   // Representing each slot to add ingredients.
   ingredientSlots: FormArray;
@@ -99,6 +124,8 @@ export class RecipeFormComponent implements OnInit {
       mealType: ["", Validators.required], //need to fix this
       instructions: ["", Validators.required],
       ingredientSlots: this.ingredientSlots, // Nest form array inside formGroup to keep everything together :)
+    }, {
+      updateOn: "submit"
     })
 
 
@@ -124,8 +151,13 @@ export class RecipeFormComponent implements OnInit {
   // Emit the completed recipe up to the parent component for submission!
   saveRecipeDetails() {
     // Only keep slots with valid ingredients
-
+    if (!this.recipeFormGroup.valid){ //
+      this.formInvalid = true;
+      return;
+    }
+    this.formInvalid = false;
     this.checkValidIngredients()
+    console.log(this.recipeFormGroup.get('recipeName').errors)
     // Format into JSON object
     const new_recipe = {
       name: this.recipeFormGroup.get('recipeName').value,
@@ -211,12 +243,11 @@ export class RecipeFormComponent implements OnInit {
     }
   }
   createIngredientGroup(ingredient?) {
-    console.log("INGREDIENT IS ", ingredient)
     // TODO fix api calls to return just id rather than ingredient.id because this is disgusting.
-    if (!ingredient.name){
+    if (ingredient && !ingredient.name){
       ingredient.name = ingredient["ingredient.name"]
     }
-    if (!ingredient.id){
+    if (ingredient && !ingredient?.id){
       ingredient.id = ingredient["ingredient.id"]
     }
     let ingredientSlotForm = this.fb.group({

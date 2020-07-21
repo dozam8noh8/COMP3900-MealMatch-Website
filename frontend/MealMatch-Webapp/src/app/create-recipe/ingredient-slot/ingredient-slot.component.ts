@@ -77,7 +77,7 @@ export class IngredientSlotComponent implements OnInit {
 
   private _filter(value: string): Ingredient[] {
     const filterValue = value.toString().toLowerCase();
-
+    console.log("calling filter with ", value)
     // If not an existing ingredient
     if(!this.ingredientService.getAllIngredients().some( elem => (elem.name.toLowerCase()===filterValue))) {
       // Update the ingredient for slot at this position
