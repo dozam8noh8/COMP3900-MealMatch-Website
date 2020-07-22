@@ -28,7 +28,7 @@ import { Ingredient } from 'src/app/models/ingredient';
                   <div *ngIf="creatingIngredient"> Adding your ingredient... </div>
 
                   <div *ngIf="!creatingIngredient && creationSuccessful">
-                    your ingredient has been created
+                    Your ingredient has been created
                     <button type="button" mat-dialog-close="true">Back</button>
                   </div>
 
@@ -69,16 +69,18 @@ export class NewIngredientPopupComponent implements OnInit {
     let ingredientCategory = this.newIngredientForm.get('ingredientCategory').value
     this.ingredientService.createNewIngredient(ingredientName, ingredientCategory)
     .subscribe(
-      creation_response => {
-        // console.log(creation_response);
+      (creation_response : any) => {
         this.creatingIngredient = false;
         this.creationSuccessful = true;
-        // Reload ingredientService to include latest ingredient
-        this.ingredientService.getFromDB( (allIngredients: Ingredient[]) =>{
-          let newIngredient: Ingredient = allIngredients.find(elem => (elem.name===ingredientName));
-          // Send this newly created ingredient back to slot that called this
-          if(newIngredient) this.dialogRef.close(newIngredient);
-        });
+        // Add the new ingredient with the id returned from the response to the frontend.
+
+        let newIngredient: Ingredient = {
+          id: creation_response.id,
+          name: ingredientName,
+          onList: false,
+          category: ingredientCategory
+        }
+        this.dialogRef.close(newIngredient);
       },
       err => {
         this.creatingIngredient = false;
@@ -88,5 +90,4 @@ export class NewIngredientPopupComponent implements OnInit {
   }
 
 }
-
 

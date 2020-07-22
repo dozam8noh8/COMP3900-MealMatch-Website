@@ -52,7 +52,6 @@ export class IngredientSlotComponent implements OnInit {
   @Output() updateQuantity = new EventEmitter<any>();
 
   ingredientIsValid: boolean = true;
-
   filteredOptions: Observable<Ingredient[]>;
 
   constructor(private ingredientService: IngredientService, private newIngredientDialog: MatDialog) { }
@@ -61,8 +60,6 @@ export class IngredientSlotComponent implements OnInit {
     this.filteredOptions = this.formGroup.get('name').valueChanges
       .pipe(
         map(value => {
-          console.log("Value is ", value)
-          console.log(" Ingredients are" , this.addedIngredients)
           return this._filter(value)
         }),
       );
@@ -74,8 +71,8 @@ export class IngredientSlotComponent implements OnInit {
     this.formGroup.controls.id.setValue(newIngredient.id)
     this.formGroup.get('name').setValue(newIngredient.name) // set the name manually because the selector passes in the whole ingredient.
     // Remove "ingredient does not exist message"
+    this.formGroup.get('name').disable();
     this.ingredientIsValid = true;
-
   }
 
   private _filter(value: string): Ingredient[] {
@@ -83,7 +80,6 @@ export class IngredientSlotComponent implements OnInit {
     // If not an existing ingredient
     if(!this.ingredientService.getAllIngredients().some( elem => (elem.name.toLowerCase()===filterValue))) {
       // Update the ingredient for slot at this position
-      this.updateIngredient.emit( {index: this.position, newIngredient: null} );
       this.ingredientIsValid = false;
     }
 
@@ -111,6 +107,7 @@ export class IngredientSlotComponent implements OnInit {
       // If not an ingredient being passed in
       // console.log(typeof newCreatedIngredient)
       if(typeof newCreatedIngredient === 'string') {
+        console.log("Ingredient is a string", newCreatedIngredient);
       } else {
         this.addToList(newCreatedIngredient);
       }

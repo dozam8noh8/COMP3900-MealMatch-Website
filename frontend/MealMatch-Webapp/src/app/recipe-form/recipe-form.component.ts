@@ -158,9 +158,7 @@ export class RecipeFormComponent implements OnInit {
       })
     }
     this.addedIngredients$ = this.ingredientSlots.valueChanges.pipe(debounceTime(1000), startWith([]),map(x => {
-      console.log("Ingredient slots changing")
       let ingredients = this.slotsToIngredients();
-      console.log(ingredients);
       return ingredients;
     }), );
     this.getAllMealTypes();
@@ -246,7 +244,6 @@ export class RecipeFormComponent implements OnInit {
 
   loadRecipeFromData(recipe: Recipe) {
     // ID will be set to -1 if we need an ID from api.
-    console.log(recipe);
     this.recipeFormGroup.get('recipeName').setValue(recipe.name);
     this.recipeFormGroup.get('mealType').setValue(recipe.mealtypes?.[0]?.name); // TODO current broken unless edit recipe endpoint takes an id.
     this.recipeFormGroup.get('instructions').setValue(recipe?.instruction);
@@ -273,6 +270,11 @@ export class RecipeFormComponent implements OnInit {
       name: ingredient?.name || "" ,
       quantity: ingredient?.quantity || "",
     })
+    // Lock the ingredient in if it is already a valid ingredient.
+    if (ingredient?.name){
+      ingredientSlotForm.get('name').disable();
+
+    }
     return ingredientSlotForm;
   }
 

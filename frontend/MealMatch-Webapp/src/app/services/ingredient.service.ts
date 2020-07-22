@@ -4,6 +4,7 @@ import {Ingredient} from '../models/ingredient';
 import { Category } from '../home-page/category';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { IngredientSearchComponent } from '../home-page/ingredient-search/ingredient-search.component';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +45,27 @@ export class IngredientService {
     });
   }
 
+  // TODO add error handling
+  // TODO, add to all categories once we know what it does.
   createNewIngredient(ingredientName: string, ingredientCategory: string) {
-    return this.http.post("http://localhost:5000/api/add_ingredient", { name: ingredientName, category: ingredientCategory});
+    return this.http.post("http://localhost:5000/api/add_ingredient", { name: ingredientName, category: ingredientCategory}).pipe(map((response: any) => {
+      // Add the returned ingredient to the local service ingredients.
+      let ingredient: Ingredient = {
+          name: ingredientName,
+          category: ingredientCategory,
+          id: response.id,
+          onList: false,
+      }
+      this.allIngredients.push(ingredient);
+      // Add to all categories.
+      for (const category of this.allCategories) {
+        if (category.name === ingredientCategory){
+          category.ingredients.push(ingredient)
+        }
+      } //push(ingredient);
+
+      return response;
+    }));
   }
 
   ngOnInit() { }
