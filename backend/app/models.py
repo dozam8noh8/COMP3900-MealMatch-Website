@@ -138,6 +138,16 @@ class IngredientPairs(db.Model):
             list.append(new_pair)
         return list
 
+    def remove_pairs(recipe):
+        ingredient_ids = set(x.ingredient_id for x in recipe.ingredients)
+        pairs = IngredientPairs.query.all()
+        pairs = [(x.id, x.pairs) for x in pairs]
+        for pair_id, pair in pairs:
+            pair_set = set(int(x) for x in pair.split(', '))
+            if pair_set.issubset(ingredient_ids):
+                IngredientPairs.query.filter_by(id=pair_id).delete()
+        db.session.commit()
+
     def json_dump(pairs):
         schema = IngredientPairsSchema(many=True)
         return schema.dump(pairs)
@@ -216,6 +226,7 @@ class Recipe(db.Model):
 
         user.recipes.append(recipe)
         db.session.commit()
+        IngredientPairs.remove_pairs(recipe)
         return recipe
 
     def edit_recipe(recipe_id, name, instruction, mealType, ingredients):
@@ -253,6 +264,7 @@ class Recipe(db.Model):
                     recipe.ingredients.append(recipe_ingredient)
 
         db.session.commit()
+        IngredientPairs.remove_pairs(recipe)
         return recipe
 
     def recipe_delete(recipe_id):
