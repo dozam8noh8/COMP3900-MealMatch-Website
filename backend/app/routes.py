@@ -261,8 +261,8 @@ def add_recipe():
     instruction = request.json.get('instruction')
     mealType = request.json.get('mealType')
     ingredients = request.json.get('ingredients')
-    user = 'admin@admin.com'
-    recipe = Recipe.add_recipe(name, instruction, mealType, ingredients, user)
+    user_id = g.user.id
+    recipe = Recipe.add_recipe(name, instruction, mealType, ingredients, user_id)
     if type(recipe) == str:
         return recipe, 201 # Error message FIX error code
     return {'recipe_id' : recipe.id, 'message': 'Recipe has been added'}

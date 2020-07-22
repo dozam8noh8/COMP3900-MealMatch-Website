@@ -16,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     [submitting]="submitting"
     [completionErrorMessage]="completionErrorMessage"
     [submissionComplete]="submissionSuccessful"
+    [completedRecipeId]="completedRecipeId"
     ></app-recipe-form>
 
             `
@@ -29,6 +30,7 @@ export class RecipeEditComponent implements OnInit {
   submissionSuccessful: boolean = false;
   completionSuccessMessage = "Recipe successfully edited!";
   completionErrorMessage = "";
+  completedRecipeId: number;
   constructor(
     private recipeService: RecipeService,
     private imageService: ImageService,
@@ -60,9 +62,12 @@ export class RecipeEditComponent implements OnInit {
         this.submitting = false;
         this.API_message = creation_response.message;
         this.submissionSuccessful = true;
+        this.completedRecipeId = creation_response.recipe_id;
+        console.log("completedRecipeId = ", this.completedRecipeId)
+
       },
       err => {
-        console.log(err);
+        console.log("ERROR" , err);
       }
     )
     if(data.image) {
@@ -75,7 +80,7 @@ export class RecipeEditComponent implements OnInit {
           this.submissionSuccessful = true;
         },
         err => {
-          console.log(err);
+          console.log("ERROR", err);
         }
       )
     }

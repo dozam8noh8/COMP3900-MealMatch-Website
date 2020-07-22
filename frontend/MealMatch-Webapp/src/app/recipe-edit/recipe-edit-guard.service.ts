@@ -15,7 +15,8 @@ export class RecipeEditGuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
     let recipeId = route.params?.id
     // If user has typed a route like /edit/glkjfg, redirect to notfound
-    if (!recipeId || !isNumber(recipeId)) {
+    console.log(isNaN(+recipeId))
+    if (!recipeId || isNaN(+recipeId)) {
       this.router.navigate(['/notfound'])
       return false;
     }
@@ -25,6 +26,7 @@ export class RecipeEditGuardService implements CanActivate {
         return true;
       }
       else {
+        console.log("This is not your recipe")
         this.router.navigate(['/home'])
         return false;
       }

@@ -16,6 +16,7 @@ import { Recipe } from '../models/recipe';
     [submitting]="creatingRecipe"
     [completionErrorMessage]="completionErrorMessage"
     [submissionComplete]="creationSuccessful"
+    [completedRecipeId]="completedRecipeId"
     ></app-recipe-form>
 
             `
@@ -29,6 +30,7 @@ export class CreateRecipeComponent implements OnInit {
   creationSuccessful: boolean = false;
   completionSuccessMessage = "Your recipe has been created!";
   completionErrorMessage = "";
+  completedRecipeId: number;
   constructor(
     private recipeService: RecipeService,
     private imageService: ImageService,
@@ -49,6 +51,8 @@ export class CreateRecipeComponent implements OnInit {
         this.creatingRecipe = false;
         this.API_message = creation_response.message;
         this.creationSuccessful = true;
+        this.completedRecipeId = creation_response.recipe_id;
+
 
         if(data.image) {
           // Use recipe id to upload image
@@ -60,14 +64,14 @@ export class CreateRecipeComponent implements OnInit {
               this.creationSuccessful = true;
             },
             err => {
-              console.log(err);
+              console.log("ERROR" , err);
             }
           )
         }
 
       },
       err => {
-        console.log(err);
+        console.log("ERROR" , err);
       }
     )
   }

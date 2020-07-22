@@ -18,6 +18,10 @@ export class SearchResultsComponent implements OnInit {
       this.selectedMealType = searchState.mealType;
       this.searchService.searchForRecipes(searchState.searchIngredients);
     }
+    else {
+      // If there is no state a user cannot find anything with search
+      this.router.navigate(['/home']);
+    }
   }
 
   ngOnInit(): void {
@@ -32,17 +36,17 @@ export class SearchResultsComponent implements OnInit {
       return this.searchService.getAllResults();
 
     } else {
-      
+
       return this.searchService.getAllResults().filter(recipe => {
         return recipe.mealtypes.some( elem => (elem.name === this.selectedMealType));
-      })      
+      })
     }
 
   }
 
   getSearchedIngredients() {
     return this.searchService.inputIngredients;
-  }  
+  }
 
   searchComplete() {
     return this.searchService.searchComplete;

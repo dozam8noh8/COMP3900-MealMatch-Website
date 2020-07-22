@@ -51,7 +51,7 @@ export class RecipeViewCardComponent implements OnInit{
     @Output() editEmitter = new EventEmitter<number>();
     @Output() deleteEmitter = new EventEmitter<number>();
 
-    recipeImagePlaceholder = 'assets/images/user_placeholder.jpg';
+    recipeImagePlaceholder = 'assets/images/recipe_placeholder.jpg';
     loading = false;
     error: string = '';
     link: string;

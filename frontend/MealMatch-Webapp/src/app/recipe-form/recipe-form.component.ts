@@ -14,6 +14,7 @@ import { IngredientService } from '../services/ingredient.service';
   selector: 'app-recipe-form',
   styleUrls: ['./recipe-form.component.scss'],
   template: `
+            <div class="container">
               <form [formGroup]="recipeFormGroup" (ngSubmit)="saveRecipeDetails()">
                 <h2> Recipe Name </h2>
                 <mat-form-field class="inputFields">
@@ -26,7 +27,7 @@ import { IngredientService } from '../services/ingredient.service';
 
                 <div #Image *ngIf="recipeDetails && recipeDetails.image; else noImage">
                 <h2 > Change recipe image ... </h2>
-                  <img alt="user placeholder image" [src]="recipeDetails.image">
+                  <img alt="user placeholder image" [src]="recipeDetails.image" style="width:30vw; height: 30vh">
                   <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
                 </div>
 
@@ -64,7 +65,7 @@ import { IngredientService } from '../services/ingredient.service';
 
 
                 <h2> Instructions </h2>
-                <mat-form-field class="inputFields" style="width: 50%;">
+                <mat-form-field appearance="fill" class="inputFields" style="width: 50%;">
                   <textarea matInput rows="10" formControlName="instructions"></textarea>
                   <mat-error>
                     Enter some instructions
@@ -84,22 +85,26 @@ import { IngredientService } from '../services/ingredient.service';
                 <div *ngIf="submissionComplete">
                   {{completionSuccessMessage}} <br/>
                   <a routerLink="/dashboard">Back to Dashboard</a>
+                  <a [routerLink]="'/recipe/' + completedRecipeId ">View Recipe</a>
+
                 </div>
                 <mat-error *ngIf="formInvalid && !recipeFormGroup.valid"> Please make sure all fields are filled </mat-error>
               </div>
           </form>
+        </div>
 
 `
 })
 export class RecipeFormComponent implements OnInit {
   // Optional recipeDetails to initialise recipe form with.
   @Input() recipeDetails: Recipe | undefined;
-
   // Generic form submission handling. Consider componentising (see form-submit.component)
   @Input() submitting: boolean;
   @Input() submissionComplete: boolean;
   @Input() completionSuccessMessage: string;
   @Input() completionErrorMessage: string;
+  @Input() completedRecipeId: number;
+
 
   recipeFormGroup: FormGroup;
 
@@ -233,7 +238,7 @@ export class RecipeFormComponent implements OnInit {
     // ID will be set to -1 if we need an ID from api.
     console.log(recipe);
     this.recipeFormGroup.get('recipeName').setValue(recipe.name);
-    this.recipeFormGroup.get('mealType').setValue(recipe?.mealtypes[0].name); // TODO current broken unless edit recipe endpoint takes an id.
+    this.recipeFormGroup.get('mealType').setValue(recipe.mealtypes?.[0]?.name); // TODO current broken unless edit recipe endpoint takes an id.
     this.recipeFormGroup.get('instructions').setValue(recipe?.instruction);
 
     recipe.ingredients.forEach(element => {

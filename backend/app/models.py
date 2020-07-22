@@ -188,7 +188,7 @@ class Recipe(db.Model):
 
 
     # Make new recipe
-    def add_recipe(name, instruction, mealType, ingredients, user, image=None):
+    def add_recipe(name, instruction, mealType, ingredients, user_id, image=None):
         recipe = ''
         if image:
             recipe = Recipe(name=name, instruction=instruction, image=image)
@@ -202,7 +202,7 @@ class Recipe(db.Model):
             return 'Mealtype does not exist: ' + mealType
 
         recipe.mealtypes.append(mealtype)
-        user = User.query.filter_by(email=user).first()
+        user = User.query.filter_by(id=user_id).first()
 
         for ingredient in ingredients:
             db_ingredient = Ingredient.query.filter(func.lower(Ingredient.name) == func.lower(ingredient['name'])).first()

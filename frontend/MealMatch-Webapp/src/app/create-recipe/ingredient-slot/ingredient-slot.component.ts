@@ -30,7 +30,7 @@ import { NewIngredientPopupComponent } from '../new-ingredient-popup/new-ingredi
                       </mat-option>
                   </mat-autocomplete>
               </mat-form-field>
-              <button type="button" (click)="removeSelf()">Remove this ingredient</button>
+              <button type="button" (click)="removeSelf()">Remove ingredient</button>
 
               <div *ngIf="!ingredientIsValid">
                 <em>This ingredient does not exist. Would you like to add to our collection of ingredients?</em>
