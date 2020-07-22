@@ -85,7 +85,7 @@ import { IngredientService } from '../services/ingredient.service';
                 <div *ngIf="submissionComplete">
                   {{completionSuccessMessage}} <br/>
                   <a routerLink="/dashboard">Back to Dashboard</a>
-                  <a [routerLink]="'/recipe/' + completedRecipeId ">View Recipe</a>
+                  <a style="margin: 3vw;"[routerLink]="'/recipe/' + completedRecipeId ">View Recipe</a>
 
                 </div>
                 <mat-error *ngIf="formInvalid && !recipeFormGroup.valid"> Please make sure all fields are filled </mat-error>
