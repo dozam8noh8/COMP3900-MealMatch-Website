@@ -2,10 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IngredientService } from 'src/app/services/ingredient.service';
 import { Observable } from 'rxjs';
 import { Ingredient } from 'src/app/models/ingredient';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { NewIngredientPopupComponent } from '../new-ingredient-popup/new-ingredient-popup.component';
+import { IngredientSearchComponent } from 'src/app/home-page/ingredient-search/ingredient-search.component';
 
 
 @Component({
@@ -43,12 +44,9 @@ export class IngredientSlotComponent implements OnInit {
   // Keep track of whether a valid ingredient
   @Input() position: number;
   @Input() quantity: string;
-
   @Input() addedIngredients: Ingredient[];
-
-
   @Input() formGroup: FormGroup; // Controls the quantity and ingredient the slot has.
-
+  @Input() formArray: FormArray;
   @Output() removeIngredient = new EventEmitter<number>();
   @Output() updateIngredient = new EventEmitter<any>();
   @Output() updateQuantity = new EventEmitter<any>();
@@ -62,7 +60,11 @@ export class IngredientSlotComponent implements OnInit {
   ngOnInit(): void {
     this.filteredOptions = this.formGroup.get('name').valueChanges
       .pipe(
-        map(value => this._filter(value)),
+        map(value => {
+          console.log("Value is ", value)
+          console.log(" Ingredients are" , this.addedIngredients)
+          return this._filter(value)
+        }),
       );
       this.formGroup.get('name').valueChanges.subscribe(x=> console.log(x));
   }

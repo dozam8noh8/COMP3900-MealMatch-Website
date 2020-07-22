@@ -21,18 +21,18 @@ import { Ingredient } from 'src/app/models/ingredient';
 
                   <br/>
 
-                  <div *ngIf="!creatingIngredient && !creationSuccessful">   
-                    <button type="button" mat-dialog-close="true">Cancel</button><button> Create new ingredient</button> 
+                  <div *ngIf="!creatingIngredient && !creationSuccessful">
+                    <button type="button" mat-dialog-close="true">Cancel</button><button> Create new ingredient</button>
                   </div>
 
                   <div *ngIf="creatingIngredient"> Adding your ingredient... </div>
-                  
-                  <div *ngIf="!creatingIngredient && creationSuccessful"> 
+
+                  <div *ngIf="!creatingIngredient && creationSuccessful">
                     your ingredient has been created
                     <button type="button" mat-dialog-close="true">Back</button>
                   </div>
-                               
-                </form>  
+
+                </form>
               `
 })
 export class NewIngredientPopupComponent implements OnInit {
@@ -45,7 +45,7 @@ export class NewIngredientPopupComponent implements OnInit {
   @Output() handleNew = new EventEmitter<Ingredient>();
 
   constructor(
-    private ingredientService: IngredientService, 
+    private ingredientService: IngredientService,
     public dialogRef: MatDialogRef<NewIngredientPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -57,14 +57,14 @@ export class NewIngredientPopupComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   getAllCategories() {
     return this.ingredientService.getAllCategories().map(cat => (cat.name));
   }
 
   createNewIngredient() {
     this.creatingIngredient = true;
-    
+
     let ingredientName = this.newIngredientForm.get('ingredientName').value;
     let ingredientCategory = this.newIngredientForm.get('ingredientCategory').value
     this.ingredientService.createNewIngredient(ingredientName, ingredientCategory)

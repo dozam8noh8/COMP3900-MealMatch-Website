@@ -54,7 +54,6 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.authService.getLoggedInUserId();
-    console.log(this.userId);
     this.authService.getUserDetails().subscribe(res => {
       this.loading = false;
       this.username = res.username;
@@ -65,7 +64,6 @@ export class ProfilePageComponent implements OnInit {
       }
       this.recipes = res.recipes;
     });
-
   }
   handleEditRecipe(recipeId: number) {
     // Redirect to create recipe page.

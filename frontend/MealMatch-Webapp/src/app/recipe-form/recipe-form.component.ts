@@ -8,6 +8,8 @@ import { LovelessSet } from '../loveless-sets/loveless-sets.component';
 import { Recipe } from '../models/recipe';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../services/ingredient.service';
+import { map, startWith, debounceTime } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -55,9 +57,10 @@ import { IngredientService } from '../services/ingredient.service';
                   <div *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIngredient">
                     <app-ingredient-slot
                     [formGroup]="slot"
+                    [formArray]="ingredientSlots"
                     [position]="index"
                     (removeIngredient)="removeSlot($event)"
-                    [addedIngredients]="slotsToIngredients()"> </app-ingredient-slot>
+                    [addedIngredients]="addedIngredients$ | async"> </app-ingredient-slot>
                   </div>
                 <button type="button" (click)="addSlot()">Add an ingredient</button>
 
@@ -116,6 +119,8 @@ export class RecipeFormComponent implements OnInit {
   // Representing each slot to add ingredients.
   ingredientSlots: FormArray;
 
+  addedIngredients$: Observable<Ingredient[]>;
+
   @Output() buildRecipeEmitter = new EventEmitter<any>();
   recipeImagePath: string;
   constructor(
@@ -152,7 +157,12 @@ export class RecipeFormComponent implements OnInit {
         }
       })
     }
-
+    this.addedIngredients$ = this.ingredientSlots.valueChanges.pipe(debounceTime(1000), startWith([]),map(x => {
+      console.log("Ingredient slots changing")
+      let ingredients = this.slotsToIngredients();
+      console.log(ingredients);
+      return ingredients;
+    }), );
     this.getAllMealTypes();
   }
 
@@ -267,14 +277,15 @@ export class RecipeFormComponent implements OnInit {
   }
 
   checkValidIngredients(){
-    let allIngredientIds = this.ingredientService.getAllIngredients(true).map(ingredient => ingredient.id);
+    let allIngredientNames = this.ingredientService.getAllIngredients(true).map(ingredient => ingredient.name);
     // Remove controls that did not have valid ingredient ids.
     this.ingredientSlots.controls = this.ingredientSlots.controls.filter(control => {
-      return allIngredientIds.includes(control.get('id').value)
+      return allIngredientNames.includes(control.get('name').value)
     })
     // Get freshest set of ingredients.
-
   }
+
+
 
 }
 

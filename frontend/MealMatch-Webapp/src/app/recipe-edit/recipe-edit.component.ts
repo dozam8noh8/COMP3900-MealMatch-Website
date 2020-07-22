@@ -64,27 +64,31 @@ export class RecipeEditComponent implements OnInit {
         this.submissionSuccessful = true;
         this.completedRecipeId = creation_response.recipe_id;
         console.log("completedRecipeId = ", this.completedRecipeId)
+        if(data.image) {
+          // Use recipe id to upload image
+          this.imageService.uploadRecipeImage(this.recipeToEdit.id, data.image)
+          .subscribe(
+            (upload_response: any) => {
+              this.submitting = false;
+              this.API_message = upload_response.message;
+              this.submissionSuccessful = true;
+              this.router.navigate([`/recipe/${this.recipeToEdit.id}`])
+            },
+            err => {
+              console.log("ERROR", err);
+            }
+          )
+        }
+        else {
+          this.router.navigate([`/recipe/${this.recipeToEdit.id}`])
+
+        }
 
       },
       err => {
         console.log("ERROR" , err);
       }
     )
-    if(data.image) {
-      // Use recipe id to upload image
-      this.imageService.uploadRecipeImage(this.recipeToEdit.id, data.image)
-      .subscribe(
-        (upload_response: any) => {
-          this.submitting = false;
-          this.API_message = upload_response.message;
-          this.submissionSuccessful = true;
-        },
-        err => {
-          console.log("ERROR", err);
-        }
-      )
-    }
-    this.router.navigate([`/recipe/${this.recipeToEdit.id}`])
   }
 
 
