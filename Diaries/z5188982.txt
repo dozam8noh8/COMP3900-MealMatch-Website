@@ -72,3 +72,11 @@ week with finishing up the ratings system. Everything seems to be working for no
 done with most of the backend work. We will need to make new endpoints every now and then because the
 frontend might need help but backend work can sort of wrap up here and I can move on to UI work from next
 sprint.
+
+==============Week 8==============
+As planned I moved on to fixing more of the UI for this week. I had to spend a bit of time to design a logo
+for our page and also all the assets and icons for the site. Canva was pretty helpful and making sure assets
+were open to use in terms of copyright for us. From then on I ended up redesigning the entire navbar,
+login page, register page and recipe results page which took the entire week. The redesign should be good
+enough for this milestone. The next UI update will be the recipe page. For next sprint, I plan on
+refactoring code on backend for the style marks and finish up the UI update.
