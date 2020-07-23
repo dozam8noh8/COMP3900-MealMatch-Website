@@ -16,11 +16,10 @@ import { Router } from '@angular/router';
   template: `
   <h1>  Welcome to your recipe dashboard {{ username }}!</h1>
   <div>
-    <app-photo-upload (uploadEmitter)="setProfilePhoto($event)">
+    <app-photo-upload (uploadEmitter)="setProfilePhoto($event)" [existingImageURL]="profile_pic">
     </app-photo-upload>
-    <button (click)="uploadPhoto()" [disabled]="!recipeImage"> Upload Photo </button>
+    <button (click)="uploadPhoto()" [disabled]="!recipeImage"> SAVE PHOTO CHANGE </button>
   </div>
-  <img alt="user placeholder image" [src]="profile_pic">
 
   <button (click)="handleAddRecipe()"> Add a new recipe </button>
 

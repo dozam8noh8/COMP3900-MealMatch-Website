@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Recipe } from '../models/recipe';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class RecipeService {
 
   }
   getRecipeDetails(recipeId: number) {
-    return this.http.get(`${this.BASE_URL}/recipe/${recipeId}`);
+    return this.http.get<Recipe>(`${this.BASE_URL}/recipe/${recipeId}`);
   }
   getRecipesByUserId(userId: number) {
 

@@ -16,9 +16,9 @@ class ImageSnippet {
          type="file"
          accept="image/*"
          (change)="processFile(imageInput)">
-  
-  <!-- Profile has own displaying of image, so only show the follow if for recipe -->
-  <img *ngIf="isForRecipe" [src]="temporaryImageURL" height="200"> <br/>
+  <br/>
+
+  <img *ngIf="existingImageURL" [src]="existingImageURL" height="200"> <br/>
 </label>
 `
 })
@@ -28,8 +28,7 @@ export class PhotoUploadComponent {
 
   selectedFile: ImageSnippet;
   @Output() uploadEmitter = new EventEmitter<File>();
-  @Input() isForRecipe: boolean;
-  temporaryImageURL;
+  @Input() existingImageURL;
   constructor(){}
 
   processFile(imageInput: any) {
@@ -44,7 +43,7 @@ export class PhotoUploadComponent {
 
     reader.readAsDataURL(file);
     reader.onload = (event) => {
-      this.temporaryImageURL = event.target.result;
+      this.existingImageURL = event.target.result;
     }
   }
 }
