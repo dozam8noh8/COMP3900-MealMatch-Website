@@ -7,16 +7,17 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class RecipeService {
+
   private BASE_URL = 'http://localhost:5000/api'; // Our api calls will go to this URL //Move to service
   allMealTypes: string[];
 
   constructor(private http: HttpClient) {
-    // this.http.get(`${this.BASE_URL}/get_all_mealtypes`)
-    // .subscribe( (data: any[]) => {
-    //   this.allMealTypes = data.map(elem => (elem.name));
-    // }) // error handling here?
   }
 
+  // Any data population methods go here. Currently none.
+  restart() {
+
+  }
   getRecipeDetails(recipeId: number) {
     return this.http.get(`${this.BASE_URL}/recipe/${recipeId}`);
   }

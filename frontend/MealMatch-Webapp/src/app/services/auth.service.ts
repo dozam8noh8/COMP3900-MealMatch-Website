@@ -3,7 +3,6 @@ import { HttpHeaders, HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable, ReplaySubject, of} from 'rxjs';
 import { map, delay, materialize, dematerialize } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { HelperFunctionsService } from '../helper-functions.service';
 import { User } from '../models/user';
 @Injectable({
   providedIn: 'root' // means this provider is available all throughout the app.
@@ -12,10 +11,11 @@ import { User } from '../models/user';
 
 // Adapted from https://realpython.com/user-authentication-with-angular-4-and-flask/
 export class AuthService {
+  private ingredientsListStorage: string = "StoredIngredients";
   private BASE_URL = 'http://localhost:5000/api'; // Our api calls will go to this URL
   private headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
   private isLoggedInSubject: ReplaySubject<any> = new ReplaySubject(1); // This replays the last emitted thing to subscribers which means
-  constructor(private http: HttpClient, private router: Router, private helper: HelperFunctionsService) {
+  constructor(private http: HttpClient, private router: Router) {
     if (localStorage.getItem('currentUser')) {
       this.isLoggedInSubject.next(true)
     }

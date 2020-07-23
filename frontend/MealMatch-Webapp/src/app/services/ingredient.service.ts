@@ -5,6 +5,7 @@ import { Category } from '../home-page/category';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { IngredientSearchComponent } from '../home-page/ingredient-search/ingredient-search.component';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +14,31 @@ export class IngredientService {
 
   private ingredientsListStorage: string = "StoredIngredients";
   BASE_URL = 'http://localhost:5000/api'
+  // All the ingredients from the system.
   allIngredients: Ingredient[] = [];
+  // All categories, containing the category name and all the ingredients within that category.
   allCategories: Category[];
+  // Ingredients that are ticked in the category selection and displayed in the "My ingredient list"
   addedIngredients: Ingredient[] = [];
+  // Ingredients that are retrieved from local storage in constructor and should be added to the list when retrieved.
+  localStorageIngredients: Ingredient[] = [];
 
-  constructor(private http: HttpClient) {
-    // If there is ingredientList from previous session, restore it
-    let storedData = localStorage.getItem(this.ingredientsListStorage);
-    if(storedData) {
-      this.addedIngredients = JSON.parse(storedData);
-    }
-    this.getFromDB();
+  constructor(private http: HttpClient, private authService: AuthService) {
+    this.restart();
+  }
+  // We want to reinitialise the service on login.
+  // This will be called from AuthService, try to remove this coupling.
+  restart(){
+        // If there is ingredientList from previous session, restore it
+        let storedData = localStorage.getItem(this.ingredientsListStorage);
+        if(storedData) {
+          let localStorageItem = JSON.parse(storedData);
+          // If the user is the same as the previous user, or they are both undefined.
+          if (localStorageItem?.userId === this.authService.getLoggedInUserId()) {
+            this.localStorageIngredients = localStorageItem.ingredients;
+          }
+        }
+        this.getFromDB();
   }
 
   getFromDB(callback=null) {
@@ -34,14 +49,18 @@ export class IngredientService {
         category.ingredients = category.ingredients.map( item => {
           item = { ...item,
                             // Make sure ingredients (if on localStorage ingredient list) is checked off
-                    onList: this.addedIngredients.some(elem => (elem.id===item.id)) ? true : false
+                    onList: this.localStorageIngredients.some(elem => (elem.id===item.id)) ? true : false
                   };
+          if (item.onList){
+            this.addedIngredients.push(item);
+          }
           this.allIngredients.push(item);
           return item;
         });
       });
 
       if(callback) callback(this.allIngredients);
+
     });
   }
 
@@ -105,8 +124,14 @@ export class IngredientService {
     this.addedIngredients.map(ingredient => this.removeFromList(ingredient));
   }
 
+  // TODO We should have these preferences saved per user. (Maybe in session storage?)
   saveIngredients() {
-    localStorage.setItem(this.ingredientsListStorage, JSON.stringify(this.addedIngredients));
+    let userId = this.authService.getLoggedInUserId();
+    let storageItem = {
+      ingredients: this.addedIngredients,
+      userId: userId
+    }
+    localStorage.setItem(this.ingredientsListStorage, JSON.stringify(storageItem));
   }
 
   getLovelessSets() {

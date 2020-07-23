@@ -132,7 +132,6 @@ export class RecipeFormComponent implements OnInit {
     ) {    }
 
   ngOnInit(): void {
-
     // Build formGroup
     this.ingredientSlots = this.fb.array([]); // Initialise ingredientSlots to be an empty array.
     this.recipeFormGroup = this.fb.group({
@@ -167,7 +166,7 @@ export class RecipeFormComponent implements OnInit {
   // Emit the completed recipe up to the parent component for submission!
   saveRecipeDetails() {
     // Only keep slots with valid ingredients
-    if (!this.recipeFormGroup.valid){ //
+    if (!this.recipeFormGroup.valid){
       this.formInvalid = true;
       return;
     }
@@ -272,7 +271,10 @@ export class RecipeFormComponent implements OnInit {
     })
     // Lock the ingredient in if it is already a valid ingredient.
     if (ingredient?.name){
+      ingredientSlotForm.get('name').markAsDirty();
+      ingredientSlotForm.get('name').markAsTouched();
       ingredientSlotForm.get('name').disable();
+
 
     }
     return ingredientSlotForm;
@@ -280,7 +282,7 @@ export class RecipeFormComponent implements OnInit {
 
   checkValidIngredients(){
     let allIngredientNames = this.ingredientService.getAllIngredients(true).map(ingredient => ingredient.name);
-    // Remove controls that did not have valid ingredient ids.
+    // Remove controls that did not have valid ingredient names.
     this.ingredientSlots.controls = this.ingredientSlots.controls.filter(control => {
       return allIngredientNames.includes(control.get('name').value)
     })

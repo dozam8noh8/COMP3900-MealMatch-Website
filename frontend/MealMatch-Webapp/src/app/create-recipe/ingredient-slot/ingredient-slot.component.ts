@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
 import { IngredientService } from 'src/app/services/ingredient.service';
 import { Observable } from 'rxjs';
 import { Ingredient } from 'src/app/models/ingredient';
@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { NewIngredientPopupComponent } from '../new-ingredient-popup/new-ingredient-popup.component';
 import { IngredientSearchComponent } from 'src/app/home-page/ingredient-search/ingredient-search.component';
+import { MatInput } from '@angular/material/input';
 
 
 @Component({
@@ -16,11 +17,12 @@ import { IngredientSearchComponent } from 'src/app/home-page/ingredient-search/i
               <input type="text" placeholder="quantity"
               [formControl]="formGroup.get('quantity')">
               <mat-form-field style="width: 50%;">
-                  <input type="text"
+                  <input class="selected" type="text"
                   placeholder="Input an ingredient"
                   matInput
                   [formControl]="formGroup.get('name')"
-                  [matAutocomplete]="auto">
+                  [matAutocomplete]="auto"
+                  >
                   <mat-autocomplete
                   autoActiveFirstOption
                   #auto="matAutocomplete"
@@ -39,7 +41,7 @@ import { IngredientSearchComponent } from 'src/app/home-page/ingredient-search/i
               </div>
             `
 })
-export class IngredientSlotComponent implements OnInit {
+export class IngredientSlotComponent implements OnInit{
 
   // Keep track of whether a valid ingredient
   @Input() position: number;
@@ -66,6 +68,7 @@ export class IngredientSlotComponent implements OnInit {
       this.formGroup.get('name').valueChanges.subscribe(x=> console.log(x));
   }
 
+  // We could actually set [value]=option.name in the mat-option
   addToList(newIngredient: Ingredient) {
     // Set the id of the ingredient that we get returned in the response.
     this.formGroup.controls.id.setValue(newIngredient.id)
@@ -107,7 +110,6 @@ export class IngredientSlotComponent implements OnInit {
       // If not an ingredient being passed in
       // console.log(typeof newCreatedIngredient)
       if(typeof newCreatedIngredient === 'string') {
-        console.log("Ingredient is a string", newCreatedIngredient);
       } else {
         this.addToList(newCreatedIngredient);
       }
