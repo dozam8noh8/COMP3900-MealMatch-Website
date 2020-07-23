@@ -16,8 +16,9 @@ import { MatInput } from '@angular/material/input';
   template: `
               <input type="text" placeholder="quantity"
               [formControl]="formGroup.get('quantity')">
+
               <mat-form-field style="width: 50%;">
-                  <input class="selected" type="text"
+                  <input type="text"
                   placeholder="Input an ingredient"
                   matInput
                   [formControl]="formGroup.get('name')"

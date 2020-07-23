@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../services/ingredient.service';
 import { map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { validateHorizontalPosition } from '@angular/cdk/overlay';
 
 
 @Component({
@@ -267,11 +268,13 @@ export class RecipeFormComponent implements OnInit {
     let ingredientSlotForm = this.fb.group({
       id: ingredient?.id || -1,
       name: ingredient?.name || "" ,
-      quantity: ingredient?.quantity || "",
+      quantity: [ingredient?.quantity || "", {validators: Validators.required, updateOn: "submit"}],
     })
     // Lock the ingredient in if it is already a valid ingredient.
     if (ingredient?.name){
+      // For styling
       ingredientSlotForm.get('name').markAsDirty();
+      ingredientSlotForm.get('name').clearValidators();
       ingredientSlotForm.get('name').markAsTouched();
       ingredientSlotForm.get('name').disable();
 
