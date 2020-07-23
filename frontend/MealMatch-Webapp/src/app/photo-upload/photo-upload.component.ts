@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { ImageService } from '../image.service';
 
 
@@ -16,6 +16,9 @@ class ImageSnippet {
          type="file"
          accept="image/*"
          (change)="processFile(imageInput)">
+  
+  <!-- Profile has own displaying of image, so only show the follow if for recipe -->
+  <img *ngIf="isForRecipe" [src]="temporaryImageURL" height="200"> <br/>
 </label>
 `
 })
@@ -25,6 +28,8 @@ export class PhotoUploadComponent {
 
   selectedFile: ImageSnippet;
   @Output() uploadEmitter = new EventEmitter<File>();
+  @Input() isForRecipe: boolean;
+  temporaryImageURL;
   constructor(){}
 
   processFile(imageInput: any) {
@@ -38,5 +43,8 @@ export class PhotoUploadComponent {
     });
 
     reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      this.temporaryImageURL = event.target.result;
+    }
   }
 }

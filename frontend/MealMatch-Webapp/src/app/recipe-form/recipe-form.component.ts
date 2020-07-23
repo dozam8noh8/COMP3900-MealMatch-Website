@@ -31,12 +31,16 @@ import { validateHorizontalPosition } from '@angular/cdk/overlay';
                 <div #Image *ngIf="recipeDetails && recipeDetails.image; else noImage">
                 <h2 > Change recipe image ... </h2>
                   <img alt="user placeholder image" [src]="recipeDetails.image" style="width:30vw; height: 30vh">
-                  <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
+                  <app-photo-upload 
+                  (uploadEmitter)="maintainRecipeImage($event)"
+                  [isForRecipe]="true"></app-photo-upload>
                 </div>
 
                 <ng-template #noImage>
                 <h2 > Upload an image ... </h2>
-                  <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
+                  <app-photo-upload 
+                  (uploadEmitter)="maintainRecipeImage($event)"
+                  [isForRecipe]="true"></app-photo-upload>
                 </ng-template>
 
 
@@ -240,6 +244,9 @@ export class RecipeFormComponent implements OnInit {
 
   maintainRecipeImage(file: File){
     this.recipeImage = file;
+    var fileReader = new FileReader();
+    
+    console.log(fileReader.readAsDataURL(file))
   }
 
   loadRecipeFromData(recipe: Recipe) {
