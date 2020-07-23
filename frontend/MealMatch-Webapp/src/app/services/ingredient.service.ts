@@ -29,9 +29,11 @@ export class IngredientService {
   // We want to reinitialise the service on login.
   // This will be called from AuthService, try to remove this coupling.
   restart(){
+        console.log("Initialising ingredients")
         // If there is ingredientList from previous session, restore it
         let storedData = localStorage.getItem(this.ingredientsListStorage);
         if(storedData) {
+          console.log("Added ingredients", this.addedIngredients)
           let localStorageItem = JSON.parse(storedData);
           // If the user is the same as the previous user, or they are both undefined.
           if (localStorageItem?.userId === this.authService.getLoggedInUserId()) {
@@ -42,6 +44,8 @@ export class IngredientService {
   }
 
   getFromDB(callback=null) {
+    // Reinitialise added ingredients
+    this.addedIngredients = [];
     this.http.get("http://localhost:5000/api/get_ingredients_in_categories")
     .subscribe( (data: Category[]) => {
       this.allCategories = data;
@@ -131,6 +135,7 @@ export class IngredientService {
       ingredients: this.addedIngredients,
       userId: userId
     }
+    console.log(storageItem);
     localStorage.setItem(this.ingredientsListStorage, JSON.stringify(storageItem));
   }
 
