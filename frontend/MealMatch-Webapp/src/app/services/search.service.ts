@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { Ingredient } from '../models/ingredient';
 import { HttpClient } from '@angular/common/http';
 import { Recipe } from '../models/recipe';
+import { MealType } from '../models/mealtype';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  allMealTypes = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Miscellaneous'];
-  
   searchComplete = false;
   inputIngredients: Ingredient[];
   allResults: Recipe[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    
+  }
 
   searchForRecipes(ingredients: Ingredient[]) {
     this.inputIngredients = ingredients;
@@ -31,5 +33,15 @@ export class SearchService {
     return this.allResults;
   }
 
+  getAllMealTypes() {
+    return this.http.get<MealType[]>("http://localhost:5000/api/get_all_mealtypes")
+    .pipe(
+      map( data => {
+        // Push 'All' as a Meal Type
+        data.splice(0,0,{id:0,name:"All"});
+        return data;
+      })
+    )
+  }
 
 }
