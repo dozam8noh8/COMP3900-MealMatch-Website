@@ -103,3 +103,7 @@ working out the best way to delete a component off the page based on an action i
 subscriptions) and EventEmitters to propagate the change to the required components. I also did some work on the backend to create the endpoints that I required,
 like the user_info endpoint and some methods on the models that it would require to get the information. We don't have many user stories left but we definitely
 have a lot of UI work to do :/
+
+
+==================Week 8==============
+This week I did a lot on edit recipe and create recipe page. I also did some things for loveless sets which are the sets that have no ingredients. Mostly frontend work and bug fixes. And I also prepared the group for the demo. Its been a busy week with work and other things but we managed to achieve most of the functionality for the sprint. All doing well!
