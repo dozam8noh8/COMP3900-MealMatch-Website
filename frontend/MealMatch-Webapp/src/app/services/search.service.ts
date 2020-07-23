@@ -31,5 +31,4 @@ export class SearchService {
     return this.allResults;
   }
 
-
 }

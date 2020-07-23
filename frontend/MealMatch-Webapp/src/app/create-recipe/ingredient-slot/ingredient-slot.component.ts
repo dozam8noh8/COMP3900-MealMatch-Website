@@ -62,11 +62,8 @@ export class IngredientSlotComponent implements OnInit{
   ngOnInit(): void {
     this.filteredOptions = this.formGroup.get('name').valueChanges
       .pipe(
-        map(value => {
-          return this._filter(value)
-        }),
+        map(value => this._filter(value)),
       );
-      this.formGroup.get('name').valueChanges.subscribe(x=> console.log(x));
   }
 
   // We could actually set [value]=option.name in the mat-option
@@ -83,14 +80,15 @@ export class IngredientSlotComponent implements OnInit{
     const filterValue = value.toString().toLowerCase();
     // If not an existing ingredient
     if(!this.ingredientService.getAllIngredients().some( elem => (elem.name.toLowerCase()===filterValue))) {
-      // Update the ingredient for slot at this position
+      // Set validity to false which offers user to create a new ingredient with that name.
       this.ingredientIsValid = false;
     }
-
-    if(filterValue)
-      return filterValue==='' ? [] : this.ingredientService.getAllIngredients().filter(item => {
-          return item.name.toLowerCase().startsWith(filterValue) && !this.addedIngredients.includes(item)
+      // Return a list of ingredients that start with what is typed in but arent already added.
+      return this.ingredientService.getAllIngredients().filter(item => {
+        return item.name.toLowerCase().startsWith(filterValue) && !this.addedIngredients.some(elem => elem.name === item.name)
       });
+      // This.addedIngredients has a list of ingredient.name + ingredient.id but allIngredients also has onList.
+
   }
 
   // This is hacky, hopefully we can improve but I don't know how the auto selector emits an object when a form control cant.
@@ -108,12 +106,7 @@ export class IngredientSlotComponent implements OnInit{
       data: { inputString: this.formGroup.get('name').value }
     }).afterClosed()
     .subscribe( (newCreatedIngredient: Ingredient) => {
-      // If not an ingredient being passed in
-      // console.log(typeof newCreatedIngredient)
-      if(typeof newCreatedIngredient === 'string') {
-      } else {
-        this.addToList(newCreatedIngredient);
-      }
+      this.addToList(newCreatedIngredient);
     });
   }
 

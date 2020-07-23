@@ -10,6 +10,10 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
+/* The ingredient service provides and keeps track of the data relating to ingredients.
+it makes the api calls to the backend to populate lists of Ingredients or categories
+and then components request lists. Data can become stale if the backend updates so
+if fresh data is needed, call the restart method to get data from the DB again. */
 export class IngredientService {
 
   private ingredientsListStorage: string = "StoredIngredients";
@@ -44,10 +48,12 @@ export class IngredientService {
   }
 
   getFromDB(callback=null) {
-    // Reinitialise added ingredients
-    this.addedIngredients = [];
+
     this.http.get("http://localhost:5000/api/get_ingredients_in_categories")
     .subscribe( (data: Category[]) => {
+      // Reinitialise all ingredient lists.
+      this.addedIngredients = [];
+      this.allIngredients = [];
       this.allCategories = data;
       this.allCategories.forEach( category => {
         category.ingredients = category.ingredients.map( item => {
@@ -85,7 +91,7 @@ export class IngredientService {
         if (category.name === ingredientCategory){
           category.ingredients.push(ingredient)
         }
-      } //push(ingredient);
+      }
 
       return response;
     }));
