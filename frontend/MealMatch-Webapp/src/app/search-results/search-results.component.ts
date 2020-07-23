@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchService } from '../services/search.service';
+import { MealType } from '../models/mealtype';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-search-results',
@@ -9,19 +11,40 @@ import { SearchService } from '../services/search.service';
 })
 export class SearchResultsComponent implements OnInit {
 
-  selectedMealType: String;
+  formForMealType;
+  selectedMealType: string;
+  allMealTypes: string[];
 
-  constructor(private router: Router, private searchService: SearchService) {
+  constructor(
+    private router: Router, 
+    private searchService: SearchService,
+    private formBuilder: FormBuilder
+    ) {
+      this.formForMealType = this.formBuilder.group({
+        selectedMealType: ''
+      });
+
     let searchState = this.router.getCurrentNavigation().extras.state;
-    // If a list of ingredients was passed from search (home page)
-    if(searchState) {
-      this.selectedMealType = searchState.mealType;
-      this.searchService.searchForRecipes(searchState.searchIngredients);
-    }
-    else {
-      // If there is no state a user cannot find anything with search
-      this.router.navigate(['/home']);
-    }
+    
+    this.searchService.getAllMealTypes()
+    .subscribe( (data: MealType[]) => {
+      // Get the meal types as strings
+      this.allMealTypes = data.map(mtype => mtype.name);
+
+      // If a list of ingredients was passed from search (home page)
+      if(searchState) {
+        // Set the selected meal type as per the search
+        this.selectedMealType = searchState.mealType.name;
+        this.formForMealType.setValue({
+          selectedMealType: searchState.mealType.name
+        })
+        this.searchService.searchForRecipes(searchState.searchIngredients);
+      }
+      else {
+        // If there is no state a user cannot find anything with search
+        this.router.navigate(['/home']);
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -32,11 +55,11 @@ export class SearchResultsComponent implements OnInit {
   }
 
   getResults() {
-    if(this.selectedMealType==="All") {
+    if(!this.selectedMealType || this.selectedMealType==="All") {
       return this.searchService.getAllResults();
 
     } else {
-
+      // Get the recipes that have the selected meal type as one of its meal types
       return this.searchService.getAllResults().filter(recipe => {
         return recipe.mealtypes.some( elem => (elem.name === this.selectedMealType));
       })
@@ -50,10 +73,6 @@ export class SearchResultsComponent implements OnInit {
 
   searchComplete() {
     return this.searchService.searchComplete;
-  }
-
-  getAllMealTypes() {
-    return this.searchService.allMealTypes;
   }
 
 }

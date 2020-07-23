@@ -1,11 +1,12 @@
 
+<form [formGroup]="formForMealType">
 <mat-form-field appearance="fill" style="margin-left: 2%; margin-top: 2%;">
     <mat-label>Meal Type</mat-label>
     <mat-select 
     matNativeControl
-    (selectionChange)="updateMealType($event.value)"
-    [(value)] = "selectedMealType">
-        <mat-option *ngFor="let mealtype of getAllMealTypes()" 
+    formControlName="selectedMealType"
+    (selectionChange)="updateMealType($event.value)">
+        <mat-option *ngFor="let mealtype of allMealTypes" 
         [value]="mealtype">
             {{mealtype}}
         </mat-option>
@@ -29,7 +30,7 @@
     <div *ngIf="searchComplete() && getResults().length === 0" style="margin-left: 35%; margin-top: 10%">
         <h1 style="font-weight: heavier; font-size: 3em" class="copperplate">We're Sorry</h1>
         <h1 style="font-weight: lighter; font-size: 1.5em" class="copperplate">We can't seem to find any 
-            <span *ngIf="selectedMealType !== 'All'"> "{{selectedMealType}}" </span>
+            <span *ngIf="!selectedMealType || selectedMealType !== 'All'"> "{{selectedMealType}}" </span>
                 recipes with: 
         </h1>
         <ul *ngFor="let ingredient of getSearchedIngredients()">
@@ -38,3 +39,4 @@
         <button mat-raised-button color="primary" class="copperplate submitButton" routerLink="/home">Search for new recipes</button>
     </div>
 </div>
+</form>
