@@ -12,8 +12,9 @@ export class RequestLogInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler) : Observable<HttpEvent<any>> {
-        let JWTToken = window.btoa(this.authService.getJWTToken() + ':unused');
+        let JWTToken = this.authService.getJWTToken();
         if (JWTToken) {
+            JWTToken = window.btoa(JWTToken+ ':unused');
             let authHeader = request.headers.append('Authorization', 'Basic ' + JWTToken);
             request = request.clone({headers: authHeader});
         }
