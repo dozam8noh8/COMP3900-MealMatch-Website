@@ -23,4 +23,10 @@ Flexibility week! Busy with other uni assignments so I did not get anything done
 Week 7
 Resumed my tickets right on Monday and completed a few tickets in terms of backend. I implemented API calls for getting all the distinct mealtypes, recommendation system based on an input of ingredients, adding a new ingredient and a skeleton for the creation of recipes to help Waqif out.
 
-WIP...
+Now, most of the backend is set up in terms of functionality and thus there should be no blockers on the frontend. Hence, I started to focus on improving the software's quality. So, I spent a few hours categorising the ingredients once again. Wrote a script that did 20% of them, but I had to manually input categories for 400 or so ingredients which some of which were obscure.
+
+Week 8
+Cleaning up the code and ensuring that there were no side effects or inconsistencies when a user performed an operation. Wrote some more backend code that included an endpoint of recipe updating and removing loveless sets when a recipe was added.
+Spent a few hours trying to debug a HTTP/CORS/UTF8 bug. Ended up print() debugging deep into the libraries.
+
+WIP
