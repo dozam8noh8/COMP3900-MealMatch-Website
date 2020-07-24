@@ -10,12 +10,16 @@ import { Ingredient } from '../models/ingredient';
   selector: 'app-home-page',
   styleUrls: ['./home-page.component.scss'],
   template: `
-              <h2> Search for ingredient </h2>
-              <app-search-bar
-              [allItems]="getAllIngredients()"
-              [itemAsString]="ingredientAsString"
-              [additionalFiltering]="notOnList"
-              (selectedItemEmitter)="addToList($event)"></app-search-bar>
+              <mat-card id="search-section">
+                <h1> Search for ingredient </h1>
+                <app-search-bar
+                [allItems]="getAllIngredients()"
+                [itemAsString]="ingredientAsString"
+                [additionalFiltering]="notOnList"
+                (selectedItemEmitter)="addToList($event)"></app-search-bar>
+              </mat-card>
+              <br/>
+              <br/>
 
               <div class="ingredientsAndButton">
                 <button class="remove-all" (click)="ingredientService.removeAllFromList()" mat-raised-button type="raised" color="primary">Clear All Ingredients</button>

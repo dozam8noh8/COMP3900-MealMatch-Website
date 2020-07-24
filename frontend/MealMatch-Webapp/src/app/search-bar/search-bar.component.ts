@@ -7,20 +7,22 @@ import { map } from 'rxjs/operators';
   selector: 'app-search-bar',
   styleUrls: ['./search-bar.component.scss'],
   template: `
-              <input type="text"
-              placeholder="Input an ingredient"
-              matInput
-              [formControl]="fc"
-              [matAutocomplete]="auto">
-              <mat-autocomplete 
-              autoActiveFirstOption 
-              #auto="matAutocomplete" 
-              [displayWith]="itemAsString"
-              (optionSelected)="selectItem($event.option.value)">
-                  <mat-option *ngFor="let option of filteredOptions | async" [value]="(option)"> 
-                      {{itemAsString(option)}} 
-                  </mat-option>
-              </mat-autocomplete>
+              <mat-form-field style="width: 100%;">
+                <input type="text"
+                placeholder="Input an ingredient"
+                matInput
+                [formControl]="fc"
+                [matAutocomplete]="auto">
+                <mat-autocomplete 
+                autoActiveFirstOption 
+                #auto="matAutocomplete" 
+                [displayWith]="itemAsString"
+                (optionSelected)="selectItem($event.option.value)">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="(option)"> 
+                        {{itemAsString(option)}} 
+                    </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
             `
 })
 export class SearchBarComponent implements OnInit {
