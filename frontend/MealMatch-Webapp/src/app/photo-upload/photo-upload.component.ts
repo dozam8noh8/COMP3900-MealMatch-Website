@@ -43,6 +43,7 @@ export class PhotoUploadComponent {
 
     reader.readAsDataURL(file);
     reader.onload = (event) => {
+      // The URL for the image can be changed to a sort of temporary URL that the file reader keeps when an event (file selection) occurs
       this.existingImageURL = event.target.result;
     }
   }

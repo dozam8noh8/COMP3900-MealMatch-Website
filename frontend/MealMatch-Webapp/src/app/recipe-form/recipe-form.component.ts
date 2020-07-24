@@ -38,8 +38,7 @@ import { validateHorizontalPosition } from '@angular/cdk/overlay';
                 <ng-template #noImage>
                 <h2 > Upload an image ... </h2>
                   <app-photo-upload 
-                  (uploadEmitter)="maintainRecipeImage($event)"
-                  [existingImageURL]="recipeDetails.image"></app-photo-upload>
+                  (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
                 </ng-template>
 
 
@@ -152,8 +151,8 @@ export class RecipeFormComponent implements OnInit {
       this.loadRecipeFromData(this.recipeDetails)
       // This recipe may have an image so get that
       this.recipeService.getRecipeDetails(this.recipeDetails.id)
-      .subscribe( response => {
-        this.existingImageURL = response.image;
+      .subscribe( (response: Recipe) => {
+        this.existingImageURL = response?.image;
       })
     }
 
