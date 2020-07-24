@@ -6,7 +6,6 @@ import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { NewIngredientPopupComponent } from '../new-ingredient-popup/new-ingredient-popup.component';
-import { IngredientSearchComponent } from 'src/app/home-page/ingredient-search/ingredient-search.component';
 import { MatInput } from '@angular/material/input';
 
 

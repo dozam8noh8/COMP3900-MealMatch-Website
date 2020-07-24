@@ -4,11 +4,40 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SearchService } from '../services/search.service';
 import { MealType } from '../models/mealtype';
+import { Ingredient } from '../models/ingredient';
 
 @Component({
   selector: 'app-home-page',
+  styleUrls: ['./home-page.component.scss'],
   template: `
-              <app-ingredient-search></app-ingredient-search>
+              <mat-card id="search-section">
+                <h1> Search for ingredient </h1>
+                <app-search-bar
+                [allItems]="getAllIngredients()"
+                [itemAsString]="ingredientAsString"
+                [additionalFiltering]="notOnList"
+                (selectedItemEmitter)="addToList($event)"></app-search-bar>
+              </mat-card>
+              <br/>
+              <br/>
+
+              <div class="ingredientsAndButton">
+                <button class="remove-all" (click)="ingredientService.removeAllFromList()" mat-raised-button type="raised" color="primary">Clear All Ingredients</button>
+                <mat-card id="my-ingredients-section">
+                  <h2>My Ingredients List</h2>
+                  <div *ngIf="ingredientService.getAddedIngredients().length <= 0; then thenBlock else elseBlock"> </div>
+                  <ng-template #thenBlock> <p class="ingredient-text">No ingredients selected</p> </ng-template>
+                  <ng-template #elseBlock>
+                      <div *ngFor="let ingredient of ingredientService.getAddedIngredients()">
+                          <div class="user-list-item">
+                              {{ingredient.name}} 
+                              <button class="remove-button" (click)="ingredientService.removeFromList(ingredient)"> <strong>x</strong></button>
+                          </div>
+                      </div> 
+                  </ng-template>
+                </mat-card>
+              </div>
+
               <br>
               <br>
               <app-ingredient-by-category></app-ingredient-by-category>
@@ -40,7 +69,7 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    private ingredientServce: IngredientService, 
+    public ingredientService: IngredientService, 
     private searchService: SearchService,
     private formBuilder: FormBuilder
     ) {
@@ -66,10 +95,26 @@ export class HomePageComponent implements OnInit {
   submitIngredients() {
     this.router.navigateByUrl('/search', {
       state: {
-        searchIngredients: this.ingredientServce.getAddedIngredients().map(item => {return item.name}),
+        searchIngredients: this.ingredientService.getAddedIngredients().map(item => {return item.name}),
         mealType: this.ingredientSearchForm.controls['selectedMealType'].value
       }
     });
+  }
+
+  getAllIngredients(): Ingredient[] {
+    return this.ingredientService.getAllIngredients();
+  }
+
+  ingredientAsString(ingredient: Ingredient): string {
+    return ingredient?.name;
+  }
+
+  notOnList(ingredient: Ingredient): boolean {
+    return !ingredient.onList;
+  }
+
+  addToList(ingredient: Ingredient) {
+    this.ingredientService.addToList(ingredient);
   }
 
 }

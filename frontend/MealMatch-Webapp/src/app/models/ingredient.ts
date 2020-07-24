@@ -3,8 +3,8 @@
 
 export interface Ingredient {
     id: number;
-    name: String;
-    onList?: Boolean;
+    name: string;
+    onList?: boolean;
     category?: String;
 }
 

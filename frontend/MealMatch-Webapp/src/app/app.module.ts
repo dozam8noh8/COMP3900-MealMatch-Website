@@ -27,7 +27,6 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { IngredientSearchComponent } from './home-page/ingredient-search/ingredient-search.component';
 import { IngredientByCategoryComponent } from './home-page/ingredient-by-category/ingredient-by-category.component';
 
 import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
@@ -50,6 +49,7 @@ import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 import { FormSubmitComponent } from './form-submit/form-submit.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -79,7 +79,6 @@ const materialModules = [
     LoginComponent,
     SignupComponent,
     NavbarComponent,
-    IngredientSearchComponent,
     IngredientByCategoryComponent,
     RecipeInfoComponent,
     SearchResultsComponent,
@@ -98,6 +97,7 @@ const materialModules = [
     FormSubmitComponent,
     RecipeEditComponent,
     PageNotFoundComponent,
+    SearchBarComponent,
   ],
   imports: [
     BrowserModule,
