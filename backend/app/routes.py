@@ -10,6 +10,7 @@ from app.models import Ingredient, User, Recipe, Category, Mealtype, RecipeIngre
 from app import auth, app, db
 from app.seed import seed_db
 import secrets
+from app.ErrorException import ErrorException
 
 
 ###############################################################
@@ -28,6 +29,22 @@ def verify_password(username_or_token, password):
             return False
     g.user = user
     return True
+
+# Error handler
+@app.errorhandler(ErrorException)
+def handle_error_exception(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.statusCode
+    return response
+
+@auth.error_handler
+def auth_error(status):
+    raise ErrorException('Your authentication is invalid', 401)
+
+# Demo error handling
+# @app.route('/foo')
+# def get_foo():
+#     raise ErrorException('this view is gone', 404)
 
 @app.route('/healthz', methods=['GET'])
 def healthz():
@@ -52,9 +69,9 @@ def new_user():
     username = request.json.get('username')
     password = request.json.get('password')
     if username is None or password is None:
-        abort(400)    # missing arguments
+        raise ErrorException('Username or Password is not entered', 500)
     if User.query.filter_by(username=username).first() is not None:
-        abort(400)    # existing user
+        raise ErrorException('This user already exists', 500)
     user = User(username=username)
     user.hash_password(password)
     db.session.add(user)
@@ -81,11 +98,11 @@ def get_user_info(id):
     '''
     # If the requesting user is not the user who's info is requested.
     if g.user.id != id:
-        return 'Unauthorized Access', 401
+        raise ErrorException('Your authentication is invalid', 401)
     user = User.query.get(id)
     # Can't find user in db.
     if not user:
-        abort(400)
+        raise ErrorException('This user does not exist in the database', 500)
     recipes = Recipe.get_recipes_by_user_id(g.user.id)
     return jsonify({'user_id': user.id, 'email': user.email, 'username': user.username, 'recipes': recipes, 'profile_pic': user.profile_pic })
     #return jsonify(User.json_dump(user)) # We dont want all 10000 recipes for user, only 10 for now.
@@ -95,17 +112,17 @@ def get_user_info(id):
 def edit_user(id):
     # If the requesting user is not the user who's info is requested.
     if g.user.id != id:
-        return 'Unauthorized Access', 401
+        raise ErrorException('Your authentication is invalid', 401)
     user = User.query.get(id)
     # Can't find user in db.
     if not user:
-        abort(400)
+        raise ErrorException('This user does not exist in the database', 500)
     old_pass = request.json.get('old_password')
     new_pass = request.json.get('new_password')
     if user.verify_password(old_pass):
         user.hash_password(new_pass)
     else:
-        return "Old password does not match", 201
+        raise ErrorException('Your old password is invalid', 500)
     db.session.commit()
     return "Success", 200
 
@@ -162,11 +179,11 @@ def recipe_delete(recipe_id):
     """ Delete a recipe by its id"""
     recipe = Recipe.get_recipe_by_id(recipe_id)
     if not recipe:
-        return 'Recipe Id not found', 204
+        raise ErrorException('This recipe does not exist', 500)
     if g.user.id != recipe["user_id"] :
-        return 'Unauthorized Access', 401 # Cant delete a recipe that isn't yours
+        raise ErrorException('Your authentication is invalid', 401) # Cant delete a recipe that isn't yours
     if Recipe.recipe_delete(recipe_id):
-        return Response(status=200)
+        return "Success", 200
 
 
 # Actually returns sets as required. TODO Change variable names
@@ -217,7 +234,7 @@ def add_ingredient():
     category = request.json.get('category')
     ingredient = Ingredient.add_ingredient(name, category)
     if type(ingredient) is str:
-        return ingredient, 201 # Error message FIX error code
+        raise ErrorException(ingredient, 500) # Error message FIX error code
     return {'ingredient_id' : ingredient.id, 'message': 'Ingredient has been added'}
 
 @app.route('/api/rating/<int:id>', methods=['GET', 'POST'])
@@ -231,7 +248,7 @@ def rating(id):
     if request.method == 'POST':
         rating = request.json.get('rating')
         if int(rating) > 5 or int(rating) < 1:
-            return 'Ratings must be between 1 and 5', 201 # Fix error code
+            raise ErrorException('Ratings must be between 1 and 5', 500)
         comment = request.json.get('comment')
         user = User.query.filter_by(id=request.json.get('user_id')).first()
         recipe = Recipe.query.filter_by(id=id).first()
@@ -264,7 +281,7 @@ def add_recipe():
     user_id = g.user.id
     recipe = Recipe.add_recipe(name, instruction, mealType, ingredients, user_id)
     if type(recipe) == str:
-        return recipe, 201 # Error message FIX error code
+        raise ErrorException(recipe, 500) # Error message FIX error code
     return {'recipe_id' : recipe.id, 'message': 'Recipe has been added'}
 
 @app.route('/api/edit_recipe', methods=['POST'])
@@ -277,7 +294,7 @@ def edit_recipe():
     ingredients = request.json.get('ingredients')
     recipe = Recipe.edit_recipe(recipe_id, name, instruction, mealType, ingredients)
     if type(recipe) is str:
-        return recipe, 201 # Error message FIX error code
+        raise ErrorException(recipe, 500) # Error message FIX error code
     return {'recipe_id' : recipe.id, 'message': 'Recipe has been edited'}
 
 @app.route('/api/recommendations', methods=['POST'])
@@ -306,6 +323,8 @@ def profile_pic_upload():
         picture_path = 'http://localhost:5000' + url_for('static', filename=msg)
         user_id = g.user.id
         User.upload_profile_image(user_id, picture_path)
+    else:
+        raise ErrorException(msg, code)
     return jsonify({'msg':msg}), code
 
 @app.route('/api/recipe_image_upload/<int:recipe_id>', methods=['POST'])
@@ -315,6 +334,8 @@ def recipe_image_upload(recipe_id):
     if code == 200: #TODO HANDLE ERRORS - Turn into objects?
         picture_path = 'http://localhost:5000' + url_for('static', filename=msg)
         Recipe.upload_recipe_image(recipe_id, picture_path)
+    else:
+        raise ErrorException(msg, code)
     return jsonify({'msg':msg}), code
 
 
