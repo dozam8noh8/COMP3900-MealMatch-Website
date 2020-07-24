@@ -4,7 +4,6 @@ import {Ingredient} from '../models/ingredient';
 import { Category } from '../home-page/category';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { IngredientSearchComponent } from '../home-page/ingredient-search/ingredient-search.component';
 import { AuthService } from './auth.service';
 
 @Injectable({
