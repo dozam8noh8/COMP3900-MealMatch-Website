@@ -38,8 +38,15 @@ import { Ingredient } from '../models/ingredient';
                 </mat-card>
               </div>
 
+              <br/>
+
+              <app-recommend-ingredients></app-recommend-ingredients>
+
               <br>
               <br>
+
+              <br/>
+              <br/>
               <app-ingredient-by-category></app-ingredient-by-category>
               <br>
               <br>
