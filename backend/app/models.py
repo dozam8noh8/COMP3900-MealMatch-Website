@@ -1,5 +1,6 @@
 from app import db, jwt, time, app, generate_password_hash, check_password_hash, ma
 from sqlalchemy import func, desc
+from app.ErrorException import ErrorException
 
 userRatings = db.Table('user_ratings',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
@@ -65,23 +66,10 @@ class Ingredient(db.Model):
     name = db.Column(db.String(256), index=True)
     recipes = db.relationship('RecipeIngredients', backref=db.backref('ingredients'))
 
-    def get(name):
-        ingredient = Ingredient.query.filter_by(name=name).first()
-        return ingredient
-
-    # unused method? cleanup?
-    def get_all(names):
-        ingredients = []
-        for name in names:
-            ingredient = Ingredient.get(name)
-            if ingredient != None:
-                ingredients.append(ingredient)
-        return ingredients
-
     def add_ingredient(name, category):
         db_category = Category.query.filter(func.lower(Category.name) == func.lower(category)).first()
         if not db_category:
-            return 'Category does not exist: ' + category
+            raise ErrorException('Category does not exist: ' + category, 400)
 
         ingredient = Ingredient(name=name)
         ingredient.categories.append(db_category)
@@ -209,7 +197,7 @@ class Recipe(db.Model):
         mealtype = Mealtype.query.filter(func.lower(Mealtype.name) == func.lower(mealType)).first()
         if not mealtype:
             db.session.rollback()
-            return 'Mealtype does not exist: ' + mealType
+            raise ErrorException('Mealtype does not exist: ' + mealType, 400)
 
         recipe.mealtypes.append(mealtype)
         user = User.query.filter_by(id=user_id).first()
@@ -218,7 +206,7 @@ class Recipe(db.Model):
             db_ingredient = Ingredient.query.filter(func.lower(Ingredient.name) == func.lower(ingredient['name'])).first()
             if not db_ingredient:
                 db.session.rollback()
-                return 'Ingredient does not exist: ' + ingredient['name']
+                raise ErrorException('Ingredient does not exist: ' + ingredient['name'], 400)
 
             recipe_ingredient = RecipeIngredients(quantity=ingredient['quantity'])
             recipe_ingredient.ingredients = db_ingredient
@@ -232,7 +220,7 @@ class Recipe(db.Model):
     def edit_recipe(recipe_id, name, instruction, mealType, ingredients):
         recipe = Recipe.query.get(recipe_id)
         if not recipe:
-            return 'Recipe id does not exist:' + recipe(recipe_id)
+            raise ErrorException('Recipe id does not exist:' + recipe(recipe_id), 400)
 
         recipe.name = name
         recipe.instruction = instruction
