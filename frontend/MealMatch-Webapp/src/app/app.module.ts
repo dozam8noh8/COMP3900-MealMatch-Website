@@ -50,6 +50,7 @@ import { FormSubmitComponent } from './form-submit/form-submit.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { RecommendIngredientsComponent } from './home-page/recommend-ingredients/recommend-ingredients.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -98,6 +99,7 @@ const materialModules = [
     RecipeEditComponent,
     PageNotFoundComponent,
     SearchBarComponent,
+    RecommendIngredientsComponent,
   ],
   imports: [
     BrowserModule,

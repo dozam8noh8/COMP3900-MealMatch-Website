@@ -26,6 +26,8 @@ export class IngredientService {
   // Ingredients that are retrieved from local storage in constructor and should be added to the list when retrieved.
   localStorageIngredients: Ingredient[] = [];
 
+  recommendedIngredients: Ingredient[] = [];
+
   constructor(private http: HttpClient, private authService: AuthService) {
     this.restart();
   }
@@ -66,6 +68,7 @@ export class IngredientService {
           this.allIngredients.push(item);
           return item;
         });
+        this._reloadRecommendedIngredients();
       });
 
       if(callback) callback(this.allIngredients);
@@ -117,12 +120,14 @@ export class IngredientService {
     newIngredient.onList = true;
     this.addedIngredients.push(newIngredient);
     this.saveIngredients();
+    this._reloadRecommendedIngredients();
   }
 
   removeFromList(ingredient: Ingredient) {
     ingredient.onList = false;
     this.addedIngredients = this.addedIngredients.filter(item => item!=ingredient);
     this.saveIngredients();
+    this._reloadRecommendedIngredients();
   }
 
   getAllCategories(): Category[] {
@@ -146,6 +151,20 @@ export class IngredientService {
 
   getLovelessSets() {
     return this.http.get(`${this.BASE_URL}/popular_ingredient_pairs`);
+  }
+
+
+  getRecommendedIngredients(): Ingredient[] {
+    return this.recommendedIngredients;
+  }
+
+  private _reloadRecommendedIngredients() {
+    const ingredientsIdList = this.addedIngredients.map(elem => elem.id);
+    return this.http.post<Ingredient[]>("http://localhost:5000/api/recommendations", {"ingredients": ingredientsIdList})
+    .subscribe(resp => {
+      this.recommendedIngredients = resp;
+    })
+    // error handling
   }
 
 }
