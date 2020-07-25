@@ -51,6 +51,7 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { RecommendIngredientsComponent } from './home-page/recommend-ingredients/recommend-ingredients.component';
+import { InputListComponent } from './home-page/input-list/input-list.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -100,6 +101,7 @@ const materialModules = [
     PageNotFoundComponent,
     SearchBarComponent,
     RecommendIngredientsComponent,
+    InputListComponent
   ],
   imports: [
     BrowserModule,

@@ -20,31 +20,10 @@ import { Ingredient } from '../models/ingredient';
               </mat-card>
               <br/>
               <br/>
-
-              <div class="ingredientsAndButton">
-                <button class="remove-all" (click)="ingredientService.removeAllFromList()" mat-raised-button type="raised" color="primary">Clear All Ingredients</button>
-                <mat-card id="my-ingredients-section">
-                  <h2>My Ingredients List</h2>
-                  <div *ngIf="ingredientService.getAddedIngredients().length <= 0; then thenBlock else elseBlock"> </div>
-                  <ng-template #thenBlock> <p class="ingredient-text">No ingredients selected</p> </ng-template>
-                  <ng-template #elseBlock>
-                      <div *ngFor="let ingredient of ingredientService.getAddedIngredients()">
-                          <div class="user-list-item">
-                              {{ingredient.name}} 
-                              <button class="remove-button" (click)="ingredientService.removeFromList(ingredient)"> <strong>x</strong></button>
-                          </div>
-                      </div> 
-                  </ng-template>
-                </mat-card>
+              <div id="inputListAndRecommendations">
+                <app-input-list> </app-input-list>
+                <app-recommend-ingredients></app-recommend-ingredients>
               </div>
-
-              <br/>
-
-              <app-recommend-ingredients></app-recommend-ingredients>
-
-              <br>
-              <br>
-
               <br/>
               <br/>
               <app-ingredient-by-category></app-ingredient-by-category>
@@ -76,7 +55,7 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    public ingredientService: IngredientService, 
+    private ingredientService: IngredientService, 
     private searchService: SearchService,
     private formBuilder: FormBuilder
     ) {
@@ -116,6 +95,7 @@ export class HomePageComponent implements OnInit {
     return ingredient?.name;
   }
 
+  // Pass this function into app-search-bar so that search-bar will also check that an ingredient has not already been inputted
   notOnList(ingredient: Ingredient): boolean {
     return !ingredient.onList;
   }

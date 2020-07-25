@@ -1,7 +1,6 @@
-
-
-#recommendedIngredientsSection {
+#my-ingredients-section {
     margin: 0 auto;
+    // width: 75%; 
     overflow: auto;
     align-content: center;
     // This makes the text padding the same as the user list item padding
@@ -14,19 +13,31 @@
     }
 }
 
-
-.ingredient-item {
+.user-list-item {
     float: left;
-    background-color: rgb(179, 99, 253);
+    background-color: rgb(65, 215, 253);
     margin-right: 7px;
     margin-bottom: 10px;
     border-radius: 5px;
     padding: 0.5vh 0.5vw 0.5vh 0.5vw;
 }
 
-.add-button {
+.remove-button {
     cursor: pointer;
     // background-color: skyblue;
     background-color: transparent;
     border-width: 0;
 }
+
+#ingredientsAndButton {
+    display: flex;
+    flex-direction: column;
+    #inputIngredients {
+        order: 1;
+    }
+    
+    #removeAllButton {
+        order: 2;
+    }    
+}
+
