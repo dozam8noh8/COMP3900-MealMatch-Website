@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { ImageService } from '../image.service';
 
 
@@ -16,6 +16,9 @@ class ImageSnippet {
          type="file"
          accept="image/*"
          (change)="processFile(imageInput)">
+  <br/>
+
+  <img *ngIf="existingImageURL" [src]="existingImageURL" height="200"> <br/>
 </label>
 `
 })
@@ -25,6 +28,7 @@ export class PhotoUploadComponent {
 
   selectedFile: ImageSnippet;
   @Output() uploadEmitter = new EventEmitter<File>();
+  @Input() existingImageURL;
   constructor(){}
 
   processFile(imageInput: any) {
@@ -38,5 +42,9 @@ export class PhotoUploadComponent {
     });
 
     reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      // The URL for the image can be changed to a sort of temporary URL that the file reader keeps when an event (file selection) occurs
+      this.existingImageURL = event.target.result;
+    }
   }
 }

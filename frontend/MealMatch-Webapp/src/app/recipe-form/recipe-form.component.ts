@@ -30,13 +30,15 @@ import { validateHorizontalPosition } from '@angular/cdk/overlay';
 
                 <div #Image *ngIf="recipeDetails && recipeDetails.image; else noImage">
                 <h2 > Change recipe image ... </h2>
-                  <img alt="user placeholder image" [src]="recipeDetails.image" style="width:30vw; height: 30vh">
-                  <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
+                  <app-photo-upload 
+                  (uploadEmitter)="maintainRecipeImage($event)"
+                  [existingImageURL]="recipeDetails.image"></app-photo-upload>
                 </div>
 
                 <ng-template #noImage>
                 <h2 > Upload an image ... </h2>
-                  <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
+                  <app-photo-upload 
+                  (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
                 </ng-template>
 
 
@@ -115,6 +117,7 @@ export class RecipeFormComponent implements OnInit {
   allMealTypes: string[];
 
   recipeImage: File;
+  existingImageURL: string;
   formInvalid: boolean = false;
   // Contains an array of formGroup (name, id and quantity form controls)
   // Representing each slot to add ingredients.
@@ -146,6 +149,11 @@ export class RecipeFormComponent implements OnInit {
     // If we are using this component to edit a recipe, we need to set everything in the form.
     if (this.recipeDetails){
       this.loadRecipeFromData(this.recipeDetails)
+      // This recipe may have an image so get that
+      this.recipeService.getRecipeDetails(this.recipeDetails.id)
+      .subscribe( (response: Recipe) => {
+        this.existingImageURL = response?.image;
+      })
     }
 
 

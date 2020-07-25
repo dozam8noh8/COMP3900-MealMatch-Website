@@ -16,11 +16,13 @@ import { Router } from '@angular/router';
   template: `
   <h1>  Welcome to your recipe dashboard {{ username }}!</h1>
   <div>
-    <app-photo-upload (uploadEmitter)="setProfilePhoto($event)">
+    <app-photo-upload (uploadEmitter)="setProfilePhoto($event)" [existingImageURL]="profile_pic">
     </app-photo-upload>
-    <button (click)="uploadPhoto()" [disabled]="!recipeImage"> Upload Photo </button>
+    <span *ngIf="photoIsUploading">Uploading...</span>
+    <span *ngIf="!photoIsUploading">
+      <button (click)="uploadPhoto()" [disabled]="!recipeImage || photoUploadComplete"> SAVE PHOTO CHANGE </button>
+    </span>
   </div>
-  <img alt="user placeholder image" [src]="profile_pic">
 
   <button (click)="handleAddRecipe()"> Add a new recipe </button>
 
@@ -45,6 +47,8 @@ export class ProfilePageComponent implements OnInit {
   recipes: Recipe[];
   recipeImage: File;
   loading = true;
+  photoIsUploading = false;
+  photoUploadComplete = false;
 
   @ViewChildren(RecipeViewCardComponent) recipeCards: QueryList<RecipeViewCardComponent>;
 
@@ -80,12 +84,16 @@ export class ProfilePageComponent implements OnInit {
   setProfilePhoto(file: File) {
     console.log("Setting profile photo")
     this.recipeImage = file;
+    this.photoUploadComplete = false;
   }
   uploadPhoto(){
     console.log("Uploading photo")
+    this.photoIsUploading = true;
     if (this.recipeImage){
       this.imageService.uploadProfileImage(this.recipeImage).subscribe((res:any) => {
         this.profile_pic = `http://localhost:5000/static/${res.msg}`
+        this.photoIsUploading = false;
+        this.photoUploadComplete = true;
       })
     }
   }
