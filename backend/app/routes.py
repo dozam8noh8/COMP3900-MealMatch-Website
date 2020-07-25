@@ -48,7 +48,7 @@ def auth_error(status):
 
 @app.route('/healthz', methods=['GET'])
 def healthz():
-    return 'Server is up'
+    return jsonify({'message': 'Server is up', 'statusCode': 200, 'status' : 'success'})
 
 # Register a user
 @app.route('/api/users', methods=['POST'])
@@ -68,7 +68,7 @@ def new_user():
     '''
     username = request.json.get('username')
     password = request.json.get('password')
-    if username is None or password is None:
+    if not username or not password:
         raise ErrorException('Username or Password is not entered', 500)
     if User.query.filter_by(username=username).first() is not None:
         raise ErrorException('This user already exists', 500)
@@ -76,7 +76,7 @@ def new_user():
     user.hash_password(password)
     db.session.add(user)
     db.session.commit()
-    return (jsonify({'username': user.username}), 201)
+    return jsonify({'username': user.username, 'statusCode': 201, 'status' : 'success'}), 201
 
 
 @app.route('/api/users/<int:id>', methods=['GET'])
@@ -104,7 +104,7 @@ def get_user_info(id):
     if not user:
         raise ErrorException('This user does not exist in the database', 500)
     recipes = Recipe.get_recipes_by_user_id(g.user.id)
-    return jsonify({'user_id': user.id, 'email': user.email, 'username': user.username, 'recipes': recipes, 'profile_pic': user.profile_pic })
+    return jsonify({'user_id': user.id, 'email': user.email, 'username': user.username, 'recipes': recipes, 'profile_pic': user.profile_pic, 'statusCode': 200, 'status' : 'success'})
     #return jsonify(User.json_dump(user)) # We dont want all 10000 recipes for user, only 10 for now.
 
 @app.route('/api/edit_user/<int:id>', methods=['POST'])
@@ -124,7 +124,7 @@ def edit_user(id):
     else:
         raise ErrorException('Your old password is invalid', 500)
     db.session.commit()
-    return "Success", 200
+    return jsonify({'message': 'Success', 'statusCode': 200, 'status' : 'success'})
 
 
 # Get Auth Token
@@ -147,7 +147,7 @@ def get_auth_token():
 
     '''
     token = g.user.generate_auth_token(12000)
-    return jsonify({'user_id': g.user.id, 'token': token.decode('ascii'), 'duration': 12000})
+    return jsonify({'user_id': g.user.id, 'token': token.decode('ascii'), 'duration': 12000, 'statusCode': 200, 'status' : 'success'})
 
 @app.route('/api/recipe/<int:id>', methods=['GET'])
 def get_recipe(id):
@@ -183,7 +183,7 @@ def recipe_delete(recipe_id):
     if g.user.id != recipe["user_id"] :
         raise ErrorException('Your authentication is invalid', 401) # Cant delete a recipe that isn't yours
     if Recipe.recipe_delete(recipe_id):
-        return "Success", 200
+        return jsonify({'message': 'Recipe deleted.', 'statusCode': 200, 'status' : 'success'})
 
 
 # Actually returns sets as required. TODO Change variable names
@@ -233,9 +233,7 @@ def add_ingredient():
     name = request.json.get('name')
     category = request.json.get('category')
     ingredient = Ingredient.add_ingredient(name, category)
-    if type(ingredient) is str:
-        raise ErrorException(ingredient, 500) # Error message FIX error code
-    return {'ingredient_id' : ingredient.id, 'message': 'Ingredient has been added'}
+    return {'ingredient_id' : ingredient.id, 'message': 'Ingredient has been added', 'statusCode': 201, 'status' : 'success'}
 
 @app.route('/api/rating/<int:id>', methods=['GET', 'POST'])
 def rating(id):
@@ -280,9 +278,7 @@ def add_recipe():
     ingredients = request.json.get('ingredients')
     user_id = g.user.id
     recipe = Recipe.add_recipe(name, instruction, mealType, ingredients, user_id)
-    if type(recipe) == str:
-        raise ErrorException(recipe, 500) # Error message FIX error code
-    return {'recipe_id' : recipe.id, 'message': 'Recipe has been added'}
+    return {'recipe_id' : recipe.id, 'message': 'Recipe has been added', 'statusCode': 201, 'status' : 'success'}
 
 @app.route('/api/edit_recipe', methods=['POST'])
 @auth.login_required
@@ -293,9 +289,7 @@ def edit_recipe():
     mealType = request.json.get('mealType')
     ingredients = request.json.get('ingredients')
     recipe = Recipe.edit_recipe(recipe_id, name, instruction, mealType, ingredients)
-    if type(recipe) is str:
-        raise ErrorException(recipe, 500) # Error message FIX error code
-    return {'recipe_id' : recipe.id, 'message': 'Recipe has been edited'}
+    return {'recipe_id' : recipe.id, 'message': 'Recipe has been edited', 'statusCode': 201, 'status' : 'success'}
 
 @app.route('/api/recommendations', methods=['POST'])
 def get_recommendations():
@@ -325,7 +319,7 @@ def profile_pic_upload():
         User.upload_profile_image(user_id, picture_path)
     else:
         raise ErrorException(msg, code)
-    return jsonify({'msg':msg}), code
+    return jsonify({'msg':msg, 'statusCode': 201, 'status' : 'success'}), code
 
 @app.route('/api/recipe_image_upload/<int:recipe_id>', methods=['POST'])
 @auth.login_required
@@ -336,7 +330,7 @@ def recipe_image_upload(recipe_id):
         Recipe.upload_recipe_image(recipe_id, picture_path)
     else:
         raise ErrorException(msg, code)
-    return jsonify({'msg':msg}), code
+    return jsonify({'msg':msg, 'statusCode': 201, 'status' : 'success'}), code
 
 
 
