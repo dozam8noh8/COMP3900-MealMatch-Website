@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import {Ingredient} from '../models/ingredient';
-import { Category } from '../home-page/category';
+import { Category } from '../models/category';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
@@ -110,10 +110,6 @@ export class IngredientService {
 
   getAddedIngredients(): Ingredient[] {
     return this.addedIngredients;
-  }
-
-  addOrRemove(ingredient: Ingredient) {
-    ingredient.onList ? this.removeFromList(ingredient) : this.addToList(ingredient);
   }
 
   addToList(newIngredient: Ingredient) {

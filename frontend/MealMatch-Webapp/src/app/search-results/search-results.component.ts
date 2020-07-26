@@ -6,8 +6,50 @@ import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-search-results',
-  templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.scss']
+  styleUrls: ['./search-results.component.scss'],
+  template: `
+              <form [formGroup]="formForMealType">
+              <mat-form-field appearance="fill" style="margin-left: 2%; margin-top: 2%;">
+                  <mat-label>Meal Type</mat-label>
+                  <mat-select 
+                  matNativeControl
+                  formControlName="selectedMealType"
+                  (selectionChange)="updateMealType($event.value)">
+                      <mat-option *ngFor="let mealtype of allMealTypes" 
+                      [value]="mealtype">
+                          {{mealtype}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+              <div layout="row" layout-fill layout-align="center center">
+                  <mat-spinner *ngIf=!searchComplete() style="margin-left: 45%; margin-top: 15%;"> Showing spinner </mat-spinner>
+              </div>
+
+              <div *ngIf="searchComplete() && getResults().length > 0">
+                  <div class="columned" style="margin-left: 2%;">
+                      <div *ngFor="let recipe of getResults()" style="width: 400px">
+                          <a routerLink="/recipe/{{recipe.id}}" style="text-decoration: none; margin-top: 2%;">
+                              <app-recipe-view-card [recipe]="recipe"></app-recipe-view-card>
+                          </a>
+                      </div>
+                  </div>    
+              </div>
+
+              <div layout="row" layout-fill layout-align="center center">
+                  <div *ngIf="searchComplete() && getResults().length === 0" style="margin-left: 35%; margin-top: 10%">
+                      <h1 style="font-weight: heavier; font-size: 3em" class="copperplate">We're Sorry</h1>
+                      <h1 style="font-weight: lighter; font-size: 1.5em" class="copperplate">We can't seem to find any 
+                          <span *ngIf="!selectedMealType || selectedMealType !== 'All'"> "{{selectedMealType}}" </span>
+                              recipes with: 
+                      </h1>
+                      <ul *ngFor="let ingredient of getSearchedIngredients()">
+                          <li class="copperplate">{{ingredient}}</li>
+                      </ul>
+                      <button mat-raised-button color="primary" class="copperplate submitButton" routerLink="/home">Search for new recipes</button>
+                  </div>
+              </div>
+              </form>
+            `
 })
 export class SearchResultsComponent implements OnInit {
 
