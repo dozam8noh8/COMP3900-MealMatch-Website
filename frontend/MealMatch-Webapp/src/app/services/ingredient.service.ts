@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import {Ingredient} from '../models/ingredient';
-import { Category } from '../home-page/category';
+import { Category } from '../models/category';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
@@ -68,8 +68,8 @@ export class IngredientService {
           this.allIngredients.push(item);
           return item;
         });
-        this._reloadRecommendedIngredients();
       });
+      this._reloadRecommendedIngredients();
 
       if(callback) callback(this.allIngredients);
 
@@ -112,10 +112,6 @@ export class IngredientService {
     return this.addedIngredients;
   }
 
-  addOrRemove(ingredient: Ingredient) {
-    ingredient.onList ? this.removeFromList(ingredient) : this.addToList(ingredient);
-  }
-
   addToList(newIngredient: Ingredient) {
     newIngredient.onList = true;
     this.addedIngredients.push(newIngredient);
@@ -135,7 +131,10 @@ export class IngredientService {
   }
 
   removeAllFromList() {
-    this.addedIngredients.map(ingredient => this.removeFromList(ingredient));
+    this.addedIngredients.forEach(ingredient => ingredient.onList = false);
+    this.addedIngredients = [];
+    this.saveIngredients();
+    this._reloadRecommendedIngredients();
   }
 
   // TODO We should have these preferences saved per user. (Maybe in session storage?)
