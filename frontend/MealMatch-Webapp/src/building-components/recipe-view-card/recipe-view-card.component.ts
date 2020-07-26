@@ -32,7 +32,7 @@ import { map, finalize } from 'rxjs/operators';
         </span>
     </i>
     </div>
-    <div *ngIf="showDeleteEdit">
+    <div style="position: absolute;bottom: 0; width: 95%;" *ngIf="showDeleteEdit">
     <button mat-raised-button (click)="editRecipe()" color="primary" [routerLink]="null"> Edit </button>
     <button mat-raised-button (click)="deleteRecipe()" color="warn" [routerLink]="null"> Delete </button>
     <mat-error> {{error}} </mat-error>

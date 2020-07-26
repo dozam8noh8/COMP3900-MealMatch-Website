@@ -11,14 +11,14 @@ class ImageSnippet {
   styleUrls: ['./photo-upload.component.scss'],
   template: `
   <label class="image-upload-container btn btn-bwm">
-  <span>Select Image</span>
+  <span style="margin-right: 2.5vw;">Select Image</span>
   <input #imageInput
          type="file"
          accept="image/*"
          (change)="processFile(imageInput)">
   <br/>
 
-  <img *ngIf="existingImageURL" [src]="existingImageURL" height="200"> <br/>
+  <img *ngIf="existingImageURL" style="margin-top: 2vh;" [src]="existingImageURL" height="200"> <br/>
 </label>
 `
 })

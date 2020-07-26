@@ -14,17 +14,17 @@ import { Router } from '@angular/router';
   selector: 'app-profile-page',
   styleUrls: ['profile-page.component.scss'],
   template: `
-  <h1>  Welcome to your recipe dashboard {{ username }}!</h1>
-  <div>
+  <h1 style="margin-left: 1.5vw; font-weight: lighter; font-size: 5vh; margin-top: 4vh;">  Welcome to your recipe dashboard, {{ username }}!</h1>
+  <div style="margin-left: 10vw; margin-top: 5vh; margin-bottom: 2vh;">
     <app-photo-upload (uploadEmitter)="setProfilePhoto($event)" [existingImageURL]="profile_pic">
     </app-photo-upload>
     <span *ngIf="photoIsUploading">Uploading...</span>
     <span *ngIf="!photoIsUploading">
-      <button (click)="uploadPhoto()" [disabled]="!recipeImage || photoUploadComplete"> SAVE PHOTO CHANGE </button>
+      <button (click)="uploadPhoto()" [disabled]="!recipeImage || photoUploadComplete" class="submitButton"> Save Photo Change </button>
     </span>
   </div>
 
-  <button (click)="handleAddRecipe()"> Add a new recipe </button>
+  <button mat-raised-button color="primary" class="submitButton" (click)="handleAddRecipe()" style="margin-left: 1.5vh; font-size: 2vh;"> Add a new recipe </button>
 
   <div *ngIf="recipes && recipes.length > 0; else noRecipes" class="all-recipes-container">
     <div class="container" *ngFor="let recipe of recipes">
@@ -34,7 +34,7 @@ import { Router } from '@angular/router';
   </div>
   <ng-template #noRecipes >
     <h1 *ngIf="!loading"> You have no recipes </h1>
-    <mat-spinner *ngIf="loading"> </mat-spinner>
+    <mat-spinner *ngIf="loading" style="margin-left: 47%;"> </mat-spinner>
   </ng-template>
 
 `
