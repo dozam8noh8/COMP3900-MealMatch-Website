@@ -68,8 +68,8 @@ export class IngredientService {
           this.allIngredients.push(item);
           return item;
         });
-        this._reloadRecommendedIngredients();
       });
+      this._reloadRecommendedIngredients();
 
       if(callback) callback(this.allIngredients);
 
@@ -135,7 +135,10 @@ export class IngredientService {
   }
 
   removeAllFromList() {
-    this.addedIngredients.map(ingredient => this.removeFromList(ingredient));
+    this.addedIngredients.forEach(ingredient => ingredient.onList = false);
+    this.addedIngredients = [];
+    this.saveIngredients();
+    this._reloadRecommendedIngredients();
   }
 
   // TODO We should have these preferences saved per user. (Maybe in session storage?)
