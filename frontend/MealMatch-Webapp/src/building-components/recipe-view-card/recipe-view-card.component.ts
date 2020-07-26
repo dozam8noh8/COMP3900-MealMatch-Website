@@ -19,10 +19,10 @@ import { map, finalize } from 'rxjs/operators';
 </mat-card-header>
     <div class="clickableLink" [routerLink]="link" style="cursor: pointer">
     <div *ngIf="recipe.image" >
-        <img src="{{recipe.image}}" style="width: 100%;">
+        <img src="{{recipe.image}}" style="width: 100%; border-radius: 2.5%;">
     </div>
     <div *ngIf="!recipe.image">
-        <img [src]="recipeImagePlaceholder" style="width: 100%;">
+        <img [src]="recipeImagePlaceholder" style="width: 100%; border-radius: 2.5%;">
     </div>
 
     <b>{{recipe.name}}</b> <br>
