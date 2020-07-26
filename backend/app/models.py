@@ -237,11 +237,10 @@ class Recipe(db.Model):
                               .filter(RecipeIngredients.recipe_id == recipe.id)
                               .all()
         )
-        recipe_ingredients.sort()
-
         ingredients = [(x['name'], x['quantity']) for x in ingredients]
-        ingredients.sort()
-        if recipe_ingredients != ingredients:
+
+        if sorted(recipe_ingredients) != sorted(ingredients):
+            # Ingredients have changed, updating db..
             RecipeIngredients.query.filter_by(recipe_id=recipe.id).delete()
             for name, quantity in ingredients:
                 ingredient = Ingredient.query.filter(func.lower(Ingredient.name) == func.lower(name)).first()
