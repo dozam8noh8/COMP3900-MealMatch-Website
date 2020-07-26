@@ -1,6 +1,13 @@
 from app import db, jwt, time, app, generate_password_hash, check_password_hash, ma
-from sqlalchemy import func, desc
+from sqlalchemy import func, desc, event
 from app.ErrorException import ErrorException
+from sqlalchemy.engine import Engine
+
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
 
 userRatings = db.Table('user_ratings',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
@@ -8,7 +15,7 @@ userRatings = db.Table('user_ratings',
 )
 
 recipeRatings = db.Table('recipe_ratings',
-    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id'), primary_key=True),
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id', ondelete='cascade'), primary_key=True),
     db.Column('rating_id', db.Integer, db.ForeignKey('rating.id'), primary_key=True)
 )
 
@@ -57,7 +64,7 @@ ingredientCategories = db.Table('ingredient_categories',
 )
 
 recipeMealTypes = db.Table('recipe_mealtypes',
-    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id')),
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id', ondelete='cascade')),
     db.Column('mealtype_id', db.Integer, db.ForeignKey('mealtype.id'))
 )
 
@@ -273,7 +280,7 @@ class Recipe(db.Model):
 class RecipeIngredients(db.Model):
     __tablename__ = 'recipe_ingredients'
     id = db.Column(db.Integer, primary_key=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id', ondelete='cascade'))
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredient.id'))
     quantity = db.Column(db.Text)
 
