@@ -10,14 +10,14 @@ import { map, finalize } from 'rxjs/operators';
     styleUrls: ['recipe-view-card.component.scss'],
     template: `
 
-<mat-card class="recipe" >
+<mat-card class="recipe" style="display: flex; flex-direction: column">
 <ng-container *ngIf="!loading">
-<mat-card-header [routerLink]="link" style="cursor: pointer">
+<div [routerLink]="link" style="cursor: pointer; flex: 1;" class="invisible-outline"> 
+<mat-card-header >
 <div mat-card-avatar style="background-image: url({{recipe.image}});background-size: cover;"></div>
 <mat-card-title>{{recipe.name}}</mat-card-title>
 <mat-card-subtitle>Primary Mealtype: {{recipe.mealtypes[0].name}}</mat-card-subtitle>
 </mat-card-header>
-    <div class="clickableLink" [routerLink]="link" style="cursor: pointer">
     <div *ngIf="recipe.image" >
         <img src="{{recipe.image}}" style="width: 100%; border-radius: 2.5%;">
     </div>
@@ -30,9 +30,10 @@ import { map, finalize } from 'rxjs/operators';
         <span *ngFor="let ingredient of recipe.ingredients">
             {{ingredient["ingredient.name"]}}, <!-- Should not have comma for last ingredient -->
         </span>
-    </i>
-    </div>
-    <div style="position: absolute;bottom: 0; width: 95%;" *ngIf="showDeleteEdit">
+    </i>    
+</div>
+
+    <div style="position: absolute;bottom: 0; width: 95%; flex: 2" *ngIf="showDeleteEdit">
     <button mat-raised-button (click)="editRecipe()" color="primary" [routerLink]="null"> Edit </button>
     <button mat-raised-button (click)="deleteRecipe()" color="warn" [routerLink]="null"> Delete </button>
     <mat-error> {{error}} </mat-error>

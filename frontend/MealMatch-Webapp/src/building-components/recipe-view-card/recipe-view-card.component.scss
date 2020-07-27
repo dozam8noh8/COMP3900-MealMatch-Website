@@ -18,3 +18,12 @@
 .recipe:hover {
     background-color: lightgray;
 }
+
+.invisible-outline {
+    border: none;
+    box-shadow: none;
+}
+
+.invisible-outline:hover {
+    background-color: lightgray;
+}

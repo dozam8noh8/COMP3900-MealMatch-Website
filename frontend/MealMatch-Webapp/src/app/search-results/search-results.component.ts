@@ -25,15 +25,13 @@ import { FormBuilder } from '@angular/forms';
                   <mat-spinner *ngIf=!searchComplete() style="margin-left: 45%; margin-top: 15%;"> Showing spinner </mat-spinner>
               </div>
 
-              <div *ngIf="searchComplete() && getResults().length > 0">
-                  <div class="columned" style="margin-left: 2%;">
-                      <div *ngFor="let recipe of getResults()" style="width: 400px">
-                          <a routerLink="/recipe/{{recipe.id}}" style="text-decoration: none; margin-top: 2%;">
+              <ng-container *ngIf="searchComplete() && getResults().length > 0">
+                  <ng-container class="columned" style="margin-left: 2%;">
+                      <ng-container *ngFor="let recipe of getResults()">
                               <app-recipe-view-card [recipe]="recipe"></app-recipe-view-card>
-                          </a>
-                      </div>
-                  </div>    
-              </div>
+                      </ng-container>
+                  </ng-container>    
+              </ng-container>
 
               <div layout="row" layout-fill layout-align="center center">
                   <div *ngIf="searchComplete() && getResults().length === 0" style="margin-left: 35%; margin-top: 10%">
