@@ -2,6 +2,10 @@
 
 #recommendedIngredientsSection {
     margin: 0 auto;
+    border-radius: 10px;
+    margin-left: 0;
+    width: 80%;
+    height: 84%;
     overflow: auto;
     align-content: center;
     // This makes the text padding the same as the user list item padding
@@ -17,10 +21,11 @@
 
 .ingredient-item {
     float: left;
-    background-color: rgb(179, 99, 253);
+    background-color: rgb(72,209,204);
     margin-right: 7px;
     margin-bottom: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
+    padding-right: 10px;
     padding: 0.5vh 0.5vw 0.5vh 0.5vw;
 }
 

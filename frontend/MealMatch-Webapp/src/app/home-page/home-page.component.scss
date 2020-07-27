@@ -2,6 +2,7 @@
 
 #search-section {
     margin: 0 auto;
+    padding-top: 3vh;
     width: 50%; 
     border-color: black;
     align-items: center;
@@ -26,4 +27,21 @@ app-input-list {
 app-recommend-ingredients {
     order: 2;
     flex-grow: 1;
+}
+
+.homepage-div{
+  background-image: url("homeBackground.jpg");
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.submitButton {
+    margin: 0 auto; 
+    border-radius: 25px; 
+    width: 25vw; 
+    height: 50px;
+    font-weight: lighter;
+    font-size: 2vw;
+    color: #008080;
 }

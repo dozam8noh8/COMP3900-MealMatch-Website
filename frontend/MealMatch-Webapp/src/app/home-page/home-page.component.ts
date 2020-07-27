@@ -9,14 +9,16 @@ import { Ingredient } from '../models/ingredient';
 @Component({
   selector: 'app-home-page',
   styleUrls: ['./home-page.component.scss'],
-  template: `
-              <mat-card id="search-section">
-                <h1> Search for ingredient </h1>
-                <app-search-bar
-                [allItems]="getAllIngredients()"
-                [itemAsString]="ingredientAsString"
-                [additionalFiltering]="notOnList"
-                (selectedItemEmitter)="addToList($event)"></app-search-bar>
+  template: `<div class="homepage-div">
+              <mat-card id="search-section" style="margin-top: 18px; width: 75vw; border-radius: 10px;">
+                <h1 style="font-weight: lighter; font-size: 2.5vw;"> Search for ingredient </h1>
+                <div style="width: 60%; margin-left:20%;">
+                  <app-search-bar
+                  [allItems]="getAllIngredients()"
+                  [itemAsString]="ingredientAsString"
+                  [additionalFiltering]="notOnList"
+                  (selectedItemEmitter)="addToList($event)"></app-search-bar>
+                </div>
               </mat-card>
               <br/>
               <br/>
@@ -30,6 +32,9 @@ import { Ingredient } from '../models/ingredient';
               <br>
               <br>
               <form [formGroup]="ingredientSearchForm" (ngSubmit)="submitIngredients()">
+                <div style="text-align: center; margin-bottom: 15vh;">
+                  <button mat-raised-button type="submit" color="white" class=submitButton>Search for recipes</button>
+                </div>
 
                 <mat-form-field appearance="fill">
                   <mat-label>Meal Type</mat-label>
@@ -41,11 +46,8 @@ import { Ingredient } from '../models/ingredient';
                       </mat-option>
                   </mat-select>
                 </mat-form-field>
-
-                <div style="text-align: center;">
-                  <button mat-raised-button type="submit" color="primary" sytle="margin: 0 auto;">Search for recipes</button>
-                </div>
               </form>
+              </div>
             `
 })
 export class HomePageComponent implements OnInit {

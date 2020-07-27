@@ -7,7 +7,7 @@ import { Ingredient } from 'src/app/models/ingredient';
   styleUrls: ['./recommend-ingredients.component.scss'],
   template: `
                 <mat-card id="recommendedIngredientsSection">
-                  <h3>Do you also have:</h3>
+                  <h2 style="font-weight: heavier">Do you also have:</h2>
 
                   <div *ngIf="getRecommendedIngredients().length <= 0; then thenBlock else elseBlock"> </div>
                   <ng-template #thenBlock> <p class="ingredient-text">No ingredient to recommend</p> </ng-template>

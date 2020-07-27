@@ -1,6 +1,7 @@
 #my-ingredients-section {
     margin: 0 auto;
-    // width: 75%; 
+    border-radius: 10px;
+    width: 83%; 
     overflow: auto;
     align-content: center;
     // This makes the text padding the same as the user list item padding
@@ -15,10 +16,10 @@
 
 .user-list-item {
     float: left;
-    background-color: rgb(65, 215, 253);
+    background-color: rgb(127,255,212);
     margin-right: 7px;
     margin-bottom: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     padding: 0.5vh 0.5vw 0.5vh 0.5vw;
 }
 
