@@ -14,7 +14,7 @@ import { FormBuilder } from '@angular/forms';
                   <mat-select 
                   matNativeControl
                   formControlName="selectedMealType"
-                  (selectionChange)="updateMealType($event.value)">
+                  (selectionChange)="updateSearchMealType($event.value)">
                       <mat-option *ngFor="let mealtype of allMealTypes" 
                       [value]="mealtype">
                           {{mealtype}}
@@ -39,8 +39,8 @@ import { FormBuilder } from '@angular/forms';
                   <div *ngIf="searchComplete() && getResults().length === 0" style="margin-left: 35%; margin-top: 10%">
                       <h1 style="font-weight: heavier; font-size: 3em" class="copperplate">We're Sorry</h1>
                       <h1 style="font-weight: lighter; font-size: 1.5em" class="copperplate">We can't seem to find any 
-                          <span *ngIf="!selectedMealType || selectedMealType !== 'All'"> "{{selectedMealType}}" </span>
-                              recipes with: 
+                          <span *ngIf="getSelectedMealType() !== 'All'"> "{{getSelectedMealType()}}" </span>
+                              recipes with just: 
                       </h1>
                       <ul *ngFor="let ingredient of getSearchedIngredients()">
                           <li class="copperplate">{{ingredient}}</li>
@@ -54,17 +54,16 @@ import { FormBuilder } from '@angular/forms';
 export class SearchResultsComponent implements OnInit {
 
   formForMealType;
-  selectedMealType: string;
   allMealTypes: string[];
 
   constructor(
     private router: Router, 
     private searchService: SearchService,
     private formBuilder: FormBuilder
-    ) {
-      this.formForMealType = this.formBuilder.group({
-        selectedMealType: ''
-      });
+  ) {
+    this.formForMealType = this.formBuilder.group({
+      selectedMealType: ''
+    });
 
     let searchState = this.router.getCurrentNavigation().extras.state;
     
@@ -75,11 +74,7 @@ export class SearchResultsComponent implements OnInit {
 
       // If a list of ingredients was passed from search (home page)
       if(searchState) {
-        // Set the selected meal type as per the search
-        this.selectedMealType = searchState.mealType.name;
-        this.formForMealType.setValue({
-          selectedMealType: searchState.mealType.name
-        })
+        this.updateSearchMealType(searchState.mealType.name);
         this.searchService.searchForRecipes(searchState.searchIngredients);
       }
       else {
@@ -92,18 +87,25 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateMealType(newMealType: string) {
-    this.selectedMealType = newMealType;
+  // Updates the meal type in form
+  updateSearchMealType(newMealType: string) {
+    this.formForMealType.setValue({
+      selectedMealType: newMealType
+    })
+  }
+
+  // Gets the selected meal type from the form field
+  getSelectedMealType(): string {
+    return this.formForMealType.get('selectedMealType').value;
   }
 
   getResults() {
-    if(!this.selectedMealType || this.selectedMealType==="All") {
+    if(!this.getSelectedMealType() || this.getSelectedMealType()==="All") {
       return this.searchService.getAllResults();
-
     } else {
       // Get the recipes that have the selected meal type as one of its meal types
       return this.searchService.getAllResults().filter(recipe => {
-        return recipe.mealtypes.some( elem => (elem.name === this.selectedMealType));
+        return recipe.mealtypes.some( elem => (elem.name === this.getSelectedMealType()) );
       })
     }
 
