@@ -20,7 +20,9 @@ export class SearchService {
   }
 
   searchForRecipes(ingredients: Ingredient[], mealtype: string) {
+    this.searchComplete = false;
     this.inputIngredients = ingredients;
+    this.setMealType(mealtype);
     this.http.post("http://localhost:5000/api/recipe_search", {
       "ingredients": ingredients
     })
