@@ -12,13 +12,14 @@ export class SearchService {
 
   searchComplete = false;
   inputIngredients: Ingredient[];
+  currentMealType: string;
   allResults: Recipe[];
 
   constructor(private http: HttpClient) {
     
   }
 
-  searchForRecipes(ingredients: Ingredient[]) {
+  searchForRecipes(ingredients: Ingredient[], mealtype: string) {
     this.inputIngredients = ingredients;
     this.http.post("http://localhost:5000/api/recipe_search", {
       "ingredients": ingredients
@@ -42,6 +43,14 @@ export class SearchService {
         return data;
       })
     )
+  }
+
+  setMealType(mealtype: string) {
+    this.currentMealType = mealtype;
+  }
+
+  getMealType(): string {
+    return this.currentMealType;
   }
 
 }

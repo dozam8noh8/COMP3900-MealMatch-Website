@@ -71,10 +71,10 @@ export class SearchResultsComponent implements OnInit {
       let searchState = this.router.getCurrentNavigation().extras.state;
       if(searchState) { // If a list of ingredients was passed from search (home page)
         this.updateSearchMealType(searchState.mealType.name);
-        this.searchService.searchForRecipes(searchState.searchIngredients);
+        this.searchService.searchForRecipes(searchState.searchIngredients, searchState.mealType.name);
       }
       else { // The user navigated to page by e.g. back button
-        // Get the previously search results
+        this.updateSearchMealType(searchService.getMealType());
       }
       
       this.searchService.getAllMealTypes()
@@ -89,11 +89,12 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // Updates the meal type in the form
+  // Updates the meal type in the form and searchService
   updateSearchMealType(newMealType: string) {
     this.formForMealType.setValue({
       selectedMealType: newMealType
-    })
+    });
+    this.searchService.setMealType(newMealType);
   }
 
   // Gets the selected meal type from the form field
