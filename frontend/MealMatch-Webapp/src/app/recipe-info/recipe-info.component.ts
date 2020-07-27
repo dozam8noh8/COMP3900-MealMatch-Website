@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { RecipeService } from '../services/recipe.service';
 import {Recipe} from '../models/recipe';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -49,13 +49,20 @@ export class RecipeInfoComponent implements OnInit {
   recipePlaceholder = 'assets/images/recipe_placeholder.jpg';
   
   constructor(
-    private recipeService: RecipeService, 
-    private route: ActivatedRoute
+    private recipeService: RecipeService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe( params => {
-      this.getRecipeDetails(Number(params.get('id')));
+      let recipeId = params.get('id');
+      // If parameter 'id' is not a number
+      if (!recipeId || isNaN(+recipeId)) {
+        this.router.navigate(['/notfound']);
+        return;
+      }
+      this.getRecipeDetails(Number(recipeId));
     });
 
   }
@@ -63,7 +70,15 @@ export class RecipeInfoComponent implements OnInit {
   getRecipeDetails(repId: number) {
     this.recipeService.getRecipeDetails(repId)
     .subscribe( (data: Recipe) => {
-      this.recipe = data
+      
+      if( Object.keys(data).length === 0 ) { // If data is empty
+        this.router.navigate(['/notfound']);
+      } else {
+        this.recipe = data;
+      }
+    },
+    (error) => { 
+      console.log(error);
     });
   }
 
