@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
     </app-photo-upload>
     <span *ngIf="photoIsUploading">Uploading...</span>
     <span *ngIf="!photoIsUploading">
-      <button (click)="uploadPhoto()" [disabled]="!recipeImage || photoUploadComplete" class="submitButton"> Save Photo Change </button>
+      <button (click)="uploadPhoto()" [disabled]="!newProfilePhotoFile || photoUploadComplete" class="submitButton"> Save Photo Change </button>
     </span>
   </div>
 
@@ -45,7 +45,7 @@ export class ProfilePageComponent implements OnInit {
   email: string;
   profile_pic = "assets/images/user_placeholder.jpg";
   recipes: Recipe[];
-  recipeImage: File;
+  newProfilePhotoFile: File;
   loading = true;
   photoIsUploading = false;
   photoUploadComplete = false;
@@ -69,28 +69,28 @@ export class ProfilePageComponent implements OnInit {
       this.recipes = res.recipes;
     });
   }
+  // Called when edit recipe button is clicked on a child recipe-view-card component.
   handleEditRecipe(recipeId: number) {
-    // Redirect to create recipe page.
-    let recipe = this.recipes.filter(recipe => recipe.id === recipeId);
-    let paramObject = JSON.stringify(recipe); // Contains stringified object
+    // Redirect to edit recipe page with the id of the recipe being edited as the param.
     this.router.navigate(['/edit', recipeId]);
-    //send api call
   }
-  // Delete the recipe that was emitted by child to be deleted.
+  // Delete the recipe from the view that was emitted by child to be deleted. It is deleted in backend by child.
   handleDeleteRecipe(recipeToDelete: number) {
     this.recipes = this.recipes.filter(recipe => recipe.id !== recipeToDelete)
   }
 
+  // Set a user's profile image based on what is selected and emitted from the photo upload component.
   setProfilePhoto(file: File) {
-    console.log("Setting profile photo")
-    this.recipeImage = file;
+    this.newProfilePhotoFile = file;
     this.photoUploadComplete = false;
   }
+
+  // Upload a profile picture
   uploadPhoto(){
     console.log("Uploading photo")
     this.photoIsUploading = true;
-    if (this.recipeImage){
-      this.imageService.uploadProfileImage(this.recipeImage).subscribe((res:any) => {
+    if (this.newProfilePhotoFile){
+      this.imageService.uploadProfileImage(this.newProfilePhotoFile).subscribe((res:any) => {
         this.profile_pic = `http://localhost:5000/static/${res.msg}`
         this.photoIsUploading = false;
         this.photoUploadComplete = true;
