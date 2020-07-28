@@ -103,7 +103,7 @@ export class HomePageComponent implements OnInit {
   }
 
   addToList(ingredient: Ingredient) {
-    this.ingredientService.addToList(ingredient);
+    this.ingredientService.addToList(ingredient.id);
   }
 
 }

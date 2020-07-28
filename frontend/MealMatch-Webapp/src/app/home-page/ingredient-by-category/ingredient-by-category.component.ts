@@ -41,7 +41,7 @@ export class IngredientByCategoryComponent implements OnInit {
   addOrRemove(ingredient: Ingredient) {
     ingredient.onList 
       ? this.ingredientService.removeFromList(ingredient)
-      : this.ingredientService.addToList(ingredient);
+      : this.ingredientService.addToList(ingredient.id);
   }
 
   getAllCategories(): Category[] {

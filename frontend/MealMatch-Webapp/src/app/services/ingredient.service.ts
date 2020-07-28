@@ -112,7 +112,9 @@ export class IngredientService {
     return this.addedIngredients;
   }
 
-  addToList(newIngredient: Ingredient) {
+  addToList(ingredientId: number) {
+    // Find the ingredient with corresponding ID
+    let newIngredient = this.allIngredients.find(ing => ing.id===ingredientId);
     newIngredient.onList = true;
     this.addedIngredients.push(newIngredient);
     this.saveIngredients();

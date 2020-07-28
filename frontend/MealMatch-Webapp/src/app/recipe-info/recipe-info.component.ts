@@ -34,8 +34,11 @@ import { ActivatedRoute, Router } from '@angular/router';
                         </div>
                         <div>
                             <h2 style="font-weight:lighter; font-size: 2em">Steps</h2>
-                            <!-- <p [innerHTML]="recipe.instructions"></p> -->
-                            {{recipe.instruction}}
+                            <ol style="display: inline-block;">
+                              <div *ngFor="let instruction of instructions">
+                                <li>{{instruction}}</li>
+                              </div>
+                            </ol>
                         </div>
                     </div>
                 </mat-card>
@@ -47,6 +50,7 @@ export class RecipeInfoComponent implements OnInit {
 
   recipe: Recipe;
   recipePlaceholder = 'assets/images/recipe_placeholder.jpg';
+  instructions: string[] = [];
   
   constructor(
     private recipeService: RecipeService,
@@ -75,6 +79,7 @@ export class RecipeInfoComponent implements OnInit {
         this.router.navigate(['/notfound']);
       } else {
         this.recipe = data;
+        this.instructions = this.recipe.instruction.split('\n');
       }
     },
     (error) => { 
