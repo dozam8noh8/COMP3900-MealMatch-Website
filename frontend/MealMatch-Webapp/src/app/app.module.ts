@@ -52,6 +52,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { RecommendIngredientsComponent } from './home-page/recommend-ingredients/recommend-ingredients.component';
 import { InputListComponent } from './home-page/input-list/input-list.component';
+import { DisplayCommentsComponent } from './recipe-info/display-comments/display-comments.component';
+import { StarSystemComponent } from './star-system/star-system.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -101,7 +103,9 @@ const materialModules = [
     PageNotFoundComponent,
     SearchBarComponent,
     RecommendIngredientsComponent,
-    InputListComponent
+    InputListComponent,
+    DisplayCommentsComponent,
+    StarSystemComponent
   ],
   imports: [
     BrowserModule,

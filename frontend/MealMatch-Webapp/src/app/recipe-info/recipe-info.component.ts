@@ -41,6 +41,8 @@ import { ActivatedRoute, Router } from '@angular/router';
                             </ol>
                         </div>
                     </div>
+                  <app-display-comments style="width: 90%"
+                  [recipeId]="recipe.id"></app-display-comments>
                 </mat-card>
                 </ng-container>
                 </div>
