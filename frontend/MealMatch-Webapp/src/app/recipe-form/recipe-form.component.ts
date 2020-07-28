@@ -17,89 +17,81 @@ import { validateHorizontalPosition } from '@angular/cdk/overlay';
   selector: 'app-recipe-form',
   styleUrls: ['./recipe-form.component.scss'],
   template: `
-            <div class="container">
-              <form [formGroup]="recipeFormGroup" (ngSubmit)="saveRecipeDetails()">
-                <h2> Recipe Name </h2>
-                <mat-form-field class="inputFields">
-                <input matInput type="text" placeholder="Recipe Name" formControlName="recipeName" required>
-                <mat-error>
-                    Please give your recipe a title.
-                </mat-error>
-              </mat-form-field>
-
-
+  <div class="container">
+    <form [formGroup]="recipeFormGroup" (ngSubmit)="saveRecipeDetails()">
+        <div class="flex-container">
+            <div>
                 <div #Image *ngIf="recipeDetails && recipeDetails.image; else noImage">
-                <h2 > Change recipe image ... </h2>
-                  <app-photo-upload 
-                  (uploadEmitter)="maintainRecipeImage($event)"
-                  [existingImageURL]="recipeDetails.image"></app-photo-upload>
+                    <h2 class="title"> Change recipe image ... </h2>
+                    <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"
+                        [existingImageURL]="recipeDetails.image">
+                    </app-photo-upload>
                 </div>
-
                 <ng-template #noImage>
-                <h2 > Upload an image ... </h2>
-                  <app-photo-upload 
-                  (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
+                    <h2 class="title"> Upload an image ... </h2>
+                    <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
                 </ng-template>
-
-
-                <h2> Mealtype </h2>
-                <mat-form-field appearance="fill" class="select">
-                  <mat-select formControlName="mealType">
-                    <mat-option *ngFor="let mealtype of allMealTypes" [value]="mealtype">
-                      {{mealtype}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error>
-                    Choose a mealtype
-                  </mat-error>
+            </div>
+            <div class="form">
+                <h2 class="title"> Recipe Name </h2>
+                <mat-form-field class="inputFields form-field">
+                    <input matInput type="text" placeholder="Recipe Name" formControlName="recipeName" required>
+                    <mat-error>
+                        Please give your recipe a title.
+                    </mat-error>
                 </mat-form-field>
 
-
-
-                <h2> Ingredients </h2>
-                  <div *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIngredient">
-                    <app-ingredient-slot
-                    [formGroup]="slot"
-                    [formArray]="ingredientSlots"
-                    [position]="index"
-                    (removeIngredient)="removeSlot($event)"
-                    [addedIngredients]="addedIngredients$ | async"> </app-ingredient-slot>
-                  </div>
-                <button type="button" (click)="addSlot()">Add an ingredient</button>
-
-
-
-
-                <h2> Instructions </h2>
-                <mat-form-field appearance="fill" class="inputFields" style="width: 50%;">
-                  <textarea matInput rows="10" formControlName="instructions"></textarea>
-                  <mat-error>
-                    Enter some instructions
-                  </mat-error>
+                <h2 class="title"> Mealtype </h2>
+                <mat-form-field appearance="fill" class="select form-field">
+                    <mat-select formControlName="mealType">
+                        <mat-option *ngFor="let mealtype of allMealTypes" [value]="mealtype">
+                            {{mealtype}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        Choose a mealtype
+                    </mat-error>
                 </mat-form-field>
-                <br/>
 
-
-                <div *ngIf="!submitting">
-                  <div *ngIf="!submissionComplete">
-                    <button type="submit">Save</button>
-                    <div *ngIf="completionErrorMessage">
-                      {{completionErrorMessage}}
-                    </div>
-                  </div>
-
-                <div *ngIf="submissionComplete">
-                  {{completionSuccessMessage}} <br/>
-                  <a routerLink="/dashboard">Back to Dashboard</a>
-                  <a style="margin: 3vw;"[routerLink]="'/recipe/' + completedRecipeId ">View Recipe</a>
-
+                <h2 class="title"> Ingredients </h2>
+                <div *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIngredient">
+                    <app-ingredient-slot [formGroup]="slot" [formArray]="ingredientSlots" [position]="index"
+                        (removeIngredient)="removeSlot($event)" [addedIngredients]="addedIngredients$ | async">
+                    </app-ingredient-slot>
                 </div>
-                <mat-error *ngIf="formInvalid && !recipeFormGroup.valid"> Please make sure all fields are filled </mat-error>
-              </div>
-          </form>
-        </div>
+                <button mat-raised-button class="form-field" color="primary" type="button" (click)="addSlot()">Add an
+                    ingredient</button>
 
-`
+                <h2 class="title"> Instructions </h2>
+                <mat-form-field appearance="fill" class="inputFields" style="width: 100%;">
+                    <textarea matInput rows="10" formControlName="instructions"></textarea>
+                    <mat-error>
+                        Enter some instructions
+                    </mat-error>
+                </mat-form-field>
+                <br />
+                <div *ngIf="!submitting">
+                    <div *ngIf="!submissionComplete">
+                        <button mat-raised-button style="width: 25%" color="primary" type="submit">Save</button>
+                        <h2 *ngIf="completionErrorMessage">
+                            {{completionErrorMessage}}
+                        </h2>
+                    </div>
+
+                    <h2 *ngIf="submissionComplete">
+                        {{completionSuccessMessage}} <br />
+                        <button mat-raised-button color="primary" routerLink="/dashboard">Back to Dashboard</button>
+                        <button mat-raised-button color="primary" style="margin: 1.5vw;"
+                            [routerLink]="'/recipe/' + completedRecipeId ">View Recipe</button>
+                    </h2>
+                    <mat-error *ngIf="formInvalid && !recipeFormGroup.valid"> Please make sure all fields are filled
+                    </mat-error>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+  `
 })
 export class RecipeFormComponent implements OnInit {
   // Optional recipeDetails to initialise recipe form with.

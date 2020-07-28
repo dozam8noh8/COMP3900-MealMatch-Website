@@ -3,12 +3,12 @@
         {
             "name": "Grilled Cheese Buns",
             "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Grilled_Cheese_with_hoisin.jpg",
-            "instruction": "Grill buns with cheese in it",
+            "instruction": "Grill buns with cheese in it. Serve when cheese is fully melted or buns are golden brown.",
             "mealtype": "Miscellaneous",
             "ingredients": [
                 {
                     "name": "Buns",
-                    "quantity": "1 bun"
+                    "quantity": "2 buns"
                 },
                 {
                     "name": "Cheese Slices",
@@ -19,7 +19,7 @@
         {
             "name": "Noodles",
             "image": "https://live.staticflickr.com/4814/30979161127_65de182a52_b.jpg",
-            "instruction": "Boil noodles with water",
+            "instruction": "Boil a saucepan full of boiling water.\nBoil noodles according to packet specifications.\nServe.",
             "mealtype": "Miscellaneous",
             "ingredients": [
                 {

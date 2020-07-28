@@ -13,27 +13,36 @@ import { MatInput } from '@angular/material/input';
   selector: 'app-ingredient-slot',
   styleUrls: ['./ingredient-slot.component.scss'],
   template: `
-              <input type="text" placeholder="quantity"
-              [formControl]="formGroup.get('quantity')">
+              <div class="flex-container">
+                <div style="display: flex; align-items: center; margin-right: 8px">
+                  <input type="text" placeholder="quantity"
+                  [formControl]="formGroup.get('quantity')">
+                </div>
 
-              <mat-form-field style="width: 50%;">
-                  <input type="text"
-                  placeholder="Input an ingredient"
-                  matInput
-                  [formControl]="formGroup.get('name')"
-                  [matAutocomplete]="auto"
-                  >
-                  <mat-autocomplete
-                  autoActiveFirstOption
-                  #auto="matAutocomplete"
-                  [displayWith]="displayIngredient"
-                  (optionSelected)="addToList($event.option.value)">
-                      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                          {{option.name}}
-                      </mat-option>
-                  </mat-autocomplete>
-              </mat-form-field>
-              <button type="button" (click)="removeSelf()">Remove ingredient</button>
+                <div style="flex-grow: 8">
+                  <mat-form-field style="width: 90%">
+                      <input type="text"
+                      placeholder="Input an ingredient"
+                      matInput
+                      [formControl]="formGroup.get('name')"
+                      [matAutocomplete]="auto"
+                      >
+                      <mat-autocomplete
+                      autoActiveFirstOption
+                      #auto="matAutocomplete"
+                      [displayWith]="displayIngredient"
+                      (optionSelected)="addToList($event.option.value)">
+                          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                              {{option.name}}
+                          </mat-option>
+                      </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+                
+                <div>
+                  <button mat-raised-button color="warn" type="button" (click)="removeSelf()">Remove ingredient</button>
+                </div>
+              </div>
 
               <div *ngIf="!ingredientIsValid">
                 <em>This ingredient does not exist. Would you like to add to our collection of ingredients?</em>
