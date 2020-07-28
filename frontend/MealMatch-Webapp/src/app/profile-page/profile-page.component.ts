@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   template: `
   <h1 style="margin-left: 1.5vw; font-weight: lighter; font-size: 5vh; margin-top: 4vh;">  Welcome to your recipe dashboard, {{ username }}!</h1>
   <div style="margin-left: 10vw; margin-top: 5vh; margin-bottom: 2vh; width: 50%; position: right;">
-    <app-photo-upload (uploadEmitter)="setProfilePhoto($event)" [existingImageURL]="profile_pic">
+    <app-photo-upload (uploadEmitter)="setProfilePhoto($event)" [existingImageURL]="profile_pic" [loading]="loading">
     </app-photo-upload>
     <span *ngIf="photoIsUploading">Uploading...</span>
     <span *ngIf="!photoIsUploading">

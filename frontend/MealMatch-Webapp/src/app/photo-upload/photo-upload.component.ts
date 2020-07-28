@@ -16,19 +16,24 @@ class ImageSnippet {
          type="file"
          accept="image/*"
          (change)="processFile(imageInput)">
-  <br/>
-
-  <img *ngIf="existingImageURL" style="margin-top: 2vh;" [src]="existingImageURL" height="200"> <br/>
+  <br>
+  <div class="preview-image">
+    <img *ngIf="existingImageURL && !loading" [src]="existingImageURL"> <br>
+    <mat-spinner *ngIf="loading"> </mat-spinner>
+  </div>
 </label>
 `
 })
 // https://www.freecodecamp.org/news/how-to-make-image-upload-easy-with-angular-1ed14cb2773b/
 
 export class PhotoUploadComponent {
-
-  selectedFile: ImageSnippet;
   @Output() uploadEmitter = new EventEmitter<File>();
-  @Input() existingImageURL;
+
+  @Input() existingImageURL: string | ArrayBuffer;
+  @Input() loading: boolean;
+
+  private selectedFile: ImageSnippet;
+
   constructor(){}
 
   processFile(imageInput: any) {
