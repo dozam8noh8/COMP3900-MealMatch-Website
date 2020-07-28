@@ -250,7 +250,7 @@ def rating(id):
         comment = request.json.get('comment')
         user = User.query.filter_by(id=request.json.get('user_id')).first()
         recipe = Recipe.query.filter_by(id=id).first()
-        new_rating = Rating(rating=rating, comment=comment)
+        new_rating = Rating(rating=int(rating), comment=comment)
         # Check if rating already exists by a user
         for user_rating in user.rating:
             for rating_recipe in user_rating.recipe:
@@ -259,12 +259,12 @@ def rating(id):
                     user_rating.comment = comment
                     db.session.commit()
                     return jsonify({'id':user_rating.id, 'rating':user_rating.rating, 'comment': user_rating.comment})
-        return jsonify(Rating.json_dump(user.rating))
+        # return jsonify(Rating.json_dump(user.rating))
         recipe.rating.append(new_rating)
         user.rating.append(new_rating)
         db.session.add(new_rating)
         db.session.commit()
-        return jsonify(Rating.json_dump(new_rating))
+        return jsonify({'id':new_rating.id, 'rating':new_rating.rating, 'comment': new_rating.comment})
     recipe = Recipe.query.filter_by(id=id).first()
     ratings = recipe.rating
     return jsonify(Rating.json_dump(ratings))
