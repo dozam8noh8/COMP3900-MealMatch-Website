@@ -136,7 +136,7 @@ def get_auth_token():
         as an alternative to a username and password authentication.
 
         - Once a token has been acquired, it will be appended to the authorisation header of loggedIn only requests.
-        - The token will only last a certain amount of time (currently 12000 seconds) before
+        - The token will only last a certain amount of time (currently 24000 seconds) before
         a user must request another using their username and password.
         - To get this token, a user must send their username connected with their password
         as a base64 encoded string as part of the authorization header of the get request to this route.
@@ -146,8 +146,8 @@ def get_auth_token():
         Also see HTTP Basic Authentication
 
     '''
-    token = g.user.generate_auth_token(12000)
-    return jsonify({'user_id': g.user.id, 'token': token.decode('ascii'), 'duration': 12000, 'statusCode': 200, 'status' : 'success'})
+    token = g.user.generate_auth_token(24000)
+    return jsonify({'user_id': g.user.id, 'token': token.decode('ascii'), 'duration': 24000, 'statusCode': 200, 'status' : 'success'})
 
 @app.route('/api/recipe/<int:id>', methods=['GET'])
 def get_recipe(id):
