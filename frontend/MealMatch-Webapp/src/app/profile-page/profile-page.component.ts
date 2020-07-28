@@ -97,6 +97,7 @@ export class ProfilePageComponent implements OnInit {
       })
     }
   }
+  // Open a the popup that asks if you would like to add a recipe.
   handleAddRecipe() {
     this.dialog.open(AddRecipePopupComponent);
   }
