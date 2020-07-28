@@ -13,9 +13,11 @@ import { MatInput } from '@angular/material/input';
   selector: 'app-ingredient-slot',
   styleUrls: ['./ingredient-slot.component.scss'],
   template: `
+                  <mat-error *ngIf="formGroup.get('quantity').invalid && formSubmitted"> Please enter a quantity </mat-error>
+
               <div class="flex-container">
                 <div style="display: flex; align-items: center; margin-right: 8px">
-                  <input type="text" placeholder="quantity"
+                  <input #quantity type="text" placeholder="quantity"
                   [formControl]="formGroup.get('quantity')">
                 </div>
 
@@ -38,7 +40,7 @@ import { MatInput } from '@angular/material/input';
                       </mat-autocomplete>
                   </mat-form-field>
                 </div>
-                
+
                 <div>
                   <button mat-raised-button color="warn" type="button" (click)="removeSelf()">Remove ingredient</button>
                 </div>
@@ -58,6 +60,8 @@ export class IngredientSlotComponent implements OnInit{
   @Input() addedIngredients: Ingredient[];
   @Input() formGroup: FormGroup; // Controls the quantity and ingredient the slot has.
   @Input() formArray: FormArray;
+  @Input() formSubmitted: boolean;
+
   @Output() removeIngredient = new EventEmitter<number>();
   @Output() updateIngredient = new EventEmitter<any>();
   @Output() updateQuantity = new EventEmitter<any>();
@@ -82,6 +86,7 @@ export class IngredientSlotComponent implements OnInit{
     // Remove "ingredient does not exist message"
     this.formGroup.get('name').disable();
     this.ingredientIsValid = true;
+
   }
 
   private _filter(value: string): Ingredient[] {

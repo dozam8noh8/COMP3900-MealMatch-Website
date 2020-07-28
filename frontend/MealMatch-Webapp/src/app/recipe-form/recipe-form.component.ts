@@ -52,7 +52,7 @@ import { Observable } from 'rxjs';
                 <h2 class="title"> Ingredients </h2>
                 <div *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIngredient">
                     <app-ingredient-slot [formGroup]="slot" [formArray]="ingredientSlots" [position]="index"
-                        (removeIngredient)="removeSlot($event)" [addedIngredients]="addedIngredients$ | async">
+                        (removeIngredient)="removeSlot($event)" [addedIngredients]="addedIngredients$ | async" [formSubmitted]="formInvalid">
                     </app-ingredient-slot>
                 </div>
                 <button mat-raised-button class="form-field" color="primary" type="button" (click)="addSlot()">Add an
@@ -80,7 +80,7 @@ import { Observable } from 'rxjs';
                         <button mat-raised-button color="primary" style="margin: 1.5vw;"
                             [routerLink]="'/recipe/' + completedRecipeId ">View Recipe</button>
                     </h2>
-                    <mat-error *ngIf="formInvalid && !recipeFormGroup.valid"> Please make sure all fields are filled
+                    <mat-error *ngIf="formInvalid "> {{ invalidMessage }}
                     </mat-error>
                 </div>
             </div>
@@ -111,6 +111,7 @@ export class RecipeFormComponent implements OnInit {
   recipeImage: File;
   existingImageURL: string;
   formInvalid: boolean = false;
+  invalidMessage = '';
   // Contains an array of formGroup (name, id and quantity form controls)
   // Representing each slot to add ingredients.
   ingredientSlots: FormArray;
@@ -169,10 +170,19 @@ export class RecipeFormComponent implements OnInit {
     // Only keep slots with valid ingredients
     if (!this.recipeFormGroup.valid){
       this.formInvalid = true;
+      this.invalidMessage = "Please make sure all fields of the form are filled out."
+      return;
+    }
+    // If there is no ingredients in the recipe, we are invalid.
+    if (!this.checkValidIngredients()){
+      this.formInvalid = true;
+      this.invalidMessage = "You must add at least one ingredient to the recipe"
+
       return;
     }
     this.formInvalid = false;
-    this.checkValidIngredients()
+
+
     // Format into JSON object
     const new_recipe = {
       name: this.recipeFormGroup.get('recipeName').value,
@@ -268,7 +278,7 @@ export class RecipeFormComponent implements OnInit {
     let ingredientSlotForm = this.fb.group({
       id: ingredient?.id || -1,
       name: ingredient?.name || "" ,
-      quantity: [ingredient?.quantity || "", {validators: Validators.required, updateOn: "submit"}],
+      quantity: [ingredient?.quantity || "", {validators: Validators.required}],
     })
     // Lock the ingredient in if it is already a valid ingredient.
     if (ingredient?.name){
@@ -289,7 +299,10 @@ export class RecipeFormComponent implements OnInit {
     this.ingredientSlots.controls = this.ingredientSlots.controls.filter(control => {
       return allIngredientNames.includes(control.get('name').value)
     })
-    // Get freshest set of ingredients.
+    if (this.ingredientSlots.controls.length < 1){
+      return false;
+    }
+    return true;
   }
 
 
