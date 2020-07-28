@@ -1,9 +1,9 @@
 
 
 #image-ingredients {
-    width: 65%; 
+    width: 65%;
     margin: 0 auto;
-    overflow: hidden;     
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,11 +16,22 @@
 }
 
 #instructions {
-    width: 80%; 
+    width: 80%;
     margin: 0 auto;
 }
 
 .main-div{
     height: 200vh;
-  background-image: url("bg.jpg");
+    background-image: url("bg.jpg");
+    justify-content: center;
+  img {
+    justify-content: center;
+    width: 40%;
+    margin-top: 2vh;
+    border-radius: 5%;
+    }
+    .image-container{
+        display: flex;
+        justify-content: center;
+    }
 }

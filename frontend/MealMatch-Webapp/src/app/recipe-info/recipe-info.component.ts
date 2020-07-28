@@ -15,8 +15,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
                 <mat-card id="image-ingredients" style="flex-direction: column; border-radius: 2%; padding-top: 8vh; margin-bottom: 2vh;">
                     <mat-card-title style="font-weight:lighter; font-size: 3.5em; padding-top: 2vh; padding-bottom: 4vh;">{{recipe.name}}</mat-card-title>
-                    <div>
-                        <img src="{{recipe.image || recipePlaceholder}}" style="width: 40%; margin-left: 30%; border-radius: 5%;">
+                    <div class="image-container">
+                        <img mat-card-image src="{{recipe.image || recipePlaceholder}}">
                     </div>
 
                     <div id="ingredients" style="display: flex; flex-direction: column; font-weight:lighter">
@@ -51,7 +51,7 @@ export class RecipeInfoComponent implements OnInit {
   recipe: Recipe;
   recipePlaceholder = 'assets/images/recipe_placeholder.jpg';
   instructions: string[] = [];
-  
+
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
@@ -74,7 +74,7 @@ export class RecipeInfoComponent implements OnInit {
   getRecipeDetails(repId: number) {
     this.recipeService.getRecipeDetails(repId)
     .subscribe( (data: Recipe) => {
-      
+
       if( Object.keys(data).length === 0 ) { // If data is empty
         this.router.navigate(['/notfound']);
       } else {
@@ -82,7 +82,7 @@ export class RecipeInfoComponent implements OnInit {
         this.instructions = this.recipe.instruction.split('\n');
       }
     },
-    (error) => { 
+    (error) => {
       console.log(error);
     });
   }
