@@ -3,6 +3,7 @@ import { RatingCommentService } from 'src/app/services/rating-comment.service';
 import { RatingComment } from 'src/app/models/rating_comment';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-display-comments',
@@ -11,24 +12,50 @@ import { User } from 'src/app/models/user';
               <h3>Reviews</h3>
               <ng-container *ngFor="let rc of allRatingComments">
 
-                <div *ngIf="currentUser && rc.username === currentUser['username']; else elseNotUser">
-                  HAVE EDIT BUTTON
-                  <div class="rating-comment">
-                    <app-star-system
-                    [rating]="rc.rating"></app-star-system>
-                    from <em>{{rc.username}}</em>
-                    <div class="comment-div">
-                      <strong>"{{rc.comment}}"</strong>
+                <div *ngIf="currentUser && rc.username === currentUser['username'] && editable; else elseNotEditable">
+                  <!-- Allow the user to change rating and comment -->
+                  <form [formGroup]="ratingCommentFormGroup" (ngSubmit)="postRatingComment()" class="rating-comment">
+                    <ngb-rating 
+                    [formControl]="ratingCommentFormGroup.get('rating')"
+                    [max]="5"
+                    [readonly]="false">
+                      <ng-template let-fill="fill" let-index="index">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+
+                    <div>
+                      Comment: <br/>
+                      <textarea formControlName="comment"></textarea>
+                      <br/>
+                      <button (click)="toggleEdit()" mat-raised-button color="warn">Cancel</button>
+                      <button type="submit" mat-raised-button color="primary">Save</button>            
                     </div>
-                  </div>
+                  </form>
 
                 </div>
 
-                <ng-template #elseNotUser>
+                <!-- Just display the rating and comment -->
+                <ng-template #elseNotEditable>
                   <div class="rating-comment">
-                    <app-star-system
-                    [rating]="rc.rating"></app-star-system>
-                    from <em>{{rc.username}}</em>
+                    <ngb-rating 
+                    [(rate)]="rc.rating"
+                    [max]="5"
+                    [readonly]="true">
+                      <ng-template let-fill="fill" let-index="index">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+
+                    <!-- If a user is logged in and the ratingComment belongs to this user -->
+                    <span *ngIf="currentUser && rc.username === currentUser['username']">
+                      Your comment and rating <button mat-raised-button color="primary" (click)="toggleEdit()">Edit</button>
+                    </span>
+
+                    <span *ngIf="!currentUser || rc.username !== currentUser['username']">
+                      from <em>{{rc.username}}</em>
+                    </span>
+                    
                     <div class="comment-div">
                       <strong>"{{rc.comment}}"</strong>
                     </div>
@@ -46,10 +73,22 @@ export class DisplayCommentsComponent implements OnInit {
   allRatingComments: RatingComment[];
   currentUser: User;
 
+  ratingCommentFormGroup: FormGroup;
+  ratingControl: FormControl;
+  editable = false;
+
   constructor(
     private rcService: RatingCommentService,
     private authService: AuthService,
-  ) { }
+  ) { 
+
+    this.ratingControl = new FormControl('');
+    this.ratingCommentFormGroup = new FormGroup({
+      rating: this.ratingControl, // validate?
+      comment: new FormControl('') // validate?
+    });
+
+  }
 
   ngOnInit(): void {
 
@@ -62,10 +101,13 @@ export class DisplayCommentsComponent implements OnInit {
 
         this.currentUser = userResp;
 
-        // Order the ratingComments so that current user's is at the top
+        // Sort all ratingComments so that if there is one by the user, it is first
         this.allRatingComments = rcResp;
         this.allRatingComments = this.allRatingComments.sort( rc => {
           if(rc.username === this.currentUser['username']) {
+            // If is a rating by the user already, set the form as well
+            this.ratingCommentFormGroup.get('rating').setValue(rc.rating);
+            this.ratingCommentFormGroup.get('comment').setValue(rc.comment);
             return -1;
           }
           return 0;
@@ -81,6 +123,25 @@ export class DisplayCommentsComponent implements OnInit {
     })
 
 
+  }
+
+
+
+  postRatingComment() {
+    console.log(this.formRating)
+    console.log(this.formComment)
+  }
+
+  toggleEdit() {
+    this.editable = !this.editable;
+  }
+
+  get formRating() {
+    return this.ratingCommentFormGroup.get('rating').value;
+  }
+
+  get formComment() {
+    return this.ratingCommentFormGroup.get('comment').value;
   }
 
 }
