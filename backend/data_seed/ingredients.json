@@ -343,12 +343,6 @@
             "strType": "Meats"
         },
         {
-            "idIngredient": "66",
-            "strIngredient": "Chicken Breasts",
-            "strDescription": null,
-            "strType": "Meats"
-        },
-        {
             "idIngredient": "67",
             "strIngredient": "Chicken Legs",
             "strDescription": null,
@@ -1271,12 +1265,6 @@
             "strIngredient": "Onion Salt",
             "strDescription": null,
             "strType": "Seasonings"
-        },
-        {
-            "idIngredient": "227",
-            "strIngredient": "Onions",
-            "strDescription": null,
-            "strType": "Vegetables"
         },
         {
             "idIngredient": "228",
@@ -2203,12 +2191,6 @@
             "strType": "Meats"
         },
         {
-            "idIngredient": "393",
-            "strIngredient": "Fennel",
-            "strDescription": null,
-            "strType": "Vegetables"
-        },
-        {
             "idIngredient": "394",
             "strIngredient": "Red Wine Vinegar",
             "strDescription": null,
@@ -2219,12 +2201,6 @@
             "strIngredient": "Haricot Beans",
             "strDescription": null,
             "strType": "Legumes"
-        },
-        {
-            "idIngredient": "396",
-            "strIngredient": "Rosemary",
-            "strDescription": null,
-            "strType": "Vegetables"
         },
         {
             "idIngredient": "397",
@@ -2240,12 +2216,6 @@
         },
         {
             "idIngredient": "399",
-            "strIngredient": "Tomato Sauce",
-            "strDescription": null,
-            "strType": "Sauces"
-        },
-        {
-            "idIngredient": "400",
             "strIngredient": "Tomato Sauce",
             "strDescription": null,
             "strType": "Sauces"
@@ -3220,12 +3190,6 @@
             "idIngredient": "566",
             "strIngredient": "Bread Rolls",
             "strDescription": "A roll is a small, usually round or oblong individual loaf of bread served as a meal accompaniment (eaten plain or with butter) A roll can be served and eaten whole or cut transversely and dressed with filling between the two halves. Rolls are also commonly used to make sandwiches similar to those produced using slices of bread. They are found in most cuisines all over the world. In the Deipnosophistae, the author Athenaeus (c. 170 \u2013 c. 230) describes some of the bread, cakes, and pastries available in the Classical world. Among the breads mentioned are griddle cakes, honey-and-oil bread, mushroom-shaped loaves covered in poppy seeds, and the military specialty of rolls baked on a spit.",
-            "strType": "Baking & Grains"
-        },
-        {
-            "idIngredient": "567",
-            "strIngredient": "Bun",
-            "strDescription": "A bun is a small, sometimes sweet, bread-based item[1] or roll. Though they come in many shapes and sizes, they are most commonly hand-sized or smaller, with a round top and flat bottom.",
             "strType": "Baking & Grains"
         },
         {
