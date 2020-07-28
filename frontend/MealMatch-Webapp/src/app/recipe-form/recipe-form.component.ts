@@ -2,15 +2,11 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { Ingredient } from '../models/ingredient';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { RecipeService } from '../services/recipe.service';
-import { HttpClient } from '@angular/common/http';
-import { ImageService } from '../image.service';
-import { LovelessSet } from '../loveless-sets/loveless-sets.component';
 import { Recipe } from '../models/recipe';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../services/ingredient.service';
 import { map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { validateHorizontalPosition } from '@angular/cdk/overlay';
 
 
 @Component({
@@ -29,7 +25,7 @@ import { validateHorizontalPosition } from '@angular/cdk/overlay';
                 </div>
                 <ng-template #noImage>
                     <h2 class="title"> Upload an image ... </h2>
-                    <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"></app-photo-upload>
+                    <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)" existingImageURL="assets/images/recipe_placeholder.jpg"></app-photo-upload>
                 </ng-template>
             </div>
             <div class="form">
@@ -93,9 +89,13 @@ import { validateHorizontalPosition } from '@angular/cdk/overlay';
 </div>
   `
 })
+/* The recipe form component is a reusable component for creating or editing the details of a recipe.
+  to use for recipe editing, send in the recipe as the "recipeDetails" input. Otherwise all fields will
+  be empty by default. */
 export class RecipeFormComponent implements OnInit {
   // Optional recipeDetails to initialise recipe form with.
   @Input() recipeDetails: Recipe | undefined;
+
   // Generic form submission handling. Consider componentising (see form-submit.component)
   @Input() submitting: boolean;
   @Input() submissionComplete: boolean;
@@ -121,7 +121,6 @@ export class RecipeFormComponent implements OnInit {
   recipeImagePath: string;
   constructor(
     private recipeService: RecipeService,
-    private imageService: ImageService,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private ingredientService: IngredientService,
@@ -149,7 +148,8 @@ export class RecipeFormComponent implements OnInit {
     }
 
 
-    // Otherwise we are creating a recipe but we should listen for any routing from loveless set component.
+    // We can be redirected here from selecting the loveless set option, we need to prepopulate with
+    // the information sent from there.
     else {
       this.activatedRoute.queryParams.subscribe(res => {
         if (res?.contents) {
