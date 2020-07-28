@@ -27,6 +27,7 @@ class ImageSnippet {
 // https://www.freecodecamp.org/news/how-to-make-image-upload-easy-with-angular-1ed14cb2773b/
 
 export class PhotoUploadComponent {
+  // Emits to the parent component when we load the file
   @Output() uploadEmitter = new EventEmitter<File>();
 
   @Input() existingImageURL: string | ArrayBuffer;
