@@ -54,6 +54,7 @@ import { RecommendIngredientsComponent } from './home-page/recommend-ingredients
 import { InputListComponent } from './home-page/input-list/input-list.component';
 import { DisplayCommentsComponent } from './recipe-info/display-comments/display-comments.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DisplayReviewComponent } from './recipe-info/display-review/display-review.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -105,6 +106,7 @@ const materialModules = [
     RecommendIngredientsComponent,
     InputListComponent,
     DisplayCommentsComponent,
+    DisplayReviewComponent,
   ],
   imports: [
     BrowserModule,

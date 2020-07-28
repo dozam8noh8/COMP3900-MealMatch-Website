@@ -12,6 +12,7 @@ import { FormGroup, FormControl } from '@angular/forms';
               <h2>Reviews</h2>
               <mat-spinner *ngIf="loadingComments"> </mat-spinner> 
 
+              <!-- If the currently logged in user has not posted a ratingComment yet --> 
               <ng-container *ngIf="!loadingComments && currentUser && !existingRC">
                 <mat-spinner *ngIf="postingUserRC"> </mat-spinner> 
                 <form 
@@ -36,12 +37,14 @@ import { FormGroup, FormControl } from '@angular/forms';
                 </form>
               </ng-container>
 
+              <!-- If there are no comments at all --> 
               <ng-container *ngIf="allRatingComments && allRatingComments.length <= 0">
                 There are no reviews for this recipe.
               </ng-container>
 
               <ng-container *ngFor="let rc of allRatingComments">
 
+                <!-- If the current ratingComment belongs to the logged in user -->
                 <div class="rating-comment" *ngIf="currentUser && rc.username === currentUser['username']; else elseNotCurrentUsers">
                   <mat-spinner *ngIf="postingUserRC"> </mat-spinner> 
 
@@ -68,22 +71,14 @@ import { FormGroup, FormControl } from '@angular/forms';
                     </div>
                   </form>
 
-                  <!-- Just display the rating and comment -->
+                  <!-- Just display the rating and comment with an edit button -->
                   <div *ngIf="!postingUserRC && !editable">
-                    <ngb-rating 
-                    [(rate)]="rc.rating"
-                    [max]="5"
-                    [readonly]="true">
-                      <ng-template let-fill="fill" let-index="index">
-                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                      </ng-template>
-                    </ngb-rating>
-
-                    This is your comment and rating <button mat-raised-button color="primary" (click)="toggleEdit()">Edit</button>
-                    
-                    <div class="comment-div">
-                      <strong>"{{rc.comment}}"</strong>
-                    </div>
+                    <app-display-review
+                    [rating]="rc.rating"
+                    [username]="rc.username"
+                    [comment]="rc.comment"
+                    [currentUser]="currentUser['username']"
+                    (toggleEditEmitter)="toggleEdit()"></app-display-review>
                   </div>
 
                 </div>
@@ -91,28 +86,12 @@ import { FormGroup, FormControl } from '@angular/forms';
                 <!-- Just display the rating and comment -->
                 <ng-template #elseNotCurrentUsers>
                   <div class="rating-comment">
-                    <ngb-rating 
-                    [(rate)]="rc.rating"
-                    [max]="5"
-                    [readonly]="true">
-                      <ng-template let-fill="fill" let-index="index">
-                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                      </ng-template>
-                    </ngb-rating>
-
-                    <!-- If a user is logged in and the ratingComment belongs to this user -->
-                    <span *ngIf="currentUser && rc.username === currentUser['username'] && !postingUserRC">
-                      This is your comment and rating <button mat-raised-button color="primary" (click)="toggleEdit()">Edit</button>
-                    </span>
-
-                    <span *ngIf="!currentUser || rc.username !== currentUser['username']">
-                      from <em>{{rc.username}}</em>
-                    </span>
-                    
-                    <div class="comment-div">
-                      <strong>"{{rc.comment}}"</strong>
-                    </div>
+                    <app-display-review
+                    [rating]="rc.rating"
+                    [username]="rc.username"
+                    [comment]="rc.comment"></app-display-review>                  
                   </div>
+
                 </ng-template>
 
 
@@ -127,7 +106,6 @@ export class DisplayCommentsComponent implements OnInit {
   currentUser: User;
 
   ratingCommentFormGroup: FormGroup;
-  ratingControl: FormControl;
   editable = false;
   existingRC: RatingComment;
 
@@ -139,9 +117,8 @@ export class DisplayCommentsComponent implements OnInit {
     private authService: AuthService,
   ) { 
 
-    this.ratingControl = new FormControl('');
     this.ratingCommentFormGroup = new FormGroup({
-      rating: this.ratingControl, // validate?
+      rating: new FormControl(''), // validate?
       comment: new FormControl('') // validate?
     });
 
@@ -204,7 +181,6 @@ export class DisplayCommentsComponent implements OnInit {
         this.loadingComments = false;
       })
     })
-
 
   }
 
