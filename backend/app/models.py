@@ -108,9 +108,9 @@ class Rating(db.Model):
     def json_dump(rating):
         ratingsList = []
         for ind_rating in rating:
-            json_obj = {'id':ind_rating.id, 'rating':ind_rating.rating, 'comment': ind_rating.comment, 'user': ind_rating.user[0].email}
+            username = User.query.filter_by(id=ind_rating.user[0].id).first().username
+            json_obj = {'id':ind_rating.id, 'rating':ind_rating.rating, 'comment': ind_rating.comment, 'username': username}
             ratingsList.append(json_obj)
-            print(ind_rating.user[0].email)
         return (ratingsList)
         # schema = RatingSchema(many=True)
         # return schema.dump(rating)
