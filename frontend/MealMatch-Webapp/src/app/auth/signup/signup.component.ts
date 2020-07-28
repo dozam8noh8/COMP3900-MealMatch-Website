@@ -8,27 +8,27 @@ import { Router } from '@angular/router';
   styleUrls: ['signup.component.scss'],
   template: `
   <div class="main-div">
-   <mat-card style="text-align: center; margin: 2em;">
+   <mat-card>
      <div>
-   <mat-card-title style="font-weight:lighter; font-size: 3em; margin-top: 35px; padding-bottom: 10px;"> Register Here! </mat-card-title>
+   <mat-card-title> Register Here! </mat-card-title>
 
-     <mat-card-content style="padding-top: 30px;">
+     <mat-card-content>
      <form [formGroup]="form" (ngSubmit)="onSubmit()">
      <p>
 
       <mat-form-field class="inputFields">
       <input matInput placeholder="Username" formControlName="username" required>
       <mat-error>
-          Please provide a valid email username
+          Please provide a valid username
       </mat-error>
     </mat-form-field>
-</p>
+    </p>
     <p>
 
     <mat-form-field class="inputFields">
-      <input matInput style="font-weight: lighter;" placeholder="Email" formControlName="email" required>
+      <input matInput placeholder="Email" formControlName="email" required>
       <mat-error>
-          Please provide a valid email address
+          Please provide a valid email address.
       </mat-error>
     </mat-form-field>
 
@@ -52,11 +52,10 @@ import { Router } from '@angular/router';
           Please confirm password.
       </mat-error>
     </mat-form-field>
-    <p>
-    <button mat-raised-button class="submitButton" [disabled]="loading" color="primary">Sign Up</button>
-    <mat-spinner *ngIf=loading> </mat-spinner>
     <mat-error class="submitError" *ngIf=error> {{error}} </mat-error>
     <h1 *ngIf=showSuccessBanner> Sign up successful, redirecting to login </h1>
+    <button mat-raised-button class="submitButton" [disabled]="loading" color="primary">Sign Up</button>
+    <mat-spinner *ngIf=loading> </mat-spinner>
 
 
 </form>
@@ -67,10 +66,12 @@ import { Router } from '@angular/router';
 </div>
   `
 })
+/* The signup component is where a user can register their details in the system to create an account.
+  it uses reactive forms for validating inputs such as passwords must match and no empty fields. */
 export class SignupComponent implements OnInit {
   form: FormGroup;
   loading: boolean;
-  error: String; // Refactor errors!
+  error: String;
   passwordMatchError: boolean;
   showSuccessBanner: boolean;
   constructor(
@@ -79,64 +80,46 @@ export class SignupComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.form = this.fb.group({  // This builds a reactive form with the given controls (like a big object)
-      username: ['', Validators.required], // These connect to the mat-errors to provide validation error text.
+     // Build the reactive form using form builder, add validations to all inputs.
+     // If a form control is invalid, the mat-errors will be displayed.
+    this.form = this.fb.group({
+      username: ['', Validators.required],
       email: ['', Validators.email],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
     },
-//{    updateOn: 'submit', validators: bothPasswordFieldsMatch,} );
+
     )}
   async onSubmit() {
+    // Only submit the form if there are no validation errors.
     if (this.form.valid) {
-      // Extra validation. FIX THE USE OF SET TIMEOUT.
+      // Double check that confirm password matches the initial password.
       if (this.form.get('password').value !== this.form.get('confirmPassword').value) {
-        this.error = 'Please make sure the confirm password field matches the password field.';
-        //setTimeout(() => this.error = '', 4000);
+        this.error = 'Please make sure password fields match.';
         return;
       }
+        // While we are waiting for the response, set loading to true so we can display a loading spinner
         this.loading = true;
         this.error = '';
-        const username = this.form.get('username').value; // Get the values entered in the form.
+
+        // Submit form details to backend.
+        const username = this.form.get('username').value;
         const password = this.form.get('password').value;
         await this.authService.signup({username,password})
+        // On success, show user login was successful then navigate to home page.
         .then(() => {
           this.showSuccessBanner = true;
-          // FIX THIS SO YOU CAN'T CLICK IT MULTIPLE TIMES!
           setTimeout(() => this.router.navigate(['/login']), 1000);
         })
+        // On error, indicate that the username is already taken.
         .catch(error => {
           this.error = 'This username is already taken, please try another.';
           console.log("An error occurred", error);
         })
+        // Regardless, stop the loading of the page so the user can try again.
         .finally(() => {
           this.loading = false;
         });
       }
     }
-}
-export function bothPasswordFieldsMatch(f: FormGroup) {
-  let password = f.get('password').value ;
-  let confirmPassword = f.get('confirmPassword').value;
-  console.log("Password = ", password, confirmPassword)
-  if (!password || !confirmPassword) {
-    return null;
-  }
-  if (password === confirmPassword) {
-    return null; // Validator will passs
-  }
-  return { 'NoPasswordMatch': true }; // validator fails here with the message passwords dont match.
-
-}
-/* Haven't got this working yet but might be useful at some stage */
-export function controlNotSameAs(otherControl: AbstractControl): ValidatorFn {
-  return function inner (control: AbstractControl) {
-    if (!control.value || !otherControl.value) {
-      return null;
-    }
-    if (control.value === otherControl.value){
-      return null;
-    }
-    return { 'NoPasswordMatch': true }; // validator fails here with the message passwords dont match.
-  }
 }
