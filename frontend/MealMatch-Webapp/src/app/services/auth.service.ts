@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject, of} from 'rxjs';
-import { map, delay, materialize, dematerialize } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
 @Injectable({
@@ -35,6 +35,24 @@ export class AuthService {
     }
   }
 
+  // Checks if the web token used for network requests has expired
+  isTokenExpired() {
+    let userDetails = this.getLocalStorageUser();
+    // If there are no details in local storage, the token might aswell be expired.
+    if (!userDetails) {
+      return true;
+    }
+
+    let expiryDate = new Date(userDetails.expiry);
+    let currDate = new Date();
+    console.log(expiryDate, currDate)
+    if (currDate > expiryDate){
+      return true;
+    }
+    return false;
+
+
+  }
   // Sends request to log in a user and places json web token in session storage.
   login(user): Observable<any> {
 
@@ -43,13 +61,25 @@ export class AuthService {
     // Add the data to the request headers
     let authHeaders = this.headers.append('Authorization', authData); //Make a new header from old header + auth data.
 
-    return this.http.get(`${this.BASE_URL}/token`, {headers: authHeaders})
+    return this.http.get<any>(`${this.BASE_URL}/token`, {headers: authHeaders})
     // Do the following side effects, then return the response of the request
     .pipe(map(response => {
-        // If the promise resolves, store the object with token in local storage!
-        localStorage.setItem('currentUser', JSON.stringify(response))
+      // If we get back a login success, we set the user details with its token and expiry in localStorage.
+      if (response.status === "success") {
+
+        // Calculate the expiry date as token duration + time now.
+        let expiryDate = new Date();
+        expiryDate.setSeconds(expiryDate.getSeconds() + response.duration)
+        //console.log(currDate)
+        let userStorageDetails = {
+          ...response,
+          expiry: expiryDate
+        }
+        // If the request resolves, store the object with token in local storage!
+        localStorage.setItem('currentUser', JSON.stringify(userStorageDetails))
         // Set the loggedInSubject to emit true until further changes (representing the user is logged in)
         this.isLoggedInSubject.next(true)
+      }
         return response;
       }),
     );
@@ -66,14 +96,24 @@ export class AuthService {
   }
   // Get the json webtoken from browser storage if there is one, we use this to append to our network requests to add authentication
   getJWTToken(): string | undefined {
+    if (this.isTokenExpired()) {
+      return undefined;
+    }
     return JSON.parse(localStorage.getItem('currentUser'))?.token;
   }
 
   // Log the user out by clearing localStorage and changing isLoggedIn subject to return false.
-  logout() {
+  logout(expired=false) {
     localStorage.removeItem('currentUser'); // just clear what we have added, we don't want to clear users other things!
     this.isLoggedInSubject.next(false);
-    this.router.navigate(['/login'])
+
+    // Show that the session is expired in the url (if the JSON token has expired)
+    if (expired) {
+      this.router.navigate(['/login'], {queryParams: {session: "expired"}})
+    }
+    else {
+      this.router.navigate(['/login'])
+    }
   }
 
   // Returns the user id of the user based on what is in browser localStorage, if there is no user we just return undefined
@@ -87,4 +127,8 @@ export class AuthService {
     return this.http.get(`${this.BASE_URL}/users/${userId}`, {headers: this.headers});
   }
 
+  // Return the details associated with a user that are stored in localstorage as an object.
+  getLocalStorageUser() {
+    return JSON.parse(localStorage.getItem('currentUser'));
+  }
 }
