@@ -661,12 +661,6 @@
             "strType": "Dairy"
         },
         {
-            "idIngredient": "123",
-            "strIngredient": "Eggs",
-            "strDescription": null,
-            "strType": "Dairy"
-        },
-        {
             "idIngredient": "124",
             "strIngredient": "Enchilada Sauce",
             "strDescription": null,
@@ -1107,12 +1101,6 @@
         {
             "idIngredient": "199",
             "strIngredient": "Lemon Zest",
-            "strDescription": null,
-            "strType": "Fruits"
-        },
-        {
-            "idIngredient": "200",
-            "strIngredient": "Lemons",
             "strDescription": null,
             "strType": "Fruits"
         },
