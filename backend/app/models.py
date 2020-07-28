@@ -2,6 +2,7 @@ from app import db, jwt, time, app, generate_password_hash, check_password_hash,
 from sqlalchemy import func, desc, event
 from app.ErrorException import ErrorException
 from sqlalchemy.engine import Engine
+import json
 
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
@@ -105,8 +106,14 @@ class Rating(db.Model):
     recipe = db.relationship('Recipe', secondary=recipeRatings, backref=db.backref('rating', lazy='dynamic'))
 
     def json_dump(rating):
-        schema = RatingSchema(many=True)
-        return schema.dump(rating)
+        ratingsList = []
+        for ind_rating in rating:
+            json_obj = {'id':ind_rating.id, 'rating':ind_rating.rating, 'comment': ind_rating.comment, 'user': ind_rating.user[0].email}
+            ratingsList.append(json_obj)
+            print(ind_rating.user[0].email)
+        return (ratingsList)
+        # schema = RatingSchema(many=True)
+        # return schema.dump(rating)
 
 class IngredientPairs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
