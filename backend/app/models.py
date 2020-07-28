@@ -165,7 +165,23 @@ class Recipe(db.Model):
     def get_recipe_by_id(id):
         recipe = Recipe.query.get(id)
         schema = RecipeSchema(many=False)
-        return schema.dump(recipe)
+        recipe = schema.dump(recipe)
+        rating = Recipe.get_rating(recipe['id'])
+        recipe['rating'] = rating
+        return recipe
+
+    def get_rating(id):
+        recipe = Recipe.query.filter_by(id=id).first()
+        ratings = recipe.rating
+        sum_rating = 0
+        count = 0
+        if len(recipe.rating.all()) == 0:
+            return 0
+        for rating in ratings:
+            # print(rating.rating)
+            sum_rating = sum_rating + int(rating.rating)
+            count = count + 1
+        return sum_rating/float(count)
 
     def get_recipes(ingredients):
         ingredients = [x.lower() for x in ingredients]
@@ -280,7 +296,11 @@ class Recipe(db.Model):
 
     def json_dump(recipe):
         schema = RecipeSchema(many=True)
-        return schema.dump(recipe)
+        recipes = schema.dump(recipe)
+        for recipe in recipes:
+            rating = Recipe.get_rating(recipe['id'])
+            recipe['rating'] = rating
+        return recipes
 
 
 
