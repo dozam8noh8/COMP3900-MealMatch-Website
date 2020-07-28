@@ -11,32 +11,45 @@ import { User } from '../models/user';
 
 // Adapted from https://realpython.com/user-authentication-with-angular-4-and-flask/
 export class AuthService {
-  private ingredientsListStorage: string = "StoredIngredients";
-  private BASE_URL = 'http://localhost:5000/api'; // Our api calls will go to this URL
+   // The base of all our api calls.
+  private BASE_URL = 'http://localhost:5000/api';
+  // Set some default headers of the request.
   private headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
-  private isLoggedInSubject: ReplaySubject<any> = new ReplaySubject(1); // This replays the last emitted thing to subscribers which means
+
+  // This replays the last emitted thing to new subscribers which means
+  // we can find out if a user is logged in just by subscribing without any
+  // external events occuring.
+  private isLoggedInSubject: ReplaySubject<any> = new ReplaySubject(1);
+
+
   constructor(private http: HttpClient, private router: Router) {
+    // If the browser localstorage has information about the user
+    // This means we haven't logged out. Since we clear stored information on logout.
     if (localStorage.getItem('currentUser')) {
+      // Since constructor is run on app start, we should make sure our users token hasnt expired through a dummy request
+      // All subscriptions to isLoggedIn will return true.
       this.isLoggedInSubject.next(true)
     }
     else {
       this.isLoggedInSubject.next(false)
-
     }
   }
 
   // Sends request to log in a user and places json web token in session storage.
   login(user): Observable<any> {
-    var authData = 'Basic ' + window.btoa(`${user.username}:${user.password}`); // Establish auth data from username and pw (required to get token from endpoint.).
-    let authHeaders = this.headers.append('Authorization', authData); //Make a new header from old header + auth data.
-    let url = `${this.BASE_URL}/token`;
 
-    return this.http.get(url, {headers: authHeaders})
-    // Do the following, then return the response (So we can log things if we need.)
+    // Establish auth data from username and pw (required to get token from endpoint.)
+    var authData = 'Basic ' + window.btoa(`${user.username}:${user.password}`);
+    // Add the data to the request headers
+    let authHeaders = this.headers.append('Authorization', authData); //Make a new header from old header + auth data.
+
+    return this.http.get(`${this.BASE_URL}/token`, {headers: authHeaders})
+    // Do the following side effects, then return the response of the request
     .pipe(map(response => {
-        localStorage.setItem('currentUser', JSON.stringify(response)) // If the promise resolves, store the object with token in local storage!
-        console.log("Storing details of response" + localStorage.getItem('currentUser'));
-        this.isLoggedInSubject.next(true) // could also just send in true while we're not using things from here.
+        // If the promise resolves, store the object with token in local storage!
+        localStorage.setItem('currentUser', JSON.stringify(response))
+        // Set the loggedInSubject to emit true until further changes (representing the user is logged in)
+        this.isLoggedInSubject.next(true)
         return response;
       }),
     );
@@ -44,45 +57,34 @@ export class AuthService {
 
   // Sends the request to sign up a user given the details on the signup page.
   signup(user): Promise<any> {
-    let url: string = `${this.BASE_URL}/users`;
-    return this.http.post(url, user, {headers: this.headers}).toPromise();
-
+    return this.http.post(`${this.BASE_URL}/users`, user, {headers: this.headers}).toPromise();
   }
 
-  // Checks if a user is logged in by seeing if they have a token in local storage.
+  // Checks if a user is logged in through the loggedInSubject, the emitted value changes from true to false when we log out.
   isLoggedIn(): Observable<boolean>{
-    console.log("Calling islogged in in auth service.")
-    return this.isLoggedInSubject.asObservable().pipe(map( state => !!state)); //cast state to boolean (it already is)
+    return this.isLoggedInSubject.asObservable();
   }
-
+  // Get the json webtoken from browser storage if there is one, we use this to append to our network requests to add authentication
   getJWTToken(): string | undefined {
     return JSON.parse(localStorage.getItem('currentUser'))?.token;
   }
-  // Should we log out of the backend aswell?
+
+  // Log the user out by clearing localStorage and changing isLoggedIn subject to return false.
   logout() {
     localStorage.removeItem('currentUser'); // just clear what we have added, we don't want to clear users other things!
     this.isLoggedInSubject.next(false);
     this.router.navigate(['/login'])
   }
 
+  // Returns the user id of the user based on what is in browser localStorage, if there is no user we just return undefined
   getLoggedInUserId() : number | undefined {
     const user = JSON.parse(localStorage.getItem('currentUser'));
     return user?.user_id;
   }
-
+  // Get the details associated with a user (name, profile_photo, contributed recipes, etc) from the backend.
   getUserDetails() : Observable<any> {
     const userId = this.getLoggedInUserId();
-    let url = `${this.BASE_URL}/users/${userId}`
-    return this.http.get(url, {headers: this.headers}).pipe(map(response => {
-      return response;
-    }));
+    return this.http.get(`${this.BASE_URL}/users/${userId}`, {headers: this.headers});
   }
 
-}
-
-/* This function can be used to add a delay to a promise
-  Use it like
-  delay2(100).then(original promise here) */
-function delay2(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
