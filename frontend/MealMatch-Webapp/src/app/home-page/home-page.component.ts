@@ -10,9 +10,9 @@ import { Ingredient } from '../models/ingredient';
   selector: 'app-home-page',
   styleUrls: ['./home-page.component.scss'],
   template: `<div class="homepage-div">
-              <mat-card id="search-section" style="margin-top: 18px; width: 75vw; border-radius: 10px;">
-                <h1 style="font-weight: lighter; font-size: 2.5vw;"> Search for ingredient </h1>
-                <div style="width: 60%; margin-left:20%;">
+              <mat-card id="search-section">
+                <h1> Search for ingredient </h1>
+                <div class="search-bar-container">
                   <app-search-bar
                   [allItems]="getAllIngredients()"
                   [itemAsString]="ingredientAsString"
@@ -20,19 +20,16 @@ import { Ingredient } from '../models/ingredient';
                   (selectedItemEmitter)="addToList($event)"></app-search-bar>
                 </div>
               </mat-card>
-              <br/>
-              <br/>
+
               <div id="inputListAndRecommendations">
                 <app-input-list> </app-input-list>
                 <app-recommend-ingredients></app-recommend-ingredients>
               </div>
-              <br/>
-              <br/>
+
               <app-ingredient-by-category></app-ingredient-by-category>
-              <br>
-              <br>
+
               <form [formGroup]="ingredientSearchForm" (ngSubmit)="submitIngredients()">
-                <div style="text-align: center; margin-bottom: 15vh;">
+                <div class="submit-button-container">
                   <button mat-raised-button type="submit" color="white" class=submitButton>Search for recipes</button>
                 </div>
 
@@ -40,7 +37,7 @@ import { Ingredient } from '../models/ingredient';
                   <mat-label>Meal Type</mat-label>
                   <mat-select
                   formControlName="selectedMealType">
-                      <mat-option *ngFor="let mealtype of allMealTypes" 
+                      <mat-option *ngFor="let mealtype of allMealTypes"
                       [value]="mealtype">
                           {{mealtype.name}}
                       </mat-option>
@@ -56,8 +53,8 @@ export class HomePageComponent implements OnInit {
   ingredientSearchForm;
 
   constructor(
-    private router: Router, 
-    private ingredientService: IngredientService, 
+    private router: Router,
+    private ingredientService: IngredientService,
     private searchService: SearchService,
     private formBuilder: FormBuilder
     ) {

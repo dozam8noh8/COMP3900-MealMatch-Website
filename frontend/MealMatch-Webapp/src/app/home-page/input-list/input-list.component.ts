@@ -7,7 +7,7 @@ import { Ingredient } from 'src/app/models/ingredient';
   styleUrls: ['./input-list.component.scss'],
   template: `
                 <mat-card id="my-ingredients-section">
-                  <h2 style="font-weight: lighter; font-size: 2.5vw; margin-top: 2vh; margin-left: 2vw; margin-bottom:5%;">My Ingredients List</h2>
+                  <h2 style="font-weight: lighter; font-size: 2.5vw; margin-top: 1vh; margin-left: 2vw; margin-bottom:3%;">My Ingredients List</h2>
                   <div id="ingredientsAndButton" style="margin-left: 2vw; margin-right: 2vw">
 
                     <div id="inputIngredients">
@@ -16,10 +16,10 @@ import { Ingredient } from 'src/app/models/ingredient';
                       <ng-template #elseBlock>
                           <div *ngFor="let ingredient of getAddedIngredients()">
                               <div class="user-list-item">
-                                  {{ingredient.name}} 
+                                  {{ingredient.name}}
                                   <button class="remove-button" (click)="removeFromList(ingredient)"> <strong>x</strong></button>
                               </div>
-                          </div> 
+                          </div>
                       </ng-template>
                     </div>
 

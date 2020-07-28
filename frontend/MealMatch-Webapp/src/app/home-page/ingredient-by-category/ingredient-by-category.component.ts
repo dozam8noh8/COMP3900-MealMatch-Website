@@ -8,24 +8,24 @@ import { Category } from 'src/app/models/category';
   styleUrls: ['./ingredient-by-category.component.scss'],
   template: `
               <mat-card style="margin: 0 auto; width: 75%; border-radius: 10px;">
-                <h2 style="font-weight: lighter; font-size: 2.5vw; margin-top: 2vh; margin-left: 2vw; margin-bottom:5%;">Ingredients by Category</h2>
+                <h2 style="font-weight: lighter; font-size: 2.5vw; margin-top: 2vh; margin-left: 2vw; margin-bottom:1%;">Ingredients by Category</h2>
                 <mat-tab-group >
                   <div *ngFor="let category of getAllCategories()">
                     <mat-tab label="{{category.name}}">
                       <ul class="columned">
                         <div *ngFor="let ingredient of category.ingredients">
-                          <mat-checkbox 
+                          <mat-checkbox
                           [checked]="ingredient.onList"
                           (change)="addOrRemove(ingredient)"
                           color="primary"
-                          style="margin-top: 30px; margin-right: 30px;">
+                          style="margin-top: 4vh; margin-right: 4vh;">
                               {{ingredient.name}}
-                          </mat-checkbox>                                
+                          </mat-checkbox>
                         </div>
                       </ul>
                     </mat-tab>
                   </div>
-                </mat-tab-group>    
+                </mat-tab-group>
               </mat-card>
             `
 })
@@ -39,7 +39,7 @@ export class IngredientByCategoryComponent implements OnInit {
   }
 
   addOrRemove(ingredient: Ingredient) {
-    ingredient.onList 
+    ingredient.onList
       ? this.ingredientService.removeFromList(ingredient)
       : this.ingredientService.addToList(ingredient.id);
   }

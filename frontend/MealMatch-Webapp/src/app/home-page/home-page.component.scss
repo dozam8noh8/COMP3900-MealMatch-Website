@@ -2,12 +2,17 @@
 
 #search-section {
     margin: 0 auto;
-    padding-top: 3vh;
-    width: 50%; 
+    padding-top: 2vh;
+    margin-bottom: 2vh;
+    width: 50%;
     border-color: black;
     align-items: center;
     align-content: center;
     text-align: center;
+    h1 {
+        font-weight: lighter;
+        font-size: 2.5vw;
+    }
 }
 
 #inputListAndRecommendations {
@@ -29,19 +34,38 @@ app-recommend-ingredients {
     flex-grow: 1;
 }
 
+app-ingredient-by-category {
+    margin-top: 2vh;
+}
+
 .homepage-div{
   background-image: url("homeBackground.jpg");
-  display: flex; 
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
+  #search-section {
+    margin-top: 18px;
+    width: 75vw;
+    border-radius: 10px;
+  }
 }
 
 .submitButton {
-    margin: 0 auto; 
-    border-radius: 25px; 
-    width: 25vw; 
+    margin-top: 2vh;
+    border-radius: 25px;
+    width: 25vw;
     height: 50px;
     font-weight: lighter;
     font-size: 2vw;
     color: #008080;
 }
+.search-bar-container {
+    width: 60%;
+    margin-left:20%;
+}
+
+.submit-button-container {
+    text-align: center;
+    margin-bottom: 15vh;
+}
+
