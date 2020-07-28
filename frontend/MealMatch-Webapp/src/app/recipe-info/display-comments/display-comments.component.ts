@@ -42,12 +42,12 @@ import { FormGroup, FormControl } from '@angular/forms';
 
               <ng-container *ngFor="let rc of allRatingComments">
 
-                <div class="rating-comment" *ngIf="currentUser && rc.username === currentUser['username'] && editable; else elseNotEditable">
+                <div class="rating-comment" *ngIf="currentUser && rc.username === currentUser['username']; else elseNotCurrentUsers">
                   <mat-spinner *ngIf="postingUserRC"> </mat-spinner> 
 
                   <!-- Allow the user to change rating and comment -->
                   <form 
-                  *ngIf="!postingUserRC"
+                  *ngIf="!postingUserRC && editable"
                   [formGroup]="ratingCommentFormGroup" 
                   (ngSubmit)="postRatingComment()">
                     <ngb-rating 
@@ -68,10 +68,28 @@ import { FormGroup, FormControl } from '@angular/forms';
                     </div>
                   </form>
 
+                  <!-- Just display the rating and comment -->
+                  <div *ngIf="!postingUserRC && !editable">
+                    <ngb-rating 
+                    [(rate)]="rc.rating"
+                    [max]="5"
+                    [readonly]="true">
+                      <ng-template let-fill="fill" let-index="index">
+                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+
+                    This is your comment and rating <button mat-raised-button color="primary" (click)="toggleEdit()">Edit</button>
+                    
+                    <div class="comment-div">
+                      <strong>"{{rc.comment}}"</strong>
+                    </div>
+                  </div>
+
                 </div>
 
                 <!-- Just display the rating and comment -->
-                <ng-template #elseNotEditable>
+                <ng-template #elseNotCurrentUsers>
                   <div class="rating-comment">
                     <ngb-rating 
                     [(rate)]="rc.rating"
