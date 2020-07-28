@@ -101,11 +101,14 @@ export class IngredientSlotComponent implements OnInit{
   }
 
   openNewIngredientDialog() {
-    this.newIngredientDialog.open(NewIngredientPopupComponent, {
+    let dialogRef = this.newIngredientDialog.open(NewIngredientPopupComponent, {
       data: { inputString: this.formGroup.get('name').value }
-    }).afterClosed()
-    .subscribe( (newCreatedIngredient: Ingredient) => {
-      this.addToList(newCreatedIngredient);
+    })
+
+    // Subscribe to if an ingredient was created
+    dialogRef.componentInstance.addIngredient
+    .subscribe( (newCreatedIngredient: Ingredient)=> {
+      this.addToList(newCreatedIngredient)
     });
   }
 
