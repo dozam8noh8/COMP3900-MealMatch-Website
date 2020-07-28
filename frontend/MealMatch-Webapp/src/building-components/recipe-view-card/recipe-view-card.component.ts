@@ -12,28 +12,27 @@ import { map, finalize } from 'rxjs/operators';
 
 <mat-card class="recipe" style="display: flex; flex-direction: column">
 <ng-container *ngIf="!loading">
-<div [routerLink]="link" style="cursor: pointer; flex: 1;" class="invisible-outline"> 
+<div [routerLink]="link" style="cursor: pointer; flex: 1;" class="invisible-outline">
 <mat-card-header >
 <div mat-card-avatar style="background-image: url({{recipe.image}});background-size: cover;"></div>
-<mat-card-title>{{recipe.name}}</mat-card-title>
+<mat-card-title>{{recipeDisplayTitle}}</mat-card-title>
 <mat-card-subtitle>Primary Mealtype: {{recipe.mealtypes[0].name}}</mat-card-subtitle>
 </mat-card-header>
     <div *ngIf="recipe.image" >
-        <img src="{{recipe.image}}" style="width: 100%; border-radius: 2.5%;">
+        <img src="{{recipe.image}}">
     </div>
     <div *ngIf="!recipe.image">
-        <img [src]="recipeImagePlaceholder" style="width: 100%; border-radius: 2.5%;">
+        <img [src]="recipeImagePlaceholder">
     </div>
 
     <b>{{recipe.name}}</b> <br>
-    <i>Uses:
-        <span *ngFor="let ingredient of recipe.ingredients">
-            {{ingredient["ingredient.name"]}}, <!-- Should not have comma for last ingredient -->
-        </span>
-    </i>    
-</div>
+    <div class="ingredient-list">
+    <i>Uses: {{ingredientsString}}
+    </i>
+    </div>
+    </div>
 
-    <div style="position: absolute;bottom: 0; width: 95%; flex: 2" *ngIf="showDeleteEdit">
+    <div class="edit-delete-container" *ngIf="showDeleteEdit">
     <button mat-raised-button (click)="editRecipe()" color="primary" [routerLink]="null"> Edit </button>
     <button mat-raised-button (click)="deleteRecipe()" color="warn" [routerLink]="null"> Delete </button>
     <mat-error> {{error}} </mat-error>
@@ -52,13 +51,16 @@ export class RecipeViewCardComponent implements OnInit{
     @Output() editEmitter = new EventEmitter<number>();
     @Output() deleteEmitter = new EventEmitter<number>();
 
+    recipeDisplayTitle = '';
     recipeImagePlaceholder = 'assets/images/recipe_placeholder.jpg';
     loading = false;
     error: string = '';
     link: string;
+    ingredientsString = '';
     constructor(private dialog: MatDialog, private recipeService: RecipeService) {}
     ngOnInit() {
         this.link = `/recipe/${this.recipe.id}`;
+        this.generateDisplayStrings();
     }
     editRecipe() {
         console.log("Editing recipe")
@@ -90,6 +92,41 @@ export class RecipeViewCardComponent implements OnInit{
               // Do nothing.
             }
         });
+    }
+
+    // Generate the string of ingredients shown on the card. Truncate at 100 chars
+    generateDisplayStrings(){
+        let truncate = false;
+        for (let ingredient of this.recipe.ingredients) {
+            if (this.ingredientsString.length + ingredient["ingredient.name"].length > 120) {
+                truncate = true;
+                break;
+            }
+            this.ingredientsString += (ingredient["ingredient.name"] + ", ")
+        }
+        // Remove last ", "
+        this.ingredientsString = this.ingredientsString.slice(0,-2);
+        if (truncate) {
+            this.ingredientsString += ".."
+        }
+        else {
+            this.ingredientsString += ".";
+        }
+        console.log(this.ingredientsString);
+
+        truncate = false;
+        for (let word of this.recipe.name.split(" ")) {
+            console.log(word)
+            if (this.recipeDisplayTitle.length + word.length > 20){
+                truncate = true;
+                break;
+            }
+            this.recipeDisplayTitle += word + " ";
+        }
+        this.recipeDisplayTitle = this.recipeDisplayTitle.slice(0,-1);
+        if (truncate) {
+            this.recipeDisplayTitle += "..."
+        }
     }
 
 }
