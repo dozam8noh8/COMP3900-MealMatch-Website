@@ -12,6 +12,7 @@ import { LovelessSetsComponent } from './loveless-sets/loveless-sets.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipeEditGuardService } from './recipe-edit/recipe-edit-guard.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RecipeFormGuardService } from './recipe-form-guard.service';
 
 
 const routes: Routes = [
@@ -21,8 +22,8 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'recipe/:id', component: RecipeInfoComponent},
   {path: 'search', component: SearchResultsComponent},
-  {path: 'create', component: CreateRecipeComponent, canActivate: [AuthGuardService]},
-  {path: 'edit/:id', component: RecipeEditComponent, canActivate: [AuthGuardService, RecipeEditGuardService]},
+  {path: 'create', component: CreateRecipeComponent, canActivate: [AuthGuardService], canDeactivate: [RecipeFormGuardService]},
+  {path: 'edit/:id', component: RecipeEditComponent, canActivate: [AuthGuardService, RecipeEditGuardService], canDeactivate: [RecipeFormGuardService]},
   {path: 'lovelesssets', component: LovelessSetsComponent}, // Component for sets with no recipes
   {path: 'dashboard', component: ProfilePageComponent, canActivate: [AuthGuardService]},
   {path: 'notfound', component: PageNotFoundComponent},
