@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchService } from '../services/search.service';
 import { MealType } from '../models/mealtype';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-search-results',
@@ -31,10 +32,10 @@ import { FormBuilder } from '@angular/forms';
                               <app-recipe-view-card [recipe]="recipe"></app-recipe-view-card>
                       </ng-container>
                   </ng-container>
-                  <mat-paginator
-                  [length]="100"
+                  <mat-paginator *ngIf="getResults().length > 0"
+                  [length]="getResults().length"
                   [pageSize]="itemsPerPage"
-                  [pageSizeOptions]="[5, 10, 25]"
+                  [pageSizeOptions]="[10, 20]"
                   (page)="handlePaginator($event)"
                   >
                   </mat-paginator>
@@ -58,7 +59,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class SearchResultsComponent implements OnInit {
 
-  formForMealType;
+  formForMealType: FormGroup;
   allMealTypes: string[];
 
   // The page number of the current page of recipes being displayed.
@@ -70,7 +71,7 @@ export class SearchResultsComponent implements OnInit {
   constructor(
     private router: Router,
     private searchService: SearchService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
     this.formForMealType = this.formBuilder.group({
       selectedMealType: ''
@@ -100,6 +101,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   // Updates the meal type in the form and searchService
@@ -116,11 +118,12 @@ export class SearchResultsComponent implements OnInit {
   }
 
   getResults() {
+
     if(!this.getSelectedMealType() || this.getSelectedMealType()==="All") {
-      return this.searchService.getAllResults();
+      return this.searchService.getAllResults().recipes;
     } else {
       // Get the recipes that have the selected meal type as one of its meal types
-      return this.searchService.getAllResults().filter(recipe => {
+      return this.searchService.getAllResults().recipes.filter(recipe => {
         return recipe.mealtypes.some( elem => (elem.name === this.getSelectedMealType()) );
       })
     }
@@ -135,6 +138,8 @@ export class SearchResultsComponent implements OnInit {
     return this.searchService.searchComplete;
   }
   handlePaginator($event){
+    let state = this.router.getCurrentNavigation().extras.state;
+    this.searchService.searchForRecipes(state.searchIngredients, state.mealType.name, this.displayedPage, this.itemsPerPage)
     console.log($event);
   }
 }

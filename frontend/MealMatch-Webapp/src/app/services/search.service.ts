@@ -21,25 +21,31 @@ export class SearchService {
 
   }
 
-  searchForRecipes(ingredients: Ingredient[], mealtype: string) {
+  searchForRecipes(ingredients: Ingredient[], mealtype: string, displayedPage?: number, itemsPerPage?:number) {
     this.searchComplete = false;
     this.inputIngredients = ingredients;
     this.setMealType(mealtype);
     this.http.post("http://localhost:5000/api/recipe_search", {
-      "ingredients": ingredients
-    })
+      "ingredients": ingredients,
+    },
+    {params: {
+      page_num: displayedPage?.toString() || "1",
+      page_size: itemsPerPage?.toString() || "10",
+    }})
     .subscribe( (data: any) => {
       this.allResults = data.recipes;
       this.searchComplete = true;
-      this.pageNum = data.pageSize;
+      this.pageNum = data.page_num;
+      this.pageSize = data.page_size;
     });
   }
 
   getAllResults() {
     return {
-      results: this.allResults,
+      recipes: this.allResults,
       pageNum: this.pageNum,
       pageSize: this.pageSize,
+      totalResults: this.allResults.length,
     }
   }
 
