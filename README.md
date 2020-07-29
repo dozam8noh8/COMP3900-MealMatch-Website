@@ -3,7 +3,6 @@
 Remember to add your diaries in the diaries directory with zXXXXXXX.txt as the name
 
 # Project Setup.
-=========
 Set up Backend first
 ------------
 
@@ -29,12 +28,11 @@ After you install all the required packages run the server and seed the database
     (venv) python run.py
     
     Visit localhost:5000/db_seed to populate your database with recipes
-    
-=========
+
 Set up Frontend
 ------------
 
-Do the following on another terminal and keep the backend Python API running
+NOTE: Do the following on another terminal and keep the backend Python API running
 Install all packages, build the Angular app and run:
 
     $ cd frontend/MealMatch-Webapp
@@ -42,8 +40,6 @@ Install all packages, build the Angular app and run:
     $ ng build
     $ ng serve
     Visit localhost:4200 to view the app!
-    
-=========
 
 # Members
 - Emmanuel Borra
