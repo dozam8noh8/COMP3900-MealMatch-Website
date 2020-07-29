@@ -131,14 +131,13 @@ class IngredientPairs(db.Model):
 
     def get_highest_pairs():
         pairs = IngredientPairs.query.order_by(desc(IngredientPairs.count)).limit(5).all()
-        list = []
+        highest_pairs = []
         for pair in pairs:
-            pair_to_find = pair.pairs.split(", ")
-            new_pair = []
-            for in_pair in pair_to_find:
-                new_pair.append(Ingredient.query.filter_by(id=in_pair).first())
-            list.append(new_pair)
-        return list
+            ingredient_ids = pair.pairs.split(', ')
+            ingredients = [Ingredient.query.filter_by(id=int(x)).first() for x in ingredient_ids]
+            ingredients = Ingredient.json_dump(ingredients)
+            highest_pairs.append({'id': pair.id, 'ingredients': ingredients, 'count': pair.count})
+        return highest_pairs
 
     def remove_pairs(recipe):
         ingredient_ids = set(x.ingredient_id for x in recipe.ingredients)
@@ -183,7 +182,7 @@ class Recipe(db.Model):
             count = count + 1
         return sum_rating/float(count)
 
-    def get_recipes(ingredients):
+    def get_recipes(ingredients, page_num, page_size):
         ingredients = [x.lower() for x in ingredients]
         ingredients_id = (Ingredient
                           .query
@@ -207,12 +206,25 @@ class Recipe(db.Model):
 
         if len(filtered) == 0:
             IngredientPairs.increment_count(ingredients_id)
-        return filtered
+        total_results = len(filtered)
 
-    def get_recipes_by_user_id(user_id):
-        recipes = Recipe.query.filter_by(user_id=user_id).limit(10).all()
-        schema = RecipeSchema(many=True)
-        return schema.dump(recipes)
+        recipes = Recipe.get_paginated_list(filtered, page_num, page_size)
+        recipes = RecipeSchema(many=True).dump(recipes)
+        return {'recipes' : recipes, 'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
+
+    def get_recipes_by_user_id(user_id, page_num, page_size):
+        recipes = Recipe.query.filter_by(user_id=user_id).all()
+        total_results = len(recipes)
+        recipes = Recipe.get_paginated_list(recipes, page_num, page_size)
+        recipes = RecipeSchema(many=True).dump(recipes)
+        for recipe in recipes:
+            rating = Recipe.get_rating(recipe['id'])
+            recipe['rating'] = rating
+        return {'recipes' : recipes, 'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
+
+    def get_paginated_list(recipes, page_num, page_size):
+        start = (page_num - 1) * page_size
+        return recipes[start : start + page_size]
 
 
     # Make new recipe

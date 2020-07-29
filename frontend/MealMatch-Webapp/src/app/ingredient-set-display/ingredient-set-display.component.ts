@@ -9,13 +9,16 @@ import { Recipe } from '../models/recipe';
   styleUrls: ['./ingredient-set-display.component.scss'],
   template: `
       <mat-card>
-        <mat-card-title> Ingredients </mat-card-title>
+        <mat-card-title> Loveless Set {{set.setId}} </mat-card-title>
         <mat-card-content>
+          <div class="text-flex">
           <ol>
             <li *ngFor="let ingredient of set.ingredients"> {{ ingredient.name }} </li>
           </ol>
+          <h1 class="copperplate"> 15 Recipe searchers searched for this set of ingredient </h1>
+          <button mat-raised-button color="primary" (click)=emitCreateRecipe()> Create Recipe </button>
+        </div>
         </mat-card-content>
-        <button mat-raised-button color="primary" (click)=emitCreateRecipe()> Create Recipe </button>
       </mat-card>
 
   `
