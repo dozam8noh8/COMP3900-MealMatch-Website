@@ -52,6 +52,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { RecommendIngredientsComponent } from './home-page/recommend-ingredients/recommend-ingredients.component';
 import { InputListComponent } from './home-page/input-list/input-list.component';
+import { DisplayCommentsComponent } from './recipe-info/display-comments/display-comments.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DisplayReviewComponent } from './recipe-info/display-review/display-review.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -101,7 +104,9 @@ const materialModules = [
     PageNotFoundComponent,
     SearchBarComponent,
     RecommendIngredientsComponent,
-    InputListComponent
+    InputListComponent,
+    DisplayCommentsComponent,
+    DisplayReviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +117,7 @@ const materialModules = [
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    NgbModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, // This will intercept all http requests and add a delay and log them to simulate a backend delay (during development).
