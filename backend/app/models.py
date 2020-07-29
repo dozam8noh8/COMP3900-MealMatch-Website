@@ -210,6 +210,9 @@ class Recipe(db.Model):
 
         recipes = Recipe.get_paginated_list(filtered, page_num, page_size)
         recipes = RecipeSchema(many=True).dump(recipes)
+        for recipe in recipes:
+            rating = Recipe.get_rating(recipe['id'])
+            recipe['rating'] = rating
         return {'recipes' : recipes, 'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
 
     def get_recipes_by_user_id(user_id, page_num, page_size):
