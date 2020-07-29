@@ -2,13 +2,13 @@
 
 Remember to add your diaries in the diaries directory with zXXXXXXX.txt as the name
 
-Project Setup.
+# Project Setup.
 =========
 Set up Backend first
 ------------
 
 After cloning, create a virtual environment and install the requirements.
-# NOTE: If your 'pip' is linked to Python 2, use 'pip3' instead
+NOTE: If your 'pip' is linked to Python 2, use 'pip3' instead
 
 For Linux and Mac users:
 
@@ -34,7 +34,7 @@ After you install all the required packages run the server and seed the database
 Set up Frontend
 ------------
 
-# Do the following on another terminal and keep the backend Python API running
+Do the following on another terminal and keep the backend Python API running
 Install all packages, build the Angular app and run:
 
     $ cd frontend/MealMatch-Webapp
