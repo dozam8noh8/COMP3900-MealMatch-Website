@@ -16,7 +16,7 @@ import { map, finalize } from 'rxjs/operators';
 <mat-card-header >
 <div mat-card-avatar style="background-image: url({{recipe.image}});background-size: cover;"></div>
 <mat-card-title>{{recipeDisplayTitle}}</mat-card-title>
-<mat-card-subtitle>Primary Mealtype: {{recipe.mealtypes[0].name}}</mat-card-subtitle>
+<mat-card-subtitle>Mealtype: {{recipe.mealtypes[0].name}}</mat-card-subtitle>
 </mat-card-header>
     <div *ngIf="recipe.image" >
         <img src="{{recipe.image}}">
