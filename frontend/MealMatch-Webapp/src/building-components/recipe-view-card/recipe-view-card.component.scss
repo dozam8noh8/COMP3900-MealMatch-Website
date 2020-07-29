@@ -20,6 +20,24 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    mat-card-header {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    mat-card-title {
+        height: 2.2vh;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .text-oneline ::ng-deep * {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
 }
 
 .recipe:hover {
@@ -42,4 +60,5 @@
     width: 100%;
     flex: 2;
     justify-content: space-around;
+    margin-top: 1vh;
 }

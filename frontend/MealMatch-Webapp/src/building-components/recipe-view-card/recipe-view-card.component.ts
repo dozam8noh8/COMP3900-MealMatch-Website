@@ -13,15 +13,15 @@ import { map, finalize } from 'rxjs/operators';
 <mat-card class="recipe" style="display: flex; flex-direction: column">
 <ng-container *ngIf="!loading">
 <div [routerLink]="link" style="cursor: pointer; flex: 1;" class="invisible-outline">
-<mat-card-header >
+<mat-card-header  class="text-oneline">
 <div mat-card-avatar style="background-image: url({{recipe.image}});background-size: cover;"></div>
-<mat-card-title>{{recipeDisplayTitle}}</mat-card-title>
-<mat-card-subtitle>Mealtype: {{recipe.mealtypes[0].name}}</mat-card-subtitle>
+<mat-card-title >{{recipeDisplayTitle}}</mat-card-title>
+<mat-card-subtitle>Mealtype: {{recipe.mealtypes[0].name}}
 <div>
-    <span style="color: gold;"> &#9733; </span> 
-    <span *ngIf="recipe.rating===0">No ratings yets</span>
-    <span *ngIf="recipe.rating > 0">{{recipe.rating.toFixed(2)}}</span>
-</div>
+    <span *ngIf="recipe.rating===0">Rating: Unrated</span>
+    <span *ngIf="recipe.rating > 0">Rating: {{recipe.rating.toFixed(1)}}</span>
+    <span *ngIf="recipe.rating > 0" style="color: gold;"> &#9733; </span>
+</div></mat-card-subtitle>
 </mat-card-header>
     <div *ngIf="recipe.image" >
         <img src="{{recipe.image}}">
