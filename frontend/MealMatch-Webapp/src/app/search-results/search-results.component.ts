@@ -11,11 +11,11 @@ import { FormBuilder } from '@angular/forms';
               <form [formGroup]="formForMealType">
               <mat-form-field appearance="fill" style="margin-left: 2%; margin-top: 2%;">
                   <mat-label>Meal Type</mat-label>
-                  <mat-select 
+                  <mat-select
                   matNativeControl
                   formControlName="selectedMealType"
                   (selectionChange)="updateSearchMealType($event.value)">
-                      <mat-option *ngFor="let mealtype of allMealTypes" 
+                      <mat-option *ngFor="let mealtype of allMealTypes"
                       [value]="mealtype">
                           {{mealtype}}
                       </mat-option>
@@ -30,15 +30,20 @@ import { FormBuilder } from '@angular/forms';
                       <ng-container *ngFor="let recipe of getResults()">
                               <app-recipe-view-card [recipe]="recipe"></app-recipe-view-card>
                       </ng-container>
-                  </ng-container>    
+                  </ng-container>
+                  <mat-paginator
+                  [length]="100"
+                  [pageSize]="10"
+                  [pageSizeOptions]="[5, 10, 25, 100]"
+    > </mat-paginator>
               </ng-container>
 
               <div layout="row" layout-fill layout-align="center center">
                   <div *ngIf="searchComplete() && getResults().length === 0" style="margin-left: 35%; margin-top: 10%">
                       <h1 style="font-weight: heavier; font-size: 3em" class="copperplate">We're Sorry</h1>
-                      <h1 style="font-weight: lighter; font-size: 1.5em" class="copperplate">We can't seem to find any 
+                      <h1 style="font-weight: lighter; font-size: 1.5em" class="copperplate">We can't seem to find any
                           <span *ngIf="getSelectedMealType() !== 'All'"> "{{getSelectedMealType()}}" </span>
-                              recipes with just: 
+                              recipes with just:
                       </h1>
                       <ul *ngFor="let ingredient of getSearchedIngredients()">
                           <li class="copperplate">{{ingredient}}</li>
@@ -54,8 +59,14 @@ export class SearchResultsComponent implements OnInit {
   formForMealType;
   allMealTypes: string[];
 
+  // The page number of the current page of recipes being displayed.
+  displayedPage = 1;
+
+  // The number of items displayed per paginated page
+  itemsPerPage: 10;
+
   constructor(
-    private router: Router, 
+    private router: Router,
     private searchService: SearchService,
     private formBuilder: FormBuilder
   ) {
@@ -65,9 +76,9 @@ export class SearchResultsComponent implements OnInit {
 
     if(!this.router.navigated) { // If the user is manually typing in /search
       this.router.navigate(['/home']);
-    } 
+    }
     else { // The user is accessing this page by navigation i.e. search or pressing back
-      
+
       let searchState = this.router.getCurrentNavigation().extras.state;
       if(searchState) { // If a list of ingredients was passed from search (home page)
         this.updateSearchMealType(searchState.mealType.name);
@@ -76,12 +87,12 @@ export class SearchResultsComponent implements OnInit {
       else { // The user navigated to page by e.g. back button
         this.updateSearchMealType(searchService.getMealType());
       }
-      
+
       this.searchService.getAllMealTypes()
       .subscribe( (data: MealType[]) => {
         // Get the meal types as strings
         this.allMealTypes = data.map(mtype => mtype.name);
-  
+
       });
     }
   }

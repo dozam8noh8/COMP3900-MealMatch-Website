@@ -22,14 +22,15 @@ export class LovelessSetsComponent implements OnInit {
   ngOnInit(): void {
     // POPULATE SETS
     this.ingredientService.getLovelessSets().subscribe( res => {
-      console.log(res);
       let arr = []
       // Turn each json key into an array.
       var keys = Object.keys(res); // TODO make this a function?
       keys.forEach(function(key){
+        let set = res[key]
         let obj: LovelessSet = {
-            setId: Number(key),
-            ingredients: res[key]
+            setId: set.id,
+            count: set.count,
+            ingredients: set.ingredients,
           }
         arr.push(obj)
       });
@@ -46,5 +47,6 @@ export class LovelessSetsComponent implements OnInit {
 export interface LovelessSet {
   setId: number; // The id of the set in the database for when we create the recipe with this set.
   ingredients: Ingredient[];
+  count: number; // The number of times the set has been searched.
 }
 // Lets have an array of

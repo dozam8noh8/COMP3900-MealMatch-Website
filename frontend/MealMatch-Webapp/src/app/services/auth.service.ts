@@ -122,9 +122,18 @@ export class AuthService {
     return user?.user_id;
   }
   // Get the details associated with a user (name, profile_photo, contributed recipes, etc) from the backend.
-  getUserDetails() : Observable<any> {
+  getUserDetails(recipePageNumber?: number, recipesPerPage?: number) : Observable<any> {
     const userId = this.getLoggedInUserId();
-    return this.http.get(`${this.BASE_URL}/users/${userId}`, {headers: this.headers});
+    return this.http.get(
+      `${this.BASE_URL}/users/${userId}`
+      , {
+        headers: this.headers,
+        params: {
+          recipe_page_number: recipePageNumber?.toString() || "1",
+          recipes_per_page: recipesPerPage?.toString() || "10",
+        }
+      },
+);
   }
 
   // Return the details associated with a user that are stored in localstorage as an object.

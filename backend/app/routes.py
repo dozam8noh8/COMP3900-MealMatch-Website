@@ -88,9 +88,7 @@ def get_user_info(id):
     A user is only allowed to request their own user information.
 
     @Return
-     - Returns the username of the user.
-     - (TODO) Return email of user
-     - (TODO) Return any recipes/photos associated with a user
+     - Returns the username, id, email, profile picture and associated recipes of the user.
 
     @Return Codes
      - 401 - user is unauthorised (A user isn't logged in or trying to view someone elses information)

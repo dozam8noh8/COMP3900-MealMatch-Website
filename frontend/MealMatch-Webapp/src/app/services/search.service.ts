@@ -16,7 +16,7 @@ export class SearchService {
   allResults: Recipe[];
 
   constructor(private http: HttpClient) {
-    
+
   }
 
   searchForRecipes(ingredients: Ingredient[], mealtype: string) {
@@ -26,8 +26,8 @@ export class SearchService {
     this.http.post("http://localhost:5000/api/recipe_search", {
       "ingredients": ingredients
     })
-    .subscribe( (data: Recipe[]) => {
-      this.allResults = data;
+    .subscribe( (data: any) => {
+      this.allResults = data.recipes;
       this.searchComplete = true;
     });
   }

@@ -67,6 +67,11 @@ import { Router } from '@angular/router';
       <h1 *ngIf="!loading">You have no recipes</h1>
       <mat-spinner *ngIf="loading" style="margin-left: 47%;"> </mat-spinner>
     </ng-template>
+    <mat-paginator *ngIf="recipes"
+    [length]="100"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    > </mat-paginator>
   `,
 })
 /* The profile page component is the main dashboard component for users.
@@ -85,6 +90,14 @@ export class ProfilePageComponent implements OnInit {
   recipes: Recipe[];
   // The profile photo file selected by the photo upload component to update.
   newProfilePhotoFile: File;
+
+  // The page number of the current page of recipes being displayed.
+  displayedPage = 1;
+
+  // The number of items displayed per paginated page
+  itemsPerPage: 10;
+
+  // Dynamic variables give user feedback about what events are happening on the page.
   loading = true;
   photoIsUploading = false;
   photoUploadComplete = false;
@@ -100,7 +113,7 @@ export class ProfilePageComponent implements OnInit {
     // Get the user id of the logged in user.
     this.userId = this.authService.getLoggedInUserId();
     // Get all the user details from the backend and populate the component.
-    this.authService.getUserDetails().subscribe((res) => {
+    this.authService.getUserDetails(this.displayedPage, this.itemsPerPage).subscribe((res) => {
       this.loading = false;
       this.username = res.username;
       this.email = res.email;
