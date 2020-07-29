@@ -8,7 +8,7 @@ import { Ingredient } from '../models/ingredient';
   selector: 'app-loveless-sets',
   styleUrls: ['./loveless-sets.component.scss'],
   template: `
-    <h1> These ingredients need some love! </h1>
+    <h1  class="greeting-text"> These ingredients need some love! </h1>
     <div class="ingredient-set" *ngFor="let set of sets">
         <app-ingredient-set-display [set]="set"> </app-ingredient-set-display>
     </div>
