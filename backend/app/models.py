@@ -210,9 +210,27 @@ class Recipe(db.Model):
         return filtered
 
     def get_recipes_by_user_id(user_id):
-        recipes = Recipe.query.filter_by(user_id=user_id).limit(10).all()
+        recipes = Recipe.query.filter_by(user_id=user_id).all()
+        new_res = Recipe.get_paginated_list(recipes, 19)
+        print(new_res)
         schema = RecipeSchema(many=True)
+        # print(schema.dump(new_res))
         return schema.dump(recipes)
+
+    def get_paginated_list(recipes, page):
+        if (page <= 0):
+            return []
+        start = 12 * (page-1)
+        size = len(recipes)
+        print(size)
+        if start > size:
+            return []
+        new_list = []
+        for i in range(0, 12):
+            if ((i+start) < size):
+                new_list.append(recipes[i+start])
+        print(len(new_list))
+        return new_list
 
 
     # Make new recipe
