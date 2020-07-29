@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
   <div class="container">
     <form [formGroup]="recipeFormGroup" (ngSubmit)="saveRecipeDetails()">
         <div class="flex-container">
-            <div>
+            <div class="photo-upload-container">
                 <div #Image *ngIf="recipeDetails && recipeDetails.image; else noImage">
                     <h2 class="title"> Change recipe image ... </h2>
                     <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"
