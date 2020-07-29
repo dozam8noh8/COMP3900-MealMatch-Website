@@ -63,7 +63,8 @@ import { RatingCommentService } from '../services/rating-comment.service';
                         </div>
                     </div>
                   <app-display-comments style="width: 90%"
-                  [recipeId]="recipe.id"></app-display-comments>
+                  [recipeId]="recipe.id"
+                  (reloadEmitter)="getRecipeDetails($event)"></app-display-comments>
                 </mat-card>
                 </ng-container>
                 </div>
