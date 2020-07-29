@@ -11,8 +11,34 @@
     border-radius: 20px;
     text-align: center;
     font-weight: lighter;
+    font-size: 2vh;
+
 }
 
 .copperplate {
   font-family: Copperplate
+}
+
+.greeting-text {
+  margin-left: 1.5vw;
+  font-weight: lighter;
+  font-size: 5vh;
+  margin-top: 4vh;
+}
+
+.photo-upload-container {
+  margin-left: 10vw;
+  margin-right: 0;
+  margin-top: 5vh;
+  margin-bottom: 2vh;
+  width: 35%;
+  position: right;
+
+}
+.contribute-recipes {
+  margin-top: 13vh;
+  h1 {
+    font-weight: lighter;
+    font-size: 2em;
+  }
 }
