@@ -124,7 +124,7 @@ export class RecipeViewCardComponent implements OnInit{
     }
 
     // Generate the formatted string of ingredients shown on the card.
-    // Truncate titles and ingredients to not be excessively large.
+    // No longer need to truncate title as it is done in css
     generateDisplayStrings(){
         let truncate = false;
         // Take less than 120 characters worth of ingredients.
@@ -140,20 +140,8 @@ export class RecipeViewCardComponent implements OnInit{
         if (truncate) {
             this.ingredientsString += "..."
         }
+        this.recipeDisplayTitle = this.recipe.name;
 
-        // Take less than 20 characters of title.
-        truncate = false;
-        for (let word of this.recipe.name.split(" ")) {
-            if (this.recipeDisplayTitle.length + word.length > 20){
-                truncate = true;
-                break;
-            }
-            this.recipeDisplayTitle += word + " ";
-        }
-        this.recipeDisplayTitle = this.recipeDisplayTitle.slice(0,-1);
-        if (truncate) {
-            this.recipeDisplayTitle += "..."
-        }
     }
 
 }

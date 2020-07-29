@@ -30,8 +30,10 @@
     mat-card-title {
         height: 2.2vh;
         overflow: hidden;
+        white-space: nowrap;
         text-overflow: ellipsis;
     }
+    // This does the ellipsis styling for the one line header
     .text-oneline ::ng-deep * {
         text-overflow: ellipsis;
         overflow: hidden;
