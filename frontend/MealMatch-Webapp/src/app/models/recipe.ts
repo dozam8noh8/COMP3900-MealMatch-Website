@@ -1,4 +1,4 @@
-import { Ingredient, RegularIngredient } from './ingredient';
+import { Ingredient } from './ingredient';
 
 
 
@@ -10,4 +10,5 @@ export interface Recipe {
     instruction: string;
     image?: string;
     mealtypes?: any[];
+    rating: number;
 }

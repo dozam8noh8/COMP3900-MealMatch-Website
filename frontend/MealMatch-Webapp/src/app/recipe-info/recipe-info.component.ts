@@ -76,8 +76,8 @@ export class RecipeInfoComponent implements OnInit {
   recipePlaceholder = 'assets/images/recipe_placeholder.jpg';
   instructions: string[] = [];
   allRatingComments: RatingComment;
-  nRatings = 0;
-  averageRating = 0;
+  nRatings: number = 0;
+  averageRating: string = "0";
 
   constructor(
     private recipeService: RecipeService,
@@ -121,15 +121,8 @@ export class RecipeInfoComponent implements OnInit {
   getAllRatingComments() {
     this.rcService.getAllRatingComments(this.recipe.id)
     .subscribe( (rcResp: RatingComment[]) => {
-      // console.log(rcResp)
-      // this.allRatingComments = rcResp;
-      
-      const allRatings = rcResp.map( rc => parseInt(rc.rating) )
-      const totalStars = allRatings.reduce( (accumulator, currentValue) => (accumulator + currentValue) );
       this.nRatings = rcResp.length;
-      this.averageRating = totalStars/this.nRatings;
-
-      console.log(this.averageRating)
+      this.averageRating = this.recipe.rating.toFixed(2);
     })
 
   }

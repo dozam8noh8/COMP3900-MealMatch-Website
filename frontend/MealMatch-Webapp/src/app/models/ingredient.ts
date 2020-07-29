@@ -7,8 +7,3 @@ export interface Ingredient {
     onList?: boolean;
     category?: String;
 }
-
-export interface RegularIngredient {
-    id: number;
-    name: String;
-}
