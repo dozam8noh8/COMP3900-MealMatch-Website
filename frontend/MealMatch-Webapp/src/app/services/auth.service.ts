@@ -129,8 +129,8 @@ export class AuthService {
       , {
         headers: this.headers,
         params: {
-          recipe_page_number: recipePageNumber?.toString() || "1",
-          recipes_per_page: recipesPerPage?.toString() || "10",
+          page_num: recipePageNumber?.toString() || "1",
+          page_size: recipesPerPage?.toString() || "10",
         }
       },
 );

@@ -36,8 +36,11 @@ import { Router } from '@angular/router';
         </span>
       </div>
       <div class="contribute-recipes">
-        <h1 class="copperplate">
-          Contribute to our community of recipes!
+      <h1 *ngIf="!recipesLoading" [ngPlural]="totalRecipesNumber" class="copperplate">
+          <ng-template ngPluralCase="=0">You haven't contributed any recipes yet, contribute to our community of recipes!</ng-template>
+          <ng-template ngPluralCase="=1">You've contributed {{totalRecipesNumber}} recipe, contribute another?</ng-template>
+          <ng-template ngPluralCase="other">You've contributed {{totalRecipesNumber}} recipes! Fancy one more?</ng-template>
+
         </h1>
         <button
           mat-raised-button
@@ -68,9 +71,9 @@ import { Router } from '@angular/router';
       <mat-spinner *ngIf="recipesLoading" style="margin-left: 47%;"> </mat-spinner>
     </ng-template>
     <mat-paginator *ngIf="recipes"
-    [length]="100"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]"
+    [length]="totalRecipesNumber"
+    [pageSize]="itemsPerPage"
+    [pageSizeOptions]="[12, 24, 40]"
     (page)="handlePaginator($event)"
     > </mat-paginator>
   `,
@@ -96,7 +99,7 @@ export class ProfilePageComponent implements OnInit {
   displayedPage = 1;
 
   // The number of items displayed per paginated page
-  itemsPerPage: 10;
+  itemsPerPage = 12;
 
   // Dynamic variables give user feedback about what events are happening on the page.
   loading = true;
@@ -104,6 +107,8 @@ export class ProfilePageComponent implements OnInit {
   recipesLoading = true;
   photoIsUploading = false;
   photoUploadComplete = false;
+  // The number of recipes a user has contributed in total (used for pagination).
+  totalRecipesNumber: number;
 
   constructor(
     private authService: AuthService,
@@ -121,6 +126,8 @@ export class ProfilePageComponent implements OnInit {
       this.recipesLoading = false;
       this.username = res.username;
       this.email = res.email;
+      this.totalRecipesNumber = res.total_results;
+
       if (res.profile_pic) {
         this.profile_pic = res.profile_pic;
       }
@@ -163,19 +170,20 @@ export class ProfilePageComponent implements OnInit {
   handleAddRecipe() {
     this.dialog.open(AddRecipePopupComponent);
   }
-
+  // Handles the pagination of the page, loading only itemsPerPage items at once.
   handlePaginator($event){
     this.itemsPerPage = $event.pageSize;
-    this.displayedPage = $event.pageIndex;
-    // Clear the recipes
+    this.displayedPage = $event.pageIndex + 1;
+    // Clear the recipes so that we dont show the previous page's recipes aswell.
     this.recipes = [];
     console.log($event);
     this.recipesLoading = true;
     // Not ideal to get all user details again just for recipes.
-    this.authService.getUserDetails(this.itemsPerPage, this.displayedPage)
+    this.authService.getUserDetails(this.displayedPage, this.itemsPerPage)
     .subscribe(response => {
       this.recipesLoading = false;
       this.recipes = response.recipes;
+      this.totalRecipesNumber = response.total_results;
     })
   }
 }
