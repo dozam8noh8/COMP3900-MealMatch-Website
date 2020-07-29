@@ -3,7 +3,7 @@ import { RatingCommentService } from 'src/app/services/rating-comment.service';
 import { RatingComment } from 'src/app/models/rating_comment';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-display-comments',
@@ -30,9 +30,12 @@ import { FormGroup, FormControl } from '@angular/forms';
 
                   <div>
                     Comment: <br/>
-                    <textarea formControlName="comment"></textarea>
+                    <textarea formControlName="comment" #matInput rows="5" style="width:90%"></textarea>
                     <br/>
                     <button type="submit" mat-raised-button color="primary">Add a review</button>            
+                    <div *ngIf="submitAttempted && ratingCommentFormGroup.invalid" style="color:red;">
+                      A review must have a comment and rating from 1 to 5.
+                    </div>
                   </div>
                 </form>
               </ng-container>
@@ -64,10 +67,12 @@ import { FormGroup, FormControl } from '@angular/forms';
 
                     <div>
                       Comment: <br/>
-                      <textarea formControlName="comment"></textarea>
-                      <br/>
+                      <textarea formControlName="comment" rows="5" style="width:90%"></textarea>                      <br/>
                       <button (click)="toggleEdit()" mat-raised-button color="warn">Cancel</button>
                       <button type="submit" mat-raised-button color="primary">Save</button>            
+                      <div *ngIf="submitAttempted && ratingCommentFormGroup.invalid" style="color:red;">
+                        A review must have a comment and rating from 1 to 5.
+                      </div>
                     </div>
                   </form>
 
@@ -112,14 +117,16 @@ export class DisplayCommentsComponent implements OnInit {
   loadingComments: boolean;
   postingUserRC: boolean;
 
+  submitAttempted = false;
+
   constructor(
     private rcService: RatingCommentService,
     private authService: AuthService,
   ) { 
 
     this.ratingCommentFormGroup = new FormGroup({
-      rating: new FormControl(''), // validate?
-      comment: new FormControl('') // validate?
+      rating: new FormControl('', Validators.required),
+      comment: new FormControl('', Validators.required)
     });
 
   }
@@ -130,6 +137,11 @@ export class DisplayCommentsComponent implements OnInit {
   }
 
   postRatingComment() {
+    this.submitAttempted = true;
+    if(this.ratingCommentFormGroup.invalid) {
+      return;
+    }
+
     this.postingUserRC = true;
     let rating = this.ratingCommentFormGroup.get('rating').value;
     let comment = this.ratingCommentFormGroup.get('comment').value;
@@ -188,4 +200,6 @@ export class DisplayCommentsComponent implements OnInit {
     this.editable = !this.editable;
   }
 
+  get formRating() { return this.ratingCommentFormGroup.get('rating') }
+  get formComment() { return this.ratingCommentFormGroup.get('comment') }
 }
