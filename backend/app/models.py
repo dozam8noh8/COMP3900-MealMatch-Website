@@ -131,14 +131,13 @@ class IngredientPairs(db.Model):
 
     def get_highest_pairs():
         pairs = IngredientPairs.query.order_by(desc(IngredientPairs.count)).limit(5).all()
-        list = []
+        highest_pairs = []
         for pair in pairs:
-            pair_to_find = pair.pairs.split(", ")
-            new_pair = []
-            for in_pair in pair_to_find:
-                new_pair.append(Ingredient.query.filter_by(id=in_pair).first())
-            list.append(new_pair)
-        return list
+            ingredient_ids = pair.pairs.split(', ')
+            ingredients = [Ingredient.query.filter_by(id=int(x)).first() for x in ingredient_ids]
+            ingredients = Ingredient.json_dump(ingredients)
+            highest_pairs.append({'id': pair.id, 'ingredients': ingredients, 'count': pair.count})
+        return highest_pairs
 
     def remove_pairs(recipe):
         ingredient_ids = set(x.ingredient_id for x in recipe.ingredients)

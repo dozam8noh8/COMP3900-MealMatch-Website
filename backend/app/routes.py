@@ -103,8 +103,8 @@ def get_user_info(id):
     # Can't find user in db.
     if not user:
         raise ErrorException('This user does not exist in the database', 500)
-    page_num = request.args.get('page_num', type=int)
-    page_size = request.args.get('page_size', type=int)
+    page_num = request.args.get('page_num', default=1, type=int)
+    page_size = request.args.get('page_size', default=12, type=int)
     response = Recipe.get_recipes_by_user_id(g.user.id, page_num, page_size)
     response.update({'user_id': user.id, 'email': user.email, 'username': user.username, 'profile_pic': user.profile_pic, 'statusCode': 200, 'status' : 'success'})
     return response
@@ -172,8 +172,8 @@ def recipe_search():
         (TODO) - Add the schema recipes will be returned in once it is finalised.
     '''
     ingredients = request.json.get('ingredients')
-    page_num = request.args.get('page_num', type=int)
-    page_size = request.args.get('page_size', type=int)
+    page_num = request.args.get('page_num', default=1, type=int)
+    page_size = request.args.get('page_size', default=12, type=int)
     response = Recipe.get_recipes(ingredients, page_num, page_size)
     response.update({'statusCode': 200, 'status' : 'success'})
     return response
@@ -195,9 +195,8 @@ def recipe_delete(recipe_id):
 @app.route('/api/popular_ingredient_pairs', methods=['GET'])
 @auth.login_required
 def popular_ingredient_pairs():
-    ingredients = IngredientPairs.get_highest_pairs()
-    ingredients = [Ingredient.json_dump(x) for x in ingredients]
-    return jsonify(ingredients)
+    response = IngredientPairs.get_highest_pairs()
+    return jsonify(response)
 
 
 @app.route('/api/get_ingredients_in_categories', methods=['GET'])
