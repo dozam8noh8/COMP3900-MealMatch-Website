@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RatingCommentService } from 'src/app/services/rating-comment.service';
 import { RatingComment } from 'src/app/models/rating_comment';
 import { AuthService } from 'src/app/services/auth.service';
@@ -107,6 +107,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class DisplayCommentsComponent implements OnInit {
 
   @Input() recipeId: number;
+  @Output() reloadEmitter = new EventEmitter();
   allRatingComments: RatingComment[];
   currentUser: User;
 
@@ -159,7 +160,7 @@ export class DisplayCommentsComponent implements OnInit {
   getAllRatingComments() {
     this.rcService.getAllRatingComments(this.recipeId)
     .subscribe( (rcResp: RatingComment[]) => {
-
+      this.reloadEmitter.emit(this.recipeId)
       // We need to get the currently logged in user
       this.authService.getUserDetails()
       .subscribe( (userResp) => {
