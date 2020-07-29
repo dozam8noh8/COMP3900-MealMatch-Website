@@ -183,7 +183,7 @@ class Recipe(db.Model):
             count = count + 1
         return sum_rating/float(count)
 
-    def get_recipes(ingredients):
+    def get_recipes(ingredients, page_num, page_size):
         ingredients = [x.lower() for x in ingredients]
         ingredients_id = (Ingredient
                           .query
@@ -207,30 +207,22 @@ class Recipe(db.Model):
 
         if len(filtered) == 0:
             IngredientPairs.increment_count(ingredients_id)
-        return filtered
+        total_results = len(filtered)
 
-    def get_recipes_by_user_id(user_id):
+        recipes = Recipe.get_paginated_list(filtered, page_num, page_size)
+        recipes = RecipeSchema(many=True).dump(recipes)
+        return {'recipes' : recipes, 'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
+
+    def get_recipes_by_user_id(user_id, page_num, page_size):
         recipes = Recipe.query.filter_by(user_id=user_id).all()
-        new_res = Recipe.get_paginated_list(recipes, 19)
-        print(new_res)
-        schema = RecipeSchema(many=True)
-        # print(schema.dump(new_res))
-        return schema.dump(recipes)
+        total_results = len(recipes)
+        recipes = Recipe.get_paginated_list(recipes, page_num, page_size)
+        recipes = RecipeSchema(many=True).dump(recipes)
+        return {'recipes' : recipes, 'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
 
-    def get_paginated_list(recipes, page):
-        if (page <= 0):
-            return []
-        start = 12 * (page-1)
-        size = len(recipes)
-        print(size)
-        if start > size:
-            return []
-        new_list = []
-        for i in range(0, 12):
-            if ((i+start) < size):
-                new_list.append(recipes[i+start])
-        print(len(new_list))
-        return new_list
+    def get_paginated_list(recipes, page_num, page_size):
+        start = (page_num - 1) * page_size
+        return recipes[start : start + page_size]
 
 
     # Make new recipe

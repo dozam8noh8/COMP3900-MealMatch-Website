@@ -103,9 +103,11 @@ def get_user_info(id):
     # Can't find user in db.
     if not user:
         raise ErrorException('This user does not exist in the database', 500)
-    recipes = Recipe.get_recipes_by_user_id(g.user.id)
-    return jsonify({'user_id': user.id, 'email': user.email, 'username': user.username, 'recipes': recipes, 'profile_pic': user.profile_pic, 'statusCode': 200, 'status' : 'success'})
-    #return jsonify(User.json_dump(user)) # We dont want all 10000 recipes for user, only 10 for now.
+    page_num = request.args.get('page_num', type=int)
+    page_size = request.args.get('page_size', type=int)
+    response = Recipe.get_recipes_by_user_id(g.user.id, page_num, page_size)
+    response.update({'user_id': user.id, 'email': user.email, 'username': user.username, 'profile_pic': user.profile_pic, 'statusCode': 200, 'status' : 'success'})
+    return response
 
 @app.route('/api/edit_user/<int:id>', methods=['POST'])
 @auth.login_required
@@ -170,8 +172,11 @@ def recipe_search():
         (TODO) - Add the schema recipes will be returned in once it is finalised.
     '''
     ingredients = request.json.get('ingredients')
-    recipes = Recipe.get_recipes(ingredients)
-    return jsonify(Recipe.json_dump(recipes))
+    page_num = request.args.get('page_num', type=int)
+    page_size = request.args.get('page_size', type=int)
+    response = Recipe.get_recipes(ingredients, page_num, page_size)
+    response.update({'statusCode': 200, 'status' : 'success'})
+    return response
 
 @app.route('/api/recipe_delete/<int:recipe_id>', methods=['DELETE'])
 @auth.login_required
