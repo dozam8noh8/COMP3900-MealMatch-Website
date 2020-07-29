@@ -15,17 +15,20 @@ import { Router } from '@angular/router';
   styleUrls: ['profile-page.component.scss'],
   template: `
   <h1 style="margin-left: 1.5vw; font-weight: lighter; font-size: 5vh; margin-top: 4vh;">  Welcome to your recipe dashboard, {{ username }}!</h1>
-  <div style="margin-left: 10vw; margin-top: 5vh; margin-bottom: 2vh; width: 50%; position: right;">
-    <app-photo-upload (uploadEmitter)="setProfilePhoto($event)" [existingImageURL]="profile_pic" [loading]="loading">
-    </app-photo-upload>
-    <span *ngIf="photoIsUploading">Uploading...</span>
-    <span *ngIf="!photoIsUploading">
-      <button (click)="uploadPhoto()" [disabled]="!newProfilePhotoFile || photoUploadComplete" class="submitButton"> Save Photo Change </button>
-    </span>
+  <div style="display: flex; margin-top: 5vh">
+    <div style="margin-left: 10vw; margin-right: 0; margin-top: 5vh; margin-bottom: 2vh; width: 35%; position: right;">
+      <app-photo-upload (uploadEmitter)="setProfilePhoto($event)" [existingImageURL]="profile_pic" [loading]="loading">
+      </app-photo-upload>
+      <span *ngIf="photoIsUploading">Uploading...</span>
+      <span *ngIf="!photoIsUploading">
+        <button (click)="uploadPhoto()" [disabled]="!newProfilePhotoFile || photoUploadComplete" class="submitButton"> Save Photo Change </button>
+      </span>
+    </div>
+    <div style="margin-top: 13vh">
+                      <h1 style="font-weight: lighter; font-size: 2em" class="copperplate">Contribute to our community of recipes!</h1>
+      <button mat-raised-button color="primary" class="submitButton" (click)="handleAddRecipe()" style="margin-left: 15vw; font-size: 2vh;"> Add a new recipe </button>
+    </div>
   </div>
-
-  <button mat-raised-button color="primary" class="submitButton" (click)="handleAddRecipe()" style="margin-left: 1.5vh; font-size: 2vh;"> Add a new recipe </button>
-
   <div *ngIf="recipes && recipes.length > 0; else noRecipes" class="all-recipes-container">
     <div class="container" *ngFor="let recipe of recipes">
       <app-recipe-view-card [recipe]="recipe" [showDeleteEdit]="true" (editEmitter)="handleEditRecipe($event)" (deleteEmitter)="handleDeleteRecipe($event)">
