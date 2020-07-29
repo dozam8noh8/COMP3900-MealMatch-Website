@@ -14,6 +14,8 @@ export class SearchService {
   inputIngredients: Ingredient[];
   currentMealType: string;
   allResults: Recipe[];
+  pageNum: number;
+  pageSize: number;
 
   constructor(private http: HttpClient) {
 
@@ -29,11 +31,16 @@ export class SearchService {
     .subscribe( (data: any) => {
       this.allResults = data.recipes;
       this.searchComplete = true;
+      this.pageNum = data.pageSize;
     });
   }
 
   getAllResults() {
-    return this.allResults;
+    return {
+      results: this.allResults,
+      pageNum: this.pageNum,
+      pageSize: this.pageSize,
+    }
   }
 
   getAllMealTypes() {

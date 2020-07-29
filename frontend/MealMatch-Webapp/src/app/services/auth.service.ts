@@ -70,7 +70,7 @@ export class AuthService {
         // Calculate the expiry date as token duration + time now.
         let expiryDate = new Date();
         expiryDate.setSeconds(expiryDate.getSeconds() + response.duration)
-        //console.log(currDate)
+        // Create the storage item with the response and the expiry time.
         let userStorageDetails = {
           ...response,
           expiry: expiryDate
