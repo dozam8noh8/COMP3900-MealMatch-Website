@@ -106,4 +106,12 @@ have a lot of UI work to do :/
 
 
 ==================Week 8==============
-This week I did a lot on edit recipe and create recipe page. I also did some things for loveless sets which are the sets that have no ingredients. Mostly frontend work and bug fixes. And I also prepared the group for the demo. Its been a busy week with work and other things but we managed to achieve most of the functionality for the sprint. All doing well!
+This week I did a lot on edit recipe and create recipe page. I also did some things for loveless sets which are the sets that have no ingredients.
+Mostly frontend work and bug fixes. And I also prepared the group for the demo. Its been a busy week with work and other things but we managed to 
+achieve most of the functionality for the sprint. All doing well!
+
+==================Week 9==============
+This week I've dedicated the whole week to the project. We've all been working hard fixing up the UI and making sure there are no functionality bugs.
+I've been working hard keeping everything ticketed and making sure people have jobs to do. The main things I've done are
+UI updates, Documentation, Moving styling to SCSS files and I'm working on pagination of results right now. So much to do but I am genuinely proud
+of how much we've got done in this project!
