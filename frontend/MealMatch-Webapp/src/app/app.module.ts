@@ -55,6 +55,7 @@ import { InputListComponent } from './home-page/input-list/input-list.component'
 import { DisplayCommentsComponent } from './recipe-info/display-comments/display-comments.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DisplayReviewComponent } from './recipe-info/display-review/display-review.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const materialModules = [
   MatToolbarModule,
@@ -76,6 +77,7 @@ const materialModules = [
   MatCheckboxModule,
   MatTabsModule,
   MatDialogModule,
+  MatPaginatorModule,
 ]
 @NgModule({
   declarations: [

@@ -70,7 +70,7 @@ export class AuthService {
         // Calculate the expiry date as token duration + time now.
         let expiryDate = new Date();
         expiryDate.setSeconds(expiryDate.getSeconds() + response.duration)
-        //console.log(currDate)
+        // Create the storage item with the response and the expiry time.
         let userStorageDetails = {
           ...response,
           expiry: expiryDate
@@ -122,9 +122,18 @@ export class AuthService {
     return user?.user_id;
   }
   // Get the details associated with a user (name, profile_photo, contributed recipes, etc) from the backend.
-  getUserDetails() : Observable<any> {
+  getUserDetails(recipePageNumber?: number, recipesPerPage?: number) : Observable<any> {
     const userId = this.getLoggedInUserId();
-    return this.http.get(`${this.BASE_URL}/users/${userId}`, {headers: this.headers});
+    return this.http.get(
+      `${this.BASE_URL}/users/${userId}`
+      , {
+        headers: this.headers,
+        params: {
+          page_num: recipePageNumber?.toString() || "1",
+          page_size: recipesPerPage?.toString() || "10",
+        }
+      },
+);
   }
 
   // Return the details associated with a user that are stored in localstorage as an object.

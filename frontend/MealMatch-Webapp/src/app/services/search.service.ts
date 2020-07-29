@@ -14,26 +14,39 @@ export class SearchService {
   inputIngredients: Ingredient[];
   currentMealType: string;
   allResults: Recipe[];
+  pageNum: number;
+  pageSize: number;
 
   constructor(private http: HttpClient) {
-    
+
   }
 
-  searchForRecipes(ingredients: Ingredient[], mealtype: string) {
+  searchForRecipes(ingredients: Ingredient[], mealtype: string, displayedPage?: number, itemsPerPage?:number) {
     this.searchComplete = false;
     this.inputIngredients = ingredients;
     this.setMealType(mealtype);
     this.http.post("http://localhost:5000/api/recipe_search", {
-      "ingredients": ingredients
-    })
-    .subscribe( (data: Recipe[]) => {
-      this.allResults = data;
+      "ingredients": ingredients,
+    },
+    {params: {
+      page_num: displayedPage?.toString() || "1",
+      page_size: itemsPerPage?.toString() || "10",
+    }})
+    .subscribe( (data: any) => {
+      this.allResults = data.recipes;
       this.searchComplete = true;
+      this.pageNum = data.page_num;
+      this.pageSize = data.page_size;
     });
   }
 
   getAllResults() {
-    return this.allResults;
+    return {
+      recipes: this.allResults,
+      pageNum: this.pageNum,
+      pageSize: this.pageSize,
+      totalResults: this.allResults.length,
+    }
   }
 
   getAllMealTypes() {
