@@ -44,59 +44,85 @@ import { map, finalize } from 'rxjs/operators';
   `
 })
 
-
+/* The recipe view card is a reusable component displaying the key details of a recipe.
+    there are currently two different views depending on who is viewing the card and from where.
+    The buttons will currently show only for recipes on a user's profile because only the owner
+    should be able to alter the state of a recipe. */
 export class RecipeViewCardComponent implements OnInit{
+    // The details of the recipe the view card is displaying.
     @Input() recipe: Recipe;
-    @Input() showDeleteEdit = false; // Might need an observable here for login/logout.
+    // Whether or not we should show the buttons. Input true on the profile_page.
+    @Input() showDeleteEdit = false;
+    // Emits to the parent when edit is clicked.
     @Output() editEmitter = new EventEmitter<number>();
+    // Emits to the parent when delete is clicked
     @Output() deleteEmitter = new EventEmitter<number>();
 
-    recipeDisplayTitle = '';
+
+    // Placeholder image for recipes that have no attached image.
     recipeImagePlaceholder = 'assets/images/recipe_placeholder.jpg';
+    // Represents the loading state of the card (if the card is being deleted or loaded from API)
     loading = false;
+    // Displays errors from API.
     error: string = '';
+    // The view to navigate to when the card is clicked (other than the buttons)
     link: string;
+    // The formatted string of ingredients displayed on the card after truncation.
     ingredientsString = '';
+    // The title shown on the card after truncation/formatting.
+    recipeDisplayTitle = '';
+
     constructor(private dialog: MatDialog, private recipeService: RecipeService) {}
+
     ngOnInit() {
+        // Set the navigation link for when card is clicked (shorthand for template)
         this.link = `/recipe/${this.recipe.id}`;
         this.generateDisplayStrings();
     }
+    // Emit to parent when edit button is clicked
     editRecipe() {
-        console.log("Editing recipe")
         this.editEmitter.emit(this.recipe.id);
     }
 
+    // Open a confirmation dialog and then emit to parent if delete button is clicked
     deleteRecipe() {
+        // Open a delete confirmation popup
         let dialogRef = this.dialog.open(DeleteRecipePopupComponent);
         // Set attributes of popup.
           dialogRef.componentInstance.description ="Deleting Recipe";
           dialogRef.componentInstance.question = "Are you sure you want to delete the recipe? It's permanent"
           dialogRef.componentInstance.recipeId = this.recipe.id;
+
+          // After popup is closed, get the behaviour the popup emitted. (Yes or No)
           dialogRef.afterClosed().subscribe(emission => {
             if (emission.behaviour === "Yes") {
-                this.loading = true; // show spinner
-              this.recipeService.deleteRecipe(emission.recipeId)
-              .pipe(finalize(() => {console.log("Finally"); this.loading = false}))
-              .subscribe( response => {
-                  if (response.status === 200){
-                    this.deleteEmitter.emit(this.recipe.id); // Pass back up to parent to delete from list.
-                  }
-                  else {
-                      this.error = 'Something went wrong';
-                  }
-              },
-              err => {console.log("Error occurred"); this.error = "An error occured"});
+                this.loading = true; // show spinner's to indicate to user api call is in progress
+                this.recipeService.deleteRecipe(emission.recipeId)
+                .pipe(finalize(() => {this.loading = false})) // On completion, regardless of status stop loading.
+                .subscribe( response => {
+                    // If successful deletion, emit to parent to delete from list and view.
+                    if (response.status === 200){
+                        this.deleteEmitter.emit(this.recipe.id);
+                    }
+                    else {
+                        // Display an error if deletion failed.
+                        this.error = 'Something went wrong';
+                    }
+                },
+                // If we get an error response, show an error.
+                err => { this.error = "An error occured"});
             }
             else {
-              // Do nothing.
+              // Do nothing, the popup will be closed.
             }
         });
     }
 
-    // Generate the string of ingredients shown on the card. Truncate at 100 chars
+    // Generate the formatted string of ingredients shown on the card.
+    // Truncate titles and ingredients to not be excessively large.
     generateDisplayStrings(){
         let truncate = false;
+        // Take less than 120 characters worth of ingredients.
         for (let ingredient of this.recipe.ingredients) {
             if (this.ingredientsString.length + ingredient["ingredient.name"].length > 120) {
                 truncate = true;
@@ -107,16 +133,12 @@ export class RecipeViewCardComponent implements OnInit{
         // Remove last ", "
         this.ingredientsString = this.ingredientsString.slice(0,-2);
         if (truncate) {
-            this.ingredientsString += ".."
+            this.ingredientsString += "..."
         }
-        else {
-            this.ingredientsString += ".";
-        }
-        console.log(this.ingredientsString);
 
+        // Take less than 20 characters of title.
         truncate = false;
         for (let word of this.recipe.name.split(" ")) {
-            console.log(word)
             if (this.recipeDisplayTitle.length + word.length > 20){
                 truncate = true;
                 break;
