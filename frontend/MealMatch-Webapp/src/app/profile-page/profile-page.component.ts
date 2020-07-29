@@ -64,13 +64,14 @@ import { Router } from '@angular/router';
       </div>
     </div>
     <ng-template #noRecipes>
-      <h1 *ngIf="!loading">You have no recipes</h1>
-      <mat-spinner *ngIf="loading" style="margin-left: 47%;"> </mat-spinner>
+      <h1 *ngIf="!recipesLoading">You have no recipes</h1>
+      <mat-spinner *ngIf="recipesLoading" style="margin-left: 47%;"> </mat-spinner>
     </ng-template>
     <mat-paginator *ngIf="recipes"
     [length]="100"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="handlePaginator($event)"
     > </mat-paginator>
   `,
 })
@@ -99,6 +100,8 @@ export class ProfilePageComponent implements OnInit {
 
   // Dynamic variables give user feedback about what events are happening on the page.
   loading = true;
+  // Separate loading variable for paginated recipes.
+  recipesLoading = true;
   photoIsUploading = false;
   photoUploadComplete = false;
 
@@ -115,6 +118,7 @@ export class ProfilePageComponent implements OnInit {
     // Get all the user details from the backend and populate the component.
     this.authService.getUserDetails(this.displayedPage, this.itemsPerPage).subscribe((res) => {
       this.loading = false;
+      this.recipesLoading = false;
       this.username = res.username;
       this.email = res.email;
       if (res.profile_pic) {
@@ -158,5 +162,20 @@ export class ProfilePageComponent implements OnInit {
   // Open a the popup that asks if you would like to add a recipe.
   handleAddRecipe() {
     this.dialog.open(AddRecipePopupComponent);
+  }
+
+  handlePaginator($event){
+    this.itemsPerPage = $event.pageSize;
+    this.displayedPage = $event.pageIndex;
+    // Clear the recipes
+    this.recipes = [];
+    console.log($event);
+    this.recipesLoading = true;
+    // Not ideal to get all user details again just for recipes.
+    this.authService.getUserDetails(this.itemsPerPage, this.displayedPage)
+    .subscribe(response => {
+      this.recipesLoading = false;
+      this.recipes = response.recipes;
+    })
   }
 }

@@ -33,9 +33,11 @@ import { FormBuilder } from '@angular/forms';
                   </ng-container>
                   <mat-paginator
                   [length]="100"
-                  [pageSize]="10"
-                  [pageSizeOptions]="[5, 10, 25, 100]"
-    > </mat-paginator>
+                  [pageSize]="itemsPerPage"
+                  [pageSizeOptions]="[5, 10, 25]"
+                  (page)="handlePaginator($event)"
+                  >
+                  </mat-paginator>
               </ng-container>
 
               <div layout="row" layout-fill layout-align="center center">
@@ -132,5 +134,7 @@ export class SearchResultsComponent implements OnInit {
   searchComplete() {
     return this.searchService.searchComplete;
   }
-
+  handlePaginator($event){
+    console.log($event);
+  }
 }
