@@ -111,9 +111,17 @@ def get_user_info(id):
 def top_rated():
     return jsonify(Recipe.get_highest_rated_recipes(10))
 
-@app.route('/api/top_contributors')
+@app.route('/api/top_contributors', methods=['GET'])
 def top():
     return jsonify(User.top_contributors())
+
+@app.route('/api/top_rated', methods=['GET'])
+def combine():
+    recipes = (Recipe.get_highest_rated_recipes(10))
+    users = (User.top_contributors())
+    response = jsonify({'Recipes': recipes, 'Users': users})
+    response.status_code = 200
+    return response
 
 @app.route('/api/edit_user/<int:id>', methods=['POST'])
 @auth.login_required
