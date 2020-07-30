@@ -1,0 +1,28 @@
+.greeting-text {
+    margin-left: 1.5vw;
+    font-weight: lighter;
+    font-size: 5vh;
+    margin-top: 4vh;
+    margin-bottom: 6vh;
+    text-align: center;
+  }
+
+  .fame-container {
+      display: flex;
+      justify-content: space-around;
+      .fame-items {
+        display: flex;
+        justify-content: space-between;
+      }
+      h1 {
+        margin-bottom: 2vh;
+        font-weight: lighter;
+        font-size: 3vh;
+      }
+  }
+
+.copperplate {
+    font-family: Copperplate;
+    font-size: 3.8vh;
+    text-align: center;
+}

@@ -56,6 +56,7 @@ import { DisplayCommentsComponent } from './recipe-info/display-comments/display
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DisplayReviewComponent } from './recipe-info/display-review/display-review.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { HallOfFameComponent } from './hall-of-fame/hall-of-fame.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -109,6 +110,7 @@ const materialModules = [
     InputListComponent,
     DisplayCommentsComponent,
     DisplayReviewComponent,
+    HallOfFameComponent,
   ],
   imports: [
     BrowserModule,
