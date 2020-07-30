@@ -20,13 +20,11 @@ export class AddRecipePopupComponent {
 
 
     handleYes() {
-        console.log("Yes was clicked")
         this.dialogRef.close();
         this.router.navigate(['lovelesssets']);
     }
 
     handleNo() {
-        console.log("No was clicked")
         this.router.navigate(['create']);
         this.dialogRef.close();
     }

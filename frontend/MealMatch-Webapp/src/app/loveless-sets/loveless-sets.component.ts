@@ -3,12 +3,18 @@ import { Recipe } from '../models/recipe';
 import { RecipeService } from '../services/recipe.service';
 import { IngredientService } from '../services/ingredient.service';
 import { Ingredient } from '../models/ingredient';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loveless-sets',
   styleUrls: ['./loveless-sets.component.scss'],
   template: `
-    <h1  class="greeting-text"> These ingredients need some love! </h1>
+    <h1 *ngIf="!loading && sets.length > 1" class="greeting-text"> These ingredients need some love! </h1>
+    <div *ngIf="!loading && sets.length < 1">
+      <h1  class="greeting-text">No commonly searched ingredients without recipes! </h1>
+      <button mat-raised-button (click)="handleDashboardButton()" color="primary" class="copperplate submitButton"> Back to dashboard </button>
+    </div>
+    <mat-spinner *ngIf="loading"> </mat-spinner>
     <div class="ingredient-set" *ngFor="let set of sets">
         <app-ingredient-set-display [set]="set"> </app-ingredient-set-display>
     </div>
@@ -16,8 +22,9 @@ import { Ingredient } from '../models/ingredient';
   `,
 })
 export class LovelessSetsComponent implements OnInit {
+  loading = true;
   sets: LovelessSet[];
-  constructor(private ingredientService: IngredientService) { }
+  constructor(private ingredientService: IngredientService, private router: Router) { }
 
   ngOnInit(): void {
     // POPULATE SETS
@@ -34,14 +41,14 @@ export class LovelessSetsComponent implements OnInit {
           }
         arr.push(obj)
       });
+    this.loading = false;
     this.sets = arr;
-    console.log(this.sets)
     });
 
-
-
   }
-
+  handleDashboardButton() {
+    this.router.navigate(['/dashboard'])
+  }
 }
 
 export interface LovelessSet {

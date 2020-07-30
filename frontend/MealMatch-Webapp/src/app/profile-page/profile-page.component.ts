@@ -47,6 +47,15 @@ import { Router } from '@angular/router';
         >
           Add a new recipe
         </button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="submitButton"
+          (click)="handleAddLovelessSets()"
+          style="margin-left: 10vw;"
+        >
+          See loveless sets
+        </button>
       </div>
     </div>
     <div
@@ -153,7 +162,6 @@ export class ProfilePageComponent implements OnInit {
 
   // Upload a profile picture
   uploadPhoto() {
-    console.log('Uploading photo');
     this.photoIsUploading = true;
     if (this.newProfilePhotoFile) {
       this.imageService
@@ -167,7 +175,11 @@ export class ProfilePageComponent implements OnInit {
   }
   // Open a the popup that asks if you would like to add a recipe.
   handleAddRecipe() {
-    this.dialog.open(AddRecipePopupComponent);
+    this.router.navigate(['/create']);
+  }
+  // Navigate user to loveless sets page to create a set from there.
+  handleAddLovelessSets() {
+    this.router.navigate(['/lovelesssets']);
   }
   // Handles the pagination of the page, loading only itemsPerPage items at once.
   handlePaginator($event){
