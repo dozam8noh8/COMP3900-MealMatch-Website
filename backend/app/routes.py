@@ -138,7 +138,7 @@ def combine():
 @auth.login_required
 def edit_user(id):
     '''
-        On POST edit a user's profile 
+        On POST edit a user's profile
 
     '''
     # If the requesting user is not the user who's info is requested.
@@ -334,6 +334,8 @@ def edit_recipe():
     mealType = request.json.get('mealType')
     ingredients = request.json.get('ingredients')
     recipe = Recipe.edit_recipe(recipe_id, name, instruction, mealType, ingredients)
+    if g.user.id != recipe.user_id:
+        raise ErrorException('This is not your recipe, you cannot edit it.', 401)
     return {'recipe_id' : recipe.id, 'message': 'Recipe has been edited', 'statusCode': 201, 'status' : 'success'}
 
 @app.route('/api/recommendations', methods=['POST'])
