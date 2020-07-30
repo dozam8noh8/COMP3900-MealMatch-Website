@@ -100,7 +100,7 @@ export class RecipeViewCardComponent implements OnInit{
 
           // After popup is closed, get the behaviour the popup emitted. (Yes or No)
           dialogRef.afterClosed().subscribe(emission => {
-            if (emission.behaviour === "Yes") {
+            if (emission?.behaviour === "Yes") {
                 this.loading = true; // show spinner's to indicate to user api call is in progress
                 this.recipeService.deleteRecipe(emission.recipeId)
                 .pipe(finalize(() => {this.loading = false})) // On completion, regardless of status stop loading.

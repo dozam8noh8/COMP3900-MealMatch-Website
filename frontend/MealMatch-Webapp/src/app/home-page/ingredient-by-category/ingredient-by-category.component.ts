@@ -9,7 +9,7 @@ import { Category } from 'src/app/models/category';
   template: `
               <mat-card style="margin: 0 auto; width: 75%; border-radius: 10px;">
                 <h2 style="font-weight: lighter; font-size: 2.5vw; margin-top: 2vh; margin-left: 2vw; margin-bottom:1%;">Ingredients by Category</h2>
-                <mat-tab-group >
+                <mat-tab-group>
                   <div *ngFor="let category of getAllCategories()">
                     <mat-tab label="{{category.name}}">
                       <ul class="columned">

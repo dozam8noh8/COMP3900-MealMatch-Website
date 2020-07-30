@@ -53,3 +53,13 @@
     overflow: hidden;
     color: gold;
   }
+
+  mat-card-title {
+    flex-wrap: wrap;
+    text-align: center;
+    font-weight:lighter;
+    font-size: 5vh;
+    line-height: 4vh;
+    padding-top: 2vh;
+    padding-bottom: 4vh;
+  }

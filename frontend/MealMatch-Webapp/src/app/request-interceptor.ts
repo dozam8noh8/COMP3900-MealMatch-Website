@@ -7,7 +7,14 @@ import { Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
 
 @Injectable()
+/* The interceptor intercepts all network requests for some book keeping
+ A few functions
+ 1. Add the correct headers and authentication
+ 2. Make sure JSON tokens havent expired, if so, we redirect to login page
+ 3. Put a toggleable artificial delay on network requests to plan the UI for network requests failing.
+*/
 export class RequestLogInterceptor implements HttpInterceptor {
+    // Logged in state of user
     private loggedIn: boolean;
     constructor(private authService: AuthService, private router: Router) {
 
@@ -20,7 +27,6 @@ export class RequestLogInterceptor implements HttpInterceptor {
 
         // The user's JSON Token has expired. Log them out and clear their storage.
         if (this.loggedIn && !JWTToken ){
-            console.log("Expired token");
             this.authService.logout(true);
             return EMPTY; // still need to return an observable stream but we want to early exit
         }
@@ -31,8 +37,9 @@ export class RequestLogInterceptor implements HttpInterceptor {
             request = request.clone({headers: authHeader});
         }
 
+        // Add artificial 1 second delay to all network requests so we can design loading things responsively.
         return next.handle(request).pipe(
-            materialize(), // Add artificial 1 second delay to all network requests so we can design loading things responsively.
+            materialize(),
             delay(1000),
             dematerialize(),
         );
