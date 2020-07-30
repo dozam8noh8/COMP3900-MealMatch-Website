@@ -201,6 +201,8 @@ class Recipe(db.Model):
 
     def get_recipe_by_id(id):
         recipe = Recipe.query.get(id)
+        if not recipe:
+            raise ErrorException('Recipe id does not exist: ' + str(id), 400)
         instructions = [x.instruction for x in recipe.instructions]
         count = recipe.rating.count()
         schema = RecipeSchema(many=False)
@@ -310,7 +312,7 @@ class Recipe(db.Model):
     def edit_recipe(recipe_id, name, instruction, mealType, ingredients):
         recipe = Recipe.query.get(recipe_id)
         if not recipe:
-            raise ErrorException('Recipe id does not exist:' + recipe(recipe_id), 400)
+            raise ErrorException('Recipe id does not exist: ' + recipe_id, 400)
 
         recipe.name = name
         recipe.instructions = [RecipeInstructions(instruction=x) for x in instruction]

@@ -123,3 +123,4 @@ def seed_db():
             recipe.rating.append(rating)
             user.rating.append(rating)
     db.session.commit()
+    print('Database has been seeded')
