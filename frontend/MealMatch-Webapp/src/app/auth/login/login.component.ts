@@ -50,17 +50,24 @@ import * as rx from 'rxjs/operators';
   `
 })
 // Code adapted from https://developer.okta.com/blog/2020/01/21/angular-material-login
+/* The login component provides the interface to users to login, it interacts with the auth service
+to complete the actual logging in communication with the backend. */
 export class LoginComponent implements OnInit {
+  // The whole login form
   form: FormGroup;
-  public loginInvalid: boolean;
+  // Shown on login success
   showSuccessBanner: boolean;
+  // Represents loading state of page
   loading: boolean;
+
+  // Error handling
   showFailBanner: boolean;
   error: String;
+  // If the login fails, it is most likely due to incorrect username or password.
+  loginInvalid: boolean;
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
   ) {
@@ -72,11 +79,8 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    // if (await this.authService.checkAuthenticated()) {
-    //   await this.router.navigate([this.returnUrl]);
-    // }
   }
-
+  // When the form is submitted, validations are run, then we submit to backend.
   async onSubmit() {
     if (this.form.valid) {
         this.loading = true;
@@ -85,17 +89,17 @@ export class LoginComponent implements OnInit {
         const username = this.form.get('username').value;
         const password = this.form.get('password').value;
 
+        // Login backend through authService.
         this.authService.login({username,password})
-        .pipe(rx.take(1)) // MIGHT NOT NEED THIS AFTER REMOVING ARTIFICIAL DELAY.
+        .pipe(rx.take(1)) // take the first emission of login.
         .subscribe(response => {
           this.showSuccessBanner = true; // successful login
           this.loading = false;
           this.router.navigate(['home']);
         }, error => {
-          console.log("Error!", error)
           this.error = "Incorrect username or password, please try again!";
-          this.loading = false; // combine this with the above success function somehow?
-        }); // send in an object with username and password to auth service
+          this.loading = false;
+        });
     }
   }
 }

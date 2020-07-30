@@ -29,6 +29,8 @@ import { Category } from 'src/app/models/category';
               </mat-card>
             `
 })
+/* The ingredient by category component shows all ingredients separated into a slider list
+of all categories. Clicking on an ingredient checkbox will add it to the ingredients list on the home page. */
 export class IngredientByCategoryComponent implements OnInit {
 
   constructor(
@@ -37,13 +39,13 @@ export class IngredientByCategoryComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  // Add to the input "My ingredients list" on the home page
   addOrRemove(ingredient: Ingredient) {
     ingredient.onList
       ? this.ingredientService.removeFromList(ingredient)
       : this.ingredientService.addToList(ingredient.id);
   }
-
+  // Get all the categories (also contains all the ingredients within the categories)
   getAllCategories(): Category[] {
     return this.ingredientService.getAllCategories();
   }

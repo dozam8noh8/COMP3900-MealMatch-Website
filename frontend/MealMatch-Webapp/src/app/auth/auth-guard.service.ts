@@ -9,7 +9,8 @@ import { LoginPopupComponent } from '../../building-components/login-popup/login
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate{
+/* The auth guard ensures that only logged in users can access loggedin routes. */
+export class AuthGuardService implements CanActivate {
 
   constructor(private router: Router, private authService: AuthService, public dialog: MatDialog) { }
 
@@ -18,7 +19,6 @@ export class AuthGuardService implements CanActivate{
     return this.authService.isLoggedIn().pipe(map( loggedIn => {
       if (!loggedIn) {
         this.dialog.open(LoginPopupComponent);
-        //this.router.navigate(['/login'],  { queryParams: { returnUrl: state.url }});
         return false;
       }
       else {

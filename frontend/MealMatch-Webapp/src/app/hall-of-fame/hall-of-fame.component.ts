@@ -46,12 +46,22 @@ import { AuthService } from '../services/auth.service';
 
       `
 })
+/*
+The hall of fame component displays (up to) the top 10 contributors of recipes and the top 10 rated recipes.
+It attempts to use flexbox for a responsive like design.
+*/
 export class HallOfFameComponent implements OnInit {
   constructor(private recipeService: RecipeService) { }
+  // Represents the loading state of the page.
   loading: boolean = true;
+  // The top contributors of recipes (list is ordered), Max 10 is returned from API call
   contributors = [];
+  // The recipes with highest ratings in order. (Max 10).
   topRatedRecipes = [];
+
   ngOnInit(): void {
+    // Get the top rated recipes and top recipe contributors from backend.
+    // Add them to component arrays.
     this.recipeService.getTopRated().subscribe((response:any) => {
       this.loading = false;
       for (let key in response.Users) {

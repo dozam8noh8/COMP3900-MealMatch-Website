@@ -9,12 +9,14 @@
 
   .fame-container {
       .recipes {
-          width: 50%;
+          width: 52%;
       }
       .contributors {
           width: 40%;
       }
       display: flex;
+      margin-left: 1vw;
+      margin-right: 1vw;
       justify-content: space-between;
       .fame-items {
         display: flex;
