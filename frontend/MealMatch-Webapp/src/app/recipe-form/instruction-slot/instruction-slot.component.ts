@@ -9,11 +9,12 @@ import { FormGroup } from '@angular/forms';
   {{position+1}}.
   <div style="flex-grow: 8">
     <mat-form-field style="width: 90%" appearance="outline">
-        <input type="text"
+        <textarea type="text"
         placeholder="Input step"
         matInput
         required
-        [formControl]="formGroup.get('instruction_text')">
+        rows="5"
+        [formControl]="formGroup.get('instruction_text')"> </textarea>
         <mat-error *ngIf="formGroup.get('instruction_text').invalid">
           Please enter some text
         </mat-error>

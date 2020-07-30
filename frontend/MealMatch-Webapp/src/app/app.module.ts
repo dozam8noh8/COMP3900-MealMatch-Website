@@ -26,6 +26,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { IngredientByCategoryComponent } from './home-page/ingredient-by-category/ingredient-by-category.component';
 
@@ -80,6 +81,7 @@ const materialModules = [
   MatTabsModule,
   MatDialogModule,
   MatPaginatorModule,
+  DragDropModule
 ]
 @NgModule({
   declarations: [

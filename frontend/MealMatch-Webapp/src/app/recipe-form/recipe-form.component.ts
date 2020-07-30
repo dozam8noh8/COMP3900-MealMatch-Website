@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../services/ingredient.service';
 import { map, startWith, debounceTime, retry } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -64,12 +65,17 @@ import { Observable } from 'rxjs';
                     ingredient</button>
 
                 <h2 class="title"> Instructions </h2>
-                <div *ngFor="let slot of instructionSlots.controls; let index=index; trackBy:trackIndex">
+              <div cdkDropList *ngIf="instructionSlots.controls.length > 0" class="draggable-list" (cdkDropListDropped)="drop($event)">
+                <div cdkDrag class="draggable-box" *ngFor="let slot of instructionSlots.controls; let index=index; trackBy:trackIndex">
                   <app-instruction-slot
                   [formGroup]="slot"
                   [position]="index"
                   (removeInstruction)="removeInstructionSlot($event)"></app-instruction-slot>
+                  <div class="example-handle" cdkDragHandle>
+                    <mat-icon class="drag-handle">drag_handle</mat-icon>
+                  </div>
                 </div>
+              </div>
                 <button mat-raised-button class="form-field" color="primary" type="button" (click)="addInstructionSlot()">Add a step</button>
 
                 <br />
@@ -345,7 +351,10 @@ export class RecipeFormComponent implements OnInit {
     return true;
   }
 
-
+  // On drop, change the order of the list
+  drop(event: CdkDragDrop<FormGroup[]>) {
+    moveItemInArray(this.instructionSlots.controls, event.previousIndex, event.currentIndex);
+  }
 
 }
 
