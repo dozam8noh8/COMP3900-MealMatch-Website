@@ -60,6 +60,8 @@ Install all packages, build the Angular app and run:
 ```
 $ cd frontend/MealMatch-Webapp
 $ npm install
+If you don't have Angular cli, then please install
+$ npm install -g @angular/cli
 ```
 Once the packages have been installed, run the following two commands to comment out conflicting style issues. (Linux only)
 ```
