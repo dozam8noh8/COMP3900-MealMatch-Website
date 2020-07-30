@@ -14,14 +14,18 @@ For Linux and Mac users:
     $ cd backend
     $ virtualenv venv
     $ source venv/bin/activate
-    (venv) $ pip(3) install -r requirements.txt
+    (venv) $ pip install -r requirements.txt
+    or if you're using pip3
+    (venv) $ pip3 install -r requirements.txt
 
 Or if you are on Windows, then use the following commands instead:
 
     $ cd backend
     $ virtualenv venv
     $ venv\Scripts\activate
-    (venv) $ pip(3) install -r requirements.txt
+    (venv) $ pip install -r requirements.txt
+    or if you're using pip3
+    (venv) $ pip3 install -r requirements.txt
     
 After you install all the required packages run the server and seed the database:
 
@@ -39,7 +43,9 @@ Fix for the error is as follows:
     $ pip uninstall pyjwt
     
     Then depending on whether you are using pip or pip3
-    $ pip(3) install pyjwt
+    (venv) $ pip install pyjwt
+    or if you're using pip3
+    (venv) $ pip3 install pyjwt
     
     Run the server again and that should fix the bugs
     $ python run.py
