@@ -107,6 +107,14 @@ def get_user_info(id):
     response.update({'user_id': user.id, 'email': user.email, 'username': user.username, 'profile_pic': user.profile_pic, 'statusCode': 200, 'status' : 'success'})
     return response
 
+@app.route('/api/top_rated_recipes', methods=['GET'])
+def top_rated():
+    return jsonify(Recipe.get_highest_rated_recipes(10))
+
+@app.route('/api/top_contributors')
+def top():
+    return jsonify(User.top_contributors())
+
 @app.route('/api/edit_user/<int:id>', methods=['POST'])
 @auth.login_required
 def edit_user(id):

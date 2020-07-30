@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
       <h1  class="greeting-text"> Welcome to the hall of fame <i class="em em-fire" aria-role="presentation" aria-label="BIRD"></i> </h1>
       <div class="fame-container">
         <mat-card>
-          <mat-card-title class="copperplate"> Top Recipe Contributors <i class="em em-female-cook" aria-role="presentation" aria-label=""></i> </mat-card-title>
+          <mat-card-title class="copperplate" style="margin-bottom: 1vh"> Top Recipe Contributors <i class="em em-female-cook" aria-role="presentation" aria-label=""></i> </mat-card-title>
             <div>
               <div class="fame-items" >
                 <div class="lhs">
