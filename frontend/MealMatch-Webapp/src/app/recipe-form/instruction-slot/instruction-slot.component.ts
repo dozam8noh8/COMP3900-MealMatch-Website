@@ -12,7 +12,12 @@ import { FormGroup } from '@angular/forms';
         <input type="text"
         placeholder="Input step"
         matInput
+        required
         [formControl]="formGroup.get('instruction_text')">
+        <mat-error *ngIf="formGroup.get('instruction_text').invalid">
+          Please enter some text
+        </mat-error>
+
     </mat-form-field>
   </div>
 
@@ -25,9 +30,7 @@ import { FormGroup } from '@angular/forms';
 export class InstructionSlotComponent implements OnInit {
 
   @Input() position: number;
-  @Input() quantity: string;
   @Input() formGroup: FormGroup;
-  @Input() formSubmitted: boolean;
 
   @Output() removeInstruction = new EventEmitter<number>();
 

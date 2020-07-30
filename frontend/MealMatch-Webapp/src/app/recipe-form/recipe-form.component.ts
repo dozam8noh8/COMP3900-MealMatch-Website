@@ -5,7 +5,7 @@ import { RecipeService } from '../services/recipe.service';
 import { Recipe } from '../models/recipe';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../services/ingredient.service';
-import { map, startWith, debounceTime } from 'rxjs/operators';
+import { map, startWith, debounceTime, retry } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 
@@ -190,6 +190,12 @@ export class RecipeFormComponent implements OnInit {
 
       return;
     }
+
+    if(this.instructionSlots.length < 1) {
+      this.formInvalid = true;
+      this.invalidMessage = "You must have one step in instructions";
+      return
+    }
     this.formInvalid = false;
 
 
@@ -298,7 +304,7 @@ export class RecipeFormComponent implements OnInit {
 
   createInstructionGroup(step?) {
     let instructionSlotForm = this.fb.group({
-      instruction_text: [step || '', /* VALIDATOR*/]
+      instruction_text: [step || '', {validators: Validators.required}]
     });
     return instructionSlotForm;
   }
