@@ -402,46 +402,46 @@ class Mealtype(db.Model):
         return schema.dump(mealtypes)
 
 # Marshmallow serialiase the schema
-class IngredientSchema(ma.ModelSchema):
+class IngredientSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         fields = ("id", "name")
 
-class CategorySchema(ma.ModelSchema):
+class CategorySchema(ma.SQLAlchemyAutoSchema):
     ingredients = ma.Nested(IngredientSchema, many=True)
 
     class Meta:
         model = Category
 
-class MealtypeSchema(ma.ModelSchema):
+class MealtypeSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         fields = ("id", "name")
 
-class RecipeIngredientsSchema(ma.ModelSchema):
+class RecipeIngredientsSchema(ma.SQLAlchemyAutoSchema):
     ingredient = ma.Nested(IngredientSchema)
 
     class Meta:
         fields = ("ingredient.id", "ingredient.name", "quantity")
 
-class IngredientPairsSchema(ma.ModelSchema):
+class IngredientPairsSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = IngredientPairs
 
-class RatingSchema(ma.ModelSchema):
+class RatingSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Rating
 
-class RecipeSchema(ma.ModelSchema):
+class RecipeSchema(ma.SQLAlchemyAutoSchema):
     mealtypes = ma.Nested(MealtypeSchema, many=True)
     ingredients = ma.Nested(RecipeIngredientsSchema, many=True)
 
     class Meta:
         fields = ("id", "name", "user_id", "image", "instruction", "ingredients", "mealtypes")
 
-class NewUserSchema(ma.ModelSchema):
+class NewUserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         fields = ("id", "username")
 
-class UserSchema(ma.ModelSchema):
+class UserSchema(ma.SQLAlchemyAutoSchema):
     recipes = ma.Nested(RecipeSchema, many=True)
 
     class Meta:
