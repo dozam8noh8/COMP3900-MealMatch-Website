@@ -64,7 +64,8 @@ class User(db.Model):
                 break
             new_user = User.new_json_dump(user)
             new_user['count'] = user.recipes.count()
-            new_list.append(new_user)
+            if new_user['count'] > 0:
+                new_list.append(new_user)
             count = count + 1
         return new_list
 
@@ -355,7 +356,8 @@ class Recipe(db.Model):
             if count > 4:
                 break
             Recipe.get_recipe_owner(recipe)
-            new_list.append(recipe)
+            if (recipe['rating'] != 0):
+                new_list.append(recipe)
             count = count+1
         return new_list
 
