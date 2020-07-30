@@ -331,7 +331,7 @@ class Recipe(db.Model):
         )
         ingredients = [(x['name'], x['quantity']) for x in ingredients]
 
-        if sorted(recipe_ingredients) != sorted(ingredients):
+        if recipe_ingredients != ingredients:
             # Ingredients have changed, updating db..
             RecipeIngredients.query.filter_by(recipe_id=recipe.id).delete()
             for name, quantity in ingredients:
