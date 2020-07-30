@@ -437,7 +437,7 @@ class RecipeSchema(ma.ModelSchema):
 
 class NewUserSchema(ma.ModelSchema):
     class Meta:
-        fields = ("id", "email")
+        fields = ("id", "username")
 
 class UserSchema(ma.ModelSchema):
     recipes = ma.Nested(RecipeSchema, many=True)
