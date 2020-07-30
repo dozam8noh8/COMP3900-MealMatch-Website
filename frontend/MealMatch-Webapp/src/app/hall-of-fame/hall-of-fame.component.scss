@@ -8,18 +8,51 @@
   }
 
   .fame-container {
+      .recipes {
+          width: 50%;
+      }
+      .contributors {
+          width: 40%;
+      }
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       .fame-items {
         display: flex;
         justify-content: space-between;
       }
       h1 {
+        margin-bottom: 3vh;
+        font-weight: lighter;
+        font-size: 2.3vh;
+      }
+      a {
         margin-bottom: 2vh;
         font-weight: lighter;
-        font-size: 3vh;
+        font-size: 2.3vh;
       }
+
   }
+
+.fame-items-recipes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .top-rated-recipe {
+         display: flex;
+         flex-direction: row;
+         flex-grow: grow;
+         width: 100%;
+         justify-content: space-between;
+         margin-bottom: 3vh;
+        div {
+            margin-bottom: 3vh;
+            font-weight: lighter;
+            font-size: 2.3vh;
+        }
+
+
+      }
+}
 
 .copperplate {
     font-family: Copperplate;

@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
   template: `
       <h1  class="greeting-text"> Welcome to the hall of fame <i class="em em-fire" aria-role="presentation" aria-label="BIRD"></i> </h1>
       <div class="fame-container">
-        <mat-card>
+        <mat-card class="contributors" *ngIf="!loading">
           <mat-card-title class="copperplate" style="margin-bottom: 1vh"> Top Recipe Contributors <i class="em em-female-cook" aria-role="presentation" aria-label=""></i> </mat-card-title>
             <div>
               <div class="fame-items" >
@@ -28,21 +28,50 @@ import { AuthService } from '../services/auth.service';
             </div>
         </mat-card>
 
-        <mat-card>
+        <mat-card class="recipes" *ngIf="!loading">
         <mat-card-title class="copperplate"> Top Rated Recipes <i class="em em-spaghetti" aria-role="presentation" aria-label="SPAGHETTI"></i> </mat-card-title>
+        <div>
+              <div class="fame-items-recipes" >
+                <div class="top-rated-recipe" *ngFor="let recipe of topRatedRecipes; let index=index">
+                  <div   > <a [routerLink]="'/recipe/' + recipe.id"> {{index + 1}}. {{recipe.name}} </a> </div>
+                  <div>  </div>
+                  <div>  {{recipe.contributor}} 	&nbsp;	&nbsp;   {{recipe.rating}}/5 <i class="em em-star" aria-role="presentation" aria-label=""> </i> </div>
+                </div>
+              </div>
+            </div>
+        </mat-card>
 
-          </mat-card>
-
+        <mat-spinner *ngIf="loading"></mat-spinner>
       </div>
 
       `
 })
 export class HallOfFameComponent implements OnInit {
-
-  constructor(private recipeService: RecipeService, private authService: AuthService) { }
-  contributors: any[] = [{contributor: "Owen", amount: 100},
-  {contributor: "Waqif", amount: 100},{contributor: "Manni", amount: 100},{contributor: "Kenny", amount: 1},];
+  constructor(private recipeService: RecipeService) { }
+  loading: boolean = true;
+  contributors = [];
+  topRatedRecipes = [];
   ngOnInit(): void {
+    this.recipeService.getTopRated().subscribe((response:any) => {
+      this.loading = false;
+      for (let key in response.Users) {
+        let curr = response.Users[key];
+        this.contributors.push({
+          contributor: curr.username,
+          amount: curr.count,
+          id: curr.id,
+        })
+      }
+      for (let key in response.Recipes) {
+        let curr = response.Recipes[key]
+        this.topRatedRecipes.push({
+          id: curr.id,
+          name: curr.name,
+          rating: curr.rating,
+          contributor: curr.user,
+        })
+      }
+    });
   }
 
 }

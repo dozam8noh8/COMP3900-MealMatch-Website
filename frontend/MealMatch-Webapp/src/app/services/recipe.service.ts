@@ -45,4 +45,7 @@ export class RecipeService {
   editRecipe(recipeDetails){
     return this.http.post(`${this.BASE_URL}/edit_recipe`, recipeDetails);
   }
+  getTopRated(){
+    return this.http.get(`${this.BASE_URL}/top_rated`);
+  }
 }
