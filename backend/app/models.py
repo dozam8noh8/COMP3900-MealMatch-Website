@@ -340,7 +340,7 @@ class Recipe(db.Model):
     
     def get_recipe_owner(recipe):
         user = User.query.filter_by(id=recipe['user_id']).first()
-        recipe['user'] = user.email
+        recipe['user'] = user.username
 
     def get_highest_rated_recipes(number):
         all_recipes = Recipe.query.all()
