@@ -115,13 +115,15 @@ export class IngredientSlotComponent implements OnInit{
   }
 
   openNewIngredientDialog() {
+    // Display an ingredient creation dialog, passing in input name value
     let dialogRef = this.newIngredientDialog.open(NewIngredientPopupComponent, {
       data: { inputString: this.formGroup.get('name').value }
     })
 
-    // Subscribe to if an ingredient was created
-    dialogRef.componentInstance.addIngredient
+    // Subscribe to if an ingredient is emitted (i.e. on successful creation)
+    dialogRef.componentInstance.emitIngredient
     .subscribe( (newCreatedIngredient: Ingredient)=> {
+      // Add this ingredient to the recipe list
       this.addToList(newCreatedIngredient)
     });
   }

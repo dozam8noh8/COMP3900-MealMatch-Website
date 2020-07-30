@@ -38,7 +38,8 @@ export class IngredientSetDisplayComponent implements OnInit {
       name: `Loveless Set ${this.set.setId}`,
       ingredients: this.set.ingredients,
       instruction: "",
-      rating: 0
+      rating: 0,
+      rating_count: 0
     }
     let paramObject = JSON.stringify(recipe); // Contains stringified object
     this.router.navigate(['/create'], {queryParams: {contents: paramObject}});

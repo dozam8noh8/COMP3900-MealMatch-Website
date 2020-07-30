@@ -33,12 +33,15 @@ export class DisplayReviewComponent implements OnInit {
   @Input() username: string;
   @Input() comment: string;
   @Input() currentUser: string;
+
+  // Function in parent that can be trigger in here
   @Output() toggleEditEmitter = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void { }
 
+  // Allows the press of edit button to trigger change in parent
   emitEditToggle() {
     this.toggleEditEmitter.emit();
   }

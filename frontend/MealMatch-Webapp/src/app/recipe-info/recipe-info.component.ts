@@ -19,12 +19,12 @@ import { RatingCommentService } from '../services/rating-comment.service';
                     <mat-card-title>{{recipe.name}}</mat-card-title>
 
                     <!-- Show rating -->
-                    <ng-container *ngIf="nRatings <= 0">
+                    <ng-container *ngIf="recipe.rating_count <= 0">
                       There are no ratings yet
                     </ng-container>
-                    <ng-container *ngIf="nRatings > 0">
+                    <ng-container *ngIf="recipe.rating_count > 0">
                       <ngb-rating
-                      [(rate)]="averageRating"
+                      [(rate)]="recipe.rating"
                       [max]="5"
                       [readonly]="true">
                         <ng-template let-fill="fill" let-index="index">
@@ -33,7 +33,7 @@ import { RatingCommentService } from '../services/rating-comment.service';
                         </span>
                         </ng-template>
                       </ngb-rating>
-                      {{averageRating}} ({{nRatings}} ratings)
+                      {{recipe.rating.toFixed(2)}} ({{recipe.rating_count}} ratings)
                     </ng-container>
 
                     <div class="image-container">
@@ -75,13 +75,9 @@ export class RecipeInfoComponent implements OnInit {
   recipe: Recipe;
   recipePlaceholder = 'assets/images/recipe_placeholder.jpg';
   instructions: string[] = [];
-  allRatingComments: RatingComment;
-  nRatings: number = 0;
-  averageRating: string = "0";
 
   constructor(
     private recipeService: RecipeService,
-    private rcService: RatingCommentService,
     private route: ActivatedRoute,
     private router: Router,
   ) { }
@@ -104,27 +100,17 @@ export class RecipeInfoComponent implements OnInit {
     this.recipeService.getRecipeDetails(repId)
     .subscribe( (data: Recipe) => {
 
-      if( Object.keys(data).length === 0 ) { // If data is empty
+      if( Object.keys(data).length === 0 ) { // If data is empty, because API returned nothing with repId
         this.router.navigate(['/notfound']);
       } else {
         this.recipe = data;
         this.instructions = this.recipe.instruction.split('\n');
       }
 
-      this.getAllRatingComments();
     },
     (error) => {
       console.log(error);
     });
-  }
-
-  getAllRatingComments() {
-    this.rcService.getAllRatingComments(this.recipe.id)
-    .subscribe( (rcResp: RatingComment[]) => {
-      this.nRatings = rcResp.length;
-      this.averageRating = this.recipe.rating.toFixed(2);
-    })
-
   }
 
 }

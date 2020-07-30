@@ -56,6 +56,8 @@ export class NewIngredientPopupComponent implements OnInit {
   creatingIngredient = false;
   creationSuccessful = false;
   invalidMessage: string;
+  // Allows an ingredient to be sent to parent (used upon successful creation)
+  emitIngredient = new EventEmitter<Ingredient>();
 
   @Output() handleNew = new EventEmitter<Ingredient>();
 
@@ -76,9 +78,6 @@ export class NewIngredientPopupComponent implements OnInit {
   getAllCategories() {
     return this.ingredientService.getAllCategories().map(cat => (cat.name));
   }
-
-  // Tells parent (ingredient slot component) that a valid ingredient was added and so the input field can be locked
-  addIngredient = new EventEmitter<Ingredient>();
 
   createNewIngredient() {
     this.creatingIngredient = true;
@@ -104,8 +103,8 @@ export class NewIngredientPopupComponent implements OnInit {
           onList: false,
           category: categoryValue
         }
-        // Send this ingredient to the parent component
-        this.addIngredient.emit(newIngredient);
+        // Send this newly created ingredient to the parent component (so that it can be added)
+        this.emitIngredient.emit(newIngredient);
       },
       err => {
         this.creatingIngredient = false;

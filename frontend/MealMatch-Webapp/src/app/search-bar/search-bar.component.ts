@@ -27,9 +27,13 @@ import { map } from 'rxjs/operators';
 })
 export class SearchBarComponent implements OnInit {
 
+  // All objects to search from
   @Input() allItems: any[];
+  // Function from parent component on how object is represented as a string
   @Input() itemAsString: (value: any) => string;
+  // Any other conditions the parent wants met for filtered results e.g. not already on a list
   @Input() additionalFiltering: (value: any) => boolean;
+  // Allows a function in the parent to be triggered (for when a item is selected)
   @Output() selectedItemEmitter = new EventEmitter<any>();
 
   filteredOptions: Observable<any[]>;

@@ -11,4 +11,5 @@ export interface Recipe {
     image?: string;
     mealtypes?: any[];
     rating: number;
+    rating_count: number;
 }
