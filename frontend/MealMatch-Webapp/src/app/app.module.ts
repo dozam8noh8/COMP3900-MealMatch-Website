@@ -26,6 +26,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { IngredientByCategoryComponent } from './home-page/ingredient-by-category/ingredient-by-category.component';
 
@@ -57,6 +58,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DisplayReviewComponent } from './recipe-info/display-review/display-review.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HallOfFameComponent } from './hall-of-fame/hall-of-fame.component';
+import { InstructionSlotComponent } from './recipe-form/instruction-slot/instruction-slot.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -79,6 +81,7 @@ const materialModules = [
   MatTabsModule,
   MatDialogModule,
   MatPaginatorModule,
+  DragDropModule
 ]
 @NgModule({
   declarations: [
@@ -111,6 +114,7 @@ const materialModules = [
     ReviewSectionComponent,
     DisplayReviewComponent,
     HallOfFameComponent,
+    InstructionSlotComponent,
   ],
   imports: [
     BrowserModule,

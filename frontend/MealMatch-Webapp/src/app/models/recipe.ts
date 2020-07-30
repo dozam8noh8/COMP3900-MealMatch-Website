@@ -7,7 +7,7 @@ export interface Recipe {
     name: string;
     // owner: User;
     ingredients: Ingredient[];
-    instruction: string;
+    instruction: string[];
     image?: string;
     mealtypes?: any[];
     rating: number;
