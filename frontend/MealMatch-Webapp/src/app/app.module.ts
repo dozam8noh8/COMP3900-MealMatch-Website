@@ -124,7 +124,8 @@ const materialModules = [
     NgbModule,
   ],
   providers: [{
-    provide: HTTP_INTERCEPTORS, // This will intercept all http requests and add a delay and log them to simulate a backend delay (during development).
+    // This will intercept all http requests and add a delay, headers and auth.
+    provide: HTTP_INTERCEPTORS,
     useClass: RequestLogInterceptor,
     multi: true,
   },],

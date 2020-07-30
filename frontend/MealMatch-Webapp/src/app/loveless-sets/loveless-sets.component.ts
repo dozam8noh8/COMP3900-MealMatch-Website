@@ -21,8 +21,11 @@ import { Router } from '@angular/router';
 
   `,
 })
+/* The loveless set component shows sets that have been searched for by users but do not have any recipes.
+  The user is given the choice of making a loveless set by first clicking via the dashboard */
 export class LovelessSetsComponent implements OnInit {
   loading = true;
+  // The sets to display
   sets: LovelessSet[];
   constructor(private ingredientService: IngredientService, private router: Router) { }
 
@@ -46,6 +49,7 @@ export class LovelessSetsComponent implements OnInit {
     });
 
   }
+  // Navigate user to dashboard on click of back button
   handleDashboardButton() {
     this.router.navigate(['/dashboard'])
   }

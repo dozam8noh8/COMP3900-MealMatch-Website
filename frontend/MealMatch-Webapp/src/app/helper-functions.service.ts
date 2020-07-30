@@ -8,7 +8,7 @@ export class HelperFunctionsService {
 
   constructor() { }
 
-
+  // Delays an action using a promise
   delay (time: number) {
     return new Promise(resolve => setTimeout(resolve, time));
   }
