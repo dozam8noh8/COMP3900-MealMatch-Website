@@ -129,6 +129,9 @@ export class IngredientSlotComponent implements OnInit{
   }
 
   removeSelf() {
+    // Remove the controls (which checks validation) for this slot
+    this.formGroup.removeControl('quantity');
+    this.formGroup.removeControl('name');
     this.removeIngredient.emit(this.position);
   }
 

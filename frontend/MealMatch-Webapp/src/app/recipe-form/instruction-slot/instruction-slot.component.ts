@@ -41,6 +41,7 @@ export class InstructionSlotComponent implements OnInit {
   }
 
   removeSelf() {
+    this.formGroup.removeControl('instruction_text');
     this.removeInstruction.emit(this.position);
   }
 

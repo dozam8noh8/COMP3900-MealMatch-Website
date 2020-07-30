@@ -5,6 +5,7 @@ import {Recipe} from '../models/recipe';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RatingComment } from '../models/rating_comment';
 import { RatingCommentService } from '../services/rating-comment.service';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -16,7 +17,13 @@ import { RatingCommentService } from '../services/rating-comment.service';
                 <ng-container *ngIf="recipe">
 
                 <mat-card id="image-ingredients" style="flex-direction: column; border-radius: 2%; padding-top: 8vh; margin-bottom: 2vh;">
-                    <mat-card-title>{{recipe.name}}</mat-card-title>
+                    <mat-card-title>
+                      {{recipe.name}}
+                      <!-- If the recipe belongs to the user, allow them to edit it -->
+                      <span *ngIf="currentUserId && currentUserId===recipe.user_id">
+                        <button mat-raised-button color="primary" [routerLink]="'/edit/'+recipe.id">Edit</button>
+                      </span>
+                    </mat-card-title>
 
                     <!-- Show rating -->
                     <ng-container *ngIf="recipe.rating_count <= 0">
@@ -77,14 +84,17 @@ export class RecipeInfoComponent implements OnInit {
 
   recipe: Recipe;
   recipePlaceholder = 'assets/images/recipe_placeholder.jpg';
+  currentUserId: number;
 
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.currentUserId = this.authService.getLoggedInUserId();
     this.route.paramMap.subscribe( params => {
       let recipeId = params.get('id');
       // If parameter 'id' is not a number
@@ -110,7 +120,8 @@ export class RecipeInfoComponent implements OnInit {
 
     },
     (error) => {
-      console.log(error);
+      this.router.navigate(['/notfound']);
+      // or could inform user that recipe with such id does not exist
     });
   }
 
