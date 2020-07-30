@@ -80,3 +80,13 @@ were open to use in terms of copyright for us. From then on I ended up redesigni
 login page, register page and recipe results page which took the entire week. The redesign should be good
 enough for this milestone. The next UI update will be the recipe page. For next sprint, I plan on
 refactoring code on backend for the style marks and finish up the UI update.
+
+==============Week 9==============
+This week was a massive week for all of us. I've got most of the UI update and although it was quite a lot of work,
+it makes the website look multiple times better at least since it required changing design for pretty much every single page.
+The website now looks very professional and looks like a production sort of a website that users would use. The UI bit was a 
+good intro to frontend for us backend guys and helped put massive improvement to our UI/UX for the website. For 
+the backend, I've pretty much been doing quite a lot of backend work too such as setting up ratings for backend, pagination for search,
+setting up all the hall of fame endpoints which was quite a lot of calculation from the backend. This was undoubtedly the most
+busiest week in terms of getting work done but this was surely the most impactful. Our application is pretty much ready for submission
+and all we need to do that's left is getting our setup docs ready and doing more testing for bugs before submission.
