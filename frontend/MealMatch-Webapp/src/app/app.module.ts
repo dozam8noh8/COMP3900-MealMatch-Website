@@ -57,6 +57,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DisplayReviewComponent } from './recipe-info/display-review/display-review.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HallOfFameComponent } from './hall-of-fame/hall-of-fame.component';
+import { InstructionSlotComponent } from './recipe-form/instruction-slot/instruction-slot.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -111,6 +112,7 @@ const materialModules = [
     ReviewSectionComponent,
     DisplayReviewComponent,
     HallOfFameComponent,
+    InstructionSlotComponent,
   ],
   imports: [
     BrowserModule,

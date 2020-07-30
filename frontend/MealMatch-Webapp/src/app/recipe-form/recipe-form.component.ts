@@ -50,22 +50,30 @@ import { Observable } from 'rxjs';
                 </mat-form-field>
 
                 <h2 class="title"> Ingredients </h2>
-                <div *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIngredient">
-                    <app-ingredient-slot [formGroup]="slot" [formArray]="ingredientSlots" [position]="index"
-                        (removeIngredient)="removeSlot($event)" [addedIngredients]="addedIngredients$ | async" [formSubmitted]="formInvalid">
+                <div *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIndex">
+                    <app-ingredient-slot 
+                    [formGroup]="slot" 
+                    [formArray]="ingredientSlots" 
+                    [position]="index"
+                    (removeIngredient)="removeIngredientSlot($event)" 
+                    [addedIngredients]="addedIngredients$ | async" 
+                    [formSubmitted]="formInvalid">
                     </app-ingredient-slot>
                 </div>
-                <button mat-raised-button class="form-field" color="primary" type="button" (click)="addSlot()">Add an
+                <button mat-raised-button class="form-field" color="primary" type="button" (click)="addIngredientSlot()">Add an
                     ingredient</button>
 
                 <h2 class="title"> Instructions </h2>
-                <mat-form-field appearance="fill" class="inputFields" style="width: 100%;">
-                    <textarea matInput rows="10" formControlName="instructions"></textarea>
-                    <mat-error>
-                        Enter some instructions
-                    </mat-error>
-                </mat-form-field>
+                <div *ngFor="let slot of instructionSlots.controls; let index=index; trackBy:trackIndex">
+                  <app-instruction-slot
+                  [formGroup]="slot"
+                  [position]="index"
+                  (removeInstruction)="removeInstructionSlot($event)"></app-instruction-slot>
+                </div>
+                <button mat-raised-button class="form-field" color="primary" type="button" (click)="addInstructionSlot()">Add a step</button>
+
                 <br />
+
                 <div *ngIf="!submitting">
                     <div *ngIf="!submissionComplete">
                         <button mat-raised-button style="width: 25%" color="primary" type="submit">Save</button>
@@ -115,6 +123,7 @@ export class RecipeFormComponent implements OnInit {
   // Contains an array of formGroup (name, id and quantity form controls)
   // Representing each slot to add ingredients.
   ingredientSlots: FormArray;
+  instructionSlots: FormArray;
 
   addedIngredients$: Observable<Ingredient[]>;
 
@@ -130,11 +139,12 @@ export class RecipeFormComponent implements OnInit {
   ngOnInit(): void {
     // Build formGroup
     this.ingredientSlots = this.fb.array([]); // Initialise ingredientSlots to be an empty array.
+    this.instructionSlots = this.fb.array([]);
     this.recipeFormGroup = this.fb.group({
       recipeName: ["", Validators.required],
       mealType: ["", Validators.required], //need to fix this
-      instructions: ["", Validators.required],
       ingredientSlots: this.ingredientSlots, // Nest form array inside formGroup to keep everything together :)
+      instructionSlots: this.instructionSlots,
     })
 
 
@@ -186,14 +196,20 @@ export class RecipeFormComponent implements OnInit {
     // Format into JSON object
     const new_recipe = {
       name: this.recipeFormGroup.get('recipeName').value,
-      instruction: this.recipeFormGroup.get('instructions').value,
       mealType: this.recipeFormGroup.get('mealType').value,
       // Convert slots to appropriate ingredient format
       ingredients: this.ingredientSlots.controls.map(slot => {
         return {name: slot.get('name').value, quantity: slot.get('quantity').value}
       }),
+      instruction: this.instructionSlots.controls.map( slot => slot.get('instruction_text').value ), // Map instructionSlots to list of strings
       image: this.recipeImage || null
     }
+
+
+    console.log(new_recipe);
+    return; // remove when api is implemented
+
+
     // Emit the created object to parent that will make the api call.
     this.buildRecipeEmitter.emit({
       recipe: new_recipe,
@@ -201,18 +217,27 @@ export class RecipeFormComponent implements OnInit {
     });
   }
 
-  addSlot() {
+  addIngredientSlot() {
     // Add a slot to the formArray
     // Nest a formgroup within the formArray that is in the main formgroup.
     let newSlot = this.createIngredientGroup()
     this.ingredientSlots.push(newSlot);
   }
 
-  removeSlot(index: number) {
+  addInstructionSlot() {
+    let newSlot = this.createInstructionGroup();
+    this.instructionSlots.push(newSlot);
+  }
+
+  removeIngredientSlot(index: number) {
     this.ingredientSlots.controls.splice(index, 1);
   }
 
-  trackIngredient(index: any, item: any) {
+  removeInstructionSlot(index: number) {
+    this.instructionSlots.controls.splice(index, 1);
+  }
+
+  trackIndex(index: any, item: any) {
     return index;
   }
 
@@ -263,10 +288,21 @@ export class RecipeFormComponent implements OnInit {
       let newSlot = this.createIngredientGroup(element);
       this.ingredientSlots.push(newSlot);
     });
+
+//TODO:FOREACH INSTRUCTIONGROUP
+
     if (recipe.image) {
       this.recipeImagePath = recipe.image; // We will use this if there is already an image on the recipe.
     }
   }
+
+  createInstructionGroup(step?) {
+    let instructionSlotForm = this.fb.group({
+      instruction_text: [step || '', /* VALIDATOR*/]
+    });
+    return instructionSlotForm;
+  }
+
   createIngredientGroup(ingredient?) {
     // TODO fix api calls to return just id rather than ingredient.id because this is disgusting.
     if (ingredient && !ingredient.name){
