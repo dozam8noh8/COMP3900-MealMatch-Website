@@ -41,7 +41,7 @@ import { AuthService } from '../services/auth.service';
             </div>
         </mat-card>
 
-        <mat-spinner *ngIf="loading"></mat-spinner>
+        <mat-spinner *ngIf="loading" style="margin-left: 45%;"></mat-spinner>
       </div>
 
       `
