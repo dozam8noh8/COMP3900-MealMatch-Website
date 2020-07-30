@@ -11,16 +11,17 @@ class ImageSnippet {
   styleUrls: ['./photo-upload.component.scss'],
   template: `
   <label class="image-upload-container btn btn-bwm">
-  <span style="margin-right: 2.5vw;">Select Image</span>
-  <input #imageInput
-         type="file"
-         accept="image/*"
-         (change)="processFile(imageInput)">
-  <br>
+  <!-- <span style="margin-right: 2.5vw;">Select Image</span> -->
   <div class="preview-image">
     <img *ngIf="existingImageURL && !loading" [src]="existingImageURL"> <br>
     <mat-spinner *ngIf="loading"> </mat-spinner>
   </div>
+  <input #imageInput
+         type="file"
+         accept="image/*"
+         (change)="processFile(imageInput)"
+         style="margin-top: 20px;">
+  <br>
 </label>
 `
 })

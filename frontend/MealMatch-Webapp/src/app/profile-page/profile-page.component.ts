@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
     </h1>
     <div style="display: flex; margin-top: 5vh">
       <div class="photo-upload-container">
+        <h1> Your profile picture </h1>
         <app-photo-upload
           (uploadEmitter)="setProfilePhoto($event)"
           [existingImageURL]="profile_pic"
