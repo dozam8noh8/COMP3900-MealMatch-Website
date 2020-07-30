@@ -141,6 +141,8 @@ export class ProfilePageComponent implements OnInit {
   }
   // Delete the recipe from the view that was emitted by child to be deleted. It is deleted in backend by child.
   handleDeleteRecipe(recipeToDelete: number) {
+    // Happens if the user doesn't click either button.
+    if (!recipeToDelete) return;
     this.recipes = this.recipes.filter(
       (recipe) => recipe.id !== recipeToDelete
     );

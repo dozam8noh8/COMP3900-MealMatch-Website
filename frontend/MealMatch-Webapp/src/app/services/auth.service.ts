@@ -42,10 +42,9 @@ export class AuthService {
     if (!userDetails) {
       return true;
     }
-
+    // Create a date from the string date stored in localstorage.
     let expiryDate = new Date(userDetails.expiry);
     let currDate = new Date();
-    console.log(expiryDate, currDate)
     if (currDate > expiryDate){
       return true;
     }

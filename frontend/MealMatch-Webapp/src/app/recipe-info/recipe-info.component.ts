@@ -16,14 +16,14 @@ import { RatingCommentService } from '../services/rating-comment.service';
                 <ng-container *ngIf="recipe">
 
                 <mat-card id="image-ingredients" style="flex-direction: column; border-radius: 2%; padding-top: 8vh; margin-bottom: 2vh;">
-                    <mat-card-title style="font-weight:lighter; font-size: 3.5em; padding-top: 2vh; padding-bottom: 4vh;">{{recipe.name}}</mat-card-title>
-                    
-                    <!-- Show rating --> 
-                    <ng-container *ngIf="nRatings <= 0"> 
+                    <mat-card-title>{{recipe.name}}</mat-card-title>
+
+                    <!-- Show rating -->
+                    <ng-container *ngIf="nRatings <= 0">
                       There are no ratings yet
                     </ng-container>
-                    <ng-container *ngIf="nRatings > 0"> 
-                      <ngb-rating 
+                    <ng-container *ngIf="nRatings > 0">
+                      <ngb-rating
                       [(rate)]="averageRating"
                       [max]="5"
                       [readonly]="true">
@@ -35,7 +35,7 @@ import { RatingCommentService } from '../services/rating-comment.service';
                       </ngb-rating>
                       {{averageRating}} ({{nRatings}} ratings)
                     </ng-container>
-                    
+
                     <div class="image-container">
                         <img mat-card-image src="{{recipe.image || recipePlaceholder}}">
                     </div>
@@ -95,7 +95,7 @@ export class RecipeInfoComponent implements OnInit {
         return;
       }
       this.getRecipeDetails(Number(recipeId));
-      
+
     });
 
   }
