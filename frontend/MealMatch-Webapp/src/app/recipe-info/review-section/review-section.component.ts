@@ -6,8 +6,8 @@ import { User } from 'src/app/models/user';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-display-comments',
-  styleUrls: ['./display-comments.component.scss'],
+  selector: 'app-review-section',
+  styleUrls: ['./review-section.component.scss'],
   template: `
               <h2>Reviews</h2>
               <mat-spinner *ngIf="loadingComments"> </mat-spinner> 
@@ -101,10 +101,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
               </ng-container>
-
             `
 })
-export class DisplayCommentsComponent implements OnInit {
+export class ReviewSectionComponent implements OnInit {
 
   @Input() recipeId: number;
   @Output() reloadEmitter = new EventEmitter();
@@ -201,6 +200,5 @@ export class DisplayCommentsComponent implements OnInit {
     this.editable = !this.editable;
   }
 
-  get formRating() { return this.ratingCommentFormGroup.get('rating') }
-  get formComment() { return this.ratingCommentFormGroup.get('comment') }
+
 }

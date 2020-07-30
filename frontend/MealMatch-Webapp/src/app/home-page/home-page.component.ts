@@ -45,7 +45,7 @@ import { Ingredient } from '../models/ingredient';
 
               <form [formGroup]="ingredientSearchForm" (ngSubmit)="submitIngredients()">
                 <div class="submit-button-container">
-                  <button mat-raised-button type="submit" color="white" class=submitButton>Search for recipes</button>
+                  <button mat-raised-button type="submit" color="white" class="submitButton">Search for recipes</button>
                 </div>
               </form>
               </div>
@@ -98,15 +98,20 @@ export class HomePageComponent implements OnInit {
     return this.ingredientService.getAllIngredients();
   }
 
+  // Simply returns the name of an ingredient
+  // (Passed into app-search-bar because search bar needs to know how an object is represented as a string in order to match)
   ingredientAsString(ingredient: Ingredient): string {
     return ingredient?.name;
   }
 
-  // Pass this function into app-search-bar so that search-bar will also check that an ingredient has not already been inputted
+  // Checks that an ingredient is not already selected
+  // (Pass into app-search-bar so that search bar will also filter by this condition)
   notOnList(ingredient: Ingredient): boolean {
     return !ingredient.onList;
   }
 
+  // Adds an ingredient to user's input list
+  // (Passed into search-bar so it can be triggered on selection)
   addToList(ingredient: Ingredient) {
     this.ingredientService.addToList(ingredient.id);
   }

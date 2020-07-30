@@ -4,12 +4,14 @@ from app.ErrorException import ErrorException
 from sqlalchemy.engine import Engine
 import json
 
+# DB settings
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor = dbapi_connection.cursor()
     cursor.execute("PRAGMA foreign_keys=ON")
     cursor.close()
 
+# Model Relationships for ratings
 userRatings = db.Table('user_ratings',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column('rating_id', db.Integer, db.ForeignKey('rating.id'), primary_key=True)
@@ -20,6 +22,9 @@ recipeRatings = db.Table('recipe_ratings',
     db.Column('rating_id', db.Integer, db.ForeignKey('rating.id'), primary_key=True)
 )
 
+##########################################
+    # User Model
+##########################################
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(70), index=True)
@@ -28,6 +33,7 @@ class User(db.Model):
     profile_pic = db.Column(db.String(64))
     recipes = db.relationship('Recipe', backref='user', lazy='dynamic')
 
+    # Authentication
     def hash_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -39,6 +45,7 @@ class User(db.Model):
             {'id': self.id, 'exp': time.time() + expires_in},
             app.config['SECRET_KEY'], algorithm='HS256')
 
+    # JSON serialize for frontend
     def json_dump(user):
         schema = UserSchema()
         return schema.dump(user)
@@ -46,6 +53,9 @@ class User(db.Model):
     def new_json_dump(user):
         schema = NewUserSchema()
         return schema.dump(user)
+
+    ###############################
+    # Methods
 
     def upload_profile_image(user_id, path):
         user = User.query.filter_by(id=user_id).first()
@@ -81,6 +91,7 @@ class User(db.Model):
                 return User.query.get(data['id'])
         return
 
+# Model relationships between recipe, ingredients and mealtypes
 ingredientCategories = db.Table('ingredient_categories',
     db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredient.id')),
     db.Column('category_id', db.Integer, db.ForeignKey('category.id'))
@@ -91,6 +102,7 @@ recipeMealTypes = db.Table('recipe_mealtypes',
     db.Column('mealtype_id', db.Integer, db.ForeignKey('mealtype.id'))
 )
 
+# Ingredient class
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
@@ -111,6 +123,7 @@ class Ingredient(db.Model):
         schema = IngredientSchema(many=True)
         return schema.dump(ingr)
 
+# Ingredient category class
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
@@ -120,6 +133,7 @@ class Category(db.Model):
         schema = CategorySchema(many=True)
         return schema.dump(recipe)
 
+# Ratings class
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.String(256))
@@ -134,9 +148,8 @@ class Rating(db.Model):
             json_obj = {'id':ind_rating.id, 'rating':ind_rating.rating, 'comment': ind_rating.comment, 'username': username}
             ratingsList.append(json_obj)
         return (ratingsList)
-        # schema = RatingSchema(many=True)
-        # return schema.dump(rating)
 
+# IngredientPairs for recipe suggestions
 class IngredientPairs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pairs = db.Column(db.String(2000), index=True)
@@ -175,6 +188,7 @@ class IngredientPairs(db.Model):
         schema = IngredientPairsSchema(many=True)
         return schema.dump(pairs)
 
+# Recipe class
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
@@ -185,10 +199,12 @@ class Recipe(db.Model):
 
     def get_recipe_by_id(id):
         recipe = Recipe.query.get(id)
+        count = recipe.rating.count()
         schema = RecipeSchema(many=False)
         recipe = schema.dump(recipe)
         rating = Recipe.get_rating(recipe['id'])
         recipe['rating'] = rating
+        recipe['rating_count'] = count
         return recipe
 
     def get_rating(id):
@@ -361,7 +377,7 @@ class Recipe(db.Model):
             count = count+1
         return new_list
 
-
+# RecipeIngredients pairs class
 class RecipeIngredients(db.Model):
     __tablename__ = 'recipe_ingredients'
     id = db.Column(db.Integer, primary_key=True)
@@ -392,6 +408,7 @@ class RecipeIngredients(db.Model):
         )
         return ingredients
 
+# Mealtypes class
 class Mealtype(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), index=True)
@@ -401,7 +418,7 @@ class Mealtype(db.Model):
         schema = MealtypeSchema(many=True)
         return schema.dump(mealtypes)
 
-# Marshmallow serialiase the schema
+# Marshmallow serialiase the schema when returning to routes
 class IngredientSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         fields = ("id", "name")

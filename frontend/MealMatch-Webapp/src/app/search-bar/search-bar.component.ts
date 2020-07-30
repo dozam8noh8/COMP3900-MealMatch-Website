@@ -53,15 +53,15 @@ export class SearchBarComponent implements OnInit {
 
   private _filter(value: string): any[] {
     const filterValue = value.toString().toLowerCase();
-    return filterValue==='' ? 
-      [] :
-      this.allItems.filter(item => {
+    return filterValue==='' 
+      ? [] 
+      : this.allItems.filter(item => {
         var flag = true;
         // Check if the current object converted to a string matches the search value
         if(this.itemAsString) flag = flag && this.itemAsString(item).toLowerCase().startsWith(filterValue);
+        // Also check if there are other conditions
         if(this.additionalFiltering) flag = flag && this.additionalFiltering(item)
         return flag;
-        // return this.itemAsString(item).toLowerCase().startsWith(filterValue) && this.additionalFiltering(item);
       })
   }
 
