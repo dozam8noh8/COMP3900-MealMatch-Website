@@ -22,7 +22,7 @@ Preferred machines specifications:
 If you are on Windows then run `venv\Scripts\activate` instead of `source venv/bin/activate`  
 If you are using pip3 then run `pip3 install -r requirements.txt` instead of `pip install -r requirements.txt`  
 
-3. Database setup
+3. Database setup  
 ** WARNING **: This step will reset and reseed your database. Only run when you want to reset recipe data.  
 In the virtual environment with the required packages, run the following command.
 ```
@@ -75,6 +75,22 @@ $ vi bootstrap.scss
 ```
 and replace the contents of the file with the following
 ```
+/*!
+ * Bootstrap v4.5.0 (https://getbootstrap.com/)
+ * Copyright 2011-2020 The Bootstrap Authors
+ * Copyright 2011-2020 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+@import "functions";
+@import "variables";
+@import "mixins";
+// @import "root";
+// @import "reboot";
+// @import "type";
+// @import "images";
+// @import "code";
+// @import "grid";
 // @import "tables";
 // @import "forms";
 // @import "buttons";
