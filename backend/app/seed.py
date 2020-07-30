@@ -91,7 +91,7 @@ def seed_db():
         db.session.add(recipe)
 
         for instruction in item['strInstructions'].splitlines():
-            if instruction:
+            if len(instruction) > 2:
                 recipe_instruction = RecipeInstructions(instruction=instruction)
                 recipe.instructions.append(recipe_instruction)
 
