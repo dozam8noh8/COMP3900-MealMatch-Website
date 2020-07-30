@@ -212,10 +212,6 @@ export class RecipeFormComponent implements OnInit {
     }
 
 
-    console.log(new_recipe);
-    return; // remove when api is implemented
-
-
     // Emit the created object to parent that will make the api call.
     this.buildRecipeEmitter.emit({
       recipe: new_recipe,
@@ -287,7 +283,6 @@ export class RecipeFormComponent implements OnInit {
     // ID will be set to -1 if we need an ID from api.
     this.recipeFormGroup.get('recipeName').setValue(recipe.name);
     this.recipeFormGroup.get('mealType').setValue(recipe.mealtypes?.[0]?.name); // TODO current broken unless edit recipe endpoint takes an id.
-    this.recipeFormGroup.get('instructions').setValue(recipe?.instruction);
 
     recipe.ingredients.forEach(element => {
       // Nest a formgroup within the formArray that is in the main formgroup.
@@ -295,7 +290,10 @@ export class RecipeFormComponent implements OnInit {
       this.ingredientSlots.push(newSlot);
     });
 
-//TODO:FOREACH INSTRUCTIONGROUP
+    recipe.instruction.forEach( instr => {
+      let newSlot = this.createInstructionGroup(instr);
+      this.instructionSlots.push(newSlot);
+    })
 
     if (recipe.image) {
       this.recipeImagePath = recipe.image; // We will use this if there is already an image on the recipe.
