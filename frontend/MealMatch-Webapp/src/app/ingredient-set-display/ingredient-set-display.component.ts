@@ -37,7 +37,7 @@ export class IngredientSetDisplayComponent implements OnInit {
       id: -1, // negative id in database means the recipe is being created.
       name: `Loveless Set ${this.set.setId}`,
       ingredients: this.set.ingredients,
-      instruction: "",
+      instruction: [],
       rating: 0,
       rating_count: 0
     }
