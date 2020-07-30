@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 import { Recipe } from 'src/app/models/recipe';
 import { EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteRecipePopupComponent } from '../delete-recipe-popup/delete-recipe-popup.component';
+import { DangerousActionPopupComponent } from '../dangerous-action-popup/dangerous-action-popup.component';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { map, finalize } from 'rxjs/operators';
 @Component({
@@ -92,7 +92,7 @@ export class RecipeViewCardComponent implements OnInit{
     // Open a confirmation dialog and then emit to parent if delete button is clicked
     deleteRecipe() {
         // Open a delete confirmation popup
-        let dialogRef = this.dialog.open(DeleteRecipePopupComponent);
+        let dialogRef = this.dialog.open(DangerousActionPopupComponent);
         // Set attributes of popup.
           dialogRef.componentInstance.description ="Deleting Recipe";
           dialogRef.componentInstance.question = "Are you sure you want to delete the recipe? It's permanent"

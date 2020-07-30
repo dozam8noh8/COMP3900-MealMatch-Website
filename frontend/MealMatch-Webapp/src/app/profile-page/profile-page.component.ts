@@ -1,9 +1,6 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { RecipeService } from '../services/recipe.service';
 import { Recipe } from '../models/recipe';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
 import { ImageService } from '../image.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRecipePopupComponent } from 'src/building-components/add-recipe-popup/add-recipe-popup.component';
@@ -70,7 +67,7 @@ import { Router } from '@angular/router';
       <h1 *ngIf="!recipesLoading">You have no recipes</h1>
       <mat-spinner *ngIf="recipesLoading" style="margin-left: 47%;"> </mat-spinner>
     </ng-template>
-    <mat-paginator *ngIf="recipes"
+    <mat-paginator *ngIf="!recipesLoading"
     [length]="totalRecipesNumber"
     [pageSize]="itemsPerPage"
     [pageSizeOptions]="[12, 24, 40]"

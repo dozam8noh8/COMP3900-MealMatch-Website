@@ -39,7 +39,7 @@ import { RequestLogInterceptor } from './request-interceptor';
 import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 import { NewIngredientPopupComponent } from './create-recipe/new-ingredient-popup/new-ingredient-popup.component';
 import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
-import { DeleteRecipePopupComponent } from 'src/building-components/delete-recipe-popup/delete-recipe-popup.component';
+import { DangerousActionPopupComponent } from 'src/building-components/dangerous-action-popup/dangerous-action-popup.component';
 import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
 import { IngredientSlotComponent } from './create-recipe/ingredient-slot/ingredient-slot.component';
 import { AddRecipePopupComponent } from 'src/building-components/add-recipe-popup/add-recipe-popup.component';
@@ -95,7 +95,7 @@ const materialModules = [
     ProfilePageComponent,
     LoginPopupComponent,
     RecipeViewCardComponent,
-    DeleteRecipePopupComponent,
+    DangerousActionPopupComponent,
     PhotoUploadComponent,
     IngredientSlotComponent,
     AddRecipePopupComponent,

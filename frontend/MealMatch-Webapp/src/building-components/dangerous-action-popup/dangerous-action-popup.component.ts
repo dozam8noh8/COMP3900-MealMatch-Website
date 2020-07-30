@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    selector: 'app-delete-recipe-popup',
-    styleUrls: ['delete-recipe-popup.component.scss'],
+    selector: 'app-dangerous-action',
+    styleUrls: ['dangerous-action-popup.component.scss'],
     template: `
     <mat-card>
     <mat-card-title> {{ description }} </mat-card-title>
@@ -20,22 +20,22 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
     `,
 })
 
-export class DeleteRecipePopupComponent implements OnInit {
+export class DangerousActionPopupComponent implements OnInit {
+    // Description of dangerous action
     @Input() description: string;
+    // Question to prompt user
     @Input() question: string;
+    // If deleting a recipe, the recipe id of the parent recipe card.
     @Input() recipeId: number;
-    // @Output() yesClicked: EventEmitter<any>;
-    // @Output() noClicked: EventEmitter<any>;
+
     constructor(private dialogRef: MatDialogRef<any>) {}
     ngOnInit(): void {
-        console.log(this.description)
     }
     emitYes() {
         this.dialogRef.close({behaviour: 'Yes', recipeId: this.recipeId});
     }
     emitNo() {
         this.dialogRef.close({behaviour: 'No', recipeId: this.recipeId});
-        //this.noClicked.emit();
     }
 
 }
