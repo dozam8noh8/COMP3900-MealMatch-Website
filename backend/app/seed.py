@@ -1,6 +1,6 @@
 import json
 from app import db
-from app.models import Ingredient, User, Ingredient, Category, Recipe, Mealtype, RecipeIngredients, Rating
+from app.models import Ingredient, User, Ingredient, Category, Recipe, Mealtype, RecipeIngredients, Rating, RecipeInstructions
 from sqlalchemy import func
 from random import randrange
 import datetime
@@ -57,10 +57,14 @@ def seed_db():
     for item in json_decode['meals']:
         # Make new recipe
         if 'image' in item:
-            recipe = Recipe(name=item['name'], instruction=item['instruction'], image=item['image'])
+            recipe = Recipe(name=item['name'], image=item['image'])
         else:
-            recipe = Recipe(name=item['name'], instruction=item['instruction'])
+            recipe = Recipe(name=item['name'])
         db.session.add(recipe)
+
+        for instruction in item['instruction'].splitlines():
+            recipe_instruction = RecipeInstructions(instruction=instruction)
+            recipe.instructions.append(recipe_instruction)
 
         mealtype = Mealtype.query.filter_by(name=item['mealtype']).first()
         recipe.mealtypes.append(mealtype)
@@ -83,10 +87,13 @@ def seed_db():
     MAX_INGREDIENTS = 20
     for item in json_decode['meals']:
         # Make new recipe
-        instruction = item['strInstructions'].splitlines()
-        instruction = '\n'.join([x for x in instruction if len(x) > 2])
-        recipe = Recipe(name=item['strMeal'],instruction=instruction, image=item['strMealThumb'])
+        recipe = Recipe(name=item['strMeal'], image=item['strMealThumb'])
         db.session.add(recipe)
+
+        for instruction in item['strInstructions'].splitlines():
+            if instruction:
+                recipe_instruction = RecipeInstructions(instruction=instruction)
+                recipe.instructions.append(recipe_instruction)
 
         mealtype = Mealtype.query.filter_by(name=item['strCategory']).first()
         recipe.mealtypes.append(mealtype)
@@ -112,7 +119,6 @@ def seed_db():
     recipes = Recipe.query.all()
     for recipe in recipes:
         if randrange(10) > 3:
-            print('add')
             rating = Rating(rating=(randrange(5) + 1), comment='Demo Comment.')
             recipe.rating.append(rating)
             user.rating.append(rating)
