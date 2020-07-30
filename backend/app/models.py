@@ -199,10 +199,12 @@ class Recipe(db.Model):
 
     def get_recipe_by_id(id):
         recipe = Recipe.query.get(id)
+        count = recipe.rating.count()
         schema = RecipeSchema(many=False)
         recipe = schema.dump(recipe)
         rating = Recipe.get_rating(recipe['id'])
         recipe['rating'] = rating
+        recipe['rating_count'] = count
         return recipe
 
     def get_rating(id):
