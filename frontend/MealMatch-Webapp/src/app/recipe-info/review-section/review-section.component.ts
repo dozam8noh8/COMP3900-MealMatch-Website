@@ -111,13 +111,19 @@ export class ReviewSectionComponent implements OnInit {
   currentUser: User;
 
   ratingCommentFormGroup: FormGroup;
+
+  // Keeps track of whether a form or just a review should be displayed
   editable = false;
+  // A user's existing review, if they have one
   existingRC: RatingComment;
 
+  // Keeps track of whether rating/comments are being retrieved
   loadingComments: boolean;
+  // Keeps track of whether a review is being posted
   postingUserRC: boolean;
 
-  submitAttempted = false;
+  // Keeps track of whether an attempt to submit the form has been made
+  submitAttempted: boolean;
 
   constructor(
     private rcService: RatingCommentService,
@@ -137,18 +143,21 @@ export class ReviewSectionComponent implements OnInit {
   }
 
   postRatingComment() {
+    // Note that user has tried to submit a review
     this.submitAttempted = true;
+    // Check if all form fields are valid
     if(this.ratingCommentFormGroup.invalid) {
       return;
     }
 
+    // Note that the rating/comment is not being posted
     this.postingUserRC = true;
     let rating = this.ratingCommentFormGroup.get('rating').value;
     let comment = this.ratingCommentFormGroup.get('comment').value;
     this.rcService.postRatingComment(this.recipeId, rating, comment)
     .subscribe( (resp) => {
-      console.log(resp);
       this.editable = false;
+      // Once rating/comment has been posted, refresh the comments again
       this.getAllRatingComments();
     },
     err => {
@@ -183,8 +192,8 @@ export class ReviewSectionComponent implements OnInit {
           this.ratingCommentFormGroup.get('comment').setValue(this.existingRC.comment);
         }
 
-        this.postingUserRC = false;
         this.loadingComments = false;
+        this.postingUserRC = false;
       },
       (err) => {
         // If error with API call, it is likely that there is no user logged in
@@ -199,6 +208,5 @@ export class ReviewSectionComponent implements OnInit {
   toggleEdit() {
     this.editable = !this.editable;
   }
-
 
 }
