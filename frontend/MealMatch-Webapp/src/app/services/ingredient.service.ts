@@ -5,6 +5,7 @@ import { Category } from '../models/category';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,10 @@ export class IngredientService {
   // Ingredients that are retrieved from local storage in constructor and should be added to the list when retrieved.
   localStorageIngredients: Ingredient[] = [];
 
-  recommendedIngredients: Ingredient[] = [];
+  // Data source for recommended ingredients
+  recommendedSource = new BehaviorSubject<Ingredient[]>([]);
+  // Allows observers to subscribe to any changes to data source
+  recommendedIngredients = this.recommendedSource.asObservable();
 
   constructor(private http: HttpClient, private authService: AuthService) {
     this.restart();
@@ -154,8 +158,7 @@ export class IngredientService {
     return this.http.get(`${this.BASE_URL}/popular_ingredient_pairs`);
   }
 
-
-  getRecommendedIngredients(): Ingredient[] {
+  getRecommendedIngredients(): Observable<Ingredient[]> {
     return this.recommendedIngredients;
   }
 
@@ -163,7 +166,8 @@ export class IngredientService {
     const ingredientsIdList = this.addedIngredients.map(elem => elem.id);
     return this.http.post<Ingredient[]>("http://localhost:5000/api/recommendations", {"ingredients": ingredientsIdList})
     .subscribe(resp => {
-      this.recommendedIngredients = resp;
+      // Publish new set of recommended ingredients
+      this.recommendedSource.next(resp)
     })
     // error handling
   }

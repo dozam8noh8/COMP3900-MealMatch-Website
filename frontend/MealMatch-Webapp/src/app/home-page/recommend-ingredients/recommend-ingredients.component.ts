@@ -8,11 +8,10 @@ import { Ingredient } from 'src/app/models/ingredient';
   template: `
                 <mat-card id="recommendedIngredientsSection">
                   <h2 style="font-weight: heavier">Do you also have:</h2>
-
-                  <div *ngIf="getRecommendedIngredients().length <= 0; then thenBlock else elseBlock"> </div>
+                  <div *ngIf="recommendedIngredients.length <= 0; then thenBlock else elseBlock"> </div>
                   <ng-template #thenBlock> <p class="ingredient-text">No ingredient to recommend</p> </ng-template>
                   <ng-template #elseBlock>
-                      <div *ngFor="let recIngredient of getRecommendedIngredients()">
+                      <div *ngFor="let recIngredient of recommendedIngredients">
                           <div class="ingredient-item">
                             <button class="add-button" (click)="addIngredient(recIngredient)"> <strong>+</strong></button>
                             {{recIngredient.name}} 
@@ -24,18 +23,26 @@ import { Ingredient } from 'src/app/models/ingredient';
 })
 export class RecommendIngredientsComponent implements OnInit {
 
+  recommendedIngredients: Ingredient[];
+
   constructor(
     private ingredientService: IngredientService
   ) { }
 
   ngOnInit(): void {
-  }
-
-  getRecommendedIngredients(): Ingredient[] {
-    return this.ingredientService.getRecommendedIngredients();
+    // Subscribe to get any changes to list of recommended ingredients
+    this.ingredientService.getRecommendedIngredients()
+    .subscribe( (data: Ingredient[]) => {
+      this.recommendedIngredients = data;
+    })
   }
 
   addIngredient(ingredient: Ingredient) {
+    // Remove the ingredient from list of recommended currently stored
+    this.recommendedIngredients = this.recommendedIngredients.filter( ing => (ing.id !== ingredient.id));
+
+    // Add this ingredient to the list maintained in ingredientService
+    // which inside will call the API to update list of recommended ingredients
     this.ingredientService.addToList(ingredient.id);
   }
 
