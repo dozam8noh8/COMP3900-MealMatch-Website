@@ -43,9 +43,30 @@ class User(db.Model):
         schema = UserSchema()
         return schema.dump(user)
 
+    def new_json_dump(user):
+        schema = NewUserSchema()
+        return schema.dump(user)
+
     def upload_profile_image(user_id, path):
         user = User.query.filter_by(id=user_id).first()
         user.profile_pic = path
+    
+    def get_highest_contributors(users):
+        return sorted(users, key=lambda x: x.recipes.count(), reverse=True)
+
+    def top_contributors():
+        users = User.query.all()
+        sort_orders = User.get_highest_contributors(users)
+        count = 0
+        new_list = []
+        for user in sort_orders:
+            if (count > 4):
+                break
+            new_user = User.new_json_dump(user)
+            new_user['count'] = user.recipes.count()
+            new_list.append(new_user)
+            count = count + 1
+        return new_list
 
     @staticmethod
     def verify_auth_token(token):
@@ -316,7 +337,27 @@ class Recipe(db.Model):
             rating = Recipe.get_rating(recipe['id'])
             recipe['rating'] = rating
         return recipes
+    
+    def get_recipe_owner(recipe):
+        user = User.query.filter_by(id=recipe['user_id']).first()
+        recipe['user'] = user.email
 
+    def get_highest_rated_recipes(number):
+        all_recipes = Recipe.query.all()
+        recipes = RecipeSchema(many=True).dump(all_recipes)
+        for recipe in recipes:
+            rating = Recipe.get_rating(recipe['id'])
+            recipe['rating'] = rating
+        recipes_sorted = sorted(recipes, key=lambda k: k.get('rating', 0), reverse=True)
+        new_list = []
+        count = 0;
+        for recipe in recipes_sorted:
+            if count > 4:
+                break
+            Recipe.get_recipe_owner(recipe)
+            new_list.append(recipe)
+            count = count+1
+        return new_list
 
 
 class RecipeIngredients(db.Model):
@@ -393,6 +434,10 @@ class RecipeSchema(ma.ModelSchema):
 
     class Meta:
         fields = ("id", "name", "user_id", "image", "instruction", "ingredients", "mealtypes")
+
+class NewUserSchema(ma.ModelSchema):
+    class Meta:
+        fields = ("id", "email")
 
 class UserSchema(ma.ModelSchema):
     recipes = ma.Nested(RecipeSchema, many=True)
