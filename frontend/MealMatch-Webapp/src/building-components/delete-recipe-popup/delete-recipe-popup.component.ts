@@ -10,8 +10,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
     <mat-card-title> {{ description }} </mat-card-title>
     <mat-card-title> {{ question }} </mat-card-title>
     <div class="yesno">
-    <button mat-raised-button color="primary" (click)="emitYes()"> Yes </button>
-    <button mat-raised-button color="warn" (click)="emitNo()"> No </button>
+    <button mat-raised-button color="warn" (click)="emitYes()"> Yes </button>
+    <button mat-raised-button color="primary" (click)="emitNo()"> No </button>
     </div>
 
 
