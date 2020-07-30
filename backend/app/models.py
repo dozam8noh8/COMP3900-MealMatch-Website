@@ -5,6 +5,7 @@ from sqlalchemy.engine import Engine
 import json
 
 # DB settings
+# SQLite doesn't have referential integrity on by default
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor = dbapi_connection.cursor()
@@ -194,17 +195,20 @@ class Recipe(db.Model):
     name = db.Column(db.String(256), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     image = db.Column(db.String(100))
-    instruction = db.Column(db.String(2000))
+
+    instructions = db.relationship('RecipeInstructions', backref=db.backref('recipes'))
     ingredients = db.relationship('RecipeIngredients', backref=db.backref('recipes'))
 
     def get_recipe_by_id(id):
         recipe = Recipe.query.get(id)
+        instructions = [x.instruction for x in recipe.instructions]
         count = recipe.rating.count()
         schema = RecipeSchema(many=False)
         recipe = schema.dump(recipe)
         rating = Recipe.get_rating(recipe['id'])
         recipe['rating'] = rating
         recipe['rating_count'] = count
+        recipe['instruction'] = instructions
         return recipe
 
     def get_rating(id):
@@ -270,12 +274,15 @@ class Recipe(db.Model):
 
     # Make new recipe
     def add_recipe(name, instruction, mealType, ingredients, user_id, image=None):
-        recipe = ''
         if image:
-            recipe = Recipe(name=name, instruction=instruction, image=image)
+            recipe = Recipe(name=name, image=image)
         else:
-            recipe = Recipe(name=name, instruction=instruction)
+            recipe = Recipe(name=name)
         db.session.add(recipe)
+
+        for step in instruction:
+            recipe_instruction = RecipeInstructions(instruction=step)
+            recipe.instructions.append(recipe_instruction)
 
         mealtype = Mealtype.query.filter(func.lower(Mealtype.name) == func.lower(mealType)).first()
         if not mealtype:
@@ -367,7 +374,7 @@ class Recipe(db.Model):
             recipe['rating'] = rating
         recipes_sorted = sorted(recipes, key=lambda k: k.get('rating', 0), reverse=True)
         new_list = []
-        count = 0;
+        count = 0
         for recipe in recipes_sorted:
             if count > 4:
                 break
@@ -376,6 +383,14 @@ class Recipe(db.Model):
                 new_list.append(recipe)
             count = count+1
         return new_list
+
+class RecipeInstructions(db.Model):
+    __tablename__ = 'recipe_instructions'
+    id = db.Column(db.Integer, primary_key=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id', ondelete='cascade'))
+    instruction = db.Column(db.Text)
+
+    recipe = db.relationship('Recipe', backref=db.backref('instruction'))
 
 # RecipeIngredients pairs class
 class RecipeIngredients(db.Model):
@@ -452,7 +467,7 @@ class RecipeSchema(ma.SQLAlchemyAutoSchema):
     ingredients = ma.Nested(RecipeIngredientsSchema, many=True)
 
     class Meta:
-        fields = ("id", "name", "user_id", "image", "instruction", "ingredients", "mealtypes")
+        fields = ("id", "name", "user_id", "image", "ingredients", "mealtypes")
 
 class NewUserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
