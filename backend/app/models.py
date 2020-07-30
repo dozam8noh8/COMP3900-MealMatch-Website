@@ -313,7 +313,7 @@ class Recipe(db.Model):
             raise ErrorException('Recipe id does not exist:' + recipe(recipe_id), 400)
 
         recipe.name = name
-        recipe.instruction = instruction
+        recipe.instructions = [RecipeInstructions(instruction=x) for x in instruction]
 
         db_mealtype = Mealtype.query.filter(func.lower(Mealtype.name) == func.lower(mealType)).first()
         if db_mealtype:
