@@ -242,7 +242,7 @@ class Recipe(db.Model):
             if res:
                 filtered.append(recipe)
 
-        if len(filtered) == 0:
+        if not filtered and ingredients_id:
             IngredientPairs.increment_count(ingredients_id)
         total_results = len(filtered)
 
