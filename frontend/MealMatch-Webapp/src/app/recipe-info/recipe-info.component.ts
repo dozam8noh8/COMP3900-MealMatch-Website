@@ -62,9 +62,9 @@ import { RatingCommentService } from '../services/rating-comment.service';
                             </ol>
                         </div>
                     </div>
-                  <app-display-comments style="width: 90%"
+                  <app-review-section style="width: 90%"
                   [recipeId]="recipe.id"
-                  (reloadEmitter)="getRecipeDetails($event)"></app-display-comments>
+                  (reloadEmitter)="getRecipeDetails($event)"></app-review-section>
                 </mat-card>
                 </ng-container>
                 </div>
