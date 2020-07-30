@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./instruction-slot.component.scss'],
   template: `
 <div class="flex-container">
-  {{position+1}}.
+  <span style="padding-right: 10px"> {{position+1}}. </span>
   <div style="flex-grow: 8">
     <mat-form-field style="width: 90%" appearance="outline">
         <textarea type="text"

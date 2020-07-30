@@ -51,7 +51,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                 </mat-form-field>
 
                 <h2 class="title"> Ingredients </h2>
-                <div *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIndex">
+                  <div cdkDropList *ngIf="ingredientSlots.controls.length > 0" class="draggable-list" (cdkDropListDropped)="dropIngredient($event)">
+                <div cdkDrag class="draggable-box" *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIndex">
                     <app-ingredient-slot 
                     [formGroup]="slot" 
                     [formArray]="ingredientSlots" 
@@ -60,18 +61,24 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                     [addedIngredients]="addedIngredients$ | async" 
                     [formSubmitted]="formInvalid">
                     </app-ingredient-slot>
-                </div>
+                    <div cdkDragHandle>
+                    <mat-icon class="drag-handle">drag_handle</mat-icon>
+                  </div>
+                </div>                  
+                  </div>
+
+
                 <button mat-raised-button class="form-field" color="primary" type="button" (click)="addIngredientSlot()">Add an
                     ingredient</button>
 
                 <h2 class="title"> Instructions </h2>
-              <div cdkDropList *ngIf="instructionSlots.controls.length > 0" class="draggable-list" (cdkDropListDropped)="drop($event)">
+              <div cdkDropList *ngIf="instructionSlots.controls.length > 0" class="draggable-list" (cdkDropListDropped)="dropInstruction($event)">
                 <div cdkDrag class="draggable-box" *ngFor="let slot of instructionSlots.controls; let index=index; trackBy:trackIndex">
                   <app-instruction-slot
                   [formGroup]="slot"
                   [position]="index"
                   (removeInstruction)="removeInstructionSlot($event)"></app-instruction-slot>
-                  <div class="example-handle" cdkDragHandle>
+                  <div cdkDragHandle>
                     <mat-icon class="drag-handle">drag_handle</mat-icon>
                   </div>
                 </div>
@@ -352,8 +359,12 @@ export class RecipeFormComponent implements OnInit {
   }
 
   // On drop, change the order of the list
-  drop(event: CdkDragDrop<FormGroup[]>) {
+  dropInstruction(event: CdkDragDrop<FormGroup[]>) {
     moveItemInArray(this.instructionSlots.controls, event.previousIndex, event.currentIndex);
+  }
+
+  dropIngredient(event: CdkDragDrop<FormGroup[]>) {
+    moveItemInArray(this.ingredientSlots.controls, event.previousIndex, event.currentIndex);
   }
 
 }
