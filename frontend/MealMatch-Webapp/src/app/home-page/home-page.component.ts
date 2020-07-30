@@ -52,10 +52,9 @@ import { Ingredient } from '../models/ingredient';
             `
 })
 export class HomePageComponent implements OnInit {
-
+  loading = true;
   allMealTypes: MealType[] = [];
   ingredientSearchForm: FormGroup;
-
   constructor(
     private router: Router,
     private ingredientService: IngredientService,
@@ -65,7 +64,7 @@ export class HomePageComponent implements OnInit {
       this.ingredientSearchForm = this.formBuilder.group({
         selectedMealType: ''
       })
-
+      // Populate in constructor so we can click back to the home page and not have to reload page.
       this.searchService.getAllMealTypes()
       .subscribe( (data: MealType[]) => {
         this.allMealTypes = data;
@@ -73,15 +72,20 @@ export class HomePageComponent implements OnInit {
         this.ingredientSearchForm.setValue({
           selectedMealType: this.allMealTypes[0]
         })
+        this.loading = false;
       })
-
 
   }
 
   ngOnInit(): void {
+
   }
 
   submitIngredients() {
+    // If we click submit before the page has finished loading, we don't want to do anything
+    if (this.loading){
+      return;
+    }
     this.router.navigateByUrl('/search', {
       state: {
         searchIngredients: this.ingredientService.getAddedIngredients().map(item => {return item.name}),
