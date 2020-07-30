@@ -1,9 +1,13 @@
 # COMP3900 (Group: I dont care) - Implementing the MealMatch Project
 
-# Project Setup.
+# Project Setup
+Clone this repo to your local machine.
 
-**Backend Setup**
-------------
+Preferred machines specifications:
+- Python3+
+- Linux/Mac
+
+# Backend Setup
 1. Navigate to `capstone-project-i-dont-care/backend`
 
 2. Create a python virtual environment, activate it, and install dependencies.
