@@ -12,8 +12,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
               <h2>Reviews</h2>
               <mat-spinner *ngIf="loadingComments"> </mat-spinner> 
 
-              <!-- If the currently logged in user has not posted a ratingComment yet --> 
-              <ng-container *ngIf="!loadingComments && currentUser && !existingRC">
+              <!-- If the currently logged in user has not posted a ratingComment yet AND this recipe does not belong to said user --> 
+              <ng-container *ngIf="!loadingComments && currentUser && !existingRC && recipeOwnerId !== currentUser.user_id">
                 <mat-spinner *ngIf="postingUserRC"> </mat-spinner> 
                 <form 
                 *ngIf="!postingUserRC"
@@ -106,6 +106,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class ReviewSectionComponent implements OnInit {
 
   @Input() recipeId: number;
+  @Input() recipeOwnerId: number;
   @Output() reloadEmitter = new EventEmitter();
   allRatingComments: RatingComment[];
   currentUser: User;

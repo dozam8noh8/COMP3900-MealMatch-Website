@@ -33,7 +33,9 @@ import { RatingCommentService } from '../services/rating-comment.service';
                         </span>
                         </ng-template>
                       </ngb-rating>
-                      {{recipe.rating.toFixed(2)}} ({{recipe.rating_count}} ratings)
+                      {{recipe.rating.toFixed(2)}}
+                      <span *ngIf="recipe.rating_count === 1"> ({{recipe.rating_count}} rating) </span>
+                      <span *ngIf="recipe.rating_count > 1"> ({{recipe.rating_count}} ratings) </span>
                     </ng-container>
 
                     <div class="image-container">
@@ -64,6 +66,7 @@ import { RatingCommentService } from '../services/rating-comment.service';
                     </div>
                   <app-review-section style="width: 90%"
                   [recipeId]="recipe.id"
+                  [recipeOwnerId]="recipe.user_id"
                   (reloadEmitter)="getRecipeDetails($event)"></app-review-section>
                 </mat-card>
                 </ng-container>

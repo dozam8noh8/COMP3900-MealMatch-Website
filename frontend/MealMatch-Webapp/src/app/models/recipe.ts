@@ -5,7 +5,7 @@ import { Ingredient } from './ingredient';
 export interface Recipe {
     id: number;
     name: string;
-    // owner: User;
+    user_id: number;
     ingredients: Ingredient[];
     instruction: string[];
     image?: string;
