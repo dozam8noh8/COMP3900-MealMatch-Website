@@ -56,8 +56,8 @@ import { RatingCommentService } from '../services/rating-comment.service';
                         <div>
                             <h2 style="font-weight:lighter; font-size: 2em">Steps</h2>
                             <ol style="display: inline-block;">
-                              <div *ngFor="let instruction of instructions">
-                                <li>{{instruction}}</li>
+                              <div *ngFor="let step of recipe.instruction">
+                                <li>{{step}}</li>
                               </div>
                             </ol>
                         </div>
@@ -74,7 +74,6 @@ export class RecipeInfoComponent implements OnInit {
 
   recipe: Recipe;
   recipePlaceholder = 'assets/images/recipe_placeholder.jpg';
-  instructions: string[] = [];
 
   constructor(
     private recipeService: RecipeService,
@@ -104,7 +103,6 @@ export class RecipeInfoComponent implements OnInit {
         this.router.navigate(['/notfound']);
       } else {
         this.recipe = data;
-        this.instructions = this.recipe.instruction.split('\n');
       }
 
     },

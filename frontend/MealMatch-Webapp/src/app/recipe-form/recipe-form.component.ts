@@ -5,8 +5,9 @@ import { RecipeService } from '../services/recipe.service';
 import { Recipe } from '../models/recipe';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '../services/ingredient.service';
-import { map, startWith, debounceTime } from 'rxjs/operators';
+import { map, startWith, debounceTime, retry } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -50,22 +51,42 @@ import { Observable } from 'rxjs';
                 </mat-form-field>
 
                 <h2 class="title"> Ingredients </h2>
-                <div *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIngredient">
-                    <app-ingredient-slot [formGroup]="slot" [formArray]="ingredientSlots" [position]="index"
-                        (removeIngredient)="removeSlot($event)" [addedIngredients]="addedIngredients$ | async" [formSubmitted]="formInvalid">
+                  <div cdkDropList *ngIf="ingredientSlots.controls.length > 0" class="draggable-list" (cdkDropListDropped)="dropIngredient($event)">
+                <div cdkDrag class="draggable-box" *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIndex">
+                    <app-ingredient-slot 
+                    [formGroup]="slot" 
+                    [formArray]="ingredientSlots" 
+                    [position]="index"
+                    (removeIngredient)="removeIngredientSlot($event)" 
+                    [addedIngredients]="addedIngredients$ | async" 
+                    [formSubmitted]="formInvalid">
                     </app-ingredient-slot>
-                </div>
-                <button mat-raised-button class="form-field" color="primary" type="button" (click)="addSlot()">Add an
+                    <div cdkDragHandle>
+                    <mat-icon class="drag-handle">drag_handle</mat-icon>
+                  </div>
+                </div>                  
+                  </div>
+
+
+                <button mat-raised-button class="form-field" color="primary" type="button" (click)="addIngredientSlot()">Add an
                     ingredient</button>
 
                 <h2 class="title"> Instructions </h2>
-                <mat-form-field appearance="fill" class="inputFields" style="width: 100%;">
-                    <textarea matInput rows="10" formControlName="instructions"></textarea>
-                    <mat-error>
-                        Enter some instructions
-                    </mat-error>
-                </mat-form-field>
+              <div cdkDropList *ngIf="instructionSlots.controls.length > 0" class="draggable-list" (cdkDropListDropped)="dropInstruction($event)">
+                <div cdkDrag class="draggable-box" *ngFor="let slot of instructionSlots.controls; let index=index; trackBy:trackIndex">
+                  <app-instruction-slot
+                  [formGroup]="slot"
+                  [position]="index"
+                  (removeInstruction)="removeInstructionSlot($event)"></app-instruction-slot>
+                  <div cdkDragHandle>
+                    <mat-icon class="drag-handle">drag_handle</mat-icon>
+                  </div>
+                </div>
+              </div>
+                <button mat-raised-button class="form-field" color="primary" type="button" (click)="addInstructionSlot()">Add a step</button>
+
                 <br />
+
                 <div *ngIf="!submitting">
                     <div *ngIf="!submissionComplete">
                         <button mat-raised-button style="width: 25%" color="primary" type="submit">Save</button>
@@ -115,6 +136,7 @@ export class RecipeFormComponent implements OnInit {
   // Contains an array of formGroup (name, id and quantity form controls)
   // Representing each slot to add ingredients.
   ingredientSlots: FormArray;
+  instructionSlots: FormArray;
 
   addedIngredients$: Observable<Ingredient[]>;
 
@@ -130,11 +152,12 @@ export class RecipeFormComponent implements OnInit {
   ngOnInit(): void {
     // Build formGroup
     this.ingredientSlots = this.fb.array([]); // Initialise ingredientSlots to be an empty array.
+    this.instructionSlots = this.fb.array([]);
     this.recipeFormGroup = this.fb.group({
       recipeName: ["", Validators.required],
       mealType: ["", Validators.required], //need to fix this
-      instructions: ["", Validators.required],
       ingredientSlots: this.ingredientSlots, // Nest form array inside formGroup to keep everything together :)
+      instructionSlots: this.instructionSlots,
     })
 
 
@@ -180,20 +203,28 @@ export class RecipeFormComponent implements OnInit {
 
       return;
     }
+
+    if(this.instructionSlots.length < 1) {
+      this.formInvalid = true;
+      this.invalidMessage = "You must have one step in instructions";
+      return
+    }
     this.formInvalid = false;
 
 
     // Format into JSON object
     const new_recipe = {
       name: this.recipeFormGroup.get('recipeName').value,
-      instruction: this.recipeFormGroup.get('instructions').value,
       mealType: this.recipeFormGroup.get('mealType').value,
       // Convert slots to appropriate ingredient format
       ingredients: this.ingredientSlots.controls.map(slot => {
         return {name: slot.get('name').value, quantity: slot.get('quantity').value}
       }),
+      instruction: this.instructionSlots.controls.map( slot => slot.get('instruction_text').value ), // Map instructionSlots to list of strings
       image: this.recipeImage || null
     }
+
+
     // Emit the created object to parent that will make the api call.
     this.buildRecipeEmitter.emit({
       recipe: new_recipe,
@@ -201,18 +232,27 @@ export class RecipeFormComponent implements OnInit {
     });
   }
 
-  addSlot() {
+  addIngredientSlot() {
     // Add a slot to the formArray
     // Nest a formgroup within the formArray that is in the main formgroup.
     let newSlot = this.createIngredientGroup()
     this.ingredientSlots.push(newSlot);
   }
 
-  removeSlot(index: number) {
+  addInstructionSlot() {
+    let newSlot = this.createInstructionGroup();
+    this.instructionSlots.push(newSlot);
+  }
+
+  removeIngredientSlot(index: number) {
     this.ingredientSlots.controls.splice(index, 1);
   }
 
-  trackIngredient(index: any, item: any) {
+  removeInstructionSlot(index: number) {
+    this.instructionSlots.controls.splice(index, 1);
+  }
+
+  trackIndex(index: any, item: any) {
     return index;
   }
 
@@ -256,17 +296,30 @@ export class RecipeFormComponent implements OnInit {
     // ID will be set to -1 if we need an ID from api.
     this.recipeFormGroup.get('recipeName').setValue(recipe.name);
     this.recipeFormGroup.get('mealType').setValue(recipe.mealtypes?.[0]?.name); // TODO current broken unless edit recipe endpoint takes an id.
-    this.recipeFormGroup.get('instructions').setValue(recipe?.instruction);
 
     recipe.ingredients.forEach(element => {
       // Nest a formgroup within the formArray that is in the main formgroup.
       let newSlot = this.createIngredientGroup(element);
       this.ingredientSlots.push(newSlot);
     });
+
+    recipe.instruction.forEach( instr => {
+      let newSlot = this.createInstructionGroup(instr);
+      this.instructionSlots.push(newSlot);
+    })
+
     if (recipe.image) {
       this.recipeImagePath = recipe.image; // We will use this if there is already an image on the recipe.
     }
   }
+
+  createInstructionGroup(step?) {
+    let instructionSlotForm = this.fb.group({
+      instruction_text: [step || '', {validators: Validators.required}]
+    });
+    return instructionSlotForm;
+  }
+
   createIngredientGroup(ingredient?) {
     // TODO fix api calls to return just id rather than ingredient.id because this is disgusting.
     if (ingredient && !ingredient.name){
@@ -305,7 +358,14 @@ export class RecipeFormComponent implements OnInit {
     return true;
   }
 
+  // On drop, change the order of the list
+  dropInstruction(event: CdkDragDrop<FormGroup[]>) {
+    moveItemInArray(this.instructionSlots.controls, event.previousIndex, event.currentIndex);
+  }
 
+  dropIngredient(event: CdkDragDrop<FormGroup[]>) {
+    moveItemInArray(this.ingredientSlots.controls, event.previousIndex, event.currentIndex);
+  }
 
 }
 
