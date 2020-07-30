@@ -1,8 +1,8 @@
 import json
 from app import db
-from app.models import Ingredient, User, Ingredient, Category, Recipe, Mealtype, RecipeIngredients
+from app.models import Ingredient, User, Ingredient, Category, Recipe, Mealtype, RecipeIngredients, Rating
 from sqlalchemy import func
-import random
+from random import randrange
 import datetime
 
 ########################################### SETUP INGREDIENTS AND CATEGORIES #############################################
@@ -23,20 +23,11 @@ def seed_db():
     input_file=open('data_seed/ingredients.json', 'r', encoding='utf8')
     json_decode=json.load(input_file)
 
-    # To view all categories added uncomment this line
-    # print('categories: ', categories)
-
-    # Seed the ingredients
-    # ingredients = []
-
     for item in json_decode['ingredients']:
-        # ingredients.append(item['strIngredient'])
         category = Category.query.filter_by(name=item['strType']).first()
         ingredient = Ingredient(name=item['strIngredient'])
         ingredient.categories.append(category)
         db.session.add(ingredient)
-
-    # print('ingredients: ', ingredients)
 
 
     ########################################################################################################################
@@ -46,15 +37,11 @@ def seed_db():
     input_file=open('data_seed/mealtypes.json', 'r', encoding='utf8')
     json_decode=json.load(input_file)
 
-    # Find all the categories
-    # all_mealtypes = []
     for item in json_decode['categories']:
         if (item['strCategory'] != None):
-            # all_mealtypes.append(item['strCategory'])
             mealtype = Mealtype(name=item['strCategory'])
             db.session.add(mealtype)
 
-    # print('mealTypes: ', all_mealtypes)
 
     ########################################################################################################################
 
@@ -117,4 +104,16 @@ def seed_db():
                 break
         user.recipes.append(recipe)
 
+    db.session.commit()
+
+    ########################################################################################################################
+
+    ########################################### ADD RANDOM RATINGS #########################################################
+    recipes = Recipe.query.all()
+    for recipe in recipes:
+        if randrange(10) > 3:
+            print('add')
+            rating = Rating(rating=(randrange(5) + 1), comment='Demo Comment.')
+            recipe.rating.append(rating)
+            user.rating.append(rating)
     db.session.commit()
