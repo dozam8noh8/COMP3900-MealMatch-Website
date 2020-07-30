@@ -15,11 +15,11 @@
 	$ source venv/bin/activate
 	$ pip install -r requirements.txt
 	``` 
-If you are on Windows then run `venv\Scripts\activate` instead of `source venv/bin/activate`
+If you are on Windows then run `venv\Scripts\activate` instead of `source venv/bin/activate`  
 If you are using pip3 then run `pip3 install -r requirements.txt` instead of `pip install -r requirements.txt`  
 
 3. Database setup
-** WARNING **: This step will reset and reseed your database. Only run when you want to reset recipe data.
+** WARNING **: This step will reset and reseed your database. Only run when you want to reset recipe data.  
 In the virtual environment with the required packages, run the following command.
 ```
 (venv) $ python setup-db.py
@@ -51,7 +51,7 @@ Run the server again and that should fix the bugs
 $ python run.py
 ```
 
-**Frontend Setup**  
+# Frontend Setup
 NOTE: Do the following on another terminal and keep the backend Python API running
 Install all packages, build the Angular app and run:
 ```
