@@ -96,7 +96,9 @@ def seed_db():
     MAX_INGREDIENTS = 20
     for item in json_decode['meals']:
         # Make new recipe
-        recipe = Recipe(name=item['strMeal'],instruction=item['strInstructions'], image=item['strMealThumb'])
+        instruction = item['strInstructions'].splitlines()
+        instruction = '\n'.join([x for x in instruction if len(x) > 2])
+        recipe = Recipe(name=item['strMeal'],instruction=instruction, image=item['strMealThumb'])
         db.session.add(recipe)
 
         mealtype = Mealtype.query.filter_by(name=item['strCategory']).first()

@@ -18,6 +18,7 @@ from app.ErrorException import ErrorException
 ###############################################################
 
 #########INTERNAL FUNCTION#########
+# Auth handler
 @auth.verify_password
 def verify_password(username_or_token, password):
     # first try to authenticate by token
@@ -30,22 +31,19 @@ def verify_password(username_or_token, password):
     g.user = user
     return True
 
-# Error handler
+# Error handler for responses
 @app.errorhandler(ErrorException)
 def handle_error_exception(error):
     response = jsonify(error.to_dict())
     response.status_code = error.statusCode
     return response
 
+# Auth error handler
 @auth.error_handler
 def auth_error(status):
     raise ErrorException('Your authentication is invalid', 401)
 
-# Demo error handling
-# @app.route('/foo')
-# def get_foo():
-#     raise ErrorException('this view is gone', 404)
-
+# Health endpoint to check if service is up
 @app.route('/healthz', methods=['GET'])
 def healthz():
     return jsonify({'message': 'Server is up', 'statusCode': 200, 'status' : 'success'})
@@ -109,14 +107,27 @@ def get_user_info(id):
 
 @app.route('/api/top_rated_recipes', methods=['GET'])
 def top_rated():
+    '''
+    Returns a list of all the highest rated recipes
+
+    '''
     return jsonify(Recipe.get_highest_rated_recipes(10))
 
 @app.route('/api/top_contributors', methods=['GET'])
 def top():
+    '''
+    Returns a list of all the top contributors
+
+    '''
     return jsonify(User.top_contributors())
 
 @app.route('/api/top_rated', methods=['GET'])
 def combine():
+    '''
+
+    Returns a list of all the top contributors and recipes for hall of fame page
+
+    '''
     recipes = (Recipe.get_highest_rated_recipes(10))
     users = (User.top_contributors())
     response = jsonify({'Recipes': recipes, 'Users': users})
@@ -126,6 +137,10 @@ def combine():
 @app.route('/api/edit_user/<int:id>', methods=['POST'])
 @auth.login_required
 def edit_user(id):
+    '''
+        On POST edit a user's profile 
+
+    '''
     # If the requesting user is not the user who's info is requested.
     if g.user.id != id:
         raise ErrorException('Your authentication is invalid', 401)
@@ -290,6 +305,12 @@ def rating(id):
 @app.route('/api/add_recipe', methods=['POST'])
 @auth.login_required
 def add_recipe():
+    '''
+
+        On a POST request with /add_recipe will add a new recipe
+            for post, please supply 'name', 'instruction', 'mealType' and 'ingredients'
+
+    '''
     name = request.json.get('name')
     instruction = request.json.get('instruction')
     mealType = request.json.get('mealType')
@@ -301,6 +322,12 @@ def add_recipe():
 @app.route('/api/edit_recipe', methods=['POST'])
 @auth.login_required
 def edit_recipe():
+    '''
+
+        On a POST request with /edit_recipe will add a new recipe
+            for post, please supply 'name', 'instruction', 'mealType' and 'ingredients'
+
+    '''
     recipe_id = request.json.get('id')
     name = request.json.get('name')
     instruction = request.json.get('instruction')
@@ -330,6 +357,11 @@ def db_seed():
 @app.route('/api/profile_pic_upload', methods=['POST'])
 @auth.login_required
 def profile_pic_upload():
+    '''
+
+        On a POST request with /profile_pic_upload will upload a picture and store in our storage
+
+    '''
     msg, code = extract_photo(request)
     if code == 200: #TODO HANDLE ERRORS
         picture_path = 'http://localhost:5000' + url_for('static', filename=msg)
@@ -342,6 +374,11 @@ def profile_pic_upload():
 @app.route('/api/recipe_image_upload/<int:recipe_id>', methods=['POST'])
 @auth.login_required
 def recipe_image_upload(recipe_id):
+    '''
+
+        On a POST request with /recipe_image_upload will upload a picture and store in our storage
+
+    '''
     msg, code = extract_photo(request)
     if code == 200: #TODO HANDLE ERRORS - Turn into objects?
         picture_path = 'http://localhost:5000' + url_for('static', filename=msg)

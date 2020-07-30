@@ -52,7 +52,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { RecommendIngredientsComponent } from './home-page/recommend-ingredients/recommend-ingredients.component';
 import { InputListComponent } from './home-page/input-list/input-list.component';
-import { DisplayCommentsComponent } from './recipe-info/display-comments/display-comments.component';
+import { ReviewSectionComponent} from './recipe-info/review-section/review-section.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DisplayReviewComponent } from './recipe-info/display-review/display-review.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -108,7 +108,7 @@ const materialModules = [
     SearchBarComponent,
     RecommendIngredientsComponent,
     InputListComponent,
-    DisplayCommentsComponent,
+    ReviewSectionComponent,
     DisplayReviewComponent,
     HallOfFameComponent,
   ],
