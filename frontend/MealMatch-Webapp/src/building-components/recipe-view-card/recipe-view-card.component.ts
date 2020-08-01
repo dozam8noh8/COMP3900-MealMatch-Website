@@ -30,9 +30,8 @@ import { map, finalize } from 'rxjs/operators';
         <img [src]="recipeImagePlaceholder">
     </div>
 
-    <b>{{recipe.name}}</b> <br>
     <div class="ingredient-list">
-    <i>Uses: {{ingredientsString}}
+    Uses: <i>{{ingredientsString}}
     </i>
     </div>
     </div>

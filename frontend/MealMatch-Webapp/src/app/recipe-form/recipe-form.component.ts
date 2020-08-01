@@ -77,7 +77,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                   <app-instruction-slot
                   [formGroup]="slot"
                   [position]="index"
-                  (removeInstruction)="removeInstructionSlot($event)"></app-instruction-slot>
+                  (removeInstruction)="removeInstructionSlot($event)"
+                  [formSubmitted]="formInvalid"></app-instruction-slot>
                   <div cdkDragHandle>
                     <mat-icon class="drag-handle">drag_handle</mat-icon>
                   </div>
