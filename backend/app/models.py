@@ -61,7 +61,7 @@ class User(db.Model):
     def upload_profile_image(user_id, path):
         user = User.query.filter_by(id=user_id).first()
         user.profile_pic = path
-    
+
     def get_highest_contributors(users):
         return sorted(users, key=lambda x: x.recipes.count(), reverse=True)
 
@@ -150,44 +150,44 @@ class Rating(db.Model):
             ratingsList.append(json_obj)
         return (ratingsList)
 
-# IngredientPairs for recipe suggestions
-class IngredientPairs(db.Model):
+# IngredientSets for recipe suggestions (Loveless Sets)
+class IngredientSets(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    pairs = db.Column(db.String(2000), index=True)
+    sets = db.Column(db.String(2000), index=True)
     count = db.Column(db.Integer, default=1)
 
-    def increment_count(pair):
-        ingr_pair = IngredientPairs.query.filter_by(pairs=str(pair).strip('[]')).first()
-        if ingr_pair:
-            ingr_pair.count = ingr_pair.count + 1
+    def increment_count(LSet):
+        ingr_LSet = IngredientSets.query.filter_by(sets=str(LSet).strip('[]')).first()
+        if ingr_LSet:
+            ingr_LSet.count = ingr_LSet.count + 1
         else:
-            ingr_pair = IngredientPairs(pairs=str(pair).strip('[]'), count=1)
-            db.session.add(ingr_pair)
+            ingr_LSet = IngredientSets(sets=str(LSet).strip('[]'), count=1)
+            db.session.add(ingr_LSet)
         db.session.commit()
 
-    def get_highest_pairs():
-        pairs = IngredientPairs.query.order_by(desc(IngredientPairs.count)).limit(5).all()
-        highest_pairs = []
-        for pair in pairs:
-            ingredient_ids = pair.pairs.split(', ')
+    def get_highest_sets():
+        sets = IngredientSets.query.order_by(desc(IngredientSets.count)).limit(5).all()
+        highest_sets = []
+        for LSet in sets:
+            ingredient_ids = LSet.sets.split(', ')
             ingredients = [Ingredient.query.filter_by(id=int(x)).first() for x in ingredient_ids]
             ingredients = Ingredient.json_dump(ingredients)
-            highest_pairs.append({'id': pair.id, 'ingredients': ingredients, 'count': pair.count})
-        return highest_pairs
+            highest_sets.append({'id': LSet.id, 'ingredients': ingredients, 'count': LSet.count})
+        return highest_sets
 
-    def remove_pairs(recipe):
+    def remove_sets(recipe):
         ingredient_ids = set(x.ingredient_id for x in recipe.ingredients)
-        pairs = IngredientPairs.query.all()
-        pairs = [(x.id, x.pairs) for x in pairs]
-        for pair_id, pair in pairs:
-            pair_set = set(int(x) for x in pair.split(', '))
-            if pair_set.issubset(ingredient_ids):
-                IngredientPairs.query.filter_by(id=pair_id).delete()
+        sets = IngredientSets.query.all()
+        sets = [(x.id, x.sets) for x in sets]
+        for LSet_id, LSet in sets:
+            LSet_set = set(int(x) for x in LSet.split(', '))
+            if LSet_set.issubset(ingredient_ids):
+                IngredientSets.query.filter_by(id=LSet_id).delete()
         db.session.commit()
 
-    def json_dump(pairs):
-        schema = IngredientPairsSchema(many=True)
-        return schema.dump(pairs)
+    def json_dump(sets):
+        schema = IngredientSetsSchema(many=True)
+        return schema.dump(sets)
 
 # Recipe class
 class Recipe(db.Model):
@@ -249,7 +249,7 @@ class Recipe(db.Model):
                 filtered.append(recipe)
 
         if not filtered and ingredients_id:
-            IngredientPairs.increment_count(ingredients_id)
+            IngredientSets.increment_count(ingredients_id)
         total_results = len(filtered)
 
         recipes = Recipe.get_paginated_list(filtered, page_num, page_size)
@@ -306,7 +306,7 @@ class Recipe(db.Model):
 
         user.recipes.append(recipe)
         db.session.commit()
-        IngredientPairs.remove_pairs(recipe)
+        IngredientSets.remove_sets(recipe)
         return recipe
 
     def edit_recipe(recipe_id, name, instruction, mealType, ingredients):
@@ -343,7 +343,7 @@ class Recipe(db.Model):
                     recipe.ingredients.append(recipe_ingredient)
 
         db.session.commit()
-        IngredientPairs.remove_pairs(recipe)
+        IngredientSets.remove_pairs(recipe)
         return recipe
 
     def recipe_delete(recipe_id):
@@ -363,7 +363,7 @@ class Recipe(db.Model):
             rating = Recipe.get_rating(recipe['id'])
             recipe['rating'] = rating
         return recipes
-    
+
     def get_recipe_owner(recipe):
         user = User.query.filter_by(id=recipe['user_id']).first()
         recipe['user'] = user.username
@@ -456,9 +456,9 @@ class RecipeIngredientsSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         fields = ("ingredient.id", "ingredient.name", "quantity")
 
-class IngredientPairsSchema(ma.SQLAlchemyAutoSchema):
+class IngredientSetsSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = IngredientPairs
+        model = IngredientSets
 
 class RatingSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

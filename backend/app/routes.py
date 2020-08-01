@@ -6,7 +6,7 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import ImmutableMultiDict
-from app.models import Ingredient, User, Recipe, Category, Mealtype, RecipeIngredients, IngredientPairs, Rating
+from app.models import Ingredient, User, Recipe, Category, Mealtype, RecipeIngredients, IngredientSets, Rating
 from app import auth, app, db
 from app.seed import seed_db
 import secrets
@@ -220,10 +220,9 @@ def recipe_delete(recipe_id):
         return jsonify({'message': 'Recipe deleted.', 'statusCode': 200, 'status' : 'success'})
 
 
-# Actually returns sets as required. TODO Change variable names
 @app.route('/api/popular_ingredient_sets', methods=['GET'])
 def popular_ingredient_sets():
-    response = IngredientPairs.get_highest_pairs()
+    response = IngredientSets.get_highest_sets()
     return jsonify(response)
 
 
