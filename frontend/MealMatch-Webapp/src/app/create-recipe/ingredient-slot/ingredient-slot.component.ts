@@ -90,11 +90,18 @@ export class IngredientSlotComponent implements OnInit{
   }
 
   private _filter(value: string): Ingredient[] {
-    const filterValue = value.toString().toLowerCase();
+    const filterValue = value.toString().trim().toLowerCase();
+    if(filterValue==='') {
+      this.ingredientIsValid = true; // To make sure the add new ingredient message isn't shown
+      return [];
+    }
+    
     // If not an existing ingredient
     if(!this.ingredientService.getAllIngredients().some( elem => (elem.name.toLowerCase()===filterValue))) {
       // Set validity to false which offers user to create a new ingredient with that name.
       this.ingredientIsValid = false;
+    } else {
+      this.ingredientIsValid = true;
     }
       // Return a list of ingredients that start with what is typed in but arent already added.
       return this.ingredientService.getAllIngredients().filter(item => {
