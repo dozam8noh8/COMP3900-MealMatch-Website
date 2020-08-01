@@ -21,15 +21,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 
             `
 })
+/* The recipe edit component wraps around the recipe form to perform the logic once the form is populated.
+In this case, we send the changed recipe back up to the api with the same id which will cause the api
+to update the DB. */
 export class RecipeEditComponent implements OnInit {
-
+  // The image selected for the recipe (if any)
   recipeImage: File;
+  // The initial recipe details (to prepopulate the form)
   recipeToEdit: Recipe;
+  // Error string
   API_message: string;
+  // UI responsiveness variables
   submitting: boolean = false;
   submissionSuccessful: boolean = false;
   completionSuccessMessage = "Recipe successfully edited!";
   completionErrorMessage = "";
+  // The recipeId of the response message (should be the same as the recipeToEdit id)
   completedRecipeId: number;
   constructor(
     private recipeService: RecipeService,

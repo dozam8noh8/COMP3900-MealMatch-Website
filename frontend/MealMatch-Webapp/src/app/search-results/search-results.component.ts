@@ -137,9 +137,9 @@ export class SearchResultsComponent implements OnInit {
   searchComplete() {
     return this.searchService.searchComplete;
   }
+  // When paginator changes, make a call for the next page (with the same search state).
   handlePaginator($event){
     let state = this.router.getCurrentNavigation().extras.state;
     this.searchService.searchForRecipes(state.searchIngredients, state.mealType.name, this.displayedPage, this.itemsPerPage)
-    console.log($event);
   }
 }

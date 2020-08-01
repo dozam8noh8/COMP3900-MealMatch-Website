@@ -6,6 +6,9 @@ import { Recipe } from '../models/recipe';
 @Injectable({
   providedIn: 'root'
 })
+/* The recipe service handles data and api interactions associated with recipes,
+it can fetch, edit, and delete recipes. It also takes care of mealtypes associated
+with recipes */
 export class RecipeService {
   // Our api calls will go to this URL
   private BASE_URL = 'http://localhost:5000/api';
@@ -20,9 +23,10 @@ export class RecipeService {
   }
 
   deleteRecipe(recipeId: number): Observable<any> {
-    return this.http.delete<any>(`${this.BASE_URL}/recipe_delete/${recipeId}`, {observe: 'response'}); // Type casting to get headers from response aswell.
+     // Type casting to observe to get headers from response aswell.
+    return this.http.delete<any>(`${this.BASE_URL}/recipe_delete/${recipeId}`, {observe: 'response'});
   }
-
+  // Get all mealtypes except "All" which is a feature of the frontend.
   getAllMealTypes() {
     return this.http.get(`${this.BASE_URL}/get_all_mealtypes`);
   }
