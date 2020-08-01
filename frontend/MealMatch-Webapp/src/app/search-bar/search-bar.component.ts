@@ -56,7 +56,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   private _filter(value: string): any[] {
-    const filterValue = value.toString().toLowerCase();
+    const filterValue = value.toString().trim().toLowerCase();
     return filterValue==='' 
       ? [] 
       : this.allItems.filter(item => {
