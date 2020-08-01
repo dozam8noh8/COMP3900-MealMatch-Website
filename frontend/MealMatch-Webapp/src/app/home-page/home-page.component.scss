@@ -51,7 +51,6 @@ app-ingredient-by-category {
 }
 
 .submitButton {
-    margin-top: 2vh;
     border-radius: 25px;
     width: 25vw;
     height: 50px;
@@ -62,6 +61,7 @@ app-ingredient-by-category {
 .search-bar-container {
     width: 60%;
     margin-left:20%;
+    margin-bottom: 1vh;
 }
 
 .submit-button-container {
@@ -74,5 +74,6 @@ app-ingredient-by-category {
     left: 0;
     top: 40%;
     margin-left: 3vw;
-    width: 14%
+    width: 14%;
+    margin-top: -1vh !important;
 }
