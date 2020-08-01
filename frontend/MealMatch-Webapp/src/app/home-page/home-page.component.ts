@@ -48,7 +48,6 @@ import { Ingredient } from '../models/ingredient';
                   <button mat-raised-button type="submit" color="white" class="submitButton">Search for recipes</button>
                 </div>
               </form>
-                <button mat-raised-button routerLink="/lovelesssets" color="primary" class="submitButton"> Loveless Sets </button>
               </div>
             `
 })

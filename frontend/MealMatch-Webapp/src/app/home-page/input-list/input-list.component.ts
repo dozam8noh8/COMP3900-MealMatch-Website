@@ -23,7 +23,9 @@ import { Ingredient } from 'src/app/models/ingredient';
                       </ng-template>
                     </div>
 
-                    <button id="removeAllButton" (click)="removeAllFromList()" mat-raised-button type="raised" color="primary" style="border-radius: 15px; width: 40%; margin-left: 30%; margin-top: 2vh; margin-bottom: 1.5vh">Clear All Ingredients</button>
+                    <button id="removeAllButton" (click)="removeAllFromList()" mat-raised-button type="raised" color="primary" >
+                      Clear All Ingredients
+                    </button>
 
                   </div>
 

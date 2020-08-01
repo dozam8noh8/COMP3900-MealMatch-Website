@@ -14,10 +14,12 @@ import { Ingredient } from 'src/app/models/ingredient';
                       <div *ngFor="let recIngredient of recommendedIngredients">
                           <div class="ingredient-item">
                             <button class="add-button" (click)="addIngredient(recIngredient)"> <strong>+</strong></button>
-                            {{recIngredient.name}} 
+                            {{recIngredient.name}}
                           </div>
-                      </div> 
+                      </div>
                   </ng-template>
+                  <button mat-raised-button routerLink="/lovelesssets" color="primary" class="loveless-set"
+                  matTooltip="Commonly searched sets of ingredients for which there are no recipes."> See Loveless Sets </button>
                 </mat-card>
             `
 })
