@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IngredientService } from 'src/app/services/ingredient.service';
 import { Ingredient } from 'src/app/models/ingredient';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-recommend-ingredients',
@@ -14,9 +15,9 @@ import { Ingredient } from 'src/app/models/ingredient';
                       <div *ngFor="let recIngredient of recommendedIngredients">
                           <div class="ingredient-item">
                             <button class="add-button" (click)="addIngredient(recIngredient)"> <strong>+</strong></button>
-                            {{recIngredient.name}} 
+                            {{recIngredient.name}}
                           </div>
-                      </div> 
+                      </div>
                   </ng-template>
                 </mat-card>
             `
@@ -26,14 +27,17 @@ export class RecommendIngredientsComponent implements OnInit {
   recommendedIngredients: Ingredient[];
 
   constructor(
-    private ingredientService: IngredientService
+    private ingredientService: IngredientService,
   ) { }
 
   ngOnInit(): void {
     // Subscribe to get any changes to list of recommended ingredients
     this.ingredientService.getRecommendedIngredients()
     .subscribe( (data: Ingredient[]) => {
-      this.recommendedIngredients = data;
+      // Get all ingredient ids of ingredients currently added to ingredient list
+      let addedIngredientsIds = this.ingredientService.addedIngredients.map(ing => ing.id)
+      // Filter ingredients currently in ingredient list from recommendation.
+      this.recommendedIngredients = data.filter(ingredient => !addedIngredientsIds.includes(ingredient.id))
     })
   }
 
