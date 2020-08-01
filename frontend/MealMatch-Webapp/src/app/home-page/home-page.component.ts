@@ -13,7 +13,7 @@ import { Ingredient } from '../models/ingredient';
               <mat-card id="search-section">
 
 
-              <mat-form-field [formGroup]="ingredientSearchForm" appearance="fill" style="position: absolute; left: 0; top: 40%; margin-left: 3vw; width: 14%">
+              <mat-form-field [formGroup]="ingredientSearchForm" class="mealtype" appearance="fill">
                   <mat-label>Meal Type</mat-label>
                   <mat-select
                   formControlName="selectedMealType">
@@ -48,6 +48,7 @@ import { Ingredient } from '../models/ingredient';
                   <button mat-raised-button type="submit" color="white" class="submitButton">Search for recipes</button>
                 </div>
               </form>
+                <button mat-raised-button routerLink="/lovelesssets" color="primary" class="submitButton"> Loveless Sets </button>
               </div>
             `
 })

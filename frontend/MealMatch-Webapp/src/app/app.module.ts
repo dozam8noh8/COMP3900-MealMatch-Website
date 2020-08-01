@@ -59,6 +59,7 @@ import { DisplayReviewComponent } from './recipe-info/display-review/display-rev
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HallOfFameComponent } from './hall-of-fame/hall-of-fame.component';
 import { InstructionSlotComponent } from './recipe-form/instruction-slot/instruction-slot.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const materialModules = [
   MatToolbarModule,
@@ -81,7 +82,9 @@ const materialModules = [
   MatTabsModule,
   MatDialogModule,
   MatPaginatorModule,
-  DragDropModule
+  DragDropModule,
+  MatTooltipModule,
+  BrowserAnimationsModule,
 ]
 @NgModule({
   declarations: [

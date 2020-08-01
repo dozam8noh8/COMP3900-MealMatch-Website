@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Route } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import * as rx from 'rxjs/operators';
 
@@ -13,7 +13,7 @@ import * as rx from 'rxjs/operators';
     <mat-card-content>
       <div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <mat-card-title style="font-weight:lighter; font-size: 3.5em; padding-bottom: 15%; padding-top: 30px;">Welcome Back!</mat-card-title>
+          <mat-card-title>Welcome Back!</mat-card-title>
           <div>
           <mat-error *ngIf="loginInvalid">
             The username and password were not recognised
@@ -69,7 +69,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute,
   ) {
   }
 
@@ -95,7 +96,15 @@ export class LoginComponent implements OnInit {
         .subscribe(response => {
           this.showSuccessBanner = true; // successful login
           this.loading = false;
-          this.router.navigate(['home']);
+          let returnUrl = this.route.snapshot.queryParams?.returnUrl;
+          // If we preserved a url from redirecting from login popup component, we want to return.
+          if (returnUrl){
+            console.log("Return url is!?", returnUrl)
+            this.router.navigate([returnUrl]);
+          }
+          else {
+            this.router.navigate(['home']);
+          }
         }, error => {
           this.error = "Incorrect username or password, please try again!";
           this.loading = false;

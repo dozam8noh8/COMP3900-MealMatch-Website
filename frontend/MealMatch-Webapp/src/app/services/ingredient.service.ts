@@ -155,7 +155,7 @@ export class IngredientService {
   }
 
   getLovelessSets() {
-    return this.http.get(`${this.BASE_URL}/popular_ingredient_pairs`);
+    return this.http.get(`${this.BASE_URL}/popular_ingredient_sets`);
   }
 
   getRecommendedIngredients(): Observable<Ingredient[]> {

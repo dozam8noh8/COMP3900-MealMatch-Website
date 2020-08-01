@@ -221,9 +221,8 @@ def recipe_delete(recipe_id):
 
 
 # Actually returns sets as required. TODO Change variable names
-@app.route('/api/popular_ingredient_pairs', methods=['GET'])
-@auth.login_required
-def popular_ingredient_pairs():
+@app.route('/api/popular_ingredient_sets', methods=['GET'])
+def popular_ingredient_sets():
     response = IngredientPairs.get_highest_pairs()
     return jsonify(response)
 
