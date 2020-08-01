@@ -26,7 +26,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                 </div>
                 <ng-template #noImage>
                     <h2 class="title"> Upload an image ... </h2>
-                    <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)" existingImageURL="assets/images/recipe_placeholder.jpg"></app-photo-upload>
+                    <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"
+                    existingImageURL="assets/images/recipe_placeholder.jpg">
+                    </app-photo-upload>
                 </ng-template>
             </div>
             <div class="form">
@@ -51,20 +53,23 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                 </mat-form-field>
 
                 <h2 class="title"> Ingredients </h2>
-                  <div cdkDropList *ngIf="ingredientSlots.controls.length > 0" class="draggable-list" (cdkDropListDropped)="dropIngredient($event)">
+                  <div cdkDropList *ngIf="ingredientSlots.controls.length > 0"
+                    class="draggable-list"
+                    (cdkDropListDropped)="dropIngredient($event)"
+                  >
                 <div cdkDrag class="draggable-box" *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIndex">
-                    <app-ingredient-slot 
-                    [formGroup]="slot" 
-                    [formArray]="ingredientSlots" 
+                    <app-ingredient-slot
+                    [formGroup]="slot"
+                    [formArray]="ingredientSlots"
                     [position]="index"
-                    (removeIngredient)="removeIngredientSlot($event)" 
-                    [addedIngredients]="addedIngredients$ | async" 
+                    (removeIngredient)="removeIngredientSlot($event)"
+                    [addedIngredients]="addedIngredients$ | async"
                     [formSubmitted]="formInvalid">
                     </app-ingredient-slot>
-                    <div cdkDragHandle>
+                    <div matTooltip="Click here to drag" cdkDragHandle>
                     <mat-icon class="drag-handle">drag_handle</mat-icon>
                   </div>
-                </div>                  
+                </div>
                   </div>
 
 
@@ -79,7 +84,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                   [position]="index"
                   (removeInstruction)="removeInstructionSlot($event)"
                   [formSubmitted]="formInvalid"></app-instruction-slot>
-                  <div cdkDragHandle>
+                  <div matTooltip="Click here to drag" cdkDragHandle>
                     <mat-icon class="drag-handle">drag_handle</mat-icon>
                   </div>
                 </div>

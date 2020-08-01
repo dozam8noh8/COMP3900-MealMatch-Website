@@ -13,11 +13,11 @@ import { MatInput } from '@angular/material/input';
   selector: 'app-ingredient-slot',
   styleUrls: ['./ingredient-slot.component.scss'],
   template: `
-                  <mat-error *ngIf="formGroup.get('quantity').invalid && formSubmitted"> Please enter a quantity </mat-error>
+              <mat-error *ngIf="formGroup.get('quantity').invalid && formSubmitted"> Please enter a quantity </mat-error>
 
               <div class="flex-container">
                 <div style="display: flex; align-items: center; margin-right: 8px">
-                  <input #quantity type="text" placeholder="quantity"
+                  <input style="width: 10vw;" #quantity type="text" placeholder="quantity"
                   [formControl]="formGroup.get('quantity')">
                 </div>
 
@@ -95,7 +95,7 @@ export class IngredientSlotComponent implements OnInit{
       this.ingredientIsValid = true; // To make sure the add new ingredient message isn't shown
       return [];
     }
-    
+
     // If not an existing ingredient
     if(!this.ingredientService.getAllIngredients().some( elem => (elem.name.toLowerCase()===filterValue))) {
       // Set validity to false which offers user to create a new ingredient with that name.

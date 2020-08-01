@@ -4,6 +4,9 @@ import { FormGroup, AbstractControl, ValidatorFn } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
+/* The helper functions service contains a list of helpful functions that may
+be useful currently or in the future. If code seems useful but there is no current
+use case, it can be put below for when it is needed. */
 export class HelperFunctionsService {
 
   constructor() { }
