@@ -77,7 +77,7 @@ import { Router } from '@angular/router';
       <h1 *ngIf="!recipesLoading">You have no recipes</h1>
       <mat-spinner *ngIf="recipesLoading" style="margin-left: 47%;"> </mat-spinner>
     </ng-template>
-    <mat-paginator *ngIf="!recipesLoading"
+    <mat-paginator *ngIf="!recipesLoading && recipes.length > 1"
     [length]="totalRecipesNumber"
     [pageSize]="itemsPerPage"
     [pageSizeOptions]="[12, 24, 40]"
