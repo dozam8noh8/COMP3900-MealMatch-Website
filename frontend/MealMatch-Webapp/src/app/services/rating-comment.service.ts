@@ -31,4 +31,13 @@ export class RatingCommentService {
     return this.http.post(url, body);
   }
 
+  deleteRatingComment(rcId: number, userId: number) {
+    let url = `${this.BASE_URL}/delete_rating`;
+    let body = {
+      "ratingId": rcId,
+      "userId": userId
+    }
+    return this.http.post(url, body);
+  }
+
 }
