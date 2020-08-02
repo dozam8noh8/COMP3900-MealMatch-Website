@@ -9,7 +9,13 @@ import { Ingredient } from '../models/ingredient';
 @Component({
   selector: 'app-home-page',
   styleUrls: ['./home-page.component.scss'],
-  template: `<div class="homepage-div">
+  template: `
+            <div *ngIf="loading" class="page-loading" style="height: 100%;">
+              <mat-spinner  style="margin:auto; top: 40%"> </mat-spinner>
+              <h1 *ngIf="loading"> Loading webpage... </h1>
+            </div>
+
+            <div *ngIf="!loading" class="homepage-div">
               <mat-card id="search-section">
 
 
@@ -49,9 +55,15 @@ import { Ingredient } from '../models/ingredient';
               </div>
             `
 })
+/* The home page component displays the view for the home page,
+it has several sub components that mostly use the ingredient service
+and search service to interact with each other. */
 export class HomePageComponent implements OnInit {
+  // loading state of page
   loading = true;
+  // The mealtypes displayed in the dropdown
   allMealTypes: MealType[] = [];
+  // The form group containing all the information required to search
   ingredientSearchForm: FormGroup;
   constructor(
     private router: Router,
@@ -70,13 +82,13 @@ export class HomePageComponent implements OnInit {
         this.ingredientSearchForm.setValue({
           selectedMealType: this.allMealTypes[0]
         })
+        console.log("just about to finish loading")
         this.loading = false;
       })
 
   }
 
   ngOnInit(): void {
-
   }
 
   submitIngredients() {
