@@ -351,7 +351,7 @@ class Recipe(db.Model):
                     recipe.ingredients.append(recipe_ingredient)
 
         db.session.commit()
-        IngredientSets.remove_pairs(recipe)
+        IngredientSets.remove_sets(recipe)
         return recipe
 
     def recipe_delete(recipe_id):
@@ -402,7 +402,7 @@ class RecipeInstructions(db.Model):
 
     recipe = db.relationship('Recipe', backref=db.backref('instruction'))
 
-# RecipeIngredients pairs class
+# RecipeIngredients sets class
 class RecipeIngredients(db.Model):
     __tablename__ = 'recipe_ingredients'
     id = db.Column(db.Integer, primary_key=True)
