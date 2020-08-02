@@ -68,7 +68,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
                     <div>
                       Comment: <br/>
                       <textarea formControlName="comment" rows="5" style="width:90%"></textarea>                      <br/>
-                      <button (click)="toggleEdit()" mat-raised-button color="warn">Cancel</button>
+                      <button (click)="toggleEdit()" mat-raised-button color="basic">Cancel</button>
                       <button type="submit" mat-raised-button color="primary">Save</button>            
                       <div *ngIf="submitAttempted && ratingCommentFormGroup.invalid" style="color:red;">
                         A review must have a comment and rating from 1 to 5.
@@ -79,10 +79,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
                   <!-- Just display the rating and comment with an edit button -->
                   <div *ngIf="!postingUserRC && !editable">
                     <app-display-review
-                    [rating]="rc.rating"
-                    [username]="rc.username"
-                    [comment]="rc.comment"
-                    [currentUser]="currentUser['username']"
+                    [review]="rc"
+                    [currentUser]="currentUser"
                     (toggleEditEmitter)="toggleEdit()"></app-display-review>
                   </div>
 
@@ -92,9 +90,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
                 <ng-template #elseNotCurrentUsers>
                   <div class="rating-comment">
                     <app-display-review
-                    [rating]="rc.rating"
-                    [username]="rc.username"
-                    [comment]="rc.comment"></app-display-review>                  
+                    [review]="rc"></app-display-review>                  
                   </div>
 
                 </ng-template>
