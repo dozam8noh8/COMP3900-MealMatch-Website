@@ -311,7 +311,9 @@ def delete_rating():
 
     '''
     ratingId = request.json.get('ratingId')
-    Rating.delete_rating(ratingId)
+    userId = request.json.get('userId')
+    if not Rating.delete_rating(ratingId, userId):
+        raise ErrorException('User does not own the rating', 500)
     return {'rating_id' : ratingId, 'message': 'Rating has been deleted', 'statusCode': 201, 'status' : 'success'}
 
 @app.route('/api/add_recipe', methods=['POST'])

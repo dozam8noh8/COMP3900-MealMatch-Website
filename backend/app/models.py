@@ -142,7 +142,11 @@ class Rating(db.Model):
     user = db.relationship('User', secondary=userRatings, cascade="all,delete", backref=db.backref('rating', lazy='dynamic'))
     recipe = db.relationship('Recipe', secondary=recipeRatings, cascade="all,delete", backref=db.backref('rating', lazy='dynamic'))
 
-    def delete_rating(ratingId):
+    def delete_rating(ratingId, userId):
+        user = User.query.filter_by(id=userId).first()
+        rating = Rating.query.filter_by(id=ratingId).first()
+        if rating not in user.rating:
+            return False
         Rating.query.filter_by(id=ratingId).delete()
         return True
 
