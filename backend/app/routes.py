@@ -300,6 +300,20 @@ def rating(id):
     ratings = recipe.rating
     return jsonify(Rating.json_dump(ratings))
 
+
+@app.route('/api/delete_rating', methods=['POST'])
+@auth.login_required
+def delete_rating():
+    '''
+
+        On a POST request with /delete_rating will delete a rating
+            for post, please supply 'ratingId' and 'userId'
+
+    '''
+    recipeId = request.json.get('ratingId')
+    print(Rating.delete_rating(recipeId))
+    return 'True'
+
 @app.route('/api/add_recipe', methods=['POST'])
 @auth.login_required
 def add_recipe():
