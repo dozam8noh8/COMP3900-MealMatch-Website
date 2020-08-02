@@ -95,7 +95,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
                 <div *ngIf="!submitting">
                     <div *ngIf="!submissionComplete">
-                        <button mat-raised-button style="width: 25%" color="primary" type="submit" style="margin-bottom: 2vh;">Save</button>
+                        <button mat-raised-button style="width: 25%; margin-bottom: 2vh;" color="primary" type="submit" style="margin-bottom: 2vh;">Save</button>
                         <h2 *ngIf="completionErrorMessage">
                             {{completionErrorMessage}}
                         </h2>
@@ -107,12 +107,12 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                         <button mat-raised-button color="primary" style="margin: 1.5vw;"
                             [routerLink]="'/recipe/' + completedRecipeId ">View Recipe</button>
                     </h2>
-                    <div id="errorAnchor" style="margin-bottom: 2vh;">
+                    <div style="margin-bottom: 2vh;">
                     <mat-error  *ngIf="formInvalid "> {{ invalidMessage }}
                     </mat-error>
                     </div>
-
                 </div>
+                <div id="errorAnchor" style="height: 3vh; width: 3vw; margin-top:4vh; position: absolute;"> </div>
             </div>
         </div>
     </form>
@@ -199,6 +199,8 @@ export class RecipeFormComponent implements OnInit {
 
   // Emit the completed recipe up to the parent component for submission!
   saveRecipeDetails() {
+    // Reset formInvalid to run checks again.
+    this.formInvalid = false;
     // Only keep slots with valid ingredients
     if (!this.recipeFormGroup.valid){
 
@@ -231,8 +233,6 @@ export class RecipeFormComponent implements OnInit {
       this.scroll(null);
       return;
     }
-    this.formInvalid = false;
-
 
     // Format into JSON object
     const new_recipe = {
