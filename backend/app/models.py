@@ -15,12 +15,12 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 # Model Relationships for ratings
 userRatings = db.Table('user_ratings',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-    db.Column('rating_id', db.Integer, db.ForeignKey('rating.id'), primary_key=True)
+    db.Column('rating_id', db.Integer, db.ForeignKey('rating.id', ondelete='cascade'), primary_key=True)
 )
 
 recipeRatings = db.Table('recipe_ratings',
     db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id', ondelete='cascade'), primary_key=True),
-    db.Column('rating_id', db.Integer, db.ForeignKey('rating.id'), primary_key=True)
+    db.Column('rating_id', db.Integer, db.ForeignKey('rating.id', ondelete='cascade'), primary_key=True)
 )
 
 ##########################################
@@ -139,8 +139,12 @@ class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.String(256))
     comment = db.Column(db.String(2000))
-    user = db.relationship('User', secondary=userRatings, backref=db.backref('rating', lazy='dynamic'))
-    recipe = db.relationship('Recipe', secondary=recipeRatings, backref=db.backref('rating', lazy='dynamic'))
+    user = db.relationship('User', secondary=userRatings, cascade="all,delete", backref=db.backref('rating', lazy='dynamic'))
+    recipe = db.relationship('Recipe', secondary=recipeRatings, cascade="all,delete", backref=db.backref('rating', lazy='dynamic'))
+
+    def delete_rating(ratingId):
+        Rating.query.filter_by(id=ratingId).delete()
+        return True
 
     def json_dump(rating):
         ratingsList = []
