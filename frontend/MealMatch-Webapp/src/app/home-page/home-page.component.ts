@@ -34,7 +34,9 @@ import { Ingredient } from '../models/ingredient';
                   [additionalFiltering]="notOnList"
                   (selectedItemEmitter)="addToList($event)"></app-search-bar>
                 </div>
-                <button mat-raised-button type="submit" color="primary" class="submitButton">Search for recipes</button>
+                <form [formGroup]="ingredientSearchForm" (ngSubmit)="submitIngredients()">
+                  <button mat-raised-button type="submit" color="primary" class="submitButton">Search for recipes</button>
+                </form>
 
               </mat-card>
 
@@ -44,11 +46,6 @@ import { Ingredient } from '../models/ingredient';
               </div>
 
               <app-ingredient-by-category></app-ingredient-by-category>
-
-              <form [formGroup]="ingredientSearchForm" (ngSubmit)="submitIngredients()">
-                <div class="submit-button-container">
-                </div>
-              </form>
               </div>
             `
 })
