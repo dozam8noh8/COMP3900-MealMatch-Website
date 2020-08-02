@@ -1,6 +1,9 @@
 
 
 #recommendedIngredientsSection {
+    display:flex;
+    flex-direction:column;
+    justify-content: space-around;
     margin: 0 auto;
     border-radius: 10px;
     margin-left: 0;
@@ -37,9 +40,8 @@
 }
 
 .loveless-set {
-    position: absolute;
-    bottom: 2vh;
     transform: translate(-50%, 0);
     left: 50%;
     border-radius: 15px;
+    width: 80%;
 }
