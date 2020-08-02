@@ -307,12 +307,12 @@ def delete_rating():
     '''
 
         On a POST request with /delete_rating will delete a rating
-            for post, please supply 'ratingId' and 'userId'
+            for post, please supply 'ratingId'
 
     '''
-    recipeId = request.json.get('ratingId')
-    print(Rating.delete_rating(recipeId))
-    return 'True'
+    ratingId = request.json.get('ratingId')
+    Rating.delete_rating(ratingId)
+    return {'rating_id' : ratingId, 'message': 'Rating has been deleted', 'statusCode': 201, 'status' : 'success'}
 
 @app.route('/api/add_recipe', methods=['POST'])
 @auth.login_required

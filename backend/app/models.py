@@ -143,14 +143,7 @@ class Rating(db.Model):
     recipe = db.relationship('Recipe', secondary=recipeRatings, cascade="all,delete", backref=db.backref('rating', lazy='dynamic'))
 
     def delete_rating(ratingId):
-        # rating = Rating.query.filter_by(id=ratingId).first()
-        # user = User.query.filter_by(id=userId).first()
-        # recipe = Recipe.query.filter_by(id=recipeId).first()
-        # recipe.rating.remove(rating)
-        # user.rating.remove(rating)
-        print(Rating.query.filter_by(id=ratingId).first())
         Rating.query.filter_by(id=ratingId).delete()
-        print(Rating.query.filter_by(id=ratingId).first())
         return True
 
     def json_dump(rating):
