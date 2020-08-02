@@ -95,7 +95,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
                 <div *ngIf="!submitting">
                     <div *ngIf="!submissionComplete">
-                        <button mat-raised-button style="width: 25%" color="primary" type="submit">Save</button>
+                        <button mat-raised-button style="width: 25%" color="primary" type="submit" style="margin-bottom: 2vh;">Save</button>
                         <h2 *ngIf="completionErrorMessage">
                             {{completionErrorMessage}}
                         </h2>
@@ -107,8 +107,11 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                         <button mat-raised-button color="primary" style="margin: 1.5vw;"
                             [routerLink]="'/recipe/' + completedRecipeId ">View Recipe</button>
                     </h2>
-                    <mat-error *ngIf="formInvalid "> {{ invalidMessage }}
+                    <div id="errorAnchor" style="margin-bottom: 2vh;">
+                    <mat-error  *ngIf="formInvalid "> {{ invalidMessage }}
                     </mat-error>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -198,22 +201,35 @@ export class RecipeFormComponent implements OnInit {
   saveRecipeDetails() {
     // Only keep slots with valid ingredients
     if (!this.recipeFormGroup.valid){
+
       this.formInvalid = true;
       this.invalidMessage = "Please make sure all fields of the form are filled out."
-      return;
-    }
-    // If there is no ingredients in the recipe, we are invalid.
-    if (!this.checkValidIngredients()){
-      this.formInvalid = true;
-      this.invalidMessage = "You must add at least one ingredient to the recipe"
-
-      return;
     }
 
     if(this.instructionSlots.length < 1) {
       this.formInvalid = true;
       this.invalidMessage = "You must have one step in instructions";
-      return
+    }
+
+    if (this.ingredientSlots.length < 1) {
+      this.invalidMessage = "You must add at least one ingredient to the recipe"
+      this.formInvalid = true;
+
+    }
+    // Check once before API call
+    if (this.formInvalid){
+      this.scroll(null);
+      return;
+    }
+    // If there is no valid ingredients in the recipe, we are invalid.
+    if (!this.checkValidIngredients()){
+      this.formInvalid = true;
+      this.invalidMessage = "You must add at least one valid ingredient to the recipe"
+    }
+    // Check again after api call
+    if (this.formInvalid){
+      this.scroll(null);
+      return;
     }
     this.formInvalid = false;
 
@@ -229,7 +245,6 @@ export class RecipeFormComponent implements OnInit {
       instruction: this.instructionSlots.controls.map( slot => slot.get('instruction_text').value ), // Map instructionSlots to list of strings
       image: this.recipeImage || null
     }
-
 
     // Emit the created object to parent that will make the api call.
     this.buildRecipeEmitter.emit({
@@ -373,5 +388,12 @@ export class RecipeFormComponent implements OnInit {
     moveItemInArray(this.ingredientSlots.controls, event.previousIndex, event.currentIndex);
   }
 
+  // Scroll to a given element (to point out validation errors)
+  scroll(el: HTMLElement | null) {
+    if (!el){
+      var el = document.getElementById("errorAnchor");
+    }
+    el.scrollIntoView();
+  }
 }
 

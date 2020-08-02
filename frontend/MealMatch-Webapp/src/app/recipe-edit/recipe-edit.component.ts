@@ -59,6 +59,7 @@ export class RecipeEditComponent implements OnInit {
     );
   }
   editRecipe(data: {recipe:Recipe, image?: File}){
+    if (!data) return;
     this.submitting = true;
     // Send to endpoint to create new recipe
     this.recipeService.editRecipe({
