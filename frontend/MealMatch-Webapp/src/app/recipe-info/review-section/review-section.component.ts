@@ -81,7 +81,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
                     <app-display-review
                     [review]="rc"
                     [currentUser]="currentUser"
-                    (toggleEditEmitter)="toggleEdit()"></app-display-review>
+                    (toggleEditEmitter)="toggleEdit()"
+                    (deleteEmitter)="getAllRatingComments()"></app-display-review>
                   </div>
 
                 </div>
@@ -149,8 +150,8 @@ export class ReviewSectionComponent implements OnInit {
 
     // Note that the rating/comment is not being posted
     this.postingUserRC = true;
-    let rating = this.ratingCommentFormGroup.get('rating').value;
-    let comment = this.ratingCommentFormGroup.get('comment').value;
+    let rating = this.formRating.value;
+    let comment = this.formComment.value;
     this.rcService.postRatingComment(this.recipeId, rating, comment)
     .subscribe( (resp) => {
       this.editable = false;
@@ -163,6 +164,10 @@ export class ReviewSectionComponent implements OnInit {
   }
 
   getAllRatingComments() {
+    this.formRating.setValue('');
+    this.formComment.setValue('');
+    this.submitAttempted = false;
+
     this.rcService.getAllRatingComments(this.recipeId)
     .subscribe( (rcResp: RatingComment[]) => {
       this.reloadEmitter.emit(this.recipeId)
@@ -185,8 +190,8 @@ export class ReviewSectionComponent implements OnInit {
           this.allRatingComments.unshift(this.existingRC);
           
           // Set the form
-          this.ratingCommentFormGroup.get('rating').setValue(this.existingRC.rating);
-          this.ratingCommentFormGroup.get('comment').setValue(this.existingRC.comment);
+          this.formRating.setValue(this.existingRC.rating);
+          this.formComment.setValue(this.existingRC.comment);
         }
 
         this.loadingComments = false;
@@ -205,5 +210,8 @@ export class ReviewSectionComponent implements OnInit {
   toggleEdit() {
     this.editable = !this.editable;
   }
+
+  get formRating() { return this.ratingCommentFormGroup.get('rating') }
+  get formComment() { return this.ratingCommentFormGroup.get('comment') }
 
 }

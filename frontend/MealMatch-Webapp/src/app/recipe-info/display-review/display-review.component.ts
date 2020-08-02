@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RatingComment } from 'src/app/models/rating_comment';
 import { RatingCommentService } from 'src/app/services/rating-comment.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DangerousActionPopupComponent } from 'src/building-components/dangerous-action-popup/dangerous-action-popup.component';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-display-review',
@@ -45,12 +48,14 @@ export class DisplayReviewComponent implements OnInit {
 
   // Function in parent that can be trigger in here
   @Output() toggleEditEmitter = new EventEmitter();
+  @Output() deleteEmitter = new EventEmitter();
 
   isDeleting: boolean;
   apiMessage: string;
 
   constructor(
-    private rcService: RatingCommentService
+    private rcService: RatingCommentService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void { }
@@ -61,12 +66,22 @@ export class DisplayReviewComponent implements OnInit {
   }
 
   deleteReview() {
-    this.isDeleting = true;
-    this.rcService.deleteRatingComment(this.review.id, this.currentUser['user_id'])
-    .subscribe( resp => {
-      // console.log(resp)
-      this.apiMessage = resp['message']
-      this.isDeleting = false;
+    let dialogRef = this.dialog.open(DangerousActionPopupComponent);
+    dialogRef.componentInstance.description = "Deleting Review";
+    dialogRef.componentInstance.question = "Are you sure you want to delete your review?"
+    
+    dialogRef.afterClosed().subscribe(emitted => {
+      if(emitted?.behaviour === "Yes") {
+        this.isDeleting = true;
+        this.rcService.deleteRatingComment(this.review.id, this.currentUser['user_id'])
+        .pipe(finalize(() => {this.isDeleting = false}))
+        .subscribe( resp => {
+          if (resp['statusCode'] === 201){
+            this.deleteEmitter.emit();
+          }
+          this.apiMessage = resp['message']
+        });
+      }
     })
   }
 
