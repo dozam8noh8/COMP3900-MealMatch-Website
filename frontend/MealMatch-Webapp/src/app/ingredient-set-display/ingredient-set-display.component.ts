@@ -23,18 +23,20 @@ import { Recipe } from '../models/recipe';
 
   `
 })
+/* The ingredient set display component shows sets of ingredients which
+are commonly searched but have no recipes. It also tells users how many times
+the ingredients were searched. */
 export class IngredientSetDisplayComponent implements OnInit {
+  // The set of ingredients that have been searched.
   @Input() set: LovelessSet;
-  //@Output() createEmitter: EventEmitter<LovelessSet> = new EventEmitter();
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   emitCreateRecipe() {
-    //this.createEmitter.emit(this.set);
     let recipe: Recipe = {
-      id: -1, // negative id in database means the recipe is being created.
+      id: -1, // negative id represents the set doesn't have a real id.
       name: `Loveless Set ${this.set.setId}`,
       ingredients: this.set.ingredients,
       instruction: [],

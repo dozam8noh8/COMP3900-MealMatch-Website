@@ -32,6 +32,9 @@ import { Ingredient } from 'src/app/models/ingredient';
                 </mat-card>
             `
 })
+/* This component represents the "My ingredients list" card on the home page,
+it uses the recipe service to keep track of which ingredients have been added via
+recommendations or category selection or search bar. */
 export class InputListComponent implements OnInit {
 
   constructor(
