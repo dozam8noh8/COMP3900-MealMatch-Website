@@ -28,7 +28,6 @@ export class RequestLogInterceptor implements HttpInterceptor {
         // The user's JSON Token has expired. Log them out and clear their storage.
         if (this.loggedIn && !JWTToken ){
             this.authService.logout(true);
-            return EMPTY; // still need to return an observable stream but we want to early exit
         }
         // If we do have a JWTToken, we should use it to authenticate our api call.
         if (JWTToken) {
