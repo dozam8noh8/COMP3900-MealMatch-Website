@@ -28,10 +28,10 @@ recipeRatings = db.Table('recipe_ratings',
 ##########################################
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(70), index=True)
-    username = db.Column(db.String(32), index=True)
-    password_hash = db.Column(db.String(64))
-    profile_pic = db.Column(db.String(64))
+    email = db.Column(db.Text, index=True)
+    username = db.Column(db.Text, index=True)
+    password_hash = db.Column(db.Text)
+    profile_pic = db.Column(db.Text)
     recipes = db.relationship('Recipe', backref='user', lazy='dynamic')
 
     # Authentication
@@ -106,7 +106,7 @@ recipeMealTypes = db.Table('recipe_mealtypes',
 # Ingredient class
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), index=True)
+    name = db.Column(db.Text, index=True)
     recipes = db.relationship('RecipeIngredients', backref=db.backref('ingredients'))
 
     def add_ingredient(name, category):
@@ -127,7 +127,7 @@ class Ingredient(db.Model):
 # Ingredient category class
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), index=True)
+    name = db.Column(db.Text, index=True)
     ingredients = db.relationship('Ingredient', secondary=ingredientCategories, backref=db.backref('categories', lazy='dynamic'))
 
     def json_dump(recipe):
@@ -137,8 +137,8 @@ class Category(db.Model):
 # Ratings class
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    rating = db.Column(db.String(256))
-    comment = db.Column(db.String(2000))
+    rating = db.Column(db.Text)
+    comment = db.Column(db.Text)
     user = db.relationship('User', secondary=userRatings, cascade="all,delete", backref=db.backref('rating', lazy='dynamic'))
     recipe = db.relationship('Recipe', secondary=recipeRatings, cascade="all,delete", backref=db.backref('rating', lazy='dynamic'))
 
@@ -161,7 +161,7 @@ class Rating(db.Model):
 # IngredientSets for recipe suggestions (Loveless Sets)
 class IngredientSets(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    sets = db.Column(db.String(2000), index=True)
+    sets = db.Column(db.Text, index=True)
     count = db.Column(db.Integer, default=1)
 
     def increment_count(LSet):
@@ -200,9 +200,9 @@ class IngredientSets(db.Model):
 # Recipe class
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), index=True)
+    name = db.Column(db.Text, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    image = db.Column(db.String(100))
+    image = db.Column(db.Text)
 
     instructions = db.relationship('RecipeInstructions', backref=db.backref('recipes'))
     ingredients = db.relationship('RecipeIngredients', backref=db.backref('recipes'))
@@ -426,7 +426,7 @@ class RecipeIngredients(db.Model):
                        .filter(RecipeIngredients.recipe_id.in_(recipe_ids))
                        .filter(RecipeIngredients.ingredient_id.notin_((search_ids)))
                        .filter(RecipeIngredients.ingredient_id == Ingredient.id)
-                       .group_by(RecipeIngredients.ingredient_id)
+                       .group_by(Ingredient.id)
                        .order_by(func.count().desc())
                        .limit(5)
                        .all()
@@ -436,7 +436,7 @@ class RecipeIngredients(db.Model):
 # Mealtypes class
 class Mealtype(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), index=True)
+    name = db.Column(db.Text, index=True)
     recipes = db.relationship('Recipe', secondary=recipeMealTypes, backref=db.backref('mealtypes', lazy='dynamic'))
 
     def json_dump(mealtypes):
