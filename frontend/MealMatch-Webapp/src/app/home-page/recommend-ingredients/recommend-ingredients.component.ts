@@ -25,6 +25,8 @@ import { Ingredient } from 'src/app/models/ingredient';
                 </mat-card>
             `
 })
+/* This component keeps track of ingredients that are input and makes a request
+to the backend to get ingredients associated with those ingredients */
 export class RecommendIngredientsComponent implements OnInit {
 
   recommendedIngredients: Ingredient[];

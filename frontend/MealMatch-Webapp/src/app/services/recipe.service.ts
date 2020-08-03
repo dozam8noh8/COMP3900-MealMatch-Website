@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Recipe } from '../models/recipe';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,13 @@ export class RecipeService {
   constructor(private http: HttpClient) {
   }
 
+  getAllRecipes(pageNum?: number, pageSize?: number) {
+    return this.http.get(`${this.BASE_URL}/all_recipes`,
+    {params: {
+      page_num: pageNum?.toString() || "1",
+      page_size: pageSize?.toString() || "12",
+    }});
+  }
   getRecipeDetails(recipeId: number) {
     return this.http.get<Recipe>(`${this.BASE_URL}/recipe/${recipeId}`);
   }
