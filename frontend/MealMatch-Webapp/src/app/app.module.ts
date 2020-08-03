@@ -60,6 +60,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { HallOfFameComponent } from './hall-of-fame/hall-of-fame.component';
 import { InstructionSlotComponent } from './recipe-form/instruction-slot/instruction-slot.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AllRecipesComponent } from './all-recipes/all-recipes.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -118,6 +119,7 @@ const materialModules = [
     DisplayReviewComponent,
     HallOfFameComponent,
     InstructionSlotComponent,
+    AllRecipesComponent,
   ],
   imports: [
     BrowserModule,
