@@ -26,7 +26,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                 </div>
                 <ng-template #noImage>
                     <h2 class="title"> Upload an image ... </h2>
-                    <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)" existingImageURL="assets/images/recipe_placeholder.jpg"></app-photo-upload>
+                    <app-photo-upload (uploadEmitter)="maintainRecipeImage($event)"
+                    existingImageURL="assets/images/recipe_placeholder.jpg">
+                    </app-photo-upload>
                 </ng-template>
             </div>
             <div class="form">
@@ -51,20 +53,23 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                 </mat-form-field>
 
                 <h2 class="title"> Ingredients </h2>
-                  <div cdkDropList *ngIf="ingredientSlots.controls.length > 0" class="draggable-list" (cdkDropListDropped)="dropIngredient($event)">
+                  <div cdkDropList *ngIf="ingredientSlots.controls.length > 0"
+                    class="draggable-list"
+                    (cdkDropListDropped)="dropIngredient($event)"
+                  >
                 <div cdkDrag class="draggable-box" *ngFor="let slot of ingredientSlots.controls; let index=index; trackBy:trackIndex">
-                    <app-ingredient-slot 
-                    [formGroup]="slot" 
-                    [formArray]="ingredientSlots" 
+                    <app-ingredient-slot
+                    [formGroup]="slot"
+                    [formArray]="ingredientSlots"
                     [position]="index"
-                    (removeIngredient)="removeIngredientSlot($event)" 
-                    [addedIngredients]="addedIngredients$ | async" 
+                    (removeIngredient)="removeIngredientSlot($event)"
+                    [addedIngredients]="addedIngredients$ | async"
                     [formSubmitted]="formInvalid">
                     </app-ingredient-slot>
-                    <div cdkDragHandle>
+                    <div matTooltip="Click here to drag" cdkDragHandle>
                     <mat-icon class="drag-handle">drag_handle</mat-icon>
                   </div>
-                </div>                  
+                </div>
                   </div>
 
 
@@ -77,8 +82,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                   <app-instruction-slot
                   [formGroup]="slot"
                   [position]="index"
-                  (removeInstruction)="removeInstructionSlot($event)"></app-instruction-slot>
-                  <div cdkDragHandle>
+                  (removeInstruction)="removeInstructionSlot($event)"
+                  [formSubmitted]="formInvalid"></app-instruction-slot>
+                  <div matTooltip="Click here to drag" cdkDragHandle>
                     <mat-icon class="drag-handle">drag_handle</mat-icon>
                   </div>
                 </div>
@@ -89,7 +95,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
                 <div *ngIf="!submitting">
                     <div *ngIf="!submissionComplete">
-                        <button mat-raised-button style="width: 25%" color="primary" type="submit">Save</button>
+                        <button mat-raised-button style="width: 25%; margin-bottom: 2vh;" color="primary" type="submit" style="margin-bottom: 2vh;">Save</button>
                         <h2 *ngIf="completionErrorMessage">
                             {{completionErrorMessage}}
                         </h2>
@@ -101,9 +107,12 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                         <button mat-raised-button color="primary" style="margin: 1.5vw;"
                             [routerLink]="'/recipe/' + completedRecipeId ">View Recipe</button>
                     </h2>
-                    <mat-error *ngIf="formInvalid "> {{ invalidMessage }}
+                    <div style="margin-bottom: 2vh;">
+                    <mat-error  *ngIf="formInvalid "> {{ invalidMessage }}
                     </mat-error>
+                    </div>
                 </div>
+                <div id="errorAnchor" style="height: 3vh; width: 3vw; margin-top:4vh; position: absolute;"> </div>
             </div>
         </div>
     </form>
@@ -190,27 +199,40 @@ export class RecipeFormComponent implements OnInit {
 
   // Emit the completed recipe up to the parent component for submission!
   saveRecipeDetails() {
+    // Reset formInvalid to run checks again.
+    this.formInvalid = false;
     // Only keep slots with valid ingredients
     if (!this.recipeFormGroup.valid){
+
       this.formInvalid = true;
       this.invalidMessage = "Please make sure all fields of the form are filled out."
-      return;
-    }
-    // If there is no ingredients in the recipe, we are invalid.
-    if (!this.checkValidIngredients()){
-      this.formInvalid = true;
-      this.invalidMessage = "You must add at least one ingredient to the recipe"
-
-      return;
     }
 
     if(this.instructionSlots.length < 1) {
       this.formInvalid = true;
       this.invalidMessage = "You must have one step in instructions";
-      return
     }
-    this.formInvalid = false;
 
+    if (this.ingredientSlots.length < 1) {
+      this.invalidMessage = "You must add at least one ingredient to the recipe"
+      this.formInvalid = true;
+
+    }
+    // Check once before API call
+    if (this.formInvalid){
+      this.scroll(null);
+      return;
+    }
+    // If there is no valid ingredients in the recipe, we are invalid.
+    if (!this.checkValidIngredients()){
+      this.formInvalid = true;
+      this.invalidMessage = "You must add at least one valid ingredient to the recipe"
+    }
+    // Check again after api call
+    if (this.formInvalid){
+      this.scroll(null);
+      return;
+    }
 
     // Format into JSON object
     const new_recipe = {
@@ -223,7 +245,6 @@ export class RecipeFormComponent implements OnInit {
       instruction: this.instructionSlots.controls.map( slot => slot.get('instruction_text').value ), // Map instructionSlots to list of strings
       image: this.recipeImage || null
     }
-
 
     // Emit the created object to parent that will make the api call.
     this.buildRecipeEmitter.emit({
@@ -367,5 +388,12 @@ export class RecipeFormComponent implements OnInit {
     moveItemInArray(this.ingredientSlots.controls, event.previousIndex, event.currentIndex);
   }
 
+  // Scroll to a given element (to point out validation errors)
+  scroll(el: HTMLElement | null) {
+    if (!el){
+      var el = document.getElementById("errorAnchor");
+    }
+    el.scrollIntoView();
+  }
 }
 

@@ -6,7 +6,7 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import ImmutableMultiDict
-from app.models import Ingredient, User, Recipe, Category, Mealtype, RecipeIngredients, IngredientPairs, Rating
+from app.models import Ingredient, User, Recipe, Category, Mealtype, RecipeIngredients, IngredientSets, Rating
 from app import auth, app, db
 from app.seed import seed_db
 import secrets
@@ -220,10 +220,9 @@ def recipe_delete(recipe_id):
         return jsonify({'message': 'Recipe deleted.', 'statusCode': 200, 'status' : 'success'})
 
 
-# Actually returns sets as required. TODO Change variable names
 @app.route('/api/popular_ingredient_sets', methods=['GET'])
 def popular_ingredient_sets():
-    response = IngredientPairs.get_highest_pairs()
+    response = IngredientSets.get_highest_sets()
     return jsonify(response)
 
 
@@ -300,6 +299,22 @@ def rating(id):
     recipe = Recipe.query.filter_by(id=id).first()
     ratings = recipe.rating
     return jsonify(Rating.json_dump(ratings))
+
+
+@app.route('/api/delete_rating', methods=['POST'])
+@auth.login_required
+def delete_rating():
+    '''
+
+        On a POST request with /delete_rating will delete a rating
+            for post, please supply 'ratingId'
+
+    '''
+    ratingId = request.json.get('ratingId')
+    userId = request.json.get('userId')
+    if not Rating.delete_rating(ratingId, userId):
+        raise ErrorException('User does not own the rating', 500)
+    return {'rating_id' : ratingId, 'message': 'Rating has been deleted', 'statusCode': 201, 'status' : 'success'}
 
 @app.route('/api/add_recipe', methods=['POST'])
 @auth.login_required
