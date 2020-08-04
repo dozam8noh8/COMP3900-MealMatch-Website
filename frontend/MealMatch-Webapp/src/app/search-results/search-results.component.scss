@@ -33,3 +33,10 @@ img {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
 }
+
+.partial-result {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 2vw;
+}

@@ -22,11 +22,25 @@ import { AuthService } from '../services/auth.service';
                       </mat-option>
                   </mat-select>
               </mat-form-field>
+
+              <button *ngIf="!showPartialMatches" 
+              mat-raised-button 
+              color="primary" 
+              class="copperplate" 
+              style="margin-left: 20px;"
+              (click)="toggleResultType()">Show partial matches</button>
+              <button *ngIf="showPartialMatches" 
+              mat-raised-button 
+              color="primary" 
+              class="copperplate"
+              style="margin-left: 20px;" 
+              (click)="toggleResultType()">Show full matches</button>
+
               <div layout="row" layout-fill layout-align="center center">
                   <mat-spinner *ngIf=!searchComplete() style="margin-left: 45%; margin-top: 15%;"> Showing spinner </mat-spinner>
               </div>
 
-              <div *ngIf="searchComplete() && getResults().length > 0">
+              <div *ngIf="searchComplete() && getResults().length > 0 && !showPartialMatches">
                   <div class="columned" style="margin-left: 2%;">
                       <div *ngFor="let recipe of getResults()">
                               <app-recipe-view-card [recipe]="recipe"></app-recipe-view-card>
@@ -40,6 +54,21 @@ import { AuthService } from '../services/auth.service';
                   (page)="handlePaginator($event)"
                   >
                   </mat-paginator>
+              </div>
+
+              <div *ngIf="searchComplete() && getResults().length > 0 && showPartialMatches">
+                  <div *ngFor="let result of getResults()">
+                      <div class="partial-result">
+                        <app-recipe-view-card 
+                        [recipe]="result.recipe"></app-recipe-view-card>
+                        <div style="margin: 2vw;">
+                            You still need: 
+                            <ul *ngFor="let missing_ingredient of result.missing_ingredients; last as isLast">
+                              <li> {{missing_ingredient}} </li>
+                            </ul>                
+                        </div>
+                      </div>
+                  </div>
               </div>
 
               <div layout="row" layout-fill layout-align="center center">
@@ -62,6 +91,8 @@ export class SearchResultsComponent implements OnInit {
 
   formForMealType: FormGroup;
   allMealTypes: string[];
+
+  showPartialMatches: boolean = false;
 
   // The page number of the current page of recipes being displayed.
   displayedPage = 1;
@@ -119,16 +150,29 @@ export class SearchResultsComponent implements OnInit {
   }
 
   getResults() {
-
     if(!this.getSelectedMealType() || this.getSelectedMealType()==="All") {
-      return this.searchService.getAllResults().recipes;
-    } else {
+      if(this.showPartialMatches) { // If allowing for partial matches
+        return this.searchService.getAllResults()?.partialResults; // this returned array will need to be processed differently in template
+      }
+      return this.searchService.getAllResults()?.recipes;
+    } 
+    else {
+      if(this.showPartialMatches) {
+        return this.searchService.getAllResults()?.partialResults.filter( presult => {
+          // include the partial result if its recipe is under the selected meal type
+          return presult.recipe.mealtypes.some( elem => (elem.name === this.getSelectedMealType()) );
+        })
+      }
       // Get the recipes that have the selected meal type as one of its meal types
-      return this.searchService.getAllResults().recipes.filter(recipe => {
-        return recipe.mealtypes.some( elem => (elem.name === this.getSelectedMealType()) );
+      return this.searchService.getAllResults()?.recipes.filter(recipe => {
+        return recipe.mealtypes.some( mealtype => (mealtype.name === this.getSelectedMealType()) );
       })
     }
 
+  }
+
+  toggleResultType() {
+    this.showPartialMatches = !this.showPartialMatches;
   }
 
   getSearchedIngredients() {
