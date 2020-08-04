@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../services/recipe.service';
 import {Recipe} from '../models/recipe';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RatingComment } from '../models/rating_comment';
-import { RatingCommentService } from '../services/rating-comment.service';
 import { AuthService } from '../services/auth.service';
 
 
@@ -20,12 +18,12 @@ import { AuthService } from '../services/auth.service';
                     <mat-card-title>
                       {{recipe.name}}
                       <!-- If the recipe belongs to the user, allow them to edit it -->
-                      <span *ngIf="currentUserId && currentUserId===recipe.user_id" id="edit-button">
+                      <span *ngIf="currentUserId && currentUserId===recipe.user.id" id="edit-button">
                         <button mat-raised-button color="primary" [routerLink]="'/edit/'+recipe.id">Edit</button>
                       </span>
                     </mat-card-title>
                     <div class="rating-contributor-container">
-                    <div class="contributor"> <b> Contributed by: </b> Admin </div>
+                    <div class="contributor"> <b> Contributed by: </b> {{recipe.user.username}} </div>
                     <div class="rating-container">
                         <ng-container *ngIf="recipe.rating_count <= 0">
                           There are no ratings yet
@@ -76,7 +74,7 @@ import { AuthService } from '../services/auth.service';
                     </div>
                   <app-review-section style="width: 90%"
                   [recipeId]="recipe.id"
-                  [recipeOwnerId]="recipe.user_id"
+                  [recipeOwnerId]="recipe.user.id"
                   (reloadEmitter)="getRecipeDetails($event)"></app-review-section>
                 </mat-card>
                 </ng-container>
