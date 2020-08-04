@@ -51,7 +51,7 @@ def seed_db():
     input_file=open('data_seed/recipes2.json', 'r', encoding='utf8')
     json_decode=json.load(input_file)
 
-    user = User(username='admin', password_hash='pbkdf2:sha256:150000$V5gA5nPN$3377ab719495472c4b4f6efcdb0066d7591c29f3f5721dcb469ddd5c54fb9232', email='admin@admin.com', profile_pic=None)
+    user = User(username='Admin', password_hash='pbkdf2:sha256:150000$V5gA5nPN$3377ab719495472c4b4f6efcdb0066d7591c29f3f5721dcb469ddd5c54fb9232', email='admin@admin.com', profile_pic=None)
     db.session.add(user)
 
     for item in json_decode['meals']:
@@ -116,6 +116,10 @@ def seed_db():
     ########################################################################################################################
 
     ########################################### ADD RANDOM RATINGS #########################################################
+    user = User(username='Emmanuel')
+    user.hash_password('password')
+    db.session.add(user)
+
     recipes = Recipe.query.all()
     for recipe in recipes:
         if randrange(10) > 3:
