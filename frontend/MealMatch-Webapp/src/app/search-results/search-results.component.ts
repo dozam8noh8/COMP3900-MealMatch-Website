@@ -28,12 +28,14 @@ import { AuthService } from '../services/auth.service';
               color="primary" 
               class="copperplate" 
               style="margin-left: 20px;"
+              matTooltip="Show recipes that may require you to obtain more ingredients"
               (click)="toggleResultType()">Show partial matches</button>
               <button *ngIf="showPartialMatches" 
               mat-raised-button 
               color="primary" 
               class="copperplate"
               style="margin-left: 20px;" 
+              matTooltip="Show recipes can be made from the ingredients you currently have"
               (click)="toggleResultType()">Show full matches</button>
 
               <div layout="row" layout-fill layout-align="center center">
