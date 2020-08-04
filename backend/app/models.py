@@ -245,28 +245,49 @@ class Recipe(db.Model):
                           .all()
         )
         ingredients_id = [x[0] for x in ingredients_id]
+        input_ingredients = set(ingredients_id)
 
-        filtered = []
+        # get complete and partial recipes
+        # complete_match stores Recipe objects
+        # partial_match stores [(recipe.id, [ingredient.ids...]), ...]
+        complete_match = []
+        partial_match = {}
         recipes = Recipe.query.all()
         for recipe in recipes:
-            res = True
-            for recipe_ingredient in recipe.ingredients:
-                if recipe_ingredient.ingredient_id not in ingredients_id:
-                    res = False
-                    break
-            if res:
-                filtered.append(recipe)
+            recipe_ingredients = set(x.ingredient_id for x in recipe.ingredients)
+            missing_ingredients = recipe_ingredients - input_ingredients
+            if not missing_ingredients:
+                complete_match.append(recipe)
+            else:
+                partial_match[recipe.id] = recipe_ingredients - input_ingredients
 
-        if not filtered and ingredients_id:
+        # sorts partial matches and minimise set of ingredients additionally required
+        partial_match = [(k, sorted(list(v))) for k, v in sorted(partial_match.items(), key=lambda x: len(x[1]))]
+        partial_match = partial_match[:12]
+
+        # transform partial_recipe's recipe.id and ingredient.ids to JSON
+        partial_recipes = []
+        for match in partial_match:
+            partial_recipe = {}
+            recipe = Recipe.query.filter_by(id=match[0]).first()
+            partial_recipe['recipe'] = RecipeSchema().dump(recipe)
+
+            missing_ingredients = Ingredient.query.with_entities(Ingredient.name).filter(Ingredient.id.in_(match[1])).all()
+            missing_ingredients = [x[0] for x in missing_ingredients]
+            partial_recipe['missing_ingredients'] = missing_ingredients
+            partial_recipes.append(partial_recipe)
+
+        if not complete_match and ingredients_id:
             IngredientSets.increment_count(ingredients_id)
-        total_results = len(filtered)
+        total_results = len(complete_match)
 
-        recipes = Recipe.get_paginated_list(filtered, page_num, page_size)
+        recipes = Recipe.get_paginated_list(complete_match, page_num, page_size)
         recipes = RecipeSchema(many=True).dump(recipes)
         for recipe in recipes:
             rating = Recipe.get_rating(recipe['id'])
             recipe['rating'] = rating
-        return {'recipes' : recipes, 'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
+        return {'recipes' : recipes, 'partial_recipes' : partial_recipes, \
+            'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
 
     def get_all_recipes(page_num, page_size=12):
         recipes = Recipe.query.all()
