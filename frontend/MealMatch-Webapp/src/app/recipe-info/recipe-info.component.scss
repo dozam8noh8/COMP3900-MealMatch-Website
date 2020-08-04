@@ -68,3 +68,10 @@
     padding-top: 2vh;
     padding-bottom: 2vh;
   }
+  .rating-contributor-container {
+    display: flex;
+    justify-content: space-between;
+    .contributor {
+      margin-right: 4vw;
+    }
+  }
