@@ -14,3 +14,8 @@ export interface Recipe {
     rating_count: number;
     user?: UserDetails;
 }
+
+export interface PartialResult {
+    missing_ingredients: string[];
+    recipe: Recipe;
+}

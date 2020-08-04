@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Ingredient } from '../models/ingredient';
 import { HttpClient } from '@angular/common/http';
-import { Recipe } from '../models/recipe';
+import { Recipe, PartialResult } from '../models/recipe';
 import { MealType } from '../models/mealtype';
 import { map } from 'rxjs/operators';
 
@@ -20,6 +20,7 @@ export class SearchService {
   currentMealType: string;
   // The list of all recipes that satisfy the search criteria.
   allResults: Recipe[];
+  partialResults: PartialResult[];
 
   // Pagination variables.
   pageNum: number;
@@ -46,12 +47,14 @@ export class SearchService {
       this.searchComplete = true;
       this.pageNum = data.page_num;
       this.pageSize = data.page_size;
+      this.partialResults = data.partial_recipes;
     });
   }
   // Get the recipes and pagination details
   getAllResults() {
     return {
       recipes: this.allResults,
+      partialResults: this.partialResults,
       pageNum: this.pageNum,
       pageSize: this.pageSize,
       totalResults: this.allResults.length,
