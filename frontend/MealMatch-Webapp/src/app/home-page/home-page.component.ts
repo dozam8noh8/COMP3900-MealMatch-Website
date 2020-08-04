@@ -12,7 +12,7 @@ import { Ingredient } from '../models/ingredient';
   template: `
             <div *ngIf="loading" class="page-loading" style="height: 100%;">
               <mat-spinner  style="margin:auto; top: 40%"> </mat-spinner>
-              <h1 *ngIf="loading"> Loading webpage... </h1>
+              <h1 *ngIf="loading" style="margin-left: 1vw;"> Loading webpage... </h1>
             </div>
 
             <div *ngIf="!loading" class="homepage-div">
@@ -41,7 +41,9 @@ import { Ingredient } from '../models/ingredient';
                   (selectedItemEmitter)="addToList($event)"></app-search-bar>
                 </div>
                 <form [formGroup]="ingredientSearchForm" (ngSubmit)="submitIngredients()">
-                  <button mat-raised-button type="submit" color="primary" class="submitButton">Search for recipes</button>
+                  <button mat-raised-button matTooltip="Find recipes you can make with your input ingredients" type="submit" color="primary" class="submitButton">
+                    Search for recipes
+                  </button>
                 </form>
 
               </mat-card>
@@ -52,7 +54,9 @@ import { Ingredient } from '../models/ingredient';
               </div>
 
               <app-ingredient-by-category></app-ingredient-by-category>
+              <div class="fill-screen">
               </div>
+
             `
 })
 /* The home page component displays the view for the home page,
