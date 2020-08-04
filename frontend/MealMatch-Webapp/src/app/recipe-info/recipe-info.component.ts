@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../services/recipe.service';
 import {Recipe} from '../models/recipe';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RatingComment } from '../models/rating_comment';
-import { RatingCommentService } from '../services/rating-comment.service';
 import { AuthService } from '../services/auth.service';
 
 
@@ -16,34 +14,37 @@ import { AuthService } from '../services/auth.service';
                 <div class="main-div">
                 <ng-container *ngIf="recipe">
 
-                <mat-card id="image-ingredients" style="flex-direction: column; border-radius: 2%; padding-top: 8vh; margin-bottom: 2vh;">
+                <mat-card id="image-ingredients">
                     <mat-card-title>
                       {{recipe.name}}
                       <!-- If the recipe belongs to the user, allow them to edit it -->
-                      <span *ngIf="currentUserId && currentUserId===recipe.user_id">
+                      <span *ngIf="currentUserId && currentUserId===recipe.user.id" id="edit-button">
                         <button mat-raised-button color="primary" [routerLink]="'/edit/'+recipe.id">Edit</button>
                       </span>
                     </mat-card-title>
-
-                    <!-- Show rating -->
-                    <ng-container *ngIf="recipe.rating_count <= 0">
-                      There are no ratings yet
-                    </ng-container>
-                    <ng-container *ngIf="recipe.rating_count > 0">
-                      <ngb-rating
-                      [(rate)]="recipe.rating"
-                      [max]="5"
-                      [readonly]="true">
-                        <ng-template let-fill="fill" let-index="index">
-                        <span class="star" [class.full]="fill === 100">
-                          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-                        </span>
-                        </ng-template>
-                      </ngb-rating>
-                      {{recipe.rating.toFixed(2)}}
-                      <span *ngIf="recipe.rating_count === 1"> ({{recipe.rating_count}} rating) </span>
-                      <span *ngIf="recipe.rating_count > 1"> ({{recipe.rating_count}} ratings) </span>
-                    </ng-container>
+                    <div class="rating-contributor-container">
+                    <div class="contributor"> <b> Contributed by: </b> {{recipe.user.username}} </div>
+                    <div class="rating-container">
+                        <ng-container *ngIf="recipe.rating_count <= 0">
+                          There are no ratings yet
+                        </ng-container>
+                        <ng-container *ngIf="recipe.rating_count > 0">
+                          <ngb-rating
+                          [(rate)]="recipe.rating"
+                          [max]="5"
+                          [readonly]="true">
+                            <ng-template let-fill="fill" let-index="index">
+                            <span class="star" [class.full]="fill === 100">
+                              <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                            </span>
+                            </ng-template>
+                          </ngb-rating>
+                          <b> {{recipe.rating.toFixed(1)}} </b>
+                          <span *ngIf="recipe.rating_count === 1"> ({{recipe.rating_count}} rating) </span>
+                          <span *ngIf="recipe.rating_count > 1"> ({{recipe.rating_count}} ratings) </span>
+                        </ng-container>
+                    </div>
+                    </div>
 
                     <div class="image-container">
                         <img mat-card-image src="{{recipe.image || recipePlaceholder}}">
@@ -73,7 +74,7 @@ import { AuthService } from '../services/auth.service';
                     </div>
                   <app-review-section style="width: 90%"
                   [recipeId]="recipe.id"
-                  [recipeOwnerId]="recipe.user_id"
+                  [recipeOwnerId]="recipe.user.id"
                   (reloadEmitter)="getRecipeDetails($event)"></app-review-section>
                 </mat-card>
                 </ng-container>

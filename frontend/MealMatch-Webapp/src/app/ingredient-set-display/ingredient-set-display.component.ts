@@ -42,7 +42,6 @@ export class IngredientSetDisplayComponent implements OnInit {
       instruction: [],
       rating: 0,
       rating_count: 0,
-      user_id: -1
     }
     let paramObject = JSON.stringify(recipe); // Contains stringified object
     this.router.navigate(['/create'], {queryParams: {contents: paramObject}});

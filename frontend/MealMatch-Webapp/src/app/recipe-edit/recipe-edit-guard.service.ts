@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { isNumber } from 'util';
+import { Recipe } from '../models/recipe';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +24,9 @@ export class RecipeEditGuardService implements CanActivate {
       return false;
     }
     let userId = this.authService.getLoggedInUserId()
-    return this.recipeService.getRecipeDetails(recipeId).pipe(map((res: any) => {
+    return this.recipeService.getRecipeDetails(recipeId).pipe(map((res: Recipe) => {
       // Check the current user is the owner of the recipe
-      if (res.user_id === userId) {
+      if (res.user.id === userId) {
         return true;
       }
       // If not the owner, redirect to home, unpermitted action.
