@@ -3,6 +3,7 @@ from sqlalchemy import func, desc, event
 from app.ErrorException import ErrorException
 from sqlalchemy.engine import Engine
 import json
+from marshmallow import fields
 
 # DB settings
 # SQLite doesn't have referential integrity on by default
@@ -486,9 +487,10 @@ class RatingSchema(ma.SQLAlchemyAutoSchema):
 class RecipeSchema(ma.SQLAlchemyAutoSchema):
     mealtypes = ma.Nested(MealtypeSchema, many=True)
     ingredients = ma.Nested(RecipeIngredientsSchema, many=True)
+    user = fields.Nested("UserSchema", only=("id", "email", "username"))
 
     class Meta:
-        fields = ("id", "name", "user_id", "image", "ingredients", "mealtypes")
+        fields = ("id", "name", "user_id", "image", "ingredients", "mealtypes", "user")
 
 class NewUserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -498,5 +500,5 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     recipes = ma.Nested(RecipeSchema, many=True)
 
     class Meta:
-        fields = ("id", "email", "recipes")
+        fields = ("id", "email", "recipes", "username")
         include_relationships = True
