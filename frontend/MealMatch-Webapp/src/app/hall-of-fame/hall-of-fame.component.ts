@@ -9,15 +9,14 @@ import { AuthService } from '../services/auth.service';
       <h1  class="greeting-text"> Welcome to the hall of fame <i class="em em-fire" aria-role="presentation" aria-label="BIRD"></i> </h1>
       <div class="fame-container">
         <mat-card class="contributors" *ngIf="!loading">
-          <mat-card-title class="copperplate" style="margin-bottom: 1vh"> Top Recipe Contributors <i class="em em-female-cook" aria-role="presentation" aria-label=""></i> </mat-card-title>
+          <mat-card-title class="copperplate" style="margin-bottom: 1vh">
+             Top Recipe Contributors <i class="em em-female-cook" aria-role="presentation" aria-label=""></i>
+          </mat-card-title>
             <div>
               <div class="fame-items" >
                 <div class="lhs">
                   <h1  *ngFor="let contributor of contributors; let index=index"> {{index + 1}}. {{contributor.contributor}} </h1>
                 </div>
-                <!-- <div class="middle">
-                  <ng-container *ngFor="let contributor of contributors;"> <i class="em em-star" aria-role="presentation" aria-label=""> </i> <br></ng-container>
-                </div> -->
                 <div class="rhs" >
                   <h1 *ngFor="let contributor of contributors; let index=index" [ngPlural]=contributor.amount>
                       <ng-template ngPluralCase="=1"> {{contributor.amount}} Recipe </ng-template>
