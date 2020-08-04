@@ -33,7 +33,7 @@ import { AuthService } from '../services/auth.service';
         <div>
               <div class="fame-items-recipes" >
                 <div class="top-rated-recipe" *ngFor="let recipe of topRatedRecipes; let index=index">
-                  <div   > <a [routerLink]="'/recipe/' + recipe.id"> {{index + 1}}. {{recipe.name}} </a> </div>
+                  <div   >  {{index + 1}}. <a [routerLink]="'/recipe/' + recipe.id">{{recipe.name}} </a> </div>
                   <div>  </div>
                   <div>  {{recipe.contributor}} 	&nbsp;	&nbsp;   {{recipe.rating}}/5 <i class="em em-star" aria-role="presentation" aria-label=""> </i> </div>
                 </div>
