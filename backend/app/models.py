@@ -265,8 +265,13 @@ class Recipe(db.Model):
                     partial_match[recipe.id] = partial_ingredients
 
         # sorts partial matches and minimise set of ingredients additionally required
+        # additionally sort out pagination for comple_match and partial_match
         partial_match = [(k, sorted(list(v))) for k, v in sorted(partial_match.items(), key=lambda x: len(x[1]))]
-        partial_match = partial_match[:12]
+        all_matches = complete_match
+        all_matches.extend(partial_match)
+        all_matches = Recipe.get_paginated_list(all_matches, page_num, page_size)
+        complete_match = [x for x in all_matches if isinstance(x, Recipe)]
+        partial_match = [x for x in all_matches if not isinstance(x, Recipe)]
 
         # transform partial_recipe's recipe.id and ingredient.ids to JSON
         partial_recipes = []
