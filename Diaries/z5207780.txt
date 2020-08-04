@@ -115,3 +115,14 @@ This week I've dedicated the whole week to the project. We've all been working h
 I've been working hard keeping everything ticketed and making sure people have jobs to do. The main things I've done are
 UI updates, Documentation, Moving styling to SCSS files and I'm working on pagination of results right now. So much to do but I am genuinely proud
 of how much we've got done in this project!
+Later in the week, we found out we all got a one week extension on the report and software quality assessment submission, this kind of
+messed up my plans because we were ready to get everything done and then I could move onto my other subjects. There is always more you can 
+find to improve something but usually it will be diminishing marginal returns. Over the rest of the week we worked on ironing out lots of bugs
+I also implemented a hall of fame to gamify the contribution community a little bit.
+
+==================Week 10==============
+Its currently tuesday of week 10 and the website is almost complete, we're changing a few details here and there. I wrote up about 1300 words on the report
+on how specific functionalities added value and were an implementation challenge. I've also emailed Eugene lots of times asking him clarification questions
+which I then put in the group chat. The plan for the rest of the week is to refine our demo and be confident in all the functionality we are demoing.
+Obviously we also want to get our report done too!
+Good luck team!
