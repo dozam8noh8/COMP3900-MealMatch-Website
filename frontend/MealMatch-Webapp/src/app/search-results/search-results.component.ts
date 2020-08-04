@@ -152,20 +152,20 @@ export class SearchResultsComponent implements OnInit {
   getResults() {
     if(!this.getSelectedMealType() || this.getSelectedMealType()==="All") {
       if(this.showPartialMatches) { // If allowing for partial matches
-        return this.searchService.getAllResults().partialResults; // this returned array will need to be processed differently in template
+        return this.searchService.getAllResults()?.partialResults; // this returned array will need to be processed differently in template
       }
-      return this.searchService.getAllResults().recipes;
+      return this.searchService.getAllResults()?.recipes;
     } 
     else {
       if(this.showPartialMatches) {
-        return this.searchService.getAllResults().partialResults.filter( presult => {
+        return this.searchService.getAllResults()?.partialResults.filter( presult => {
           // include the partial result if its recipe is under the selected meal type
           return presult.recipe.mealtypes.some( elem => (elem.name === this.getSelectedMealType()) );
         })
       }
       // Get the recipes that have the selected meal type as one of its meal types
-      return this.searchService.getAllResults().recipes.filter(recipe => {
-        return recipe.mealtypes.some( elem => (elem.name === this.getSelectedMealType()) );
+      return this.searchService.getAllResults()?.recipes.filter(recipe => {
+        return recipe.mealtypes.some( mealtype => (mealtype.name === this.getSelectedMealType()) );
       })
     }
 
