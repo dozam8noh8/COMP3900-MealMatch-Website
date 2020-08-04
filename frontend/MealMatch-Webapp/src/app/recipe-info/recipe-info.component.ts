@@ -16,11 +16,11 @@ import { AuthService } from '../services/auth.service';
                 <div class="main-div">
                 <ng-container *ngIf="recipe">
 
-                <mat-card id="image-ingredients" style="flex-direction: column; border-radius: 2%; padding-top: 8vh; margin-bottom: 2vh;">
+                <mat-card id="image-ingredients">
                     <mat-card-title>
                       {{recipe.name}}
                       <!-- If the recipe belongs to the user, allow them to edit it -->
-                      <span *ngIf="currentUserId && currentUserId===recipe.user_id">
+                      <span *ngIf="currentUserId && currentUserId===recipe.user_id" id="edit-button">
                         <button mat-raised-button color="primary" [routerLink]="'/edit/'+recipe.id">Edit</button>
                       </span>
                     </mat-card-title>
