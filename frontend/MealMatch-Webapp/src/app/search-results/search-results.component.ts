@@ -23,8 +23,18 @@ import { AuthService } from '../services/auth.service';
                   </mat-select>
               </mat-form-field>
 
-              <button *ngIf="!showPartialMatches" (click)="toggleResultType()">Show partial matches</button>
-              <button *ngIf="showPartialMatches" (click)="toggleResultType()">Show full matches</button>
+              <button *ngIf="!showPartialMatches" 
+              mat-raised-button 
+              color="primary" 
+              class="copperplate" 
+              style="margin-left: 20px;"
+              (click)="toggleResultType()">Show partial matches</button>
+              <button *ngIf="showPartialMatches" 
+              mat-raised-button 
+              color="primary" 
+              class="copperplate"
+              style="margin-left: 20px;" 
+              (click)="toggleResultType()">Show full matches</button>
 
               <div layout="row" layout-fill layout-align="center center">
                   <mat-spinner *ngIf=!searchComplete() style="margin-left: 45%; margin-top: 15%;"> Showing spinner </mat-spinner>
@@ -51,22 +61,14 @@ import { AuthService } from '../services/auth.service';
                       <div class="partial-result">
                         <app-recipe-view-card 
                         [recipe]="result.recipe"></app-recipe-view-card>
-                        <div>
-                            You are missing the following ingredients: 
+                        <div style="margin: 2vw;">
+                            You still need: 
                             <ul *ngFor="let missing_ingredient of result.missing_ingredients; last as isLast">
                               <li> {{missing_ingredient}} </li>
                             </ul>                
                         </div>
                       </div>
                   </div>
-                  <mat-paginator *ngIf="getResults().length > 0"
-                  [length]="getResults().length"
-                  [pageSize]="itemsPerPage"
-                  [pageIndex]="displayedPage-1"
-                  [pageSizeOptions]="[10, 20]"
-                  (page)="handlePaginator($event)"
-                  >
-                  </mat-paginator>
               </div>
 
               <div layout="row" layout-fill layout-align="center center">
