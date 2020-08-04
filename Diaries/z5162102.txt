@@ -29,4 +29,14 @@ Week 8
 Cleaning up the code and ensuring that there were no side effects or inconsistencies when a user performed an operation. Wrote some more backend code that included an endpoint of recipe updating and removing loveless sets when a recipe was added.
 Spent a few hours trying to debug a HTTP/CORS/UTF8 bug. Ended up print() debugging deep into the libraries.
 
-WIP
+Spent a few hours investing and fixed a bug where duplicate ingredients were sometimes added to new recipes. This bug was particularly tricky to track down as it first involved somehow replicating the issue. Next, I discovered that SQLite does not have referential integrity by default and needs to be opted in. This enabled inconsistent data to leak out. Additionally, fixed another bug where edit and reordering a recipe's ingredients would not reflect in the database.
+ 
+Week 9
+As most of the backend code was finished, I jumped on to help the frontend with the UI. I created a good UI/UX experience for the recipe creation page. This one took some time for me as I have not worked in the frontend for a few months and had no formal frontend background. As such, this proved quite a challenge which in the end I had managed to overcome. As a note, part of this UI involved making the add ingredient component aesthetically pleasing.
+ 
+I updated the project setup README.md and attempted to script it as much as possible so that the project can be built quite easily. I also added more backend functionality including how many users searched for a loveless set. Finally, I cleaned up a lot of the backend code which involved constant refactoring. API endpoints were updated to reflect the status of the API call.
+ 
+Week 10
+As the due date was extended, I was able to work on some additional functionality. I added the endpoint for a recipe searcher to search for partially matching recipes. Fixed a few integrity issues with a user rating their own recipes and adding random ratings. Finally, I worked on the report which involved documenting my recommendation system as well as working on the architecture diagram and its explanations.
+ 
+On a side note, I managed to put our website onto the cloud via Heroku. This was not something I had done before and so it took many hours to do so. One bug that made it difficult was that ng-bootstrap styles was overriding over styles and so I had to write scripts that commented this out. Lots of trial and error and hours was involved.
