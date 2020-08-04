@@ -66,6 +66,11 @@ class User(db.Model):
     def get_highest_contributors(users):
         return sorted(users, key=lambda x: x.recipes.count(), reverse=True)
 
+    '''
+
+    Returns a list of the top 5 contributors
+
+    '''
     def top_contributors():
         users = User.query.all()
         sort_orders = User.get_highest_contributors(users)
@@ -165,6 +170,11 @@ class IngredientSets(db.Model):
     sets = db.Column(db.Text, index=True)
     count = db.Column(db.Integer, default=1)
 
+    '''
+
+    Increment the count for a loveless set when it's been searched
+
+    '''
     def increment_count(LSet):
         ingr_LSet = IngredientSets.query.filter_by(sets=str(LSet).strip('[]')).first()
         if ingr_LSet:
@@ -174,6 +184,11 @@ class IngredientSets(db.Model):
             db.session.add(ingr_LSet)
         db.session.commit()
 
+    '''
+
+    Returns a list of the 5 most searched loveless sets
+
+    '''
     def get_highest_sets():
         sets = IngredientSets.query.order_by(desc(IngredientSets.count)).limit(5).all()
         highest_sets = []
@@ -292,6 +307,11 @@ class Recipe(db.Model):
         return {'recipes' : recipes, 'partial_recipes' : partial_recipes, \
             'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
 
+    '''
+
+    Returns a list of all the recipes
+
+    '''
     def get_all_recipes(page_num, page_size=12):
         recipes = Recipe.query.all()
         total_size = len(recipes)
@@ -302,7 +322,11 @@ class Recipe(db.Model):
             recipe['rating'] = rating
         return {'recipes' : recipes, 'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_size}
 
-    
+    '''
+
+    Returns a list of all the recipes contributed by a user
+
+    '''
     def get_recipes_by_user_id(user_id, page_num, page_size):
         recipes = Recipe.query.filter_by(user_id=user_id).all()
         total_results = len(recipes)
@@ -313,9 +337,6 @@ class Recipe(db.Model):
             recipe['rating'] = rating
         return {'recipes' : recipes, 'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
 
-    def get_paginated_list(recipes, page_num, page_size):
-        start = (page_num - 1) * page_size
-        return recipes[start : start + page_size]
 
 
     # Make new recipe
@@ -400,18 +421,15 @@ class Recipe(db.Model):
         recipe.image = image
         db.session.commit()
 
-    def json_dump(recipe):
-        schema = RecipeSchema(many=True)
-        recipes = schema.dump(recipe)
-        for recipe in recipes:
-            rating = Recipe.get_rating(recipe['id'])
-            recipe['rating'] = rating
-        return recipes
-
     def get_recipe_owner(recipe):
         user = User.query.filter_by(id=recipe['user_id']).first()
         recipe['user'] = user.username
 
+    '''
+
+    Return a list of top 5 highest rated recipes
+
+    '''
     def get_highest_rated_recipes(number):
         all_recipes = Recipe.query.all()
         recipes = RecipeSchema(many=True).dump(all_recipes)
@@ -429,6 +447,23 @@ class Recipe(db.Model):
                 new_list.append(recipe)
             count = count+1
         return new_list
+
+    '''
+
+    Paginate any given list of recipes based on page_num & page_size and return the list for the routes
+
+    '''
+    def get_paginated_list(recipes, page_num, page_size):
+        start = (page_num - 1) * page_size
+        return recipes[start : start + page_size]
+
+    def json_dump(recipe):
+        schema = RecipeSchema(many=True)
+        recipes = schema.dump(recipe)
+        for recipe in recipes:
+            rating = Recipe.get_rating(recipe['id'])
+            recipe['rating'] = rating
+        return recipes
 
 class RecipeInstructions(db.Model):
     __tablename__ = 'recipe_instructions'
@@ -449,6 +484,12 @@ class RecipeIngredients(db.Model):
     recipe = db.relationship('Recipe', backref=db.backref('ingredient'))
     ingredient = db.relationship('Ingredient', backref=db.backref('recipe'))
 
+    '''
+
+    Returns a list of recommended ingredients based on the ingredients 
+    already selected by a user
+
+    '''
     def get_recommendations(search_ids):
         recipe_ids = (RecipeIngredients
                       .query
@@ -479,7 +520,11 @@ class Mealtype(db.Model):
         schema = MealtypeSchema(many=True)
         return schema.dump(mealtypes)
 
-# Marshmallow serialiase the schema when returning to routes
+'''
+
+    Marshmallow Schema objects for serializing before jsonifying results to the view
+
+'''
 class IngredientSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         fields = ("id", "name")
