@@ -7,7 +7,7 @@ import { Category } from 'src/app/models/category';
   selector: 'app-ingredient-by-category',
   styleUrls: ['./ingredient-by-category.component.scss'],
   template: `
-              <mat-card style="margin: 0 auto; width: 75%; border-radius: 10px;">
+              <mat-card style="margin: 0 auto; width: 75%; border-radius: 10px; min-height: 350px">
                 <h2 style="font-weight: lighter; font-size: 2.5vw; margin-top: 2vh; margin-left: 2vw; margin-bottom:1%;">Ingredients by Category</h2>
                 <mat-tab-group>
                   <div *ngFor="let category of getAllCategories()">
