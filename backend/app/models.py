@@ -259,7 +259,10 @@ class Recipe(db.Model):
             if not missing_ingredients:
                 complete_match.append(recipe)
             else:
-                partial_match[recipe.id] = recipe_ingredients - input_ingredients
+                # only include recipes where the user has at least one of the recipe's ingredient
+                partial_ingredients = recipe_ingredients - input_ingredients
+                if partial_ingredients != recipe_ingredients:
+                    partial_match[recipe.id] = partial_ingredients
 
         # sorts partial matches and minimise set of ingredients additionally required
         partial_match = [(k, sorted(list(v))) for k, v in sorted(partial_match.items(), key=lambda x: len(x[1]))]
