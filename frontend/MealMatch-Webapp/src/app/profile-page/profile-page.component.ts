@@ -80,6 +80,7 @@ import { Router } from '@angular/router';
     <mat-paginator *ngIf="!recipesLoading && recipes.length > 1"
     [length]="totalRecipesNumber"
     [pageSize]="itemsPerPage"
+    [pageIndex]="displayedPage-1"
     [pageSizeOptions]="[12, 24, 40]"
     (page)="handlePaginator($event)"
     > </mat-paginator>
@@ -108,14 +109,16 @@ export class ProfilePageComponent implements OnInit {
   // The number of items displayed per paginated page
   itemsPerPage = 12;
 
+  // The number of recipes a user has contributed in total (used for pagination).
+  totalRecipesNumber: number;
+
   // Dynamic variables give user feedback about what events are happening on the page.
   loading = true;
   // Separate loading variable for paginated recipes.
   recipesLoading = true;
   photoIsUploading = false;
   photoUploadComplete = false;
-  // The number of recipes a user has contributed in total (used for pagination).
-  totalRecipesNumber: number;
+
 
   constructor(
     private authService: AuthService,

@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
   <mat-toolbar color="primary" class="nav">
   <a routerLink="/home" routerLinkActive="active"><img src="assets/images/logo3.png" class="logo"></a>
   <div class="nav-middle">
+  <button mat-button routerLink="/allrecipes" routerLinkActive="active" class="nav-button"> All Recipes </button>
   <button mat-button routerLink="/halloffame" routerLinkActive="active" class="nav-button"> Hall Of Fame </button>
   </div>
   <div class="nav-right" >

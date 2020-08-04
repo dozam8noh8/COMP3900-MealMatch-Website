@@ -6,7 +6,7 @@ import { Recipe } from '../models/recipe';
   selector: 'app-all-recipes',
   styleUrls: ['./all-recipes.component.scss'],
   template: `
-<div
+  <div
       *ngIf="recipes && recipes.length > 0; else noRecipes"
       class="all-recipes-container"
     >
@@ -22,8 +22,9 @@ import { Recipe } from '../models/recipe';
       <mat-spinner *ngIf="loading" style="margin-left: 47%;"> </mat-spinner>
     </ng-template>
     <mat-paginator *ngIf="!loading && recipes.length > 1"
-    [length]="totalRecipesNumber"
+    [length]="totalResults"
     [pageSize]="itemsPerPage"
+    [pageIndex]="displayedPage-1"
     [pageSizeOptions]="[12, 24, 40]"
     (page)="handlePaginator($event)"
     > </mat-paginator>
@@ -37,15 +38,13 @@ export class AllRecipesComponent implements OnInit {
   itemsPerPage = 12;
   displayedPage = 1;
   loading = true;
-    totalRecipesNumber: any;
+  totalResults: number;
 
   constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
-    this.recipeService.getAllRecipes(this.itemsPerPage, this.displayedPage).subscribe((response: any) => {
-      this.loading = false;
-      this.recipes = response.recipes;
-    })
+    this.getAllRecipeData();
+
   }
   // Handles the pagination of the page, loading only itemsPerPage items at once.
   handlePaginator($event){
@@ -55,12 +54,15 @@ export class AllRecipesComponent implements OnInit {
     this.recipes = [];
     console.log($event);
     this.loading = true;
-    // Not ideal to get all user details again just for recipes.
-    this.recipeService.getAllRecipes(this.displayedPage, this.itemsPerPage)
+    this.getAllRecipeData();
+  }
+
+  getAllRecipeData(){
+    this.recipeService.getAllRecipes(this.displayedPage,this.itemsPerPage)
     .subscribe((response: any) => {
       this.loading = false;
       this.recipes = response.recipes;
-      this.totalRecipesNumber = response.total_results;
+      this.totalResults = response.total_results
     })
   }
 }

@@ -26,6 +26,8 @@ export class RequestLogInterceptor implements HttpInterceptor {
         this.authService.isLoggedIn().subscribe(isLoggedIn => {this.loggedIn = isLoggedIn});
 
         // The user's JSON Token has expired. Log them out and clear their storage.
+        // The network request will go through and fail but the user
+        // Shouldnt have any problems because they will be ready to get a new token.
         if (this.loggedIn && !JWTToken ){
             this.authService.logout(true);
         }

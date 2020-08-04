@@ -187,12 +187,15 @@ def get_recipe(id):
     '''
     return jsonify(Recipe.get_recipe_by_id(id))
 
-@app.route('/api/all_recipes', methods=['POST'])
+@app.route('/api/all_recipes', methods=['GET'])
 def get_recipes():
     '''
         Given a 'page_num' and 'page_size' for all the recipes for pagination, returns a list of all recipes
     '''
-    return jsonify(Recipe.get_all_recipes(request.json.get('page_num'), request.json.get('page_size')))
+    page_num = request.args.get('page_num', default=1, type=int)
+    page_size = request.args.get('page_size', default=12, type=int)
+    recipes = Recipe.get_all_recipes(page_num, page_size)
+    return jsonify(recipes)
 
 @app.route('/api/recipe_search', methods=['POST'])
 def recipe_search():

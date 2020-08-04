@@ -19,6 +19,7 @@ export class RecipeService {
   constructor(private http: HttpClient) {
   }
 
+  // Get a paginated response of all recipes based on pagination input
   getAllRecipes(pageNum?: number, pageSize?: number) {
     return this.http.get(`${this.BASE_URL}/all_recipes`,
     {params: {

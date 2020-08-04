@@ -35,6 +35,7 @@ import { AuthService } from '../services/auth.service';
                   <mat-paginator *ngIf="getResults().length > 0"
                   [length]="getResults().length"
                   [pageSize]="itemsPerPage"
+                  [pageIndex]="displayedPage-1"
                   [pageSizeOptions]="[10, 20]"
                   (page)="handlePaginator($event)"
                   >
