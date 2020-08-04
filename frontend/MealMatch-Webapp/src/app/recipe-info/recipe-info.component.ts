@@ -24,26 +24,29 @@ import { AuthService } from '../services/auth.service';
                         <button mat-raised-button color="primary" [routerLink]="'/edit/'+recipe.id">Edit</button>
                       </span>
                     </mat-card-title>
-
-                    <!-- Show rating -->
-                    <ng-container *ngIf="recipe.rating_count <= 0">
-                      There are no ratings yet
-                    </ng-container>
-                    <ng-container *ngIf="recipe.rating_count > 0">
-                      <ngb-rating
-                      [(rate)]="recipe.rating"
-                      [max]="5"
-                      [readonly]="true">
-                        <ng-template let-fill="fill" let-index="index">
-                        <span class="star" [class.full]="fill === 100">
-                          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-                        </span>
-                        </ng-template>
-                      </ngb-rating>
-                      {{recipe.rating.toFixed(2)}}
-                      <span *ngIf="recipe.rating_count === 1"> ({{recipe.rating_count}} rating) </span>
-                      <span *ngIf="recipe.rating_count > 1"> ({{recipe.rating_count}} ratings) </span>
-                    </ng-container>
+                    <div class="rating-contributor-container">
+                    <div class="contributor"> <b> Contributed by: </b> Admin </div>
+                    <div class="rating-container">
+                        <ng-container *ngIf="recipe.rating_count <= 0">
+                          There are no ratings yet
+                        </ng-container>
+                        <ng-container *ngIf="recipe.rating_count > 0">
+                          <ngb-rating
+                          [(rate)]="recipe.rating"
+                          [max]="5"
+                          [readonly]="true">
+                            <ng-template let-fill="fill" let-index="index">
+                            <span class="star" [class.full]="fill === 100">
+                              <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                            </span>
+                            </ng-template>
+                          </ngb-rating>
+                          <b> {{recipe.rating.toFixed(1)}} </b>
+                          <span *ngIf="recipe.rating_count === 1"> ({{recipe.rating_count}} rating) </span>
+                          <span *ngIf="recipe.rating_count > 1"> ({{recipe.rating_count}} ratings) </span>
+                        </ng-container>
+                    </div>
+                    </div>
 
                     <div class="image-container">
                         <img mat-card-image src="{{recipe.image || recipePlaceholder}}">
