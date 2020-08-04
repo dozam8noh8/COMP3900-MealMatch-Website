@@ -390,7 +390,7 @@ def profile_pic_upload():
     '''
     msg, code = extract_photo(request)
     if code == 200: #TODO HANDLE ERRORS
-        picture_path = 'http://localhost:5000' + url_for('static', filename=msg)
+        picture_path = request.url_root + url_for('static', filename=msg)
         user_id = g.user.id
         User.upload_profile_image(user_id, picture_path)
     else:
@@ -407,7 +407,7 @@ def recipe_image_upload(recipe_id):
     '''
     msg, code = extract_photo(request)
     if code == 200: #TODO HANDLE ERRORS - Turn into objects?
-        picture_path = 'http://localhost:5000' + url_for('static', filename=msg)
+        picture_path = request.url_root + url_for('static', filename=msg)
         Recipe.upload_recipe_image(recipe_id, picture_path)
     else:
         raise ErrorException(msg, code)
