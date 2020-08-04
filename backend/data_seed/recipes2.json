@@ -1,14 +1,14 @@
 {
     "meals": [
         {
-            "name": "Grilled Cheese Buns",
+            "name": "Grilled Cheese",
             "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Grilled_Cheese_with_hoisin.jpg",
-            "instruction": "Grill buns with cheese in it. Serve when cheese is fully melted or buns are golden brown.",
+            "instruction": "Grill bread with cheese in it. Serve when cheese is fully melted or bread is golden brown.",
             "mealtype": "Miscellaneous",
             "ingredients": [
                 {
-                    "name": "Buns",
-                    "quantity": "2 buns"
+                    "name": "Bread",
+                    "quantity": "2 slices"
                 },
                 {
                     "name": "Cheese Slices",
