@@ -10,7 +10,7 @@ import { Ingredient } from 'src/app/models/ingredient';
                     <div>
                     <h2 style="font-weight: heavier">Do you also have:</h2>
                     <div *ngIf="recommendedIngredients.length <= 0; then thenBlock else elseBlock"> </div>
-                      <ng-template #thenBlock> <p class="ingredient-text">No ingredient to recommend</p> </ng-template>
+                      <ng-template #thenBlock> <p class="ingredient-text">No ingredients to recommend</p> </ng-template>
                       <ng-template #elseBlock>
                           <div *ngFor="let recIngredient of recommendedIngredients">
                               <div class="ingredient-item">

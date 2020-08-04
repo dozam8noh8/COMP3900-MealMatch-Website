@@ -46,16 +46,16 @@ import { Router } from '@angular/router';
           class="submitButton"
           (click)="handleAddRecipe()"
         >
-          Add a new recipe
+          Add a New Recipe
         </button>
         <button
           mat-raised-button
           color="primary"
           class="submitButton"
           (click)="handleAddLovelessSets()"
-          style="margin-left: 10vw;"
+          style="margin-left: 13vw;"
         >
-          See loveless sets
+          See Loveless Sets
         </button>
       </div>
     </div>
