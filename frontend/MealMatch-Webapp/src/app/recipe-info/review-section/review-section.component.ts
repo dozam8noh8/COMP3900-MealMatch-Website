@@ -45,10 +45,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
                 There are no reviews for this recipe.
               </ng-container>
 
-              <br/>
-              <br/>
               <!-- If not a logged in user -->
               <ng-container *ngIf="!loadingComments && !currentUser">
+                <br/>
+                <br/>
                 You must be logged in to review recipes. <br/>
                 <a routerLink="/login">Log in</a> | 
                 Don't have an account? <a routerLink="/signup">Sign up</a>
