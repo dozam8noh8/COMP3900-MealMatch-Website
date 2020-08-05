@@ -2,7 +2,7 @@ import json
 from app import db
 from app.models import Ingredient, User, Ingredient, Category, Recipe, Mealtype, RecipeIngredients, Rating, RecipeInstructions
 from sqlalchemy import func
-from random import randrange
+import random
 import datetime
 
 ########################################### SETUP INGREDIENTS AND CATEGORIES #############################################
@@ -10,6 +10,8 @@ import datetime
 def seed_db():
     db.drop_all()
     db.create_all()
+
+    random.seed(333)
 
     # Load json
     input_file=open('data_seed/categories.json', 'r', encoding='utf8')
@@ -126,8 +128,8 @@ def seed_db():
 
     recipes = Recipe.query.all()
     for recipe in recipes:
-        if randrange(10) > 3:
-            rating = Rating(rating=(randrange(5) + 1), comment='Demo Comment.')
+        if random.randrange(10) > 3:
+            rating = Rating(rating=(random.randrange(5) + 1), comment='Demo Comment.')
             recipe.rating.append(rating)
             newUser.rating.append(rating)
     db.session.commit()
