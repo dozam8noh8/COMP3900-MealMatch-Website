@@ -1,0 +1,65 @@
+
+.recipe {
+    width: 21vw;
+    margin-left: 1vw;
+    margin-top: 1vw;
+    button {
+        margin-bottom: 1.5vh;
+        width: 40%;
+        margin-left: 1vw;
+    }
+    img {
+        border-radius: 2.5%;
+        width: 21vw;
+        height: 20vh;
+    }
+    .ingredient-list {
+
+        height: 8vh;
+        word-wrap: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    mat-card-header {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    mat-card-title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    // This does the ellipsis styling for the one line header
+    .text-oneline ::ng-deep * {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+}
+
+.recipe:hover {
+    background-color: lightgray;
+}
+
+.invisible-outline {
+    border: none;
+    box-shadow: none;
+}
+
+.invisible-outline:hover {
+    background-color: lightgray;
+}
+
+.edit-delete-container {
+    position: relative;
+    display:flex;
+    bottom: 0;
+    width: 100%;
+    flex: 2;
+    justify-content: space-around;
+    margin-top: 1vh;
+}

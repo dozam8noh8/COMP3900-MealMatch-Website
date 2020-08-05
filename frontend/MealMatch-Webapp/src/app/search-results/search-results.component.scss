@@ -1,17 +1,42 @@
 .columned {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
-    // need to fix to not allow horizontal overflow
-    max-width: 25vw;
-    height: 1800px;
-    max-height: 600%;
+    margin-right: 2%;
 }
 
-.recipe {
-    width: 300px;
+.copperplate {
+  font-family: Copperplate
 }
 
-.recipe:hover {
-    background-color: lightgray;
+.submitButton {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    width: 230px;
+    font-weight: lighter;
+}
+
+img {
+  height: fit-content; //so that it takes up full space
+  width: 25vw !important; // this prevents the image from being extremely big
+  object-fit: cover; 
+  object-position: center; /* this centers and crops the image so that it doesn't break the aspect ratio */
+}
+
+.example-card {
+  max-width: 25vh;
+  margin: 2%;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.partial-result {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 2vw;
 }

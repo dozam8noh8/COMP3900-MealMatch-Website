@@ -25,18 +25,42 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
-import { IngredientSearchComponent } from './home-page/ingredient-search/ingredient-search.component';
 import { IngredientByCategoryComponent } from './home-page/ingredient-by-category/ingredient-by-category.component';
 
 import { RecipeInfoComponent } from './recipe-info/recipe-info.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 
-import { PrivateResourceComponent } from './private-resource/private-resource.component';
-import { PopupComponent } from '../building-components/login-popup/popup.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { LoginPopupComponent } from '../building-components/login-popup/login-popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RequestLogInterceptor } from './request-interceptor';
+import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
+import { NewIngredientPopupComponent } from './create-recipe/new-ingredient-popup/new-ingredient-popup.component';
+import { RecipeViewCardComponent } from 'src/building-components/recipe-view-card/recipe-view-card.component';
+import { DangerousActionPopupComponent } from 'src/building-components/dangerous-action-popup/dangerous-action-popup.component';
+import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
+import { IngredientSlotComponent } from './create-recipe/ingredient-slot/ingredient-slot.component';
+import { AddRecipePopupComponent } from 'src/building-components/add-recipe-popup/add-recipe-popup.component';
+import { LovelessSetsComponent } from './loveless-sets/loveless-sets.component';
+import { IngredientSetDisplayComponent } from './ingredient-set-display/ingredient-set-display.component';
+import { RecipeFormComponent } from './recipe-form/recipe-form.component';
+import { FormSubmitComponent } from './form-submit/form-submit.component';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { RecommendIngredientsComponent } from './home-page/recommend-ingredients/recommend-ingredients.component';
+import { InputListComponent } from './home-page/input-list/input-list.component';
+import { ReviewSectionComponent} from './recipe-info/review-section/review-section.component'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DisplayReviewComponent } from './recipe-info/display-review/display-review.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { HallOfFameComponent } from './hall-of-fame/hall-of-fame.component';
+import { InstructionSlotComponent } from './recipe-form/instruction-slot/instruction-slot.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AllRecipesComponent } from './all-recipes/all-recipes.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -58,6 +82,10 @@ const materialModules = [
   MatCheckboxModule,
   MatTabsModule,
   MatDialogModule,
+  MatPaginatorModule,
+  DragDropModule,
+  MatTooltipModule,
+  BrowserAnimationsModule,
 ]
 @NgModule({
   declarations: [
@@ -66,12 +94,32 @@ const materialModules = [
     LoginComponent,
     SignupComponent,
     NavbarComponent,
-    IngredientSearchComponent,
     IngredientByCategoryComponent,
     RecipeInfoComponent,
     SearchResultsComponent,
-    PrivateResourceComponent,
-    PopupComponent,
+    CreateRecipeComponent,
+    NewIngredientPopupComponent,
+    ProfilePageComponent,
+    LoginPopupComponent,
+    RecipeViewCardComponent,
+    DangerousActionPopupComponent,
+    PhotoUploadComponent,
+    IngredientSlotComponent,
+    AddRecipePopupComponent,
+    LovelessSetsComponent,
+    IngredientSetDisplayComponent,
+    RecipeFormComponent,
+    FormSubmitComponent,
+    RecipeEditComponent,
+    PageNotFoundComponent,
+    SearchBarComponent,
+    RecommendIngredientsComponent,
+    InputListComponent,
+    ReviewSectionComponent,
+    DisplayReviewComponent,
+    HallOfFameComponent,
+    InstructionSlotComponent,
+    AllRecipesComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,9 +130,11 @@ const materialModules = [
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    NgbModule,
   ],
   providers: [{
-    provide: HTTP_INTERCEPTORS, // This will intercept all http requests and add a delay and log them to simulate a backend delay (during development).
+    // This will intercept all http requests and add a delay, headers and auth.
+    provide: HTTP_INTERCEPTORS,
     useClass: RequestLogInterceptor,
     multi: true,
   },],

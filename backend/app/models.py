@@ -1,13 +1,41 @@
 from app import db, jwt, time, app, generate_password_hash, check_password_hash, ma
-import app.constants as constants
+from sqlalchemy import func, desc, event
+from app.ErrorException import ErrorException
+from sqlalchemy.engine import Engine
+import json
+from marshmallow import fields
 
+# DB settings
+# SQLite doesn't have referential integrity on by default
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
+
+# Model Relationships for ratings
+userRatings = db.Table('user_ratings',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('rating_id', db.Integer, db.ForeignKey('rating.id', ondelete='cascade'), primary_key=True)
+)
+
+recipeRatings = db.Table('recipe_ratings',
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id', ondelete='cascade'), primary_key=True),
+    db.Column('rating_id', db.Integer, db.ForeignKey('rating.id', ondelete='cascade'), primary_key=True)
+)
+
+##########################################
+    # User Model
+##########################################
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(70), index=True)
-    username = db.Column(db.String(32), index=True)
-    password_hash = db.Column(db.String(64))
+    email = db.Column(db.Text, index=True)
+    username = db.Column(db.Text, index=True)
+    password_hash = db.Column(db.Text)
+    profile_pic = db.Column(db.Text)
     recipes = db.relationship('Recipe', backref='user', lazy='dynamic')
 
+    # Authentication
     def hash_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -19,6 +47,45 @@ class User(db.Model):
             {'id': self.id, 'exp': time.time() + expires_in},
             app.config['SECRET_KEY'], algorithm='HS256')
 
+    # JSON serialize for frontend
+    def json_dump(user):
+        schema = UserSchema()
+        return schema.dump(user)
+
+    def new_json_dump(user):
+        schema = NewUserSchema()
+        return schema.dump(user)
+
+    ###############################
+    # Methods
+
+    def upload_profile_image(user_id, path):
+        user = User.query.filter_by(id=user_id).first()
+        user.profile_pic = path
+
+    def get_highest_contributors(users):
+        return sorted(users, key=lambda x: x.recipes.count(), reverse=True)
+
+    '''
+
+    Returns a list of the top 5 contributors
+
+    '''
+    def top_contributors():
+        users = User.query.all()
+        sort_orders = User.get_highest_contributors(users)
+        count = 0
+        new_list = []
+        for user in sort_orders:
+            if (count > 4):
+                break
+            new_user = User.new_json_dump(user)
+            new_user['count'] = user.recipes.count()
+            if new_user['count'] > 0:
+                new_list.append(new_user)
+            count = count + 1
+        return new_list
+
     @staticmethod
     def verify_auth_token(token):
         try:
@@ -26,143 +93,481 @@ class User(db.Model):
                               algorithms=['HS256'])
         except:
             return
-        return User.query.get(data['id'])
+        if 'exp' in data:
+            if (time.time() <= data['exp']):
+                return User.query.get(data['id'])
+        return
 
+# Model relationships between recipe, ingredients and mealtypes
 ingredientCategories = db.Table('ingredient_categories',
     db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredient.id')),
     db.Column('category_id', db.Integer, db.ForeignKey('category.id'))
 )
 
 recipeMealTypes = db.Table('recipe_mealtypes',
-    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id')),
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id', ondelete='cascade')),
     db.Column('mealtype_id', db.Integer, db.ForeignKey('mealtype.id'))
 )
 
+# Ingredient class
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), index=True)
+    name = db.Column(db.Text, index=True)
     recipes = db.relationship('RecipeIngredients', backref=db.backref('ingredients'))
 
-    def get(name):
-        ingredient = Ingredient.query.filter_by(name=name).first()
+    def add_ingredient(name, category):
+        db_category = Category.query.filter(func.lower(Category.name) == func.lower(category)).first()
+        if not db_category:
+            raise ErrorException('Category does not exist: ' + category, 400)
+
+        ingredient = Ingredient(name=name)
+        ingredient.categories.append(db_category)
+        db.session.add(ingredient)
+        db.session.commit()
         return ingredient
 
-    def get_all(names):
-        ingredients = []
-        for name in names:
-            ingredient = Ingredient.get(name)
-            if ingredient != None:
-                ingredients.append(ingredient)
-        return ingredients
+    def json_dump(ingr):
+        schema = IngredientSchema(many=True)
+        return schema.dump(ingr)
 
-    def find_pair(name):
-        key_pairs = constants.COMMON_PAIRS
-        final_pairs = []
-        for pair in key_pairs:
-            if name in pair:
-                for toAdd in pair:
-                    final_pairs.append(toAdd)
-
-        return final_pairs
-
-    def find_recommendations(name):
-        final_pairs = Ingredient.find_pair(name)
-        for key in final_pairs:
-            new_pair = Ingredient.find_pair(key)
-            final_pairs = final_pairs + new_pair
-
-        final_pairs = set(final_pairs)
-        final_pairs.remove(name)
-        return list(final_pairs)
-
+# Ingredient category class
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), index=True)
+    name = db.Column(db.Text, index=True)
     ingredients = db.relationship('Ingredient', secondary=ingredientCategories, backref=db.backref('categories', lazy='dynamic'))
 
     def json_dump(recipe):
         schema = CategorySchema(many=True)
         return schema.dump(recipe)
 
+# Ratings class
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    rating = db.Column(db.Text)
+    comment = db.Column(db.Text)
+    user = db.relationship('User', secondary=userRatings, cascade="all,delete", backref=db.backref('rating', lazy='dynamic'))
+    recipe = db.relationship('Recipe', secondary=recipeRatings, cascade="all,delete", backref=db.backref('rating', lazy='dynamic'))
+
+    def delete_rating(ratingId, userId):
+        user = User.query.filter_by(id=userId).first()
+        rating = Rating.query.filter_by(id=ratingId).first()
+        if rating not in user.rating:
+            return False
+        Rating.query.filter_by(id=ratingId).delete()
+        return True
+
+    def json_dump(rating):
+        ratingsList = []
+        for ind_rating in rating:
+            username = User.query.filter_by(id=ind_rating.user[0].id).first().username
+            json_obj = {'id':ind_rating.id, 'rating':ind_rating.rating, 'comment': ind_rating.comment, 'username': username}
+            ratingsList.append(json_obj)
+        return (ratingsList)
+
+# IngredientSets for recipe suggestions (Loveless Sets)
+class IngredientSets(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sets = db.Column(db.Text, index=True)
+    count = db.Column(db.Integer, default=1)
+
+    '''
+
+    Increment the count for a loveless set when it's been searched
+
+    '''
+    def increment_count(LSet):
+        ingr_LSet = IngredientSets.query.filter_by(sets=str(LSet).strip('[]')).first()
+        if ingr_LSet:
+            ingr_LSet.count = ingr_LSet.count + 1
+        else:
+            ingr_LSet = IngredientSets(sets=str(LSet).strip('[]'), count=1)
+            db.session.add(ingr_LSet)
+        db.session.commit()
+
+    '''
+
+    Returns a list of the 5 most searched loveless sets
+
+    '''
+    def get_highest_sets():
+        sets = IngredientSets.query.order_by(desc(IngredientSets.count)).limit(5).all()
+        highest_sets = []
+        for LSet in sets:
+            ingredient_ids = LSet.sets.split(', ')
+            ingredients = [Ingredient.query.filter_by(id=int(x)).first() for x in ingredient_ids]
+            ingredients = Ingredient.json_dump(ingredients)
+            highest_sets.append({'id': LSet.id, 'ingredients': ingredients, 'count': LSet.count})
+        return highest_sets
+
+    def remove_sets(recipe):
+        ingredient_ids = set(x.ingredient_id for x in recipe.ingredients)
+        sets = IngredientSets.query.all()
+        sets = [(x.id, x.sets) for x in sets]
+        for LSet_id, LSet in sets:
+            LSet_set = set(int(x) for x in LSet.split(', '))
+            if LSet_set.issubset(ingredient_ids):
+                IngredientSets.query.filter_by(id=LSet_id).delete()
+        db.session.commit()
+
+    def json_dump(sets):
+        schema = IngredientSetsSchema(many=True)
+        return schema.dump(sets)
+
+# Recipe class
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), index=True)
+    name = db.Column(db.Text, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    image = db.Column(db.String(100))
-    instruction = db.Column(db.String(2000))
+    image = db.Column(db.Text)
+
+    instructions = db.relationship('RecipeInstructions', backref=db.backref('recipes'))
     ingredients = db.relationship('RecipeIngredients', backref=db.backref('recipes'))
 
     def get_recipe_by_id(id):
         recipe = Recipe.query.get(id)
+        if not recipe:
+            raise ErrorException('Recipe id does not exist: ' + str(id), 400)
+        instructions = [x.instruction for x in recipe.instructions]
+        count = recipe.rating.count()
         schema = RecipeSchema(many=False)
-        return schema.dump(recipe)
+        recipe = schema.dump(recipe)
+        rating = Recipe.get_rating(recipe['id'])
+        recipe['rating'] = rating
+        recipe['rating_count'] = count
+        recipe['instruction'] = instructions
+        return recipe
 
-    def get_recipes(ingredients):
-        ingredients = Ingredient.query.filter(Ingredient.name.in_(ingredients)).all()
-        ingredients_id = [ingredient.id for ingredient in ingredients]
+    def get_rating(id):
+        recipe = Recipe.query.filter_by(id=id).first()
+        ratings = recipe.rating
+        sum_rating = 0
+        count = 0
+        if len(recipe.rating.all()) == 0:
+            return 0
+        for rating in ratings:
+            # print(rating.rating)
+            sum_rating = sum_rating + int(rating.rating)
+            count = count + 1
+        return sum_rating/float(count)
 
-        filtered = []
+    def get_recipes(ingredients, page_num, page_size):
+        ingredients = [x.lower() for x in ingredients]
+        ingredients_id = (Ingredient
+                          .query
+                          .with_entities(Ingredient.id)
+                          .filter(func.lower(Ingredient.name).in_(ingredients))
+                          .order_by("id")
+                          .all()
+        )
+        ingredients_id = [x[0] for x in ingredients_id]
+        input_ingredients = set(ingredients_id)
+
+        # get complete and partial recipes
+        # complete_match stores Recipe objects
+        # partial_match stores [(recipe.id, [ingredient.ids...]), ...]
+        complete_match = []
+        partial_match = {}
         recipes = Recipe.query.all()
         for recipe in recipes:
-            res = True
-            for recipe_ingredient in recipe.ingredients:
-                if recipe_ingredient.ingredient_id not in ingredients_id:
-                    res = False
-                    break
-            if res:
-                filtered.append(recipe)
+            recipe_ingredients = set(x.ingredient_id for x in recipe.ingredients)
+            missing_ingredients = recipe_ingredients - input_ingredients
+            if not missing_ingredients:
+                complete_match.append(recipe)
+            else:
+                # only include recipes where the user has at least one of the recipe's ingredient
+                partial_ingredients = recipe_ingredients - input_ingredients
+                if partial_ingredients != recipe_ingredients:
+                    partial_match[recipe.id] = partial_ingredients
 
-        return filtered
+        # sorts partial matches and minimise set of ingredients additionally required
+        partial_match = [(k, sorted(list(v))) for k, v in sorted(partial_match.items(), key=lambda x: len(x[1]))]
+        partial_match = partial_match[:12]
+
+        # transform partial_recipe's recipe.id and ingredient.ids to JSON
+        partial_recipes = []
+        for match in partial_match:
+            partial_recipe = {}
+            recipe = Recipe.query.filter_by(id=match[0]).first()
+            partial_recipe['recipe'] = RecipeSchema().dump(recipe)
+
+            missing_ingredients = Ingredient.query.with_entities(Ingredient.name).filter(Ingredient.id.in_(match[1])).all()
+            missing_ingredients = [x[0] for x in missing_ingredients]
+            partial_recipe['missing_ingredients'] = missing_ingredients
+            partial_recipes.append(partial_recipe)
+
+        if not complete_match and ingredients_id:
+            IngredientSets.increment_count(ingredients_id)
+        total_results = len(complete_match)
+
+        recipes = Recipe.get_paginated_list(complete_match, page_num, page_size)
+        recipes = RecipeSchema(many=True).dump(recipes)
+        for recipe in recipes:
+            rating = Recipe.get_rating(recipe['id'])
+            recipe['rating'] = rating
+        return {'recipes' : recipes, 'partial_recipes' : partial_recipes, \
+            'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
+
+    '''
+
+    Returns a list of all the recipes
+
+    '''
+    def get_all_recipes(page_num, page_size=12):
+        recipes = Recipe.query.all()
+        total_size = len(recipes)
+        recipes_list = Recipe.get_paginated_list(recipes, page_num, page_size)
+        recipes = RecipeSchema(many=True).dump(recipes_list)
+        for recipe in recipes:
+            rating = Recipe.get_rating(recipe['id'])
+            recipe['rating'] = rating
+        return {'recipes' : recipes, 'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_size}
+
+    '''
+
+    Returns a list of all the recipes contributed by a user
+
+    '''
+    def get_recipes_by_user_id(user_id, page_num, page_size):
+        recipes = Recipe.query.filter_by(user_id=user_id).all()
+        total_results = len(recipes)
+        recipes = Recipe.get_paginated_list(recipes, page_num, page_size)
+        recipes = RecipeSchema(many=True).dump(recipes)
+        for recipe in recipes:
+            rating = Recipe.get_rating(recipe['id'])
+            recipe['rating'] = rating
+        return {'recipes' : recipes, 'page_num' : page_num, 'page_size' : page_size, 'total_results' : total_results}
+
+
+
+    # Make new recipe
+    def add_recipe(name, instruction, mealType, ingredients, user_id, image=None):
+        if image:
+            recipe = Recipe(name=name, image=image)
+        else:
+            recipe = Recipe(name=name)
+        db.session.add(recipe)
+
+        for step in instruction:
+            recipe_instruction = RecipeInstructions(instruction=step)
+            recipe.instructions.append(recipe_instruction)
+
+        mealtype = Mealtype.query.filter(func.lower(Mealtype.name) == func.lower(mealType)).first()
+        if not mealtype:
+            db.session.rollback()
+            raise ErrorException('Mealtype does not exist: ' + mealType, 400)
+
+        recipe.mealtypes.append(mealtype)
+        user = User.query.filter_by(id=user_id).first()
+
+        for ingredient in ingredients:
+            db_ingredient = Ingredient.query.filter(func.lower(Ingredient.name) == func.lower(ingredient['name'])).first()
+            if not db_ingredient:
+                db.session.rollback()
+                raise ErrorException('Ingredient does not exist: ' + ingredient['name'], 400)
+
+            recipe_ingredient = RecipeIngredients(quantity=ingredient['quantity'])
+            recipe_ingredient.ingredients = db_ingredient
+            recipe.ingredients.append(recipe_ingredient)
+
+        user.recipes.append(recipe)
+        db.session.commit()
+        IngredientSets.remove_sets(recipe)
+        return recipe
+
+    def edit_recipe(recipe_id, name, instruction, mealType, ingredients):
+        recipe = Recipe.query.get(recipe_id)
+        if not recipe:
+            raise ErrorException('Recipe id does not exist: ' + recipe_id, 400)
+
+        recipe.name = name
+        recipe.instructions = [RecipeInstructions(instruction=x) for x in instruction]
+
+        db_mealtype = Mealtype.query.filter(func.lower(Mealtype.name) == func.lower(mealType)).first()
+        if db_mealtype:
+            recipe.mealtypes = [db_mealtype]
+
+        # Check if any of the ingredients have been updated to avoid an additional delete and write
+        recipe_ingredients = (RecipeIngredients
+                              .query
+                              .with_entities(Ingredient.name, RecipeIngredients.quantity)
+                              .filter(RecipeIngredients.ingredient_id == Ingredient.id)
+                              .filter(RecipeIngredients.recipe_id == recipe.id)
+                              .all()
+        )
+        ingredients = [(x['name'], x['quantity']) for x in ingredients]
+
+        if recipe_ingredients != ingredients:
+            # Ingredients have changed, updating db..
+            RecipeIngredients.query.filter_by(recipe_id=recipe.id).delete()
+            for name, quantity in ingredients:
+                ingredient = Ingredient.query.filter(func.lower(Ingredient.name) == func.lower(name)).first()
+                # doesn't support ingredient creation
+                if ingredient:
+                    recipe_ingredient = RecipeIngredients(quantity=quantity)
+                    recipe_ingredient.ingredients = ingredient
+                    recipe.ingredients.append(recipe_ingredient)
+
+        db.session.commit()
+        IngredientSets.remove_sets(recipe)
+        return recipe
+
+    def recipe_delete(recipe_id):
+        Recipe.query.filter_by(id=recipe_id).delete()
+        db.session.commit()
+        return True #TODO change this to actually return false if the id isnt found.
+
+    def upload_recipe_image(id, image):
+        recipe = Recipe.query.filter_by(id=id).first()
+        recipe.image = image
+        db.session.commit()
+
+    def get_recipe_owner(recipe):
+        user = User.query.filter_by(id=recipe['user_id']).first()
+        recipe['user'] = user.username
+
+    '''
+
+    Return a list of top 5 highest rated recipes
+
+    '''
+    def get_highest_rated_recipes(number):
+        all_recipes = Recipe.query.all()
+        recipes = RecipeSchema(many=True).dump(all_recipes)
+        for recipe in recipes:
+            rating = Recipe.get_rating(recipe['id'])
+            recipe['rating'] = rating
+        recipes_sorted = sorted(recipes, key=lambda k: k.get('rating', 0), reverse=True)
+        new_list = []
+        count = 0
+        for recipe in recipes_sorted:
+            if count > 4:
+                break
+            Recipe.get_recipe_owner(recipe)
+            if (recipe['rating'] != 0):
+                new_list.append(recipe)
+            count = count+1
+        return new_list
+
+    '''
+
+    Paginate any given list of recipes based on page_num & page_size and return the list for the routes
+
+    '''
+    def get_paginated_list(recipes, page_num, page_size):
+        start = (page_num - 1) * page_size
+        return recipes[start : start + page_size]
 
     def json_dump(recipe):
         schema = RecipeSchema(many=True)
-        return schema.dump(recipe)
-        
+        recipes = schema.dump(recipe)
+        for recipe in recipes:
+            rating = Recipe.get_rating(recipe['id'])
+            recipe['rating'] = rating
+        return recipes
+
+class RecipeInstructions(db.Model):
+    __tablename__ = 'recipe_instructions'
+    id = db.Column(db.Integer, primary_key=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id', ondelete='cascade'))
+    instruction = db.Column(db.Text)
+
+    recipe = db.relationship('Recipe', backref=db.backref('instruction'))
+
+# RecipeIngredients sets class
 class RecipeIngredients(db.Model):
     __tablename__ = 'recipe_ingredients'
     id = db.Column(db.Integer, primary_key=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id', ondelete='cascade'))
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredient.id'))
     quantity = db.Column(db.Text)
 
     recipe = db.relationship('Recipe', backref=db.backref('ingredient'))
     ingredient = db.relationship('Ingredient', backref=db.backref('recipe'))
 
+    '''
+
+    Returns a list of recommended ingredients based on the ingredients 
+    already selected by a user
+
+    '''
+    def get_recommendations(search_ids):
+        recipe_ids = (RecipeIngredients
+                      .query
+                      .with_entities(RecipeIngredients.recipe_id)
+                      .filter(RecipeIngredients.ingredient_id.in_((search_ids)))
+                      .subquery()
+        )
+        ingredients = (RecipeIngredients
+                       .query
+                       .with_entities(Ingredient.id, Ingredient.name)
+                       .filter(RecipeIngredients.recipe_id.in_(recipe_ids))
+                       .filter(RecipeIngredients.ingredient_id.notin_((search_ids)))
+                       .filter(RecipeIngredients.ingredient_id == Ingredient.id)
+                       .group_by(Ingredient.id)
+                       .order_by(func.count().desc())
+                       .limit(5)
+                       .all()
+        )
+        return ingredients
+
+# Mealtypes class
 class Mealtype(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), index=True)
+    name = db.Column(db.Text, index=True)
     recipes = db.relationship('Recipe', secondary=recipeMealTypes, backref=db.backref('mealtypes', lazy='dynamic'))
 
-# Marshmallow serialiase the schema
-class IngredientSchema(ma.ModelSchema):
+    def json_dump(mealtypes):
+        schema = MealtypeSchema(many=True)
+        return schema.dump(mealtypes)
+
+'''
+
+    Marshmallow Schema objects for serializing before jsonifying results to the view
+
+'''
+class IngredientSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         fields = ("id", "name")
 
-class CategorySchema(ma.ModelSchema):
+class CategorySchema(ma.SQLAlchemyAutoSchema):
     ingredients = ma.Nested(IngredientSchema, many=True)
 
     class Meta:
         model = Category
 
-class UserSchema(ma.ModelSchema):
-    class Meta:
-        model = User
-        include_relationships = True
-
-class MealtypeSchema(ma.ModelSchema):
+class MealtypeSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         fields = ("id", "name")
 
-class RecipeIngredientsSchema(ma.ModelSchema):
+class RecipeIngredientsSchema(ma.SQLAlchemyAutoSchema):
     ingredient = ma.Nested(IngredientSchema)
-    
+
     class Meta:
         fields = ("ingredient.id", "ingredient.name", "quantity")
 
+class IngredientSetsSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = IngredientSets
 
-class RecipeSchema(ma.ModelSchema):
+class RatingSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Rating
+
+class RecipeSchema(ma.SQLAlchemyAutoSchema):
     mealtypes = ma.Nested(MealtypeSchema, many=True)
     ingredients = ma.Nested(RecipeIngredientsSchema, many=True)
+    user = fields.Nested("UserSchema", only=("id", "email", "username"))
 
     class Meta:
-        fields = ("id", "name", "user_id", "image", "instruction", "ingredients", "mealtypes")
+        fields = ("id", "name", "user_id", "image", "ingredients", "mealtypes", "user")
+
+class NewUserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        fields = ("id", "username")
+
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    recipes = ma.Nested(RecipeSchema, many=True)
+
+    class Meta:
+        fields = ("id", "email", "recipes", "username")
+        include_relationships = True

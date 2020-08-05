@@ -1,35 +1,192 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Recipe } from '../models/recipe';
-import { HttpClient } from '@angular/common/http';
+import { SearchService } from '../services/search.service';
+import { MealType } from '../models/mealtype';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-search-results',
-  templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.scss']
+  styleUrls: ['./search-results.component.scss'],
+  template: `
+              <form [formGroup]="formForMealType">
+              <mat-form-field appearance="fill" style="margin-left: 2%; margin-top: 2%;">
+                  <mat-label>Meal Type</mat-label>
+                  <mat-select
+                  matNativeControl
+                  formControlName="selectedMealType"
+                  (selectionChange)="updateSearchMealType($event.value)">
+                      <mat-option *ngFor="let mealtype of allMealTypes"
+                      [value]="mealtype">
+                          {{mealtype}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+
+              <button *ngIf="!showPartialMatches" 
+              mat-raised-button 
+              color="primary" 
+              class="copperplate" 
+              style="margin-left: 20px;"
+              matTooltip="Show recipes that may require you to obtain more ingredients"
+              (click)="toggleResultType()">Show partial matches</button>
+              <button *ngIf="showPartialMatches" 
+              mat-raised-button 
+              color="primary" 
+              class="copperplate"
+              style="margin-left: 20px;" 
+              matTooltip="Show recipes can be made from the ingredients you currently have"
+              (click)="toggleResultType()">Show full matches</button>
+
+              <div layout="row" layout-fill layout-align="center center">
+                  <mat-spinner *ngIf=!searchComplete() style="margin-left: 45%; margin-top: 15%;"> Showing spinner </mat-spinner>
+              </div>
+
+              <div *ngIf="searchComplete() && getResults().length > 0 && !showPartialMatches">
+                  <div class="columned" style="margin-left: 2%;">
+                      <div *ngFor="let recipe of getResults()">
+                              <app-recipe-view-card [recipe]="recipe"></app-recipe-view-card>
+                      </div>
+                  </div>
+                  <mat-paginator *ngIf="getResults().length > 0"
+                  [length]="getResults().length"
+                  [pageSize]="itemsPerPage"
+                  [pageIndex]="displayedPage-1"
+                  [pageSizeOptions]="[10, 20]"
+                  (page)="handlePaginator($event)"
+                  >
+                  </mat-paginator>
+              </div>
+
+              <div *ngIf="searchComplete() && getResults().length > 0 && showPartialMatches">
+                  <div *ngFor="let result of getResults()">
+                      <div class="partial-result">
+                        <app-recipe-view-card 
+                        [recipe]="result.recipe"></app-recipe-view-card>
+                        <div style="margin: 2vw;">
+                            You still need: 
+                            <ul *ngFor="let missing_ingredient of result.missing_ingredients; last as isLast">
+                              <li> {{missing_ingredient}} </li>
+                            </ul>                
+                        </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div layout="row" layout-fill layout-align="center center">
+                  <div *ngIf="searchComplete() && getResults().length === 0" style="margin-left: 35%; margin-top: 10%">
+                      <h1 style="font-weight: heavier; font-size: 3em" class="copperplate">We're Sorry</h1>
+                      <h1 style="font-weight: lighter; font-size: 1.5em" class="copperplate">We can't seem to find any
+                          <span *ngIf="getSelectedMealType() !== 'All'"> "{{getSelectedMealType()}}" </span>
+                              recipes with just:
+                      </h1>
+                      <ul *ngFor="let ingredient of getSearchedIngredients()">
+                          <li class="copperplate">{{ingredient}}</li>
+                      </ul>
+                      <button mat-raised-button color="primary" class="copperplate submitButton" routerLink="/home">Search for new recipes</button>
+                  </div>
+              </div>
+              </form>
+            `
 })
 export class SearchResultsComponent implements OnInit {
 
-  searchState;
-  resultingRecipes: Recipe[];
-  searchComplete = false;
+  formForMealType: FormGroup;
+  allMealTypes: string[];
 
-  constructor(private router: Router, private http: HttpClient) {
-    this.searchState = this.router.getCurrentNavigation().extras.state;
+  showPartialMatches: boolean = false;
+
+  // The page number of the current page of recipes being displayed.
+  displayedPage = 1;
+
+  // The number of items displayed per paginated page
+  itemsPerPage: 10;
+
+  constructor(
+    private router: Router,
+    private searchService: SearchService,
+    private formBuilder: FormBuilder,
+  ) {
+    this.formForMealType = this.formBuilder.group({
+      selectedMealType: ''
+    });
+
+    if(!this.router.navigated) { // If the user is manually typing in /search
+      this.router.navigate(['/home']);
+    }
+    else { // The user is accessing this page by navigation i.e. search or pressing back
+
+      let searchState = this.router.getCurrentNavigation().extras.state;
+      if(searchState) { // If a list of ingredients was passed from search (home page)
+        this.updateSearchMealType(searchState.mealType.name);
+        this.searchService.searchForRecipes(searchState.searchIngredients, searchState.mealType.name);
+      }
+      else { // The user navigated to page by e.g. back button
+        this.updateSearchMealType(searchService.getMealType());
+      }
+
+      this.searchService.getAllMealTypes()
+      .subscribe( (data: MealType[]) => {
+        // Get the meal types as strings
+        this.allMealTypes = data.map(mtype => mtype.name);
+
+      });
+    }
   }
 
   ngOnInit(): void {
-    // We should change this from just being ngOnInit because there is no search state on page refresh.
 
-    this.http.post("http://localhost:5000/api/recipe_search", {
-      "ingredients": this.searchState.searchIngredients
-    })
-    .subscribe( (data: Recipe[]) => {
-      this.resultingRecipes = data;
-      this.searchComplete = true;
-    });
   }
 
+  // Updates the meal type in the form and searchService
+  updateSearchMealType(newMealType: string) {
+    this.formForMealType.setValue({
+      selectedMealType: newMealType
+    });
+    this.searchService.setMealType(newMealType);
+  }
 
+  // Gets the selected meal type from the form field
+  getSelectedMealType(): string {
+    return this.formForMealType.get('selectedMealType').value;
+  }
 
+  getResults() {
+    if(!this.getSelectedMealType() || this.getSelectedMealType()==="All") {
+      if(this.showPartialMatches) { // If allowing for partial matches
+        return this.searchService.getAllResults()?.partialResults; // this returned array will need to be processed differently in template
+      }
+      return this.searchService.getAllResults()?.recipes;
+    } 
+    else {
+      if(this.showPartialMatches) {
+        return this.searchService.getAllResults()?.partialResults.filter( presult => {
+          // include the partial result if its recipe is under the selected meal type
+          return presult.recipe.mealtypes.some( elem => (elem.name === this.getSelectedMealType()) );
+        })
+      }
+      // Get the recipes that have the selected meal type as one of its meal types
+      return this.searchService.getAllResults()?.recipes.filter(recipe => {
+        return recipe.mealtypes.some( mealtype => (mealtype.name === this.getSelectedMealType()) );
+      })
+    }
+
+  }
+
+  toggleResultType() {
+    this.showPartialMatches = !this.showPartialMatches;
+  }
+
+  getSearchedIngredients() {
+    return this.searchService.inputIngredients;
+  }
+
+  searchComplete() {
+    return this.searchService.searchComplete;
+  }
+  // When paginator changes, make a call for the next page (with the same search state).
+  handlePaginator($event){
+    let state = this.router.getCurrentNavigation().extras.state;
+    this.searchService.searchForRecipes(state.searchIngredients, state.mealType.name, this.displayedPage, this.itemsPerPage)
+  }
 }

@@ -3,25 +3,24 @@ mat-card-content {
     display: flex;
     justify-content: center;
     align-items: center;
-
-
-    //align-content: space-between;
-
+    padding-top: 30px;
 
 }
 mat-card {
     display:flex;
-    margin: 2em auto;
+    margin: 10%;
+    padding: 0;
+    height: 83vh;
+    width: 50%;
+    border-radius: 25px;
     text-align: center;
     justify-content: center;
-    height: 100%;
-    width: 100%;
     align-items: center;
-  .submitError {
-    margin-top: 3em;
-    font-size: x-large;
-  }
-
+    .submitError {
+      margin-right: 2vw;
+      margin-left: 2vw;
+      font-size: x-large;
+    }
   }
 
   mat-form-field {
@@ -35,5 +34,32 @@ mat-card {
   mat-card-title {
       font-size: xx-large;
       padding-bottom: 1vh;
+      font-weight:lighter;
+      font-size: 3em;
+      margin-top: 35px;
   }
 
+.main-div{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("bg.jpg");
+}
+
+.inputFields {
+    margin: auto; font-weight:lighter;
+}
+
+.submitButton {
+    margin-top: 5vh;
+    border-radius: 20px;
+    width: 15vw;
+    font-size: 17px;
+    font-weight: lighter;
+}
+
+input[type="text"]
+{
+    font-size:24px;
+}

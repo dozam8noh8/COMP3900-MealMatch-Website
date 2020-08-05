@@ -1,6 +1,3 @@
-// div {
-//   height: calc(100vh - 65px);
-// }
 
 mat-card {
     display: flex;
@@ -12,8 +9,13 @@ mat-card {
     a {
         padding-top: 2vh;
         display: inline-block;
-        font-size: x-large; // makes the "Don't have an account? Sign Up text bigger.
+        font-weight: lighter; // makes the "Don't have an account? Sign Up text bigger.
      }
+     margin: 0;
+     padding: 0;
+     height: 57%;
+     width: 50%;
+     border-radius: 25px;
 }
 
 mat-card-content {
@@ -29,31 +31,37 @@ mat-form-field {
     width: 35vw;
 
   }
-
+mat-card-title {
+  font-weight:lighter;
+  font-size: 3.5em;
+  padding-bottom: 15%;
+  padding-top: 30px;
+}
   button {
       font-size: x-large;
   }
 
+.submitButton {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    width: 170px;
+    font-weight: lighter;
+}
 
-    // Code from https://medium.com/@dkreider09/how-to-add-a-spinner-to-an-angular-material-button-the-simplest-way-ever-69e2f7005f29
-//   <button mat-raised-button color="primary" [class.spinner]="loading" [disabled]="loading">Login</button>
+.loginCard {
+    margin: auto; width: 50%; height: 50%; margin-top: 10%;
+    align-content: center
+}
 
-    @keyframes spinner {
-    to {transform: rotate(360deg);}
-  }
+.main-div{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("loginBackground2.jpg");
+}
 
-  .spinner:before {
-    content: '';
-    box-sizing: border-box;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    margin-left: -10px;
-    border-radius: 50%;
-    border: 2px solid #ffffff;
-    border-top-color: #000000;
-    animation: spinner .8s linear infinite;
-  }
+.inputFields {
+    margin: auto;width: 100%; font-weight:lighter;
+}

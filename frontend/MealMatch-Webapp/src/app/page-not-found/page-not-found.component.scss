@@ -1,0 +1,40 @@
+.columned {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-right: 2%;
+}
+
+.copperplate {
+  font-family: Copperplate
+}
+
+.submitButton {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    width: 230px;
+    font-weight: lighter;
+}
+
+.main-div{
+  height: 200vh;
+  background-image: url("bg.jpg");
+}
+
+img {
+  height: fit-content; //so that it takes up full space
+  width: 25vw !important; // this prevents the image from being extremely big
+  object-fit: cover; 
+  object-position: center; /* this centers and crops the image so that it doesn't break the aspect ratio */
+}
+
+.example-card {
+  max-width: 25vh;
+  margin: 2%;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}

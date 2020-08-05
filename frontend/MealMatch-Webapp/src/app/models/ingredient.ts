@@ -3,12 +3,7 @@
 
 export interface Ingredient {
     id: number;
-    name: String;
-    onList: Boolean;
+    name: string;
+    onList?: boolean;
+    category?: String;
 }
-
-export interface RegularIngredient {
-    id: number;
-    name: String;
-}
-  
