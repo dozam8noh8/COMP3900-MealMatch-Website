@@ -82,7 +82,7 @@ def seed_db():
             else:
                 break
         user.recipes.append(recipe)
-        
+
     # Load json
     input_file=open('data_seed/recipes2.json', 'r', encoding='utf8')
     json_decode=json.load(input_file)
@@ -117,7 +117,11 @@ def seed_db():
 
     ########################################### ADD RANDOM RATINGS #########################################################
     newUser = User(username='Emmanuel', email='emmanuel@mealmatch.com')
-    newUser.hash_password('password')
+    newUser.hash_password('test')
+    db.session.add(newUser)
+
+    newUser = User(username='kenny', email='kenny@gmail.com')
+    newUser.hash_password('test')
     db.session.add(newUser)
 
     recipes = Recipe.query.all()

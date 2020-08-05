@@ -41,7 +41,7 @@ export class RequestLogInterceptor implements HttpInterceptor {
         // Add artificial 1 second delay to all network requests so we can design loading things responsively.
         return next.handle(request).pipe(
             materialize(),
-            delay(1000),
+            delay(500),
             dematerialize(),
         );
   }

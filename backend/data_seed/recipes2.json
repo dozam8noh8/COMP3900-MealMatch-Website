@@ -4,7 +4,7 @@
             "name": "Grilled Cheese",
             "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Grilled_Cheese_with_hoisin.jpg",
             "instruction": "Grill bread with cheese in it. Serve when cheese is fully melted or bread is golden brown.",
-            "mealtype": "Miscellaneous",
+            "mealtype": "Breakfast",
             "ingredients": [
                 {
                     "name": "Bread",
