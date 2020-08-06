@@ -77,3 +77,12 @@ When we were checking the specifications again, we realised that contributors sh
 Once this was done, we began to do extensive testing our application. I actually ask an outsider to try our app out and a few things that are simple enough were brought up. This included clearer labelling of the user’s profile image on their dashboard and being able to delete reviews. I also decided that if a user was on the view page for a recipe they own, they should be able to navigate from there to edit the details of their recipe.
 
 With our deadline being extended, every team member will continue to QA our site and if we could get an endpoint for deleting reviews I will add that our review system.
+
+
+Week 10
+Since it was very hard to find recipes that match exactly the ingredients a user has, results always seemed to look a bit empty. Because of this, we thought it would be a good idea to implement partial matching as well, so that users can see what recipes they could make if they had some more ingredients. After the backend was modified to return the appropriate data, I made sure this information, including the ingredients that are missing for each recipe, is displayed on the frontend. I added a button with a tooltip to inform users that they can toggle between fully matched and partially matched results.
+I also added the removal of reviews to the frontend since our API had been updated.
+The rest of my week was spent working on the report. Since the feedback for our proposal from last time said it wasn't completely clear how we were meeting the project objectives, I decided to explicitly list the objectives and give a description underneath each. I also gave a brief summary of how to use our functionalities, which was expanded upon by another team member. I also made sure to talk about the implementation challenges that I faced.
+Before submission, I also just formatted a lot of our text, added in a table of contents and cover page.
+I am quite happy with the final result of our project. Starting this semester with barely any knowledge of Angular, I have been introduced to many new programming concepts and paradigms that I hope to continue to learn more about.
+I would also say that this project is one of the most positive group work experiences I have had.
