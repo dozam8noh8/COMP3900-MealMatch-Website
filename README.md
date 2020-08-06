@@ -6,6 +6,7 @@ Clone this repo to your local machine.
 Preferred machines specifications:
 - Python3+
 - Linux/Mac
+
 **Warning:** If python3 is not set as the default python version, the following guide may not work, as a work around, where “python” is mentioned in the setup doc use “python3” and if required, also replace “pip” with “pip3”.
 
 # Backend Setup
