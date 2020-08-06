@@ -129,7 +129,10 @@ Run the Angular app:
 $ ng serve
 ```
 
-Finally, visit localhost:4200 to view the app!
+Finally, visit localhost:4200 to view the app!  
+**WARNING: If when you load the website, the navbar is drooping down and the stylings do not look right, please review the step above
+and comment out all imports in the bootstrap.scss file other than "functions", "variables", "mixins", "utilities"**. 
+
 
 # Test Users For Logging in
 Whilst making an account on MealMatch is easy, we’ve provided some test users so you can see what different views would be like after contributing multiple recipes. These users are created when the database is seeded and own the contributed recipes to populate the site with data.
