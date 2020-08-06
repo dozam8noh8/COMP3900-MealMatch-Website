@@ -6,6 +6,7 @@ Clone this repo to your local machine.
 Preferred machines specifications:
 - Python3+
 - Linux/Mac
+**Warning:** If python3 is not set as the default python version, the following guide may not work, as a work around, where “python” is mentioned in the setup doc use “python3” and if required, also replace “pip” with “pip3”.
 
 # Backend Setup
 1. Navigate to `capstone-project-i-dont-care/backend`
@@ -128,6 +129,20 @@ $ ng serve
 ```
 
 Finally, visit localhost:4200 to view the app!
+
+# Test Users For Logging in
+Whilst making an account on MealMatch is easy, we’ve provided some test users so you can see what different views would be like after contributing multiple recipes. These users are created when the database is seeded and own the contributed recipes to populate the site with data.
+
+**Account: Admin**
+The “admin” account owns the majority of all recipes created on mealmatch, so if you would like to see a dashboard fully populated with recipes that you can edit/delete or view, you should use this account. Admin is the user that Waqif uses to demonstrate a “power user” in the final demo.
+Username: admin
+Password: admin
+
+**Account: Kenny**
+The “kenny” account is a fresh account that would represent a starting user. It has contributed no recipes so its dashboard is empty.
+Username: kenny
+Password: test
+
 
 # Members
 - Emmanuel Borra
