@@ -90,3 +90,13 @@ the backend, I've pretty much been doing quite a lot of backend work too such as
 setting up all the hall of fame endpoints which was quite a lot of calculation from the backend. This was undoubtedly the most
 busiest week in terms of getting work done but this was surely the most impactful. Our application is pretty much ready for submission
 and all we need to do that's left is getting our setup docs ready and doing more testing for bugs before submission.
+
+==============Week 10================
+This was the final week so we put in quite a lot of effort to get all the submissions ready. Firstly, the
+code submission was due so we focused on finishing it first. For the backend, there were quite a lot of 
+bug fixed to handle and for the frontend, I focused mainly on small UI issues to fix. After that, we quickly
+moved on to finishing the report. I worked on the functionality pictures, backend project objectives,
+references for the report and proofreading when finished. Finally, we worked on our demo and practiced as a
+team which was quite a lot of fun. Overall, this week was probably the best in terms of enjoyment, I really
+enjoying the final product, the demo prep and everything else so a perfect way to end the course.
+=====================================
